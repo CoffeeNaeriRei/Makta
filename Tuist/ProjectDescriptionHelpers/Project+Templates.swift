@@ -78,6 +78,7 @@ extension Project {
                     infoPlist: .file(path: .relativeToRoot("Support/Info.plist")),
                     sources: ["Sources/**"],
                     resources: resources,
+                    scripts: [.SwiftLintScriptString],
                     dependencies: dependencies,
                     settings: settings
                 ),
@@ -89,6 +90,7 @@ extension Project {
                     deploymentTargets: .iOS(iOSVeresion),
                     infoPlist: .file(path: .relativeToRoot("Support/Info.plist")),
                     sources: ["Tests/**"],
+                    scripts: [.SwiftLintScriptString],
                     dependencies: [
                         .target(name: name)
                     ],

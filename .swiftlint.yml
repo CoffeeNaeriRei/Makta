@@ -1,0 +1,11 @@
+disabled_rules:
+  - todo
+  - trailing_whitespace
+  - function_parameter_count
+  - file_length
+
+# 한 줄 길이 150자 이내로 제한
+line_length: 160
+
+# 함수 길이 100줄로 제한
+function_body_length: 100
