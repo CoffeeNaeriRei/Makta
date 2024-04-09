@@ -15,7 +15,7 @@ let project = Project.app(
         Module.homeFeature,
         Module.stationSearchFeature,
         Module.subwayCheckFeature,
-        Module.data,
+        Module.data
     ].map { $0.project },
     resources: .default
 )

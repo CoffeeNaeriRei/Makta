@@ -6,6 +6,6 @@ let project = Project.framework(
     dependencies: [
         Module.designSystem.project,
         Module.utils.project,
-        Module.thirdPartyLib.project,
+        Module.thirdPartyLib.project
     ]
 )
