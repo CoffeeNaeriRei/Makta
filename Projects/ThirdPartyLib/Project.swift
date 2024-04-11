@@ -8,6 +8,6 @@ let project = Project.framework(
         .rxCocoa,
         .rxRelay,
         .flexLayout,
-        .pinLayout,
+        .pinLayout
     ]
 )
