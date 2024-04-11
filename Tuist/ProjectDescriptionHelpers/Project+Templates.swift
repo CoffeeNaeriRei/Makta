@@ -2,6 +2,7 @@ import ProjectDescription
 
 extension Project {
     
+    static let appName = "Makcha"
     static let bundleID = "com.coffeenaerirei"
     static let iOSVeresion = "16.0"
     
@@ -15,7 +16,7 @@ extension Project {
         return createProject(
             name: name,
             product: .app,
-            bundleID: name == "App" ? bundleID + ".Makcha" : bundleID + ".\(name)",
+            bundleID: bundleID + ".\(appName).\(name)",
             packages: packages,
             dependencies: dependencies,
             resources: resources,
@@ -33,7 +34,7 @@ extension Project {
         return createProject(
             name: name,
             product: .staticFramework,
-            bundleID: bundleID + ".\(name)",
+            bundleID: bundleID + ".\(appName).\(name)",
             packages: packages,
             dependencies: dependencies,
             resources: resources
