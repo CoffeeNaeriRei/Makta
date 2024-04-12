@@ -68,3 +68,8 @@ Derived/
 
 ### Tuist managed dependencies ###
 Tuist/Dependencies
+
+### 인증서,프로비저닝 프로파일 경로
+Signing/
+### 암호화 파일
+master.key

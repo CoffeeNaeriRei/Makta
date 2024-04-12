@@ -2,6 +2,7 @@ import ProjectDescription
 
 extension Project {
     
+    static let appName = "Makcha"
     static let bundleID = "com.coffeenaerirei"
     static let iOSVeresion = "16.0"
     
@@ -15,10 +16,11 @@ extension Project {
         return createProject(
             name: name,
             product: .app,
-            bundleID: bundleID + ".\(name)",
+            bundleID: bundleID + ".\(appName).\(name)",
             packages: packages,
             dependencies: dependencies,
-            resources: resources
+            resources: resources,
+            isAppTarget: true
         )
     }
     
@@ -32,7 +34,7 @@ extension Project {
         return createProject(
             name: name,
             product: .staticFramework,
-            bundleID: bundleID + ".\(name)",
+            bundleID: bundleID + ".\(appName).\(name)",
             packages: packages,
             dependencies: dependencies,
             resources: resources
@@ -50,10 +52,11 @@ extension Project {
         schemes: [Scheme] = [],
         packages: [Package] = [],
         dependencies: [TargetDependency] = [],
-        resources: ResourceFileElements? = nil
+        resources: ResourceFileElements? = nil,
+        isAppTarget: Bool = false
     ) -> Project {
                 
-        let settings = Settings.settings(
+        var settings = Settings.settings(
             base: [
                 "OTHER_LDFLAGS": "-ObjC",
 //                "OTHER_SWIFT_FLAGS": "$(inherited) -Xcc -Wno-error=non-modular-include-in-framework-module",
@@ -64,6 +67,11 @@ extension Project {
                 ]
             ]
         )
+        // App 모듈일 경우 Product name을 모듈 이름이 아닌 앱 이름으로 설정
+        if isAppTarget {
+            let productNameSetting: [String: SettingValue] = ["PRODUCT_NAME": "Makcha"]
+            settings.base.merge(productNameSetting)
+        }
         
         return Project(
             name: name,
