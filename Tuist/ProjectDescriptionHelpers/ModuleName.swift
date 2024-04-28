@@ -10,9 +10,7 @@ import ProjectDescription
 public enum Module {
     case app
     case homeFeature
-//    case stationSearchFeature
     case detailPathFeature
-//    case subwayCheckFeature
     case locationSearchFeature
     case domain
     case data
@@ -28,12 +26,8 @@ extension Module {
             return "App"
         case .homeFeature:
             return "HomeFeature"
-//        case .stationSearchFeature:
-//            return "StationSearchFeature"
         case .detailPathFeature:
             return "DetailPathFeature"
-//        case .subwayCheckFeature:
-//            return "SubwayCheckFeature"
         case .locationSearchFeature:
             return "LocationSearchFeature"
         case .domain:

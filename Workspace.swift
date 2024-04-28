@@ -13,8 +13,6 @@ let workspace = Workspace(
     projects: [
         Module.app,
         Module.homeFeature,
-//        Module.stationSearchFeature,
-//        Module.subwayCheckFeature,
         Module.detailPathFeature,
         Module.locationSearchFeature,
         Module.domain,

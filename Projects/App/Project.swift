@@ -11,10 +11,10 @@ import ProjectDescriptionHelpers
 let project = Project.app(
     name: "App",
     dependencies: [
-//        Module.domain
+        Module.domain,
         Module.homeFeature,
-        Module.stationSearchFeature,
-        Module.subwayCheckFeature,
+        Module.detailPathFeature,
+        Module.locationSearchFeature,
         Module.data
     ].map { $0.project },
     resources: .default
