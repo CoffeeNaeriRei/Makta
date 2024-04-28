@@ -2,7 +2,7 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.framework(
-    name: "{{ name }}Feature",
+    name: "DetailPathFeature",
     dependencies: [
         Module.domain.project,
         Module.designSystem.project,
