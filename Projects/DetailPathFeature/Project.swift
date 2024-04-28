@@ -2,7 +2,7 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.framework(
-    name: "SubwayCheckFeature",
+    name: "DetailPathFeature",
     dependencies: [
         Module.designSystem.project,
         Module.utils.project,
