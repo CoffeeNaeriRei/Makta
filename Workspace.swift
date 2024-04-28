@@ -13,8 +13,11 @@ let workspace = Workspace(
     projects: [
         Module.app,
         Module.homeFeature,
-        Module.stationSearchFeature,
-        Module.subwayCheckFeature,
+//        Module.stationSearchFeature,
+//        Module.subwayCheckFeature,
+        Module.detailPathFeature,
+        Module.locationSearchFeature,
+        Module.domain,
         Module.data
     ].map { $0.path }
 )
