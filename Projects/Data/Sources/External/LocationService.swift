@@ -1,5 +1,5 @@
 //
-//  CoreLocationService.swift
+//  LocationService.swift
 //  Data
 //
 //  Created by 김영빈 on 5/1/24.
@@ -7,9 +7,9 @@
 
 import CoreLocation
 
-// MARK: - CoreLocationService 정의
+// MARK: - LocationService 정의
 
-final class CoreLocationService: NSObject {
+final class LocationService: NSObject {
     
     typealias LocationCallback = (CLLocation?) -> Void
     
@@ -31,7 +31,7 @@ final class CoreLocationService: NSObject {
 
 // MARK: - CLLocationManagerDelegate 델리게이트 구현
 
-extension CoreLocationService: CLLocationManagerDelegate {
+extension LocationService: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
