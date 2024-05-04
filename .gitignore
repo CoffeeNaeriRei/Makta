@@ -73,3 +73,6 @@ Tuist/Dependencies
 Signing/
 ### 암호화 파일
 master.key
+
+### API KEY 관리 파일
+**.xcconfig
