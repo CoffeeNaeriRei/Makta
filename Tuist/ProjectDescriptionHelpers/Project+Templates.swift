@@ -49,7 +49,7 @@ extension Project {
         name: String,
         product: Product,
         bundleID: String,
-        schemes: [Scheme] = [],
+//        schemes: [Scheme] = [],
         packages: [Package] = [],
         dependencies: [TargetDependency] = [],
         resources: ResourceFileElements? = nil,
@@ -65,8 +65,13 @@ extension Project {
                     "$(SRCROOT)/../../Tuist/Dependencies/SwiftPackageManager/.build/checkouts/FlexLayout/Sources/yoga/include/yoga",
                     "$(SRCROOT)/../../Tuist/Dependencies/SwiftPackageManager/.build/checkouts/FlexLayout/Sources/YogaKit/include/YogaKit"
                 ]
+            ],
+            configurations: [
+                .debug(name: .debug, xcconfig: .relativeToRoot("XCConfig/Secrets.xcconfig")),
+                .release(name: .release, xcconfig: .relativeToRoot("XCConfig/Secrets.xcconfig"))
             ]
         )
+        
         // App 모듈일 경우 Product name을 모듈 이름이 아닌 앱 이름으로 설정
         if isAppTarget {
             let productNameSetting: [String: SettingValue] = ["PRODUCT_NAME": "Makcha"]
@@ -76,6 +81,7 @@ extension Project {
         return Project(
             name: name,
             packages: packages,
+//            settings: settings,
             targets: [
                 Target(
                     name: name,
@@ -104,8 +110,8 @@ extension Project {
                     ],
                     settings: settings
                 )
-            ],
-            schemes: schemes
+            ]
+//            schemes: schemes
         )
     }
 }
