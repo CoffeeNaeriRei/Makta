@@ -18,6 +18,8 @@
 		B89E7FA62BE7725000A13B58 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = B89E7FA52BE7725000A13B58 /* RxCocoa */; };
 		B89E7FA82BE7725000A13B58 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = B89E7FA72BE7725000A13B58 /* RxRelay */; };
 		B89E7FAA2BE7725000A13B58 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B89E7FA92BE7725000A13B58 /* RxSwift */; };
+		B89E7FAE2BE773B700A13B58 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7FAD2BE773B700A13B58 /* APIService.swift */; };
+		B89E7FB02BE773D100A13B58 /* TransPathDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7FAF2BE773D100A13B58 /* TransPathDTO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		B89E7F842BE7613A00A13B58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B89E7F8A2BE765D200A13B58 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		B89E7F8B2BE765D200A13B58 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		B89E7FAD2BE773B700A13B58 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		B89E7FAF2BE773D100A13B58 /* TransPathDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransPathDTO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				B89E7F922BE76FC700A13B58 /* Repository */,
-				B89E7F932BE76FCD00A13B58 /* Network */,
+				B89E7F932BE76FCD00A13B58 /* External */,
 				B89E7F942BE76FD300A13B58 /* DTO */,
 			);
 			path = Data;
@@ -112,16 +116,19 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
-		B89E7F932BE76FCD00A13B58 /* Network */ = {
+		B89E7F932BE76FCD00A13B58 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				B89E7FAC2BE773AB00A13B58 /* APIService */,
+				B89E7FAB2BE773A500A13B58 /* LocationService */,
 			);
-			path = Network;
+			path = External;
 			sourceTree = "<group>";
 		};
 		B89E7F942BE76FD300A13B58 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
+				B89E7FAF2BE773D100A13B58 /* TransPathDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -195,6 +202,21 @@
 			children = (
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		B89E7FAB2BE773A500A13B58 /* LocationService */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LocationService;
+			sourceTree = "<group>";
+		};
+		B89E7FAC2BE773AB00A13B58 /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+				B89E7FAD2BE773B700A13B58 /* APIService.swift */,
+			);
+			path = APIService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,6 +325,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B89E7F8D2BE765D200A13B58 /* TestViewController.swift in Sources */,
+				B89E7FB02BE773D100A13B58 /* TransPathDTO.swift in Sources */,
+				B89E7FAE2BE773B700A13B58 /* APIService.swift in Sources */,
 				B89E7F8C2BE765D200A13B58 /* TestView.swift in Sources */,
 				B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */,
 				B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */,
