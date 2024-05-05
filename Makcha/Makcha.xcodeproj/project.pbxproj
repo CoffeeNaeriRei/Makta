@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B86232C22BE77CEE003959FB /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = B86232C12BE77CEE003959FB /* .gitkeep */; };
+		B86232C42BE77CF4003959FB /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = B86232C32BE77CF4003959FB /* .gitkeep */; };
+		B86232C62BE77CFA003959FB /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = B86232C52BE77CFA003959FB /* .gitkeep */; };
+		B86232C82BE77D0B003959FB /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = B86232C72BE77D0B003959FB /* .gitkeep */; };
+		B86232CA2BE77D1C003959FB /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = B86232C92BE77D1C003959FB /* .gitkeep */; };
+		B86232CC2BE77D27003959FB /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = B86232CB2BE77D27003959FB /* .gitkeep */; };
+		B86232CE2BE77D2B003959FB /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = B86232CD2BE77D2B003959FB /* .gitkeep */; };
+		B86232D02BE77D2F003959FB /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = B86232CF2BE77D2F003959FB /* .gitkeep */; };
 		B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F762BE7613800A13B58 /* AppDelegate.swift */; };
 		B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F782BE7613800A13B58 /* SceneDelegate.swift */; };
 		B89E7F802BE7613900A13B58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B89E7F7F2BE7613900A13B58 /* Assets.xcassets */; };
@@ -25,6 +33,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B86232C12BE77CEE003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		B86232C32BE77CF4003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		B86232C52BE77CFA003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		B86232C72BE77D0B003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		B86232C92BE77D1C003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		B86232CB2BE77D27003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		B86232CD2BE77D2B003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		B86232CF2BE77D2F003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B89E7F732BE7613800A13B58 /* Makcha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Makcha.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B89E7F762BE7613800A13B58 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B89E7F782BE7613800A13B58 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +134,7 @@
 		B89E7F922BE76FC700A13B58 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				B86232C72BE77D0B003959FB /* .gitkeep */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -152,6 +169,7 @@
 		B89E7F962BE76FEA00A13B58 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				B86232C52BE77CFA003959FB /* .gitkeep */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -159,6 +177,7 @@
 		B89E7F972BE76FF700A13B58 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				B86232C32BE77CF4003959FB /* .gitkeep */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -166,6 +185,7 @@
 		B89E7F982BE76FFB00A13B58 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				B86232C12BE77CEE003959FB /* .gitkeep */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -185,6 +205,7 @@
 		B89E7F9A2BE7700F00A13B58 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				B86232CB2BE77D27003959FB /* .gitkeep */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -192,6 +213,7 @@
 		B89E7F9B2BE7706E00A13B58 /* DetailPath */ = {
 			isa = PBXGroup;
 			children = (
+				B86232CD2BE77D2B003959FB /* .gitkeep */,
 			);
 			path = DetailPath;
 			sourceTree = "<group>";
@@ -199,6 +221,7 @@
 		B89E7F9C2BE7707700A13B58 /* SearchPath */ = {
 			isa = PBXGroup;
 			children = (
+				B86232CF2BE77D2F003959FB /* .gitkeep */,
 			);
 			path = SearchPath;
 			sourceTree = "<group>";
@@ -206,6 +229,7 @@
 		B89E7F9D2BE770A300A13B58 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B86232C92BE77D1C003959FB /* .gitkeep */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -298,8 +322,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B86232C22BE77CEE003959FB /* .gitkeep in Resources */,
 				B89E7F832BE7613A00A13B58 /* LaunchScreen.storyboard in Resources */,
+				B86232C62BE77CFA003959FB /* .gitkeep in Resources */,
+				B86232CE2BE77D2B003959FB /* .gitkeep in Resources */,
+				B86232C82BE77D0B003959FB /* .gitkeep in Resources */,
 				B89E7F802BE7613900A13B58 /* Assets.xcassets in Resources */,
+				B86232C42BE77CF4003959FB /* .gitkeep in Resources */,
+				B86232D02BE77D2F003959FB /* .gitkeep in Resources */,
+				B86232CA2BE77D1C003959FB /* .gitkeep in Resources */,
+				B86232CC2BE77D27003959FB /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
