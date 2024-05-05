@@ -1,3 +1,6 @@
+# Created by https://www.toptal.com/developers/gitignore/api/swift,swiftpackagemanager,macos,xcode
+# Edit at https://www.toptal.com/developers/gitignore?templates=swift,swiftpackagemanager,macos,xcode
+
 ### macOS ###
 # General
 .DS_Store
@@ -26,6 +29,10 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+### macOS Patch ###
+# iCloud generated files
+*.icloud
+
 ### Xcode ###
 # Xcode
 #
@@ -51,6 +58,18 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 
+## Obj-C/Swift specific
+*.hmap
+
+## App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
 ### Xcode Patch ###
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
@@ -58,21 +77,57 @@ DerivedData/
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 
-### Projects ###
-*.xcodeproj
-*.xcworkspace
+### Xcode ###
 
-### Tuist derived files ###
-graph.dot
-Derived/
+## Xcode 8 and earlier
 
-### Tuist managed dependencies ###
-Tuist/Dependencies
+### Xcode Patch ###
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+**/xcshareddata/WorkspaceSettings.xcsettings
 
-### 인증서,프로비저닝 프로파일 경로
-Signing/
-### 암호화 파일
-master.key
+
+# Swift Package Manager
+# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
+# Packages/
+# Package.pins
+Package.resolved
+# *.xcodeproj
+# Xcode automatically generates this directory with a .xcworkspacedata file and xcuserdata
+# hence it is not needed unless you have added a package configuration file to your project
+# .swiftpm
+
+.build/
+
+### SwiftPackageManager ###
+Packages
+xcuserdata
+# *.xcodeproj
+
+
+### Tuist 관련 설정 ###
+
+# ### Projects ###
+# *.xcodeproj
+# *.xcworkspace
+
+# ### Tuist derived files ###
+# graph.dot
+# Derived/
+
+# ### Tuist managed dependencies ###
+# Tuist/Dependencies
+
+# ### 인증서,프로비저닝 프로파일 경로
+# Signing/
+# ### 암호화 파일
+# master.key
+
+
 
 ### API KEY 관리 파일
 **.xcconfig
