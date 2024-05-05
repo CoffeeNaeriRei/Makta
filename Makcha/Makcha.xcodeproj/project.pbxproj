@@ -56,15 +56,135 @@
 		B89E7F752BE7613800A13B58 /* Makcha */ = {
 			isa = PBXGroup;
 			children = (
+				B89E7F8F2BE76B9B00A13B58 /* Sources */,
+				B89E7F902BE76BA200A13B58 /* Resources */,
+			);
+			path = Makcha;
+			sourceTree = "<group>";
+		};
+		B89E7F8F2BE76B9B00A13B58 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
 				B89E7F762BE7613800A13B58 /* AppDelegate.swift */,
 				B89E7F782BE7613800A13B58 /* SceneDelegate.swift */,
-				B89E7F8A2BE765D200A13B58 /* TestView.swift */,
-				B89E7F8B2BE765D200A13B58 /* TestViewController.swift */,
+				B89E7F992BE7700700A13B58 /* Presentation */,
+				B89E7F952BE76FE100A13B58 /* Domain */,
+				B89E7F912BE76FAF00A13B58 /* Data */,
+				B89E7F9D2BE770A300A13B58 /* Utils */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		B89E7F902BE76BA200A13B58 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				B89E7F7F2BE7613900A13B58 /* Assets.xcassets */,
 				B89E7F812BE7613A00A13B58 /* LaunchScreen.storyboard */,
 				B89E7F842BE7613A00A13B58 /* Info.plist */,
 			);
-			path = Makcha;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		B89E7F912BE76FAF00A13B58 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				B89E7F922BE76FC700A13B58 /* Repository */,
+				B89E7F932BE76FCD00A13B58 /* Network */,
+				B89E7F942BE76FD300A13B58 /* DTO */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		B89E7F922BE76FC700A13B58 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		B89E7F932BE76FCD00A13B58 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		B89E7F942BE76FD300A13B58 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		B89E7F952BE76FE100A13B58 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				B89E7F982BE76FFB00A13B58 /* Interface */,
+				B89E7F972BE76FF700A13B58 /* UseCase */,
+				B89E7F962BE76FEA00A13B58 /* Entity */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		B89E7F962BE76FEA00A13B58 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		B89E7F972BE76FF700A13B58 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		B89E7F982BE76FFB00A13B58 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		B89E7F992BE7700700A13B58 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				B89E7F8A2BE765D200A13B58 /* TestView.swift */,
+				B89E7F8B2BE765D200A13B58 /* TestViewController.swift */,
+				B89E7F9C2BE7707700A13B58 /* SearchPath */,
+				B89E7F9B2BE7706E00A13B58 /* DetailPath */,
+				B89E7F9A2BE7700F00A13B58 /* Main */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		B89E7F9A2BE7700F00A13B58 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		B89E7F9B2BE7706E00A13B58 /* DetailPath */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DetailPath;
+			sourceTree = "<group>";
+		};
+		B89E7F9C2BE7707700A13B58 /* SearchPath */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SearchPath;
+			sourceTree = "<group>";
+		};
+		B89E7F9D2BE770A300A13B58 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,7 +428,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RCM87YWJ79;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Makcha/Info.plist;
+				INFOPLIST_FILE = Makcha/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -335,7 +455,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RCM87YWJ79;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Makcha/Info.plist;
+				INFOPLIST_FILE = Makcha/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
