@@ -7,19 +7,22 @@
 //
 
 import UIKit
+import RxSwift
 
 public final class TestViewController: UIViewController {
     
-    let customView = TestView()
+    public let testView = TestView()
+    
+    let disposeBag = DisposeBag()
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("ViewDidLoaded")
     }
     
+    // 뷰 컨트롤러가 자신의 뷰를 생성할 때 호출하는 메서드
     public override func loadView() {
-        view = customView
-        
+        view = testView
     }
 }
 

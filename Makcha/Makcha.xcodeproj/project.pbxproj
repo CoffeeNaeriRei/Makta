@@ -13,6 +13,11 @@
 		B89E7F832BE7613A00A13B58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B89E7F812BE7613A00A13B58 /* LaunchScreen.storyboard */; };
 		B89E7F8C2BE765D200A13B58 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F8A2BE765D200A13B58 /* TestView.swift */; };
 		B89E7F8D2BE765D200A13B58 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F8B2BE765D200A13B58 /* TestViewController.swift */; };
+		B89E7FA02BE771AE00A13B58 /* FlexLayout in Frameworks */ = {isa = PBXBuildFile; productRef = B89E7F9F2BE771AE00A13B58 /* FlexLayout */; };
+		B89E7FA32BE771BE00A13B58 /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = B89E7FA22BE771BE00A13B58 /* PinLayout */; };
+		B89E7FA62BE7725000A13B58 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = B89E7FA52BE7725000A13B58 /* RxCocoa */; };
+		B89E7FA82BE7725000A13B58 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = B89E7FA72BE7725000A13B58 /* RxRelay */; };
+		B89E7FAA2BE7725000A13B58 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B89E7FA92BE7725000A13B58 /* RxSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +36,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B89E7FA62BE7725000A13B58 /* RxCocoa in Frameworks */,
+				B89E7FA32BE771BE00A13B58 /* PinLayout in Frameworks */,
+				B89E7FAA2BE7725000A13B58 /* RxSwift in Frameworks */,
+				B89E7FA82BE7725000A13B58 /* RxRelay in Frameworks */,
+				B89E7FA02BE771AE00A13B58 /* FlexLayout in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +214,13 @@
 			dependencies = (
 			);
 			name = Makcha;
+			packageProductDependencies = (
+				B89E7F9F2BE771AE00A13B58 /* FlexLayout */,
+				B89E7FA22BE771BE00A13B58 /* PinLayout */,
+				B89E7FA52BE7725000A13B58 /* RxCocoa */,
+				B89E7FA72BE7725000A13B58 /* RxRelay */,
+				B89E7FA92BE7725000A13B58 /* RxSwift */,
+			);
 			productName = Makcha;
 			productReference = B89E7F732BE7613800A13B58 /* Makcha.app */;
 			productType = "com.apple.product-type.application";
@@ -232,6 +249,11 @@
 				Base,
 			);
 			mainGroup = B89E7F6A2BE7613800A13B58;
+			packageReferences = (
+				B89E7F9E2BE771AE00A13B58 /* XCRemoteSwiftPackageReference "FlexLayout" */,
+				B89E7FA12BE771BE00A13B58 /* XCRemoteSwiftPackageReference "PinLayout" */,
+				B89E7FA42BE7725000A13B58 /* XCRemoteSwiftPackageReference "RxSwift" */,
+			);
 			productRefGroup = B89E7F742BE7613800A13B58 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -495,6 +517,61 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B89E7F9E2BE771AE00A13B58 /* XCRemoteSwiftPackageReference "FlexLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/layoutBox/FlexLayout";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.7;
+			};
+		};
+		B89E7FA12BE771BE00A13B58 /* XCRemoteSwiftPackageReference "PinLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/layoutBox/PinLayout";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.10.5;
+			};
+		};
+		B89E7FA42BE7725000A13B58 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B89E7F9F2BE771AE00A13B58 /* FlexLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B89E7F9E2BE771AE00A13B58 /* XCRemoteSwiftPackageReference "FlexLayout" */;
+			productName = FlexLayout;
+		};
+		B89E7FA22BE771BE00A13B58 /* PinLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B89E7FA12BE771BE00A13B58 /* XCRemoteSwiftPackageReference "PinLayout" */;
+			productName = PinLayout;
+		};
+		B89E7FA52BE7725000A13B58 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B89E7FA42BE7725000A13B58 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		B89E7FA72BE7725000A13B58 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B89E7FA42BE7725000A13B58 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		B89E7FA92BE7725000A13B58 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B89E7FA42BE7725000A13B58 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B89E7F6B2BE7613800A13B58 /* Project object */;
 }
