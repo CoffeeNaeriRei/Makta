@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */ = {isa = PBXBuildFile; productRef = 206AA6052BE7A95B0057FA40 /* makcha-design-system */; };
+		206AA6082BE7B23F0057FA40 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206AA6072BE7B23F0057FA40 /* UIFont+Extension.swift */; };
 		B86232E02BE7A7F0003959FB /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */; };
 		B86232E42BE7B152003959FB /* APIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232E32BE7B152003959FB /* APIServiceTests.swift */; };
 		B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F762BE7613800A13B58 /* AppDelegate.swift */; };
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		206AA6072BE7B23F0057FA40 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		20B88A732BE79DC40088AF73 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		B86232C12BE77CEE003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232C32BE77CF4003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232C52BE77CFA003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -60,7 +64,6 @@
 		B89E7FAF2BE773D100A13B58 /* TransPathDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransPathDTO.swift; sourceTree = "<group>"; };
 		B89E7FB12BE7742600A13B58 /* LocationManagerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerInterface.swift; sourceTree = "<group>"; };
 		B89E7FB32BE7743600A13B58 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
-		B89E7FB52BE774E700A13B58 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */,
 				B89E7FA62BE7725000A13B58 /* RxCocoa in Frameworks */,
 				B89E7FA32BE771BE00A13B58 /* PinLayout in Frameworks */,
 				B89E7FAA2BE7725000A13B58 /* RxSwift in Frameworks */,
@@ -141,7 +145,7 @@
 				B89E7F7F2BE7613900A13B58 /* Assets.xcassets */,
 				B89E7F812BE7613A00A13B58 /* LaunchScreen.storyboard */,
 				B89E7F842BE7613A00A13B58 /* Info.plist */,
-				B89E7FB52BE774E700A13B58 /* Secrets.xcconfig */,
+				20B88A732BE79DC40088AF73 /* Secrets.xcconfig */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -255,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				B86232C92BE77D1C003959FB /* .gitkeep */,
+				206AA6072BE7B23F0057FA40 /* UIFont+Extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -317,6 +322,7 @@
 				B89E7FA52BE7725000A13B58 /* RxCocoa */,
 				B89E7FA72BE7725000A13B58 /* RxRelay */,
 				B89E7FA92BE7725000A13B58 /* RxSwift */,
+				206AA6052BE7A95B0057FA40 /* makcha-design-system */,
 			);
 			productName = Makcha;
 			productReference = B89E7F732BE7613800A13B58 /* Makcha.app */;
@@ -354,6 +360,7 @@
 				B89E7F9E2BE771AE00A13B58 /* XCRemoteSwiftPackageReference "FlexLayout" */,
 				B89E7FA12BE771BE00A13B58 /* XCRemoteSwiftPackageReference "PinLayout" */,
 				B89E7FA42BE7725000A13B58 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				206AA6042BE7A95B0057FA40 /* XCRemoteSwiftPackageReference "makcha-design-system" */,
 			);
 			productRefGroup = B89E7F742BE7613800A13B58 /* Products */;
 			projectDirPath = "";
@@ -426,6 +433,7 @@
 				B89E7FAE2BE773B700A13B58 /* APIService.swift in Sources */,
 				B89E7F8C2BE765D200A13B58 /* TestView.swift in Sources */,
 				B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */,
+				206AA6082BE7B23F0057FA40 /* UIFont+Extension.swift in Sources */,
 				B89E7FB22BE7742600A13B58 /* LocationManagerInterface.swift in Sources */,
 				B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */,
 			);
@@ -733,6 +741,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		206AA6042BE7A95B0057FA40 /* XCRemoteSwiftPackageReference "makcha-design-system" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CoffeeNaeriRei/makcha-design-system";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		B89E7F9E2BE771AE00A13B58 /* XCRemoteSwiftPackageReference "FlexLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/layoutBox/FlexLayout";
@@ -760,6 +776,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		206AA6052BE7A95B0057FA40 /* makcha-design-system */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 206AA6042BE7A95B0057FA40 /* XCRemoteSwiftPackageReference "makcha-design-system" */;
+			productName = "makcha-design-system";
+		};
 		B89E7F9F2BE771AE00A13B58 /* FlexLayout */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B89E7F9E2BE771AE00A13B58 /* XCRemoteSwiftPackageReference "FlexLayout" */;
