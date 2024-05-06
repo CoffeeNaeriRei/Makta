@@ -45,7 +45,6 @@
 		B86232C32BE77CF4003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232C52BE77CFA003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232C72BE77D0B003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		B86232C92BE77D1C003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232CB2BE77D27003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232CD2BE77D2B003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232CF2BE77D2F003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -258,7 +257,6 @@
 		B89E7F9D2BE770A300A13B58 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				B86232C92BE77D1C003959FB /* .gitkeep */,
 				206AA6072BE7B23F0057FA40 /* UIFont+Extension.swift */,
 			);
 			path = Utils;

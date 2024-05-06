@@ -33,10 +33,8 @@ public final class TestView: UIView {
         count.font = UIFont.systemFont(ofSize: 60.0)
         
         footer.text = "테스트 완"
-        footer.font = .init(name: Pretendard.black.rawValue, size: 32)
-        
         footer.textColor = UIColor(Color.cf(.colorScale(.fuchsia(.dark))))
-        footer.attributedText = setLineSpacing(64, text: "가나다라마바사가나다라마바사가나다라마바사")
+        footer.attributedText = .pretendard("HELLO\nWORLD", scale: .largeTitle)
         footer.numberOfLines = 0
         
         rootFlexContainer.flex.width(100%).direction(.column).padding(12).define { flex in
@@ -70,7 +68,3 @@ public final class TestView: UIView {
         rootFlexContainer.flex.layout(mode: .adjustHeight)
     }
 }
-
-//#Preview {
-//    TestViewController()
-//}
