@@ -25,3 +25,14 @@ public final class TestViewController: UIViewController {
         view = testView
     }
 }
+
+#if DEBUG
+import SwiftUI
+struct TestViewController_Previews: PreviewProvider {
+    static var previews: some View {
+        ViewControllerPreview {
+            TestViewController()
+        }
+    }
+}
+#endif

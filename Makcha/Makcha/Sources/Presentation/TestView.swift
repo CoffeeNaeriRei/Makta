@@ -7,11 +7,11 @@
 //
 
 import UIKit
+import SwiftUI
 
 import FlexLayout
 import PinLayout
 import MakchaDesignSystem
-import SwiftUI
 
 public final class TestView: UIView {
     
@@ -34,7 +34,7 @@ public final class TestView: UIView {
         
         footer.text = "테스트 완"
         footer.textColor = UIColor(Color.cf(.colorScale(.fuchsia(.dark))))
-        footer.attributedText = .pretendard("HELLO\nWORLD", scale: .largeTitle)
+        footer.attributedText = .pretendard("HELLO\nWORLD RED", scale: .largeTitle)
         footer.numberOfLines = 0
         
         rootFlexContainer.flex.width(100%).direction(.column).padding(12).define { flex in
@@ -68,3 +68,13 @@ public final class TestView: UIView {
         rootFlexContainer.flex.layout(mode: .adjustHeight)
     }
 }
+
+#if DEBUG
+struct TestView_Preview: PreviewProvider {
+    static var previews: some View {
+        ViewPreview {
+            TestView()
+        }
+    }
+}
+#endif
