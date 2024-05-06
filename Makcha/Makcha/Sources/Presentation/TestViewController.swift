@@ -26,6 +26,13 @@ public final class TestViewController: UIViewController {
     }
 }
 
-//#Preview {
-//    TestViewController()
-//}
+#if DEBUG
+import SwiftUI
+struct TestViewController_Previews: PreviewProvider {
+    static var previews: some View {
+        ViewControllerPreview {
+            TestViewController()
+        }
+    }
+}
+#endif
