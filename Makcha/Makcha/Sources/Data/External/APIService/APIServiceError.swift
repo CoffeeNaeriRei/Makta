@@ -10,4 +10,5 @@ enum APIServiceError: Error {
     case invalidURL
     case requestFail
     case noData
+    case decodingError
 }
