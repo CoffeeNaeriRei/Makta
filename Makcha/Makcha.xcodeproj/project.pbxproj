@@ -19,6 +19,7 @@
 		B862333A2BEA04D9003959FB /* APIServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86233392BEA04D9003959FB /* APIServiceType.swift */; };
 		B862333D2BEA059A003959FB /* CommonTypealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862333C2BEA059A003959FB /* CommonTypealias.swift */; };
 		B86233432BEA505B003959FB /* TransPathRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86233422BEA505B003959FB /* TransPathRepositoryTests.swift */; };
+		B86233462BEA52FB003959FB /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = B86233452BEA52FB003959FB /* RxTest */; };
 		B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F762BE7613800A13B58 /* AppDelegate.swift */; };
 		B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F782BE7613800A13B58 /* SceneDelegate.swift */; };
 		B89E7F802BE7613900A13B58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B89E7F7F2BE7613900A13B58 /* Assets.xcassets */; };
@@ -83,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B86233462BEA52FB003959FB /* RxTest in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,12 +138,20 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
+		B86233442BEA52FB003959FB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B89E7F6A2BE7613800A13B58 = {
 			isa = PBXGroup;
 			children = (
 				B89E7F752BE7613800A13B58 /* Makcha */,
 				B86232D72BE7A761003959FB /* MakchaTests */,
 				B89E7F742BE7613800A13B58 /* Products */,
+				B86233442BEA52FB003959FB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -338,6 +348,9 @@
 				B86232DB2BE7A761003959FB /* PBXTargetDependency */,
 			);
 			name = MakchaTests;
+			packageProductDependencies = (
+				B86233452BEA52FB003959FB /* RxTest */,
+			);
 			productName = MakchaTests;
 			productReference = B86232D62BE7A761003959FB /* MakchaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -828,6 +841,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 206AA6042BE7A95B0057FA40 /* XCRemoteSwiftPackageReference "makcha-design-system" */;
 			productName = "makcha-design-system";
+		};
+		B86233452BEA52FB003959FB /* RxTest */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B89E7FA42BE7725000A13B58 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxTest;
 		};
 		B89E7F9F2BE771AE00A13B58 /* FlexLayout */ = {
 			isa = XCSwiftPackageProductDependency;
