@@ -7,12 +7,8 @@
 
 import Foundation
 
-// API 호출 시 발생하는 에러
-enum APIRequestError: Error {
-    case invalidURL
-    case requestFail
-    case noData
-}
+// MARK: - APIService 정의
+// API 호출 동작을 수행하는 객체
 
 final class APIService {
     
@@ -41,7 +37,7 @@ final class APIService {
         resultSortType: ResultOrderType = .recommendPath,
         searchType: SearchType = .inCity,
         searchPathType: SearchPathType = .all,
-        completion: @escaping (Result<Data, APIRequestError>) -> Void) {
+        completion: @escaping (Result<Data, APIServiceError>) -> Void) {
             guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "ODSAY_API_KEY") as? String else { return }
             var transPathURL = "https://api.odsay.com/v1/api/searchPubTransPathT?"
             transPathURL += "apiKey=\(apiKey)"
@@ -52,15 +48,15 @@ final class APIService {
             transPathURL += "&SearchType=\(searchType.rawValue)"
             transPathURL += "&SearchPathType=\(searchPathType.rawValue)"
             guard let url = URL(string: transPathURL) else {
-                completion(.failure(APIRequestError.invalidURL))
+                completion(.failure(APIServiceError.invalidURL))
                 return
             }
             URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let _ = error {
-                    completion(.failure(APIRequestError.requestFail))
+                    completion(.failure(APIServiceError.requestFail))
                 }
                 guard let data = data else {
-                    completion(.failure(APIRequestError.noData))
+                    completion(.failure(APIServiceError.noData))
                     return
                 }
                 completion(.success(data))
