@@ -11,4 +11,5 @@ enum APIServiceError: Error {
     case requestFail
     case noData
     case decodingError
+    case entityConvertError
 }

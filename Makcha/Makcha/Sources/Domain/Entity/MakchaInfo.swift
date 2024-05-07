@@ -11,18 +11,25 @@
 struct MakchaInfo {
     let start: String // 출발지
     let end: String // 도착지
-    let startTime: String // 출발시간 ex) 오늘 오후 22:37 출발
+//    let startTime: String // 출발시간 ex) 오늘 오후 22:37 출발 // TODO: - 실시간 지하철 도착 정보 활용하기
     let makchaPaths: [MakchaPath] // 각각의 막차 경로 정보
 }
 
 // 막차 경로 정보
 struct MakchaPath {
     let fastest: Bool // 가장 빠른 경로 여부
-    let arrivalTime: String // 도착시간 ex) 다음날 오전 01:23 도착
+    let makchaPathType: MakchaPathType // 경로 유형
+//    let arrivalTime: String // 도착시간 ex) 다음날 오전 01:23 도착 // TODO: - 유즈케이스 or 뷰모델에서 계산
     let totalTime: Int // 총 소요시간 (단위: 분)
-    let firstSubPathRemaining: Int // 첫번째 세부경로 이동수단 도착까지 남은 시간 (단위: 분)
-    let firstSubPathNextRemaining: Int // 첫번째 세부경로 이동수단 다음 2번째 도착까지 남은 시간 (단위: 분)
+//    let firstSubPathRemaining: Int // 첫번째 세부경로 이동수단 도착까지 남은 시간 (단위: 분) // TODO: - 실시간 지하철 도착 정보 활용하기
+//    let firstSubPathNextRemaining: Int // 첫번째 세부경로 이동수단 다음 2번째 도착까지 남은 시간 (단위: 분) // TODO: - 실시간 지하철 도착 정보 활용하기
     let subPath: [MakchaSubPath] // 세부경로들
+}
+
+enum MakchaPathType: String {
+    case subway = "지하철"
+    case bus = "버스"
+    case both = "지하철+버스"
 }
 
 // 세부경로
