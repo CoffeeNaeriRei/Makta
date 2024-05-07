@@ -10,7 +10,7 @@ import Foundation
 // MARK: - APIService 정의
 // API 호출 동작을 수행하는 객체
 
-final class APIService {
+struct APIService {
     
     // 경로검색결과 정렬방식
     enum ResultOrderType: Int {
