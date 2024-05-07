@@ -56,55 +56,55 @@ struct SubPath: Codable {
     let sectionTime: Int // 이동 소요시간
     
     // 지하철🚇 | 버스🚌  공통
-    let stationCount: Int // 이동하여 정차하는 정거장 수(지하철, 버스 경우만 필수)
-    let lane: [Lane] // 교통 수단 정보 리스트
-    let intervalTime: Int // 평균 배차간격(분)
-    let startName: String // 승차 정류장/역명
-    let startX: Double // 승차 정류장/역 X 좌표
-    let startY: Double // 승차 정류장/역 Y 좌표
-    let endName: String // 하차 정류장/역명
-    let endX: Double // 하차 정류장/역 X 좌표
-    let endY: Double // 하차 정류장/역 Y 좌표
-    let startID: Int // 출발 정류장/역 코드
-    let endID: Int // 도착 정류장/역 코드
-//    let startExitNo: String // 지하철 들어가는 출구 번호 (지하철인 경우에만 사용되지만 해당 태그가 없을 수도 있다.)
-//    let startExitX: Double // 지하철 들어가는 출구 X좌표(지하철인 경우에 만 사용되지만 해당 태그가 없을 수도 있다.)
-//    let startExitY: Double // 지하철 들어가는 출구 Y좌표(지하철인 경우에 만 사용되지만 해당 태그가 없을 수도 있다.)
-//    let endExitNo: String
-//    let endExitX: Double
-//    let endExitY: Double
-    let passStopList: PassStopList // 지나는 역(정거장)
+    let stationCount: Int? // 이동하여 정차하는 정거장 수(지하철, 버스 경우만 필수)
+    let lane: [Lane]? // 교통 수단 정보 리스트
+    let intervalTime: Int? // 평균 배차간격(분)
+    let startName: String? // 승차 정류장/역명
+    let startX: Double? // 승차 정류장/역 X 좌표
+    let startY: Double? // 승차 정류장/역 Y 좌표
+    let endName: String? // 하차 정류장/역명
+    let endX: Double? // 하차 정류장/역 X 좌표
+    let endY: Double? // 하차 정류장/역 Y 좌표
+    let startID: Int? // 출발 정류장/역 코드
+    let endID: Int? // 도착 정류장/역 코드
+//    let startExitNo: String? // 지하철 들어가는 출구 번호 (지하철인 경우에만 사용되지만 해당 태그가 없을 수도 있다.)
+//    let startExitX: Double? // 지하철 들어가는 출구 X좌표(지하철인 경우에 만 사용되지만 해당 태그가 없을 수도 있다.)
+//    let startExitY: Double? // 지하철 들어가는 출구 Y좌표(지하철인 경우에 만 사용되지만 해당 태그가 없을 수도 있다.)
+//    let endExitNo: String?
+//    let endExitX: Double?
+//    let endExitY: Double?
+    let passStopList: PassStopList? // 지나는 역(정거장)
     
     // 지하철🚇 만 해당
-    let way: String // 방면 정보 (지하철인 경우에만 필수)
-    let wayCode: Int // 방면 정보 코드(지하철의 첫번째 경로에만 필수)
-    let door: String // 지하철 빠른 환승 위치 (지하철인 경우에만 필수)
+    let way: String? // 방면 정보 (지하철인 경우에만 필수)
+    let wayCode: Int? // 방면 정보 코드(지하철의 첫번째 경로에만 필수)
+    let door: String? // 지하철 빠른 환승 위치 (지하철인 경우에만 필수)
     
     // 버스🚌  만 해당
-    let startStationCityCode: Int // 출발 정류장 도시코드 (버스인 경우에만 필수)
-    let startStationProviderCode: Int // 출발 정류장 BIS 코드 (BIS 제공지역인 경우에만 필수)
-    let startLocalStationID: String // 각 지역 출발 정류장 ID (BIS 제공지역인 경우에만 필수)
-    let startArsID: String // 각 지역 출발 정류장 고유번호 (BIS 제공지역인 경우에만 필수)
-    let endStationCityCode: Int // 도착 정류장 도시코드 (버스인 경우에만 필수)
-    let endStationProviderCode: Int // 도착 정류장 BIS 코드 (BIS 제공지역인 경우에만 필수)
-    let endLocalStationID: String // 각 지역 도착 정류장 ID (BIS 제공지역인 경우에만 필수)
-    let endArsID: String // 각 지역 도착 정류장 고유번호 (BIS 제공지역인 경우에만 필수)
+    let startStationCityCode: Int? // 출발 정류장 도시코드 (버스인 경우에만 필수)
+    let startStationProviderCode: Int? // 출발 정류장 BIS 코드 (BIS 제공지역인 경우에만 필수)
+    let startLocalStationID: String? // 각 지역 출발 정류장 ID (BIS 제공지역인 경우에만 필수)
+    let startArsID: String? // 각 지역 출발 정류장 고유번호 (BIS 제공지역인 경우에만 필수)
+    let endStationCityCode: Int? // 도착 정류장 도시코드 (버스인 경우에만 필수)
+    let endStationProviderCode: Int? // 도착 정류장 BIS 코드 (BIS 제공지역인 경우에만 필수)
+    let endLocalStationID: String? // 각 지역 도착 정류장 ID (BIS 제공지역인 경우에만 필수)
+    let endArsID: String? // 각 지역 도착 정류장 고유번호 (BIS 제공지역인 경우에만 필수)
 }
 
 // 교통 수단 정보
 struct Lane: Codable {
     // 지하철🚇 만 해당
-    let name: String // 지하철 노선명 (지하철인 경우에만 필수)
-    let subwayCode: Int // 지하철 노선 번호 (지하철인 경우에만 필수)
-    let subwayCityCode: Int // 지하철 도시코드 (지하철인 경우에만 필수)
+    let name: String? // 지하철 노선명 (지하철인 경우에만 필수)
+    let subwayCode: Int? // 지하철 노선 번호 (지하철인 경우에만 필수)
+    let subwayCityCode: Int? // 지하철 도시코드 (지하철인 경우에만 필수)
     
     // 버스🚌  만 해당
-    let busNo: String // 버스 번호 (버스인 경우에만 필수)
-    let type: Int // 버스 타입 (버스인 경우에만 필수,여기 참조)
-    let busID: Int // 버스 코드 (버스인 경우에만 필수)
-    let busLocalBlID: String // 각 지역 버스노선 ID (BIS 제공지역인 경우에만 필수)
-    let busCityCode: Int // 운수회사 승인 도시코드 (버스인 경우에만 필수)
-    let busProviderCode: Int // BIS 코드 (BIS 제공지역인 경우에만 필수)
+    let busNo: String? // 버스 번호 (버스인 경우에만 필수)
+    let type: Int? // 버스 타입 (버스인 경우에만 필수,여기 참조)
+    let busID: Int? // 버스 코드 (버스인 경우에만 필수)
+    let busLocalBlID: String? // 각 지역 버스노선 ID (BIS 제공지역인 경우에만 필수)
+    let busCityCode: Int? // 운수회사 승인 도시코드 (버스인 경우에만 필수)
+    let busProviderCode: Int? // BIS 코드 (BIS 제공지역인 경우에만 필수)
 }
 
 // 정거장 정보
@@ -121,9 +121,9 @@ struct Station: Codable {
     let y: String // 정류장 Y좌표
     
     // 버스🚌  만 해당
-    let stationCityCode: Int // 정류장 도시코드 (버스인 경우에만 필수)
-    let stationProviderCode: Int // BIS 코드 (BIS 제공지역인 경우에만 필수)
-    let localStationID: String // 각 지역 정류장 ID (BIS 제공지역인 경우에만 필수)
-    let arsID: String // 각 지역 정류장 고유번호 (BIS 제공지역인 경우에만 필수)
-    let isNonStop: String // 미정차 정류장 여부 Y/N(버스인 경우에만 필수)
+    let stationCityCode: Int? // 정류장 도시코드 (버스인 경우에만 필수)
+    let stationProviderCode: Int? // BIS 코드 (BIS 제공지역인 경우에만 필수)
+    let localStationID: String? // 각 지역 정류장 ID (BIS 제공지역인 경우에만 필수)
+    let arsID: String? // 각 지역 정류장 고유번호 (BIS 제공지역인 경우에만 필수)
+    let isNonStop: String? // 미정차 정류장 여부 Y/N(버스인 경우에만 필수)
 }
