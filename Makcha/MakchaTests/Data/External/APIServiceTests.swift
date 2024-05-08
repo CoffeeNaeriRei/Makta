@@ -9,9 +9,11 @@ import XCTest
 @testable import Makcha
 
 final class APIServiceTests: XCTestCase {
+    private var sut: APIService!
     
     override func setUpWithError() throws {
         super.setUp()
+        sut = APIService()
     }
     
     override func tearDownWithError() throws {
@@ -24,7 +26,7 @@ final class APIServiceTests: XCTestCase {
         let completionExpectation = expectation(description: "feetchTransPathData completion expectation")
         
         // When
-        APIService.fetchTransPathData(
+        sut.fetchTransPathData(
             start: ("126.926493082645", "37.6134436427887"),
             end: ("127.126936754911", "37.5004198786564")) { result in
                 switch result {

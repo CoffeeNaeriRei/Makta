@@ -7,11 +7,8 @@
 
 import CoreLocation
 
-enum LocationError: Error {
-    case fetchFailed
-}
-
 // MARK: - LocationService 정의
+// Core Location 관련 위치 서비스 동작 처리 객체
 
 final class LocationService: NSObject {
     
@@ -59,7 +56,7 @@ extension LocationService: LocationManagerDelegate {
     }
 
     func locationManagerAbstract(_ manager: LocationManagerInterface, didFailWithError error: Error) {
-        fetchLocationCallBack?(nil, LocationError.fetchFailed)
+        fetchLocationCallBack?(nil, LocationServiceError.fetchFailed)
         fetchLocationCallBack = nil
         // TODO: - 실패 시 UI처리 필요
     }
