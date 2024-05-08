@@ -8,13 +8,13 @@
 // MARK: - MakchaInfo
 // 불러온 막차 경로 정보를 담을 Entity 모델
 
-struct MakchaInfo {
+struct MakchaInfo: Equatable {
 //    let startTime: String // 출발시간 ex) 오늘 오후 22:37 출발 // TODO: - 실시간 지하철 도착 정보 활용하기
     let makchaPaths: [MakchaPath] // 각각의 막차 경로 정보
 }
 
 // 막차 경로 정보
-struct MakchaPath {
+struct MakchaPath: Equatable {
     let fastest: Bool // 가장 빠른 경로 여부
     let makchaPathType: MakchaPathType // 경로 유형
 //    let arrivalTime: String // 도착시간 ex) 다음날 오전 01:23 도착 // TODO: - 유즈케이스 or 뷰모델에서 계산
@@ -31,7 +31,7 @@ enum MakchaPathType: String {
 }
 
 // 세부경로
-struct MakchaSubPath {
+struct MakchaSubPath: Equatable {
     let subPathType: SubPathType // 세부경로 타입 (도보-버스-지하철)
     let distance: Int // 이동거리
     let time: Int // 소요시간
@@ -71,14 +71,14 @@ enum SubPathType: String {
 }
 
 // 세부경로의 교통수단 정보
-struct LaneInfo {
+struct LaneInfo: Equatable {
     let name: String // 지하철 노선명 or 버스 번호
     
     // 필요시 지하철 노선 번호, 버스 코드 등 추가 가능
 }
 
 // 세부경로에서 거치는 정거장(역) 정보 (Station 이름이 DTO 모델과 겹쳐서 PassStation으로 함)
-struct PassStation {
+struct PassStation: Equatable {
     let index: Int // 순서
     let name: String // 이름
 }
@@ -180,7 +180,7 @@ let mockMakchaInfo = MakchaInfo(
                     lane: [
                         LaneInfo(name: "720"),
                         LaneInfo(name: "741"),
-                        LaneInfo(name: "705"),
+                        LaneInfo(name: "705")
                     ],
                     startName: "불광역3.6호선",
                     endName: "서대문역사거리.농협중앙회",
@@ -197,7 +197,7 @@ let mockMakchaInfo = MakchaInfo(
                         PassStation(index: 9, name: "독립문역.한성과학고"),
                         PassStation(index: 10, name: "영천시장"),
                         PassStation(index: 11, name: "금화초등학교.서울시교육청"),
-                        PassStation(index: 12, name: "서대문역사거리.농협중앙회"),
+                        PassStation(index: 12, name: "서대문역사거리.농협중앙회")
                     ]
                 ),
                 MakchaSubPath(
@@ -243,7 +243,7 @@ let mockMakchaInfo = MakchaInfo(
                     subPathType: .walk,
                     distance: 221,
                     time: 3
-                ),
+                )
             ]
         )
     ]
