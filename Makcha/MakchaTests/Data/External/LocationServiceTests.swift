@@ -25,7 +25,7 @@ class LocationManagerMock: LocationManagerMockInterface {
         if let location = locationToReturn?() {
             locationManagerDelegate?.locationManagerAbstract(self, didUpdateLocations: [location])
         } else {
-            locationManagerDelegate?.locationManagerAbstract(self, didFailWithError: LocationError.fetchFailed)
+            locationManagerDelegate?.locationManagerAbstract(self, didFailWithError: LocationServiceError.fetchFailed)
         }
     }
     
