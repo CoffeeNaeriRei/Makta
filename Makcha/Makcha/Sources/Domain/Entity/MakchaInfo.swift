@@ -9,8 +9,6 @@
 // 불러온 막차 경로 정보를 담을 Entity 모델
 
 struct MakchaInfo {
-    let start: String // 출발지
-    let end: String // 도착지
 //    let startTime: String // 출발시간 ex) 오늘 오후 22:37 출발 // TODO: - 실시간 지하철 도착 정보 활용하기
     let makchaPaths: [MakchaPath] // 각각의 막차 경로 정보
 }

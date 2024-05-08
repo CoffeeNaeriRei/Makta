@@ -20,6 +20,7 @@
 		B862333D2BEA059A003959FB /* CommonTypealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862333C2BEA059A003959FB /* CommonTypealias.swift */; };
 		B86233432BEA505B003959FB /* TransPathRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86233422BEA505B003959FB /* TransPathRepositoryTests.swift */; };
 		B86233462BEA52FB003959FB /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = B86233452BEA52FB003959FB /* RxTest */; };
+		B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86233472BEA9B2D003959FB /* EndPoint.swift */; };
 		B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F762BE7613800A13B58 /* AppDelegate.swift */; };
 		B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F782BE7613800A13B58 /* SceneDelegate.swift */; };
 		B89E7F802BE7613900A13B58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B89E7F7F2BE7613900A13B58 /* Assets.xcassets */; };
@@ -65,6 +66,7 @@
 		B86233392BEA04D9003959FB /* APIServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceType.swift; sourceTree = "<group>"; };
 		B862333C2BEA059A003959FB /* CommonTypealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTypealias.swift; sourceTree = "<group>"; };
 		B86233422BEA505B003959FB /* TransPathRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransPathRepositoryTests.swift; sourceTree = "<group>"; };
+		B86233472BEA9B2D003959FB /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		B89E7F732BE7613800A13B58 /* Makcha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Makcha.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B89E7F762BE7613800A13B58 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B89E7F782BE7613800A13B58 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				B86233332BEA004A003959FB /* MakchaInfo.swift */,
+				B86233472BEA9B2D003959FB /* EndPoint.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -486,6 +489,7 @@
 				B89E7FB02BE773D100A13B58 /* TransPathDTO.swift in Sources */,
 				B89E7FB42BE7743600A13B58 /* LocationService.swift in Sources */,
 				B86233342BEA004A003959FB /* MakchaInfo.swift in Sources */,
+				B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */,
 				B89E7FAE2BE773B700A13B58 /* APIService.swift in Sources */,
 				B89E7F8C2BE765D200A13B58 /* TestView.swift in Sources */,
 				205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */,
