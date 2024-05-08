@@ -528,6 +528,7 @@
 /* Begin XCBuildConfiguration section */
 		B86232DC2BE7A761003959FB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 20B88A732BE79DC40088AF73 /* Secrets.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -703,6 +704,7 @@
 		};
 		B89E7F882BE7613A00A13B58 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 20B88A732BE79DC40088AF73 /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -739,6 +741,7 @@
 		};
 		B89E7F892BE7613A00A13B58 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 20B88A732BE79DC40088AF73 /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
