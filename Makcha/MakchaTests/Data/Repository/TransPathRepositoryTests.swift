@@ -39,6 +39,7 @@ struct MockLocationService: LocationServiceInterface {
 }
 
 final class TransPathRepositoryTests: XCTestCase {
+    
     private var sut: TransPathRepository!
     private var scheduler: TestScheduler!
     private var disposeBag: DisposeBag!

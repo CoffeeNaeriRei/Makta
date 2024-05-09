@@ -22,6 +22,7 @@
 		B86233462BEA52FB003959FB /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = B86233452BEA52FB003959FB /* RxTest */; };
 		B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86233472BEA9B2D003959FB /* EndPoint.swift */; };
 		B862334B2BEC99AB003959FB /* MakchaPathUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862334A2BEC99AB003959FB /* MakchaPathUseCase.swift */; };
+		B862334F2BECD93F003959FB /* MakchaPathUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862334E2BECD93F003959FB /* MakchaPathUseCaseTests.swift */; };
 		B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F762BE7613800A13B58 /* AppDelegate.swift */; };
 		B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F782BE7613800A13B58 /* SceneDelegate.swift */; };
 		B89E7F802BE7613900A13B58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B89E7F7F2BE7613900A13B58 /* Assets.xcassets */; };
@@ -68,6 +69,7 @@
 		B86233422BEA505B003959FB /* TransPathRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransPathRepositoryTests.swift; sourceTree = "<group>"; };
 		B86233472BEA9B2D003959FB /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		B862334A2BEC99AB003959FB /* MakchaPathUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaPathUseCase.swift; sourceTree = "<group>"; };
+		B862334E2BECD93F003959FB /* MakchaPathUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaPathUseCaseTests.swift; sourceTree = "<group>"; };
 		B89E7F732BE7613800A13B58 /* Makcha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Makcha.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B89E7F762BE7613800A13B58 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B89E7F782BE7613800A13B58 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		B86232D72BE7A761003959FB /* MakchaTests */ = {
 			isa = PBXGroup;
 			children = (
+				B862334C2BECD912003959FB /* Domain */,
 				B862333F2BEA503B003959FB /* Data */,
 			);
 			path = MakchaTests;
@@ -146,6 +149,22 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B862334C2BECD912003959FB /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				B862334D2BECD923003959FB /* UseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		B862334D2BECD923003959FB /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				B862334E2BECD93F003959FB /* MakchaPathUseCaseTests.swift */,
+			);
+			path = UseCase;
 			sourceTree = "<group>";
 		};
 		B89E7F6A2BE7613800A13B58 = {
@@ -476,6 +495,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B86232E42BE7B152003959FB /* APIServiceTests.swift in Sources */,
+				B862334F2BECD93F003959FB /* MakchaPathUseCaseTests.swift in Sources */,
 				B86232E02BE7A7F0003959FB /* LocationServiceTests.swift in Sources */,
 				B86233432BEA505B003959FB /* TransPathRepositoryTests.swift in Sources */,
 			);
