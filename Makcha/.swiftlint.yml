@@ -76,9 +76,6 @@ identifier_name:
     - to
     - gap
     - sut # System under test (테스트코드에서 사용)
-    - i
-    - j
-    - k
   allowed_symbols: ["_"]
 opt_in_rules:
   - missing_docs

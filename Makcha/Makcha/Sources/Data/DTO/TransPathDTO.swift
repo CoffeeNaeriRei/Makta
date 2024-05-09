@@ -234,6 +234,7 @@ struct Station: Codable {
     }
 }
 
+#if DEBUG
 // MARK: - Mock
 
 let mockTransPathDTO = TransPathDTO(
@@ -957,3 +958,4 @@ let mockTransPathDTO = TransPathDTO(
         ]
     )
 )
+#endif

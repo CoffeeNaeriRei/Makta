@@ -5,19 +5,21 @@
 //  Created by 김영빈 on 5/7/24.
 //
 
-// MARK: - TransPathRepository 정의
-// DTO -> Entity 변환 후 Domain 계층(UseCase)에 전달
-
 import Foundation
 
 import RxSwift
 
+// MARK: - TransPathRepository 정의
+// DTO -> Entity 변환 후 Domain 계층(UseCase)에 전달
+
 final class TransPathRepository: TransPathRepositoryProtocol {
     
     private let apiService: APIServiceInterface
+    private let locationService: LocationServiceInterface
     
-    init(apiService: APIServiceInterface) {
+    init(_ apiService: APIServiceInterface, _ locationService: LocationServiceInterface) {
         self.apiService = apiService
+        self.locationService = locationService
     }
     
     // 대중교통 환승경로 정보를 받아와서 Domain 계층의 UseCase에 전달
@@ -25,7 +27,7 @@ final class TransPathRepository: TransPathRepositoryProtocol {
         start: XYCoordinate,
         end: XYCoordinate
     ) -> Observable<MakchaInfo> {
-        return Observable.create {emitter in
+        return Observable.create { emitter in
             self.apiService.fetchTransPathData(start: start, end: end) { result in
                 switch result {
                 case .success(let transPathDTO):
@@ -45,6 +47,29 @@ final class TransPathRepository: TransPathRepositoryProtocol {
             return Disposables.create()
         }
     }
+    
+    // 현재 위치의 좌표를 불러와서 반환
+    func getCurrentLocation() -> Observable<EndPoint> {
+        return Observable.create { emitter in
+            self.locationService.fetchCurrentLocation { (clLocation, error) in
+                if let error = error {
+                    print("[LocationService - ❌ 위치 불러오기 실패]")
+                    emitter.onError(error)
+                }
+                guard let location = clLocation else {
+                    print("[LocationService - ❌ 위치 데이터가 없음]")
+                    emitter.onError(LocationServiceError.noLocationData)
+                    return
+                }
+                let endPoint = EndPoint(
+                    coordinate: (location.coordinate.longitude.description, location.coordinate.latitude.description)
+                )
+                emitter.onNext(endPoint)
+                emitter.onCompleted()
+            }
+            return Disposables.create()
+        }
+    }
 }
 
 extension TransPathRepository {
@@ -54,21 +79,21 @@ extension TransPathRepository {
         let pathArr: [Path] = transPathDTO.result.path
         
         var makchaPathArr = [MakchaPath]()
-        for i in 0..<pathArr.count {
+        for pathIdx in 0..<pathArr.count {
             // 경로 유형 구하기
-            guard let makchaPathType: MakchaPathType = convertIntToMakchaPathType(makchaPathTypeInt: pathArr[i].pathType) else {
+            guard let makchaPathType: MakchaPathType = convertIntToMakchaPathType(makchaPathTypeInt: pathArr[pathIdx].pathType) else {
                 return nil
             }
             // 총 소요시간 구하기
-            let totalTime = pathArr[i].info.totalTime
+            let totalTime = pathArr[pathIdx].info.totalTime
             
             // 세부경로 구하기
-            guard let makchaSubPathArr = makeSubPathArr(subPathArr: pathArr[i].subPath) else {
+            guard let makchaSubPathArr = makeSubPathArr(subPathArr: pathArr[pathIdx].subPath) else {
                 return nil
             }
             
             let makchaPath = MakchaPath(
-                fastest: i == 0 ? true : false, // 1번째 경로가 가장 빠른 경로
+                fastest: pathIdx == 0 ? true : false, // 1번째 경로가 가장 빠른 경로
                 makchaPathType: makchaPathType,
                 totalTime: totalTime,
                 subPath: makchaSubPathArr
@@ -98,24 +123,24 @@ extension TransPathRepository {
     
     func makeSubPathArr(subPathArr: [SubPath]) -> [MakchaSubPath]? {
         var makchaSubPathArr = [MakchaSubPath]()
-        for j in 0..<subPathArr.count {
+        for subPathIdx in 0..<subPathArr.count {
             // 세부경로 [유형] 구하기
-            guard let subPathType: SubPathType = convertIntToSubPathType(subPathTypeInt: subPathArr[j].trafficType) else {
+            guard let subPathType: SubPathType = convertIntToSubPathType(subPathTypeInt: subPathArr[subPathIdx].trafficType) else {
                 return nil
             }
             // 세부경로 [교통수단 정보] 구하기
-            let laneInfoArr: [LaneInfo] = makeLaneInfoArr(lane: subPathArr[j].lane)
+            let laneInfoArr: [LaneInfo] = makeLaneInfoArr(lane: subPathArr[subPathIdx].lane)
             // 세부경로 [지나는 역] 구하기
-            let passStationArr: [PassStation] = makePassStaionArr(passStopList: subPathArr[j].passStopList)
+            let passStationArr: [PassStation] = makePassStaionArr(passStopList: subPathArr[subPathIdx].passStopList)
             
             let makchaSubPath = MakchaSubPath(
                 subPathType: subPathType,
-                distance: subPathArr[j].distance,
-                time: subPathArr[j].sectionTime,
-                stationCount: subPathArr[j].stationCount,
+                distance: subPathArr[subPathIdx].distance,
+                time: subPathArr[subPathIdx].sectionTime,
+                stationCount: subPathArr[subPathIdx].stationCount,
                 lane: laneInfoArr.isEmpty ? nil : laneInfoArr,
-                startName: subPathArr[j].startName,
-                endName: subPathArr[j].endName,
+                startName: subPathArr[subPathIdx].startName,
+                endName: subPathArr[subPathIdx].endName,
                 stations: passStationArr.isEmpty ? nil : passStationArr
             )
             

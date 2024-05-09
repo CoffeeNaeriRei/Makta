@@ -83,6 +83,7 @@ struct PassStation: Equatable {
     let name: String // 이름
 }
 
+#if DEBUG
 // MARK: - Mock
 
 let mockMakchaInfo = MakchaInfo(
@@ -248,3 +249,4 @@ let mockMakchaInfo = MakchaInfo(
         )
     ]
 )
+#endif

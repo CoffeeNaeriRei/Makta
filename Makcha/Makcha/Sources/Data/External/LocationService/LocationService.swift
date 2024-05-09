@@ -10,9 +10,14 @@ import CoreLocation
 // MARK: - LocationService 정의
 // Core Location 관련 위치 서비스 동작 처리 객체
 
-final class LocationService: NSObject {
+typealias LocationCallback = (CLLocation?, Error?) -> Void // 위치 값을 인자로 전달하는 콜백 타입
+
+protocol LocationServiceInterface {
     
-    typealias LocationCallback = (CLLocation?, Error?) -> Void // 위치 값을 인자로 전달하는 콜백 타입
+    func fetchCurrentLocation(completion: @escaping LocationCallback)
+}
+
+final class LocationService: NSObject, LocationServiceInterface {
     
     var locationManager: LocationManagerInterface
     private var fetchLocationCallBack: LocationCallback?
