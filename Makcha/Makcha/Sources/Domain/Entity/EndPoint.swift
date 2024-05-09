@@ -8,10 +8,14 @@
 // MARK: - EndPoint
 // 막차 경로 검색의 기준이 되는 출발점, 도착점의 좌표
 
-struct EndPoint {
+struct EndPoint: Equatable {
     // TODO: - 리버스 지오코딩 필요함
 //    let name: String // 좌표 주소명
     let coordinate: XYCoordinate // 좌표
+    
+    static func == (lhs: EndPoint, rhs: EndPoint) -> Bool {
+        return lhs.coordinate == rhs.coordinate
+    }
 }
 
 #if DEBUG
