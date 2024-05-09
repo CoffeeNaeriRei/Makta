@@ -70,7 +70,7 @@ final class TransPathRepositoryTests: XCTestCase {
             .bind(to: makchaInfoObserver)
             .disposed(by: disposeBag)
         
-        scheduler.start()
+//        scheduler.start()
         
         // Then
         XCTAssertEqual(makchaInfoObserver.events.count, 2) // onNext와 onCompleted가 호출

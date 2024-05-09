@@ -25,7 +25,7 @@ final class TransPathRepository: TransPathRepositoryProtocol {
         start: XYCoordinate,
         end: XYCoordinate
     ) -> Observable<MakchaInfo> {
-        return Observable.create {emitter in
+        return Observable.create { emitter in
             self.apiService.fetchTransPathData(start: start, end: end) { result in
                 switch result {
                 case .success(let transPathDTO):
