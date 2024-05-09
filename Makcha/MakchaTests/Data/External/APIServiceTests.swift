@@ -22,13 +22,15 @@ final class APIServiceTests: XCTestCase {
     
     func test_fetchTransPathData가_정상적으로_API를_호출하는지_확인() {
         // Given
+        let start = mockStartPoint.coordinate
+        let end = mockDestinationPoint.coordinate
         var isSuccess: Bool = false
         let completionExpectation = expectation(description: "feetchTransPathData completion expectation")
         
         // When
         sut.fetchTransPathData(
-            start: ("126.926493082645", "37.6134436427887"),
-            end: ("127.126936754911", "37.5004198786564")) { result in
+            start: start,
+            end: end) { result in
                 switch result {
                 case .success:
                     isSuccess = true
