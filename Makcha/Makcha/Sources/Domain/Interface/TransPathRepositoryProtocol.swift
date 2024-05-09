@@ -14,4 +14,5 @@ import RxSwift
 
 protocol TransPathRepositoryProtocol {
     func getAllMakchaTransPath(start: XYCoordinate, end: XYCoordinate) -> Observable<MakchaInfo>
+    func getCurrentLocation() -> Observable<EndPoint>
 }

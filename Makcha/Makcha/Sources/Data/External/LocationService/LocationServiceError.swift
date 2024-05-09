@@ -9,4 +9,5 @@
 
 enum LocationServiceError: Error {
     case fetchFailed
+    case noLocationData
 }

@@ -15,9 +15,11 @@ import RxSwift
 final class TransPathRepository: TransPathRepositoryProtocol {
     
     private let apiService: APIServiceInterface
+    private let locationService: LocationServiceInterface
     
-    init(apiService: APIServiceInterface) {
+    init(_ apiService: APIServiceInterface, _ locationService: LocationServiceInterface) {
         self.apiService = apiService
+        self.locationService = locationService
     }
     
     // 대중교통 환승경로 정보를 받아와서 Domain 계층의 UseCase에 전달
@@ -41,6 +43,29 @@ final class TransPathRepository: TransPathRepositoryProtocol {
                     print("[APIService] - ❌ fetchTransPathData() 호출 실패")
                     emitter.onError(error)
                 }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    // 현재 위치의 좌표를 불러와서 반환
+    func getCurrentLocation() -> Observable<EndPoint> {
+        return Observable.create { emitter in
+            self.locationService.fetchCurrentLocation { (clLocation, error) in
+                if let error = error {
+                    print("[LocationService - ❌ 위치 불러오기 실패]")
+                    emitter.onError(error)
+                }
+                guard let location = clLocation else {
+                    print("[LocationService - ❌ 위치 데이터가 없음]")
+                    emitter.onError(LocationServiceError.noLocationData)
+                    return
+                }
+                let endPoint = EndPoint(
+                    coordinate: (location.coordinate.longitude.description, location.coordinate.latitude.description)
+                )
+                emitter.onNext(endPoint)
+                emitter.onCompleted()
             }
             return Disposables.create()
         }
