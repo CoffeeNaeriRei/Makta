@@ -11,7 +11,7 @@ import Foundation
 // API 호출 동작을 수행하는 APIService 객체의 인터페이스를 정의
 
 protocol APIServiceInterface {
-    
+
     func fetchTransPathData(
         start: XYCoordinate,
         end: XYCoordinate,
