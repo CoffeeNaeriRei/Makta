@@ -5,12 +5,12 @@
 //  Created by 김영빈 on 5/7/24.
 //
 
-// MARK: - TransPathRepository 정의
-// DTO -> Entity 변환 후 Domain 계층(UseCase)에 전달
-
 import Foundation
 
 import RxSwift
+
+// MARK: - TransPathRepository 정의
+// DTO -> Entity 변환 후 Domain 계층(UseCase)에 전달
 
 final class TransPathRepository: TransPathRepositoryProtocol {
     
