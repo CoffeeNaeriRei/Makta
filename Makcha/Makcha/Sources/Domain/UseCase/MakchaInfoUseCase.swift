@@ -16,6 +16,7 @@ import RxSwift
 final class MakchaInfoUseCase {
     
     private let transPathRepository: TransPathRepositoryProtocol
+    private let endPointRepository: EndPointRepositoryProtocol
     
     let makchaInfo = PublishSubject<MakchaInfo>() // 막차 정보
     let startPoint = PublishSubject<EndPoint>() // 출발지 정보
@@ -23,8 +24,9 @@ final class MakchaInfoUseCase {
     
     private let disposeBag = DisposeBag()
     
-    init(_ transPathRepository: TransPathRepositoryProtocol) {
+    init(_ transPathRepository: TransPathRepositoryProtocol, _ endPointRepository: EndPointRepositoryProtocol) {
         self.transPathRepository = transPathRepository
+        self.endPointRepository = endPointRepository
         
         // TODO: 사용자가 설정한 기본 목적지로 초기화하기
         let destionationCoordinate = mockDestinationPoint
@@ -48,7 +50,7 @@ final class MakchaInfoUseCase {
     
     // 현재 위치 기반으로 막차 경로 불러오기
     func loadMakchaPathWithCurrentLocation() {
-        transPathRepository.getCurrentLocation()
+        endPointRepository.getCurrentLocation()
             .do(
                 onNext: { [weak self] currentLocation in
                     guard let destinationCoordinate = self?.destinationPoint.value.coordinate else { return }
