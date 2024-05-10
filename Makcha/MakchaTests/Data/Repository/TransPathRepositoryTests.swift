@@ -56,7 +56,6 @@ final class TransPathRepositoryTests: XCTestCase {
         
         // Then
         XCTAssertNotNil(result)
-//        XCTAssertEqual(result, mockMakchaInfo) // TODO: - 결과값도 확인하기
     }
     
     func test_getAllMakchaTransPath이_정상적으로_이벤트를_방출하는지_확인() {
@@ -64,18 +63,13 @@ final class TransPathRepositoryTests: XCTestCase {
         let mockApiSuccess: Result<TransPathDTO, APIServiceError>? = .success(mockTransPathDTO)
         sut = TransPathRepository(MockAPIService(mockResult: mockApiSuccess))
         let makchaInfoObserver = scheduler.createObserver(MakchaInfo.self) // 결과값을 관찰하기 위한 Observer
-//        var resultMakchaInfo: MakchaInfo
         
         // When
         sut.getAllMakchaTransPath(start: ("10.0", "10.0"), end: ("10.0", "10.0"))
             .bind(to: makchaInfoObserver)
             .disposed(by: disposeBag)
         
-//        scheduler.start()
-        
         // Then
         XCTAssertEqual(makchaInfoObserver.events.count, 2) // 이벤트 2개(onNext,onCompleted)가 호출되는지 확인
-//        resultMakchaInfo = makchaInfoObserver.events.first!.value.element!
-//        XCTAssertEqual(resultMakchaInfo, mockMakchaInfo) // TODO: - 결과값도 확인하기
     }
 }

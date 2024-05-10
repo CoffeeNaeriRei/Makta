@@ -36,6 +36,7 @@ final class EndPointRepository: EndPointRepositoryProtocol {
                 
                 let lon = location.coordinate.longitude
                 let lat = location.coordinate.latitude
+                // 경/위도 -> 주소 변환
                 self.locationService.convertCoordinateToAddress(lon: lon, lat: lat) { addressStr in
                     var nameStr = ""
                     if let addressStr = addressStr {
