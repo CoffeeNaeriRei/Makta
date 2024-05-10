@@ -1,5 +1,5 @@
 //
-//  MakchaPathUseCaseTests.swift
+//  MakchaInfoUseCaseTests.swift
 //  MakchaTests
 //
 //  Created by 김영빈 on 5/9/24.
@@ -60,15 +60,15 @@ struct MockTransPathRepository: TransPathRepositoryProtocol {
     }
 }
 
-final class MakchaPathUseCaseTests: XCTestCase {
+final class MakchaInfoUseCaseTests: XCTestCase {
     
-    private var sut: MakchaPathUseCase!
+    private var sut: MakchaInfoUseCase!
     private var scheduler: TestScheduler!
     private var disposeBag: DisposeBag!
 
     override func setUpWithError() throws {
         super.setUp()
-        sut = MakchaPathUseCase(MockTransPathRepository())
+        sut = MakchaInfoUseCase(MockTransPathRepository())
         scheduler = TestScheduler(initialClock: 0)
         disposeBag = DisposeBag()
     }
@@ -82,7 +82,7 @@ final class MakchaPathUseCaseTests: XCTestCase {
 
     func test_transPathRepository가_정상적인_MakchaInfo를_넘겼을때_제대로_바인딩되는지_확인() {
         // Given
-        sut = MakchaPathUseCase(MockTransPathRepository(isMakchaInfo: true))
+        sut = MakchaInfoUseCase(MockTransPathRepository(isMakchaInfo: true))
         let makchaInfoObserver = scheduler.createObserver(MakchaInfo.self)
         let mockStart = MOCK_START
         let mockEnd = MOCK_END
@@ -103,7 +103,7 @@ final class MakchaPathUseCaseTests: XCTestCase {
     
     func test_transPathRepository가_현재위치를_불러왔을때_현재위치와_막차경로가_제대로_바인딩되는지_확인() {
         // Given
-        sut = MakchaPathUseCase(MockTransPathRepository(isMakchaInfo: true, isCurrentLocation: true))
+        sut = MakchaInfoUseCase(MockTransPathRepository(isMakchaInfo: true, isCurrentLocation: true))
         let startPointObserver = scheduler.createObserver(EndPoint.self)
         let makchaInfoObserver = scheduler.createObserver(MakchaInfo.self)
         let expectedStartPoint = MOCK_CURRENT_LOCATION // 결과로 예상되는 startPoint 값

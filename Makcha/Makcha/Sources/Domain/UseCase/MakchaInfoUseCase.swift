@@ -1,5 +1,5 @@
 //
-//  MakchaPathUseCase.swift
+//  MakchaInfoUseCase.swift
 //  Makcha
 //
 //  Created by 김영빈 on 5/9/24.
@@ -11,9 +11,9 @@ import RxCocoa
 import RxRelay
 import RxSwift
 
-// MARK: - 막차 경로 불러오기 관련 유즈케이스
+// MARK: - 막차 정보 관련 유즈케이스
 
-final class MakchaPathUseCase {
+final class MakchaInfoUseCase {
     
     private let transPathRepository: TransPathRepositoryProtocol
     
