@@ -99,4 +99,26 @@ final class LocationServiceTests: XCTestCase {
         XCTAssertNil(result.location)
         XCTAssertNotNil(result.error)
     }
+    
+    func test_위경도_주소변환_메서드_테스트() {
+        // Given
+        let mockLon = CLLocationDegrees(mockStartPoint.coordinate.lonX)!
+        let mockLat = CLLocationDegrees(mockStartPoint.coordinate.latY)!
+        var isSuccess: Bool = false
+        let completionExpectation = expectation(description: "convertCoordinateToAddress() completion expectation")
+        
+        // When
+        sut.convertCoordinateToAddress(lon: mockLon, lat: mockLat) { addressStr in
+            if let addressStr = addressStr {
+                isSuccess = true
+            } else {
+                isSuccess = false
+            }
+            completionExpectation.fulfill()
+        }
+        wait(for: [completionExpectation], timeout: 5)
+        
+        // Then
+        XCTAssertTrue(isSuccess)
+    }
 }

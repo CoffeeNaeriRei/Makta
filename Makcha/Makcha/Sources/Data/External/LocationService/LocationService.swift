@@ -33,6 +33,41 @@ final class LocationService: NSObject, LocationServiceInterface {
         fetchLocationCallBack = completion
         locationManager.requestLocation()
     }
+    
+    // 위도-경도로 주소 변환
+    // TODO: - 리버스 지오코딩 API 변경하기
+    func convertCoordinateToAddress(
+        lon: CLLocationDegrees,
+        lat: CLLocationDegrees,
+        completion: @escaping ((String?) -> Void)
+    ) {
+        let locationToConvert = CLLocation(latitude: lat, longitude: lon)
+        let geocoder = CLGeocoder()
+        let locale = Locale(identifier: "Ko-kr")
+        
+        geocoder.reverseGeocodeLocation(locationToConvert, preferredLocale: locale) { (placeMarks, error) in
+            guard error == nil else {
+                completion(nil)
+                return
+            }
+            guard let address = placeMarks?.last else {
+                completion(nil)
+                return
+            }
+            var addressStr = ""
+            if let locality = address.locality {
+                addressStr += locality
+            }
+            if let subLocality = address.subLocality {
+                addressStr += " \(subLocality)"
+            }
+            if let placeName = address.name {
+                addressStr += " \(placeName)"
+            }
+            print("리버스 지오코딩 결과: \(addressStr)")
+            completion(addressStr)
+        }
+    }
 }
 
 // MARK: - LocationManagerDelegate 델리게이트 구현
