@@ -20,7 +20,7 @@ final class EndPointRepository: EndPointRepositoryProtocol {
         self.locationService = locationService
     }
     
-    // 현재 위치의 좌표를 불러와서 반환
+    // 현재 위치의 좌표를 불러와서 EndPoint 값으로 반환
     func getCurrentLocation() -> Observable<EndPoint> {
         return Observable.create { emitter in
             self.locationService.fetchCurrentLocation { (clLocation, error) in
@@ -33,11 +33,21 @@ final class EndPointRepository: EndPointRepositoryProtocol {
                     emitter.onError(LocationServiceError.noLocationData)
                     return
                 }
-                let endPoint = EndPoint(
-                    coordinate: (location.coordinate.longitude.description, location.coordinate.latitude.description)
-                )
-                emitter.onNext(endPoint)
-                emitter.onCompleted()
+                
+                let lon = location.coordinate.longitude
+                let lat = location.coordinate.latitude
+                self.locationService.convertCoordinateToAddress(lon: lon, lat: lat) { addressStr in
+                    var nameStr = ""
+                    if let addressStr = addressStr {
+                        nameStr = addressStr
+                    } else {
+                        nameStr = "\(lat.description),\(lon.description) (좌표변환 실패)"
+                    }
+                    
+                    let endPoint = EndPoint(name: nameStr, coordinate: (lon.description, lat.description))
+                    emitter.onNext(endPoint)
+                    emitter.onCompleted()
+                }
             }
             return Disposables.create()
         }

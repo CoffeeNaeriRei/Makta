@@ -15,6 +15,9 @@ typealias LocationCallback = (CLLocation?, Error?) -> Void // 위치 값을 인�
 protocol LocationServiceInterface {
     
     func fetchCurrentLocation(completion: @escaping LocationCallback)
+    func convertCoordinateToAddress(lon: CLLocationDegrees, lat: CLLocationDegrees,
+                                    completion: @escaping ((String?) -> Void)
+    )
 }
 
 final class LocationService: NSObject, LocationServiceInterface {
