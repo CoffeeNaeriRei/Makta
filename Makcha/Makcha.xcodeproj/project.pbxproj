@@ -41,8 +41,6 @@
 		B89E7FB22BE7742600A13B58 /* LocationManagerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7FB12BE7742600A13B58 /* LocationManagerInterface.swift */; };
 		B89E7FB42BE7743600A13B58 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7FB32BE7743600A13B58 /* LocationService.swift */; };
 		B8C31E942BEDD8170049B47C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31E932BEDD8170049B47C /* MainViewModel.swift */; };
-		B8C31E972BEDDDCA0049B47C /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31E962BEDDDCA0049B47C /* BaseViewModel.swift */; };
-		B8C31E992BEDDE190049B47C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31E982BEDDE190049B47C /* BaseViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,8 +87,6 @@
 		B89E7FB12BE7742600A13B58 /* LocationManagerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerInterface.swift; sourceTree = "<group>"; };
 		B89E7FB32BE7743600A13B58 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		B8C31E932BEDD8170049B47C /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		B8C31E962BEDDDCA0049B47C /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
-		B8C31E982BEDDE190049B47C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,7 +297,6 @@
 		B89E7F992BE7700700A13B58 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				B8C31E952BEDDDBF0049B47C /* Base */,
 				B89E7F8A2BE765D200A13B58 /* TestView.swift */,
 				B89E7F8B2BE765D200A13B58 /* TestViewController.swift */,
 				B89E7F9C2BE7707700A13B58 /* SearchPath */,
@@ -364,15 +359,6 @@
 				B86233392BEA04D9003959FB /* APIServiceType.swift */,
 			);
 			path = APIService;
-			sourceTree = "<group>";
-		};
-		B8C31E952BEDDDBF0049B47C /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				B8C31E962BEDDDCA0049B47C /* BaseViewModel.swift */,
-				B8C31E982BEDDE190049B47C /* BaseViewController.swift */,
-			);
-			path = Base;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -527,11 +513,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B89E7F8D2BE765D200A13B58 /* TestViewController.swift in Sources */,
-				B8C31E972BEDDDCA0049B47C /* BaseViewModel.swift in Sources */,
 				B86233382BEA035F003959FB /* TransPathRepository.swift in Sources */,
 				B89E7FB02BE773D100A13B58 /* TransPathDTO.swift in Sources */,
 				B89E7FB42BE7743600A13B58 /* LocationService.swift in Sources */,
-				B8C31E992BEDDE190049B47C /* BaseViewController.swift in Sources */,
 				B86233342BEA004A003959FB /* MakchaInfo.swift in Sources */,
 				2090BB372BEFAADC00501E2D /* MainViewController.swift in Sources */,
 				B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */,
