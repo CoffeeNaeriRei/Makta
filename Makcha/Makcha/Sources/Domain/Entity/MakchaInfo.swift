@@ -5,19 +5,26 @@
 //  Created by 김영빈 on 5/7/24.
 //
 
+import Foundation
+
 // MARK: - MakchaInfo
 // 불러온 막차 경로 정보를 담을 Entity 모델
 
 struct MakchaInfo: Equatable {
-//    let startTime: String // 출발시간 ex) 오늘 오후 22:37 출발 // TODO: - 실시간 지하철 도착 정보 활용하기
+    let startTime: Date // 출발시간(현재시간)
     let makchaPaths: [MakchaPath] // 각각의 막차 경로 정보
+    
+    // 출발시간을 메인 화면의 시간 형식으로 표현한 String
+    var startTimeStr: String {
+        startTime.endPointTimeString
+    }
 }
 
 // 막차 경로 정보
 struct MakchaPath: Equatable {
     let fastest: Bool // 가장 빠른 경로 여부
     let makchaPathType: MakchaPathType // 경로 유형
-//    let arrivalTime: String // 도착시간 ex) 다음날 오전 01:23 도착 // TODO: - 유즈케이스 or 뷰모델에서 계산
+//    let arrivalTime: String // 도착시간 // TODO: - 뷰모델에서 계산 (출발시간 + 총 소요시간)
     let totalTime: Int // 총 소요시간 (단위: 분)
 //    let firstSubPathRemaining: Int // 첫번째 세부경로 이동수단 도착까지 남은 시간 (단위: 분) // TODO: - 실시간 지하철 도착 정보 활용하기
 //    let firstSubPathNextRemaining: Int // 첫번째 세부경로 이동수단 다음 2번째 도착까지 남은 시간 (단위: 분) // TODO: - 실시간 지하철 도착 정보 활용하기
@@ -87,6 +94,7 @@ struct PassStation: Equatable {
 // MARK: - Mock
 
 let mockMakchaInfo = MakchaInfo(
+    startTime: Date(),
     makchaPaths: [
         MakchaPath(
             fastest: true,

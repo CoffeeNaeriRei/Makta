@@ -77,6 +77,7 @@ extension TransPathRepository {
         }
         
         let makchaInfo = MakchaInfo(
+            startTime: Date(),
             makchaPaths: makchaPathArr
         )
         
