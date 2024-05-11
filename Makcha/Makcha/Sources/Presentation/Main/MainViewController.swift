@@ -8,19 +8,37 @@
 import Foundation
 import UIKit
 import RxSwift
+import RxCocoa
 
 final class MainViewController: UIViewController {
-    public let testView = TestView()
+    // swiftlint: disable force_cast
+    var mainView: MainView {
+        view as! MainView
+    }
+    // swiftlint: enable force_cast
     
     let disposeBag = DisposeBag()
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        print("ViewDidLoaded")
+        bind()
     }
-
+    
     public override func loadView() {
-        view = testView
+        view = MainView()
+    }
+    
+    private func bind() {
+        mainView.button1.rx.tap
+            .withUnretained(self)
+            .subscribe { vc, _ in
+                vc.buttonAction()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func buttonAction() {
+        print("HELLO WORLD!")
     }
 }
 
