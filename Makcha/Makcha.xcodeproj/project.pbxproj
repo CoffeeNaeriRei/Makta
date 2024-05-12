@@ -41,6 +41,7 @@
 		B89E7FB22BE7742600A13B58 /* LocationManagerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7FB12BE7742600A13B58 /* LocationManagerInterface.swift */; };
 		B89E7FB42BE7743600A13B58 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7FB32BE7743600A13B58 /* LocationService.swift */; };
 		B8C31E942BEDD8170049B47C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31E932BEDD8170049B47C /* MainViewModel.swift */; };
+		B8C31E9B2BEDFB7D0049B47C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31E9A2BEDFB7D0049B47C /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		B89E7FB12BE7742600A13B58 /* LocationManagerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerInterface.swift; sourceTree = "<group>"; };
 		B89E7FB32BE7743600A13B58 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		B8C31E932BEDD8170049B47C /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		B8C31E9A2BEDFB7D0049B47C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -312,6 +314,7 @@
 				2090BB362BEFAADC00501E2D /* MainViewController.swift */,
 				2090BB382BEFAB7F00501E2D /* MainView.swift */,
 				B8C31E932BEDD8170049B47C /* MainViewModel.swift */,
+				B8C31E9A2BEDFB7D0049B47C /* MainViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -533,6 +536,7 @@
 				B862334B2BEC99AB003959FB /* MakchaPathUseCase.swift in Sources */,
 				B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */,
 				B86233302BE9FCD5003959FB /* APIServiceError.swift in Sources */,
+				B8C31E9B2BEDFB7D0049B47C /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
