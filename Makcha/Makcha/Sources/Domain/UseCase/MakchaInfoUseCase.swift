@@ -50,6 +50,7 @@ final class MakchaInfoUseCase {
     
     // 현재 위치 기반으로 막차 경로 불러오기
     func loadMakchaPathWithCurrentLocation() {
+        print("[MakchaInfoUseCase] - 현재 위치 기반으로 막차 경로 불러오기")
         endPointRepository.getCurrentLocation()
             .do(
                 onNext: { [weak self] currentLocation in
