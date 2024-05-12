@@ -112,6 +112,7 @@ extension TransPathRepository {
             let passStationArr: [PassStation] = makePassStaionArr(passStopList: subPathArr[subPathIdx].passStopList)
             
             let makchaSubPath = MakchaSubPath(
+                idx: subPathIdx,
                 subPathType: subPathType,
                 distance: subPathArr[subPathIdx].distance,
                 time: subPathArr[subPathIdx].sectionTime,

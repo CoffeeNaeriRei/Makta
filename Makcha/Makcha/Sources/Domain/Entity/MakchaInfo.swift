@@ -39,6 +39,7 @@ enum MakchaPathType: String {
 
 // 세부경로
 struct MakchaSubPath: Equatable {
+    let idx: Int // 세부경로 순서(인덱스)
     let subPathType: SubPathType // 세부경로 타입 (도보-버스-지하철)
     let distance: Int // 이동거리
     let time: Int // 소요시간
@@ -51,6 +52,7 @@ struct MakchaSubPath: Equatable {
     let stations: [PassStation]? // 거치는 정거장(역)들
     
     init(
+        idx: Int,
         subPathType: SubPathType,
         distance: Int,
         time: Int,
@@ -60,6 +62,7 @@ struct MakchaSubPath: Equatable {
         endName: String? = nil,
         stations: [PassStation]? = nil
     ) {
+        self.idx = idx
         self.subPathType = subPathType
         self.distance = distance
         self.time = time
@@ -103,11 +106,13 @@ let mockMakchaInfo = MakchaInfo(
             totalTime: 62,
             subPath: [
                 MakchaSubPath(
+                    idx: 0,
                     subPathType: .walk,
                     distance: 498,
                     time: 7
                 ),
                 MakchaSubPath(
+                    idx: 1,
                     subPathType: .subway,
                     distance: 8400,
                     time: 15,
@@ -129,11 +134,13 @@ let mockMakchaInfo = MakchaInfo(
                     ]
                 ),
                 MakchaSubPath(
+                    idx: 2,
                     subPathType: .walk,
                     distance: 0,
                     time: 0
                 ),
                 MakchaSubPath(
+                    idx: 3,
                     subPathType: .subway,
                     distance: 19500,
                     time: 37,
@@ -166,6 +173,7 @@ let mockMakchaInfo = MakchaInfo(
                     ]
                 ),
                 MakchaSubPath(
+                    idx: 4,
                     subPathType: .walk,
                     distance: 221,
                     time: 3
@@ -179,11 +187,13 @@ let mockMakchaInfo = MakchaInfo(
             totalTime: 71,
             subPath: [
                 MakchaSubPath(
+                    idx: 0,
                     subPathType: .walk,
                     distance: 191,
                     time: 3
                 ),
                 MakchaSubPath(
+                    idx: 1,
                     subPathType: .bus,
                     distance: 6461,
                     time: 23,
@@ -212,11 +222,13 @@ let mockMakchaInfo = MakchaInfo(
                     ]
                 ),
                 MakchaSubPath(
+                    idx: 2,
                     subPathType: .walk,
                     distance: 155,
                     time: 2
                 ),
                 MakchaSubPath(
+                    idx: 3,
                     subPathType: .subway,
                     distance: 21800,
                     time: 40,
@@ -251,6 +263,7 @@ let mockMakchaInfo = MakchaInfo(
                     ]
                 ),
                 MakchaSubPath(
+                    idx: 4,
                     subPathType: .walk,
                     distance: 221,
                     time: 3
