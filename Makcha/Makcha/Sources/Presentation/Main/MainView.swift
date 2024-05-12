@@ -35,11 +35,17 @@ final class MainView: UIView {
     }
     
     private func layout() {
-        button1.setTitle("Hello", for: .normal)        
+        button1.setTitle("Hello", for: .normal)
+        
+        let colorLine1 = UIColor(Color.transport(.subway(.metropolitanRailway(.line2))))
+        let colorLine3 = UIColor(Color.transport(.subway(.metropolitanRailway(.line3))))
+        let color마을버스 = UIColor(Color.transport(.bus(.gyeonggiBusType(.마을))))
+        
         rootView.flex.gap(.cfSpacing(.large)).define {
             $0.addItem(button1)
                 .width(200).height(80)
                 .backgroundColor(.blue)
+            
             $0.addItem().direction(.row)
                 .gap(.cfSpacing(.large))
                 .padding(.cfSpacing(.large), .cfSpacing(.medium))
@@ -50,22 +56,25 @@ final class MainView: UIView {
                         .justifyContent(.center)
                         .gap(.cfSpacing(.xxxlarge)).define {
                         $0.addItem()
-                            .backgroundColor(UIColor(Color.transport(.subway(.metropolitanRailway(.line2)))))
+                            .backgroundColor(colorLine1)
                             .height(100%)
                             .grow(1)
                         $0.addItem()
-                            .backgroundColor(UIColor(Color.transport(.subway(.metropolitanRailway(.line3)))))
+                            .backgroundColor(colorLine3)
                             .height(100%)
                             .grow(1)
                     }
-                    .backgroundColor(UIColor(Color.transport(.bus(.gyeonggiBusType(.마을)))))
+                    .backgroundColor(color마을버스)
                     .height(100%).grow(1)
+                    
                 $0.addItem()
                     .backgroundColor(UIColor(Color.transport(.subway(.metropolitanRailway(.line2)))))
                     .height(100%).grow(1)
+                    
                 $0.addItem()
-                    .backgroundColor(UIColor(Color.transport(.subway(.metropolitanRailway(.line3)))))
+                    .backgroundColor(colorLine3)
                     .height(100%).grow(1)
+                    
                 $0.addItem()
                     .backgroundColor(UIColor(Color.transport(.subway(.metropolitanRailway(.line4)))))
                     .height(100%).grow(1)
