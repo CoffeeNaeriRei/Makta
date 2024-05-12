@@ -24,7 +24,7 @@ struct MakchaInfo: Equatable {
 struct MakchaPath: Equatable {
     let fastest: Bool // 가장 빠른 경로 여부
     let makchaPathType: MakchaPathType // 경로 유형
-//    let arrivalTime: String // 도착시간 // TODO: - 뷰모델에서 계산 (출발시간 + 총 소요시간)
+    let arrivalTime: Date // 도착시간
     let totalTime: Int // 총 소요시간 (단위: 분)
 //    let firstSubPathRemaining: Int // 첫번째 세부경로 이동수단 도착까지 남은 시간 (단위: 분) // TODO: - 실시간 지하철 도착 정보 활용하기
 //    let firstSubPathNextRemaining: Int // 첫번째 세부경로 이동수단 다음 2번째 도착까지 남은 시간 (단위: 분) // TODO: - 실시간 지하철 도착 정보 활용하기
@@ -99,6 +99,7 @@ let mockMakchaInfo = MakchaInfo(
         MakchaPath(
             fastest: true,
             makchaPathType: .subway,
+            arrivalTime: Date().timeAfterMinute(after: 62),
             totalTime: 62,
             subPath: [
                 MakchaSubPath(
@@ -174,6 +175,7 @@ let mockMakchaInfo = MakchaInfo(
         MakchaPath(
             fastest: false,
             makchaPathType: .both,
+            arrivalTime: Date().timeAfterMinute(after: 71),
             totalTime: 71,
             subPath: [
                 MakchaSubPath(

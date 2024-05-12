@@ -51,6 +51,7 @@ extension TransPathRepository {
     
     // TransPathDTO -> MakchaInfo 변환 메서드
     func convertTransPathDTOToMakchaInfo(transPathDTO: TransPathDTO) -> MakchaInfo? {
+        let startTime = Date() // 출발시간(현재시간)
         let pathArr: [Path] = transPathDTO.result.path
         
         var makchaPathArr = [MakchaPath]()
@@ -70,6 +71,7 @@ extension TransPathRepository {
             let makchaPath = MakchaPath(
                 fastest: pathIdx == 0 ? true : false, // 1번째 경로가 가장 빠른 경로
                 makchaPathType: makchaPathType,
+                arrivalTime: startTime.timeAfterMinute(after: totalTime),
                 totalTime: totalTime,
                 subPath: makchaSubPathArr
             )
@@ -77,7 +79,7 @@ extension TransPathRepository {
         }
         
         let makchaInfo = MakchaInfo(
-            startTime: Date(),
+            startTime: startTime,
             makchaPaths: makchaPathArr
         )
         
