@@ -22,6 +22,7 @@ final class MainViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
         bind()
     }
     
@@ -29,14 +30,21 @@ final class MainViewController: UIViewController {
         view = MainView()
     }
     
+    private func setup() {
+        view.backgroundColor = .white
+        navigationItem.title = "막차정보"
+    }
+    
     private func bind() {
-        let input = MainViewModel.Input(resetCoordinateAction: mainView.button1.rx.tap)
+        let input = MainViewModel.Input(resetCoordinateAction: mainView.button1.rx.tap,
+                                        worldButtonTap: mainView.button2.rx.tap)
         let output = vm.transform(input: input)
-        
+       
         output.currentTime
             .drive(mainView.currentTimeLabel.rx.text)
             .disposed(by: disposeBag)
-        
+        output.worldText.drive(mainView.currentTimeLabel.rx.text)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -45,7 +53,9 @@ import SwiftUI
 struct MainViewController_Previews: PreviewProvider {
     static var previews: some View {
         ViewControllerPreview {
-            MainViewController()
+            UINavigationController(
+                rootViewController: MainViewController()
+            )
         }
     }
 }

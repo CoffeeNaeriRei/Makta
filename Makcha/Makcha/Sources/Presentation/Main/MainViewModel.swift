@@ -14,10 +14,12 @@ final class MainViewModel: ViewModelType {
     
     struct Input {
         let resetCoordinateAction: ControlEvent<Void>
+        let worldButtonTap: ControlEvent<Void>
     }
     
     struct Output {
         let currentTime: Driver<String>
+        let worldText: Driver<String>
     }
     
     func transform(input: Input) -> Output {
@@ -27,7 +29,11 @@ final class MainViewModel: ViewModelType {
                 return Date().description
             }
             .asDriver(onErrorJustReturn: "")
-
-        return Output(currentTime: currentTime)
+        
+        let worldText = input.worldButtonTap
+            .map {"World"}
+            .asDriver(onErrorJustReturn: "")
+        
+        return Output(currentTime: currentTime, worldText: worldText)
     }
 }
