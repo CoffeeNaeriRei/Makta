@@ -8,3 +8,10 @@
 // MARK: - 공통적으로 사용되는 typealias
 
 typealias XYCoordinate = (lonX: String, latY: String)
+
+protocol ViewModelType {
+    associatedtype Input
+    associatedtype Output
+    
+    func transform(input: Input) -> Output
+}

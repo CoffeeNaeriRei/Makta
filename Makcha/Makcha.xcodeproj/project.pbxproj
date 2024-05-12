@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D20F62BE912B100A7BD98 /* Preview+Extension.swift */; };
+		20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20674F942BF0894D004E8566 /* MainViewModel.swift */; };
 		206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */ = {isa = PBXBuildFile; productRef = 206AA6052BE7A95B0057FA40 /* makcha-design-system */; };
 		2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB382BEFAB7F00501E2D /* MainView.swift */; };
 		B86232E02BE7A7F0003959FB /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */; };
@@ -58,6 +59,8 @@
 
 /* Begin PBXFileReference section */
 		205D20F62BE912B100A7BD98 /* Preview+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Preview+Extension.swift"; sourceTree = "<group>"; };
+		20674F942BF0894D004E8566 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		2090BB362BEFAADC00501E2D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		2090BB382BEFAB7F00501E2D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		20B88A732BE79DC40088AF73 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		B86232CD2BE77D2B003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -319,6 +322,8 @@
 		B89E7F9A2BE7700F00A13B58 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				20674F942BF0894D004E8566 /* MainViewModel.swift */,
+				2090BB362BEFAADC00501E2D /* MainViewController.swift */,
 				2090BB382BEFAB7F00501E2D /* MainView.swift */,
 			);
 			path = Main;
@@ -547,6 +552,7 @@
 				B8C31E9D2BEE18890049B47C /* EndPointRepositoryProtocol.swift in Sources */,
 				B862333D2BEA059A003959FB /* CommonTypealias.swift in Sources */,
 				2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */,
+				20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */,
 				B89E7FB22BE7742600A13B58 /* LocationManagerInterface.swift in Sources */,
 				B862333A2BEA04D9003959FB /* APIServiceType.swift in Sources */,
 				B86233322BE9FF78003959FB /* TransPathRepositoryProtocol.swift in Sources */,
