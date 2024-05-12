@@ -20,7 +20,8 @@ struct EndPoint: Equatable {
 
 #if DEBUG
 let mockStartPoint = EndPoint(
-    name: "서울특별시 은평구 대조동 2-44",
+//    name: "서울특별시 은평구 대조동 2-44",
+    name: "서울특별시 대조동 대조동 2-44",
     coordinate: ("126.926493082645", "37.6134436427887")
 )
 let mockDestinationPoint = EndPoint(
