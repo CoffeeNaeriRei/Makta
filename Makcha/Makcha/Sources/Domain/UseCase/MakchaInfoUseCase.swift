@@ -19,7 +19,7 @@ final class MakchaInfoUseCase {
     private let endPointRepository: EndPointRepositoryProtocol
     
     let makchaInfo = PublishSubject<MakchaInfo>() // 막차 정보
-    let startPoint = PublishSubject<EndPoint>() // 출발지 정보
+    let startPoint = BehaviorRelay<EndPoint>(value: mockStartPoint) // 출발지 정보 // TODO: - 기본값 지정하기
     let destinationPoint: BehaviorRelay<EndPoint> // 도착지 정보
     
     private let disposeBag = DisposeBag()
@@ -63,6 +63,8 @@ final class MakchaInfoUseCase {
     
     // 검색한 위치 기반으로 막차 경로 불러오기
     func loadMakchaPathWithSearchedLocation() {
-        
+        let start = startPoint.value.coordinate
+        let end = destinationPoint.value.coordinate
+        loadMakchaPath(start: start, end: end)
     }
 }
