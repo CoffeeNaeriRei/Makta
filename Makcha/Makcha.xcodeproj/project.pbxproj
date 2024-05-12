@@ -45,6 +45,7 @@
 		B8C31EA12BEE1A2A0049B47C /* EndPointRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31EA02BEE1A2A0049B47C /* EndPointRepositoryTests.swift */; };
 		B8C31EA32BEF41220049B47C /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31EA22BEF41220049B47C /* Date+Extension.swift */; };
 		B8C31EA62BEF415E0049B47C /* UtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31EA52BEF415E0049B47C /* UtilsTest.swift */; };
+		B8D48C0F2BF0CFC800DA2EB6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB362BEFAADC00501E2D /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -551,6 +552,7 @@
 				B862332E2BE9FC86003959FB /* LocationServiceError.swift in Sources */,
 				B8C31E9D2BEE18890049B47C /* EndPointRepositoryProtocol.swift in Sources */,
 				B862333D2BEA059A003959FB /* CommonTypealias.swift in Sources */,
+				B8D48C0F2BF0CFC800DA2EB6 /* MainViewController.swift in Sources */,
 				2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */,
 				20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */,
 				B89E7FB22BE7742600A13B58 /* LocationManagerInterface.swift in Sources */,
