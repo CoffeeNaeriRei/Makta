@@ -12,12 +12,13 @@ import RxCocoa
 
 final class MainViewController: UIViewController {
     // swiftlint: disable force_cast
-    var mainView: MainView {
+    private var mainView: MainView {
         view as! MainView
     }
     // swiftlint: enable force_cast
     
-    let disposeBag = DisposeBag()
+    private let vm = MainViewModel()
+    private let disposeBag = DisposeBag()
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,16 +30,13 @@ final class MainViewController: UIViewController {
     }
     
     private func bind() {
-        mainView.button1.rx.tap
-            .withUnretained(self)
-            .subscribe { vc, _ in
-                vc.buttonAction()
-            }
+        let input = MainViewModel.Input(resetCoordinateAction: mainView.button1.rx.tap)
+        let output = vm.transform(input: input)
+        
+        output.currentTime
+            .drive(mainView.currentTimeLabel.rx.text)
             .disposed(by: disposeBag)
-    }
-    
-    private func buttonAction() {
-        print("HELLO WORLD!")
+        
     }
 }
 

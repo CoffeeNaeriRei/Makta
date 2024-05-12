@@ -16,6 +16,7 @@ final class MainView: UIView {
     private var rootView = UIView()
     
     let button1 = UIButton()
+    let currentTimeLabel = UILabel()
     
     init() {
         super.init(frame: .zero)
@@ -35,16 +36,23 @@ final class MainView: UIView {
     }
     
     private func layout() {
+        rootView.backgroundColor = .white
         button1.setTitle("Hello", for: .normal)
+        currentTimeLabel.text = "오늘의 시간"
         
         let colorLine1 = UIColor(Color.transport(.subway(.metropolitanRailway(.line2))))
         let colorLine3 = UIColor(Color.transport(.subway(.metropolitanRailway(.line3))))
         let color마을버스 = UIColor(Color.transport(.bus(.gyeonggiBusType(.마을))))
         
         rootView.flex.gap(.cfSpacing(.large)).define {
-            $0.addItem(button1)
-                .width(200).height(80)
-                .backgroundColor(.blue)
+            $0.addItem().direction(.row).define {
+                $0.addItem(currentTimeLabel)
+                    .grow(1)
+                $0.addItem(button1)
+                    .width(120).height(80)
+                    .backgroundColor(.blue)
+            }
+            .padding(.cfSpacing(.large))
             
             $0.addItem().direction(.row)
                 .gap(.cfSpacing(.large))
