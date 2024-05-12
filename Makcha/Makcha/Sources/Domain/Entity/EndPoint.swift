@@ -9,8 +9,8 @@
 // 막차 경로 검색의 기준이 되는 출발점, 도착점의 좌표
 
 struct EndPoint: Equatable {
-    // TODO: - 리버스 지오코딩 필요함
-//    let name: String // 좌표 주소명
+    
+    let name: String // 좌표 주소명
     let coordinate: XYCoordinate // 좌표
     
     static func == (lhs: EndPoint, rhs: EndPoint) -> Bool {
@@ -19,6 +19,13 @@ struct EndPoint: Equatable {
 }
 
 #if DEBUG
-let mockStartPoint = EndPoint(coordinate: ("126.926493082645", "37.6134436427887"))
-let mockDestinationPoint = EndPoint(coordinate: ("127.126936754911", "37.5004198786564"))
+let mockStartPoint = EndPoint(
+//    name: "서울특별시 은평구 대조동 2-44",
+    name: "서울특별시 대조동 대조동 2-44",
+    coordinate: ("126.926493082645", "37.6134436427887")
+)
+let mockDestinationPoint = EndPoint(
+    name: "서울특별시 송파구 중대로 149",
+    coordinate: ("127.126936754911", "37.5004198786564")
+)
 #endif

@@ -17,8 +17,18 @@ final class MainViewController: UIViewController {
     }
     // swiftlint: enable force_cast
     
-    private let vm = MainViewModel()
+    private let mainViewModel: MainViewModel
+    
     private let disposeBag = DisposeBag()
+    
+    init(_ mainViewModel: MainViewModel) {
+        self.mainViewModel = mainViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,13 +48,20 @@ final class MainViewController: UIViewController {
     private func bind() {
         let input = MainViewModel.Input(resetCoordinateAction: mainView.button1.rx.tap,
                                         worldButtonTap: mainView.button2.rx.tap)
-        let output = vm.transform(input: input)
+        let output = mainViewModel.transform(input: input)
        
         output.currentTime
             .drive(mainView.currentTimeLabel.rx.text)
             .disposed(by: disposeBag)
         output.worldText.drive(mainView.currentTimeLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        // 뷰 바인딩 테스트
+        output.startTime
+            .drive(mainView.currentTimeLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        input.viewDidLoadEvent.accept(()) // 바인딩이 끝난 뒤에 viewDldLoad 이벤트 1회 발생
     }
 }
 
@@ -54,7 +71,14 @@ struct MainViewController_Previews: PreviewProvider {
     static var previews: some View {
         ViewControllerPreview {
             UINavigationController(
-                rootViewController: MainViewController()
+                rootViewController: MainViewController(
+                    MainViewModel(
+                        MakchaInfoUseCase(
+                            TransPathRepository(APIService()),
+                            EndPointRepository(LocationService())
+                        )
+                    )
+                )
             )
         }
     }

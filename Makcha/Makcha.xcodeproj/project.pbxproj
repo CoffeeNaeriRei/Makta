@@ -10,7 +10,6 @@
 		205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D20F62BE912B100A7BD98 /* Preview+Extension.swift */; };
 		20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20674F942BF0894D004E8566 /* MainViewModel.swift */; };
 		206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */ = {isa = PBXBuildFile; productRef = 206AA6052BE7A95B0057FA40 /* makcha-design-system */; };
-		2090BB372BEFAADC00501E2D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB362BEFAADC00501E2D /* MainViewController.swift */; };
 		2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB382BEFAB7F00501E2D /* MainView.swift */; };
 		B86232E02BE7A7F0003959FB /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */; };
 		B86232E42BE7B152003959FB /* APIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232E32BE7B152003959FB /* APIServiceTests.swift */; };
@@ -24,8 +23,8 @@
 		B86233432BEA505B003959FB /* TransPathRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86233422BEA505B003959FB /* TransPathRepositoryTests.swift */; };
 		B86233462BEA52FB003959FB /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = B86233452BEA52FB003959FB /* RxTest */; };
 		B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86233472BEA9B2D003959FB /* EndPoint.swift */; };
-		B862334B2BEC99AB003959FB /* MakchaPathUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862334A2BEC99AB003959FB /* MakchaPathUseCase.swift */; };
-		B862334F2BECD93F003959FB /* MakchaPathUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862334E2BECD93F003959FB /* MakchaPathUseCaseTests.swift */; };
+		B862334B2BEC99AB003959FB /* MakchaInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862334A2BEC99AB003959FB /* MakchaInfoUseCase.swift */; };
+		B862334F2BECD93F003959FB /* MakchaInfoUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862334E2BECD93F003959FB /* MakchaInfoUseCaseTests.swift */; };
 		B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F762BE7613800A13B58 /* AppDelegate.swift */; };
 		B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F782BE7613800A13B58 /* SceneDelegate.swift */; };
 		B89E7F802BE7613900A13B58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B89E7F7F2BE7613900A13B58 /* Assets.xcassets */; };
@@ -41,6 +40,12 @@
 		B89E7FB02BE773D100A13B58 /* TransPathDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7FAF2BE773D100A13B58 /* TransPathDTO.swift */; };
 		B89E7FB22BE7742600A13B58 /* LocationManagerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7FB12BE7742600A13B58 /* LocationManagerInterface.swift */; };
 		B89E7FB42BE7743600A13B58 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7FB32BE7743600A13B58 /* LocationService.swift */; };
+		B8C31E9D2BEE18890049B47C /* EndPointRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31E9C2BEE18890049B47C /* EndPointRepositoryProtocol.swift */; };
+		B8C31E9F2BEE18C80049B47C /* EndPointRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31E9E2BEE18C80049B47C /* EndPointRepository.swift */; };
+		B8C31EA12BEE1A2A0049B47C /* EndPointRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31EA02BEE1A2A0049B47C /* EndPointRepositoryTests.swift */; };
+		B8C31EA32BEF41220049B47C /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31EA22BEF41220049B47C /* Date+Extension.swift */; };
+		B8C31EA62BEF415E0049B47C /* UtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31EA52BEF415E0049B47C /* UtilsTest.swift */; };
+		B8D48C0F2BF0CFC800DA2EB6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB362BEFAADC00501E2D /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,8 +78,8 @@
 		B862333C2BEA059A003959FB /* CommonTypealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTypealias.swift; sourceTree = "<group>"; };
 		B86233422BEA505B003959FB /* TransPathRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransPathRepositoryTests.swift; sourceTree = "<group>"; };
 		B86233472BEA9B2D003959FB /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
-		B862334A2BEC99AB003959FB /* MakchaPathUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaPathUseCase.swift; sourceTree = "<group>"; };
-		B862334E2BECD93F003959FB /* MakchaPathUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaPathUseCaseTests.swift; sourceTree = "<group>"; };
+		B862334A2BEC99AB003959FB /* MakchaInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaInfoUseCase.swift; sourceTree = "<group>"; };
+		B862334E2BECD93F003959FB /* MakchaInfoUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaInfoUseCaseTests.swift; sourceTree = "<group>"; };
 		B89E7F732BE7613800A13B58 /* Makcha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Makcha.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B89E7F762BE7613800A13B58 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B89E7F782BE7613800A13B58 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +92,11 @@
 		B89E7FAF2BE773D100A13B58 /* TransPathDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransPathDTO.swift; sourceTree = "<group>"; };
 		B89E7FB12BE7742600A13B58 /* LocationManagerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerInterface.swift; sourceTree = "<group>"; };
 		B89E7FB32BE7743600A13B58 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		B8C31E9C2BEE18890049B47C /* EndPointRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointRepositoryProtocol.swift; sourceTree = "<group>"; };
+		B8C31E9E2BEE18C80049B47C /* EndPointRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointRepository.swift; sourceTree = "<group>"; };
+		B8C31EA02BEE1A2A0049B47C /* EndPointRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointRepositoryTests.swift; sourceTree = "<group>"; };
+		B8C31EA22BEF41220049B47C /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		B8C31EA52BEF415E0049B47C /* UtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +129,7 @@
 			children = (
 				B862334C2BECD912003959FB /* Domain */,
 				B862333F2BEA503B003959FB /* Data */,
+				B8C31EA42BEF41400049B47C /* Utils */,
 			);
 			path = MakchaTests;
 			sourceTree = "<group>";
@@ -145,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				B86233422BEA505B003959FB /* TransPathRepositoryTests.swift */,
+				B8C31EA02BEE1A2A0049B47C /* EndPointRepositoryTests.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -167,7 +179,7 @@
 		B862334D2BECD923003959FB /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				B862334E2BECD93F003959FB /* MakchaPathUseCaseTests.swift */,
+				B862334E2BECD93F003959FB /* MakchaInfoUseCaseTests.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -238,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				B86233372BEA035F003959FB /* TransPathRepository.swift */,
+				B8C31E9E2BEE18C80049B47C /* EndPointRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -281,7 +294,7 @@
 		B89E7F972BE76FF700A13B58 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				B862334A2BEC99AB003959FB /* MakchaPathUseCase.swift */,
+				B862334A2BEC99AB003959FB /* MakchaInfoUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -290,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				B86233312BE9FF78003959FB /* TransPathRepositoryProtocol.swift */,
+				B8C31E9C2BEE18890049B47C /* EndPointRepositoryProtocol.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -337,6 +351,7 @@
 			children = (
 				205D20F62BE912B100A7BD98 /* Preview+Extension.swift */,
 				B862333C2BEA059A003959FB /* CommonTypealias.swift */,
+				B8C31EA22BEF41220049B47C /* Date+Extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -359,6 +374,14 @@
 				B86233392BEA04D9003959FB /* APIServiceType.swift */,
 			);
 			path = APIService;
+			sourceTree = "<group>";
+		};
+		B8C31EA42BEF41400049B47C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B8C31EA52BEF415E0049B47C /* UtilsTest.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -501,8 +524,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8C31EA12BEE1A2A0049B47C /* EndPointRepositoryTests.swift in Sources */,
+				B8C31EA62BEF415E0049B47C /* UtilsTest.swift in Sources */,
 				B86232E42BE7B152003959FB /* APIServiceTests.swift in Sources */,
-				B862334F2BECD93F003959FB /* MakchaPathUseCaseTests.swift in Sources */,
+				B862334F2BECD93F003959FB /* MakchaInfoUseCaseTests.swift in Sources */,
 				B86232E02BE7A7F0003959FB /* LocationServiceTests.swift in Sources */,
 				B86233432BEA505B003959FB /* TransPathRepositoryTests.swift in Sources */,
 			);
@@ -512,25 +537,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8C31E9F2BEE18C80049B47C /* EndPointRepository.swift in Sources */,
 				B89E7F8D2BE765D200A13B58 /* TestViewController.swift in Sources */,
 				B86233382BEA035F003959FB /* TransPathRepository.swift in Sources */,
 				B89E7FB02BE773D100A13B58 /* TransPathDTO.swift in Sources */,
 				B89E7FB42BE7743600A13B58 /* LocationService.swift in Sources */,
 				B86233342BEA004A003959FB /* MakchaInfo.swift in Sources */,
-				2090BB372BEFAADC00501E2D /* MainViewController.swift in Sources */,
+				B8C31EA32BEF41220049B47C /* Date+Extension.swift in Sources */,
 				B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */,
 				B89E7FAE2BE773B700A13B58 /* APIService.swift in Sources */,
 				B89E7F8C2BE765D200A13B58 /* TestView.swift in Sources */,
 				205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */,
 				B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */,
 				B862332E2BE9FC86003959FB /* LocationServiceError.swift in Sources */,
+				B8C31E9D2BEE18890049B47C /* EndPointRepositoryProtocol.swift in Sources */,
 				B862333D2BEA059A003959FB /* CommonTypealias.swift in Sources */,
+				B8D48C0F2BF0CFC800DA2EB6 /* MainViewController.swift in Sources */,
 				2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */,
 				20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */,
 				B89E7FB22BE7742600A13B58 /* LocationManagerInterface.swift in Sources */,
 				B862333A2BEA04D9003959FB /* APIServiceType.swift in Sources */,
 				B86233322BE9FF78003959FB /* TransPathRepositoryProtocol.swift in Sources */,
-				B862334B2BEC99AB003959FB /* MakchaPathUseCase.swift in Sources */,
+				B862334B2BEC99AB003959FB /* MakchaInfoUseCase.swift in Sources */,
 				B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */,
 				B86233302BE9FCD5003959FB /* APIServiceError.swift in Sources */,
 			);

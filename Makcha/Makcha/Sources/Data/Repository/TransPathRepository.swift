@@ -15,11 +15,9 @@ import RxSwift
 final class TransPathRepository: TransPathRepositoryProtocol {
     
     private let apiService: APIServiceInterface
-    private let locationService: LocationServiceInterface
     
-    init(_ apiService: APIServiceInterface, _ locationService: LocationServiceInterface) {
+    init(_ apiService: APIServiceInterface) {
         self.apiService = apiService
-        self.locationService = locationService
     }
     
     // 대중교통 환승경로 정보를 받아와서 Domain 계층의 UseCase에 전달
@@ -47,35 +45,13 @@ final class TransPathRepository: TransPathRepositoryProtocol {
             return Disposables.create()
         }
     }
-    
-    // 현재 위치의 좌표를 불러와서 반환
-    func getCurrentLocation() -> Observable<EndPoint> {
-        return Observable.create { emitter in
-            self.locationService.fetchCurrentLocation { (clLocation, error) in
-                if let error = error {
-                    print("[LocationService - ❌ 위치 불러오기 실패]")
-                    emitter.onError(error)
-                }
-                guard let location = clLocation else {
-                    print("[LocationService - ❌ 위치 데이터가 없음]")
-                    emitter.onError(LocationServiceError.noLocationData)
-                    return
-                }
-                let endPoint = EndPoint(
-                    coordinate: (location.coordinate.longitude.description, location.coordinate.latitude.description)
-                )
-                emitter.onNext(endPoint)
-                emitter.onCompleted()
-            }
-            return Disposables.create()
-        }
-    }
 }
 
 extension TransPathRepository {
     
     // TransPathDTO -> MakchaInfo 변환 메서드
     func convertTransPathDTOToMakchaInfo(transPathDTO: TransPathDTO) -> MakchaInfo? {
+        let startTime = Date() // 출발시간(현재시간)
         let pathArr: [Path] = transPathDTO.result.path
         
         var makchaPathArr = [MakchaPath]()
@@ -95,6 +71,7 @@ extension TransPathRepository {
             let makchaPath = MakchaPath(
                 fastest: pathIdx == 0 ? true : false, // 1번째 경로가 가장 빠른 경로
                 makchaPathType: makchaPathType,
+                arrivalTime: startTime.timeAfterMinute(after: totalTime),
                 totalTime: totalTime,
                 subPath: makchaSubPathArr
             )
@@ -102,6 +79,7 @@ extension TransPathRepository {
         }
         
         let makchaInfo = MakchaInfo(
+            startTime: startTime,
             makchaPaths: makchaPathArr
         )
         
@@ -134,6 +112,7 @@ extension TransPathRepository {
             let passStationArr: [PassStation] = makePassStaionArr(passStopList: subPathArr[subPathIdx].passStopList)
             
             let makchaSubPath = MakchaSubPath(
+                idx: subPathIdx,
                 subPathType: subPathType,
                 distance: subPathArr[subPathIdx].distance,
                 time: subPathArr[subPathIdx].sectionTime,

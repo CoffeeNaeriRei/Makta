@@ -10,4 +10,5 @@
 enum LocationServiceError: Error {
     case fetchFailed
     case noLocationData
+    case reverseGeocodingFailed
 }
