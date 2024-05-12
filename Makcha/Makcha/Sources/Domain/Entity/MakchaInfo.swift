@@ -26,8 +26,8 @@ struct MakchaPath: Equatable {
     let makchaPathType: MakchaPathType // 경로 유형
     let arrivalTime: Date // 도착시간
     let totalTime: Int // 총 소요시간 (단위: 분)
-//    let firstSubPathRemaining: Int // 첫번째 세부경로 이동수단 도착까지 남은 시간 (단위: 분) // TODO: - 실시간 지하철 도착 정보 활용하기
-//    let firstSubPathNextRemaining: Int // 첫번째 세부경로 이동수단 다음 2번째 도착까지 남은 시간 (단위: 분) // TODO: - 실시간 지하철 도착 정보 활용하기
+//    let firstSubPathRemaining: Int // 첫번째 세부경로 이동수단 도착까지 남은 시간 (단위: 분) // TODO: - 실시간 도착 정보 활용하기
+//    let firstSubPathNextRemaining: Int // 첫번째 세부경로 이동수단 다음 2번째 도착까지 남은 시간 (단위: 분) // TODO: - 실시간 도착 정보 활용하기
     let subPath: [MakchaSubPath] // 세부경로들
 }
 
@@ -43,6 +43,7 @@ struct MakchaSubPath: Equatable {
     let subPathType: SubPathType // 세부경로 타입 (도보-버스-지하철)
     let distance: Int // 이동거리
     let time: Int // 소요시간
+//    let subPathStartTime: Date // 세부경로 시작시간 // TODO: - 배차시간표 활용해서 계산하기
     
     // 지하철🚇 | 버스🚌  일 경우에만
     let stationCount: Int? // 거치는 정거장(역)의 수
@@ -56,6 +57,7 @@ struct MakchaSubPath: Equatable {
         subPathType: SubPathType,
         distance: Int,
         time: Int,
+//        subPathStartTime: Date,
         stationCount: Int? = nil,
         lane: [LaneInfo]? = nil,
         startName: String? = nil,
@@ -66,6 +68,7 @@ struct MakchaSubPath: Equatable {
         self.subPathType = subPathType
         self.distance = distance
         self.time = time
+//        self.subPathStartTime = subPathStartTime
         self.stationCount = stationCount
         self.lane = lane
         self.startName = startName
