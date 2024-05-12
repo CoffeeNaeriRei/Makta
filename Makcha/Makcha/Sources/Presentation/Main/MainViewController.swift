@@ -12,15 +12,17 @@ import RxCocoa
 
 final class MainViewController: UIViewController {
     // swiftlint: disable force_cast
-    var mainView: MainView {
+    private var mainView: MainView {
         view as! MainView
     }
     // swiftlint: enable force_cast
     
-    let disposeBag = DisposeBag()
+    private let vm = MainViewModel()
+    private let disposeBag = DisposeBag()
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
         bind()
     }
     
@@ -28,17 +30,21 @@ final class MainViewController: UIViewController {
         view = MainView()
     }
     
-    private func bind() {
-        mainView.button1.rx.tap
-            .withUnretained(self)
-            .subscribe { vc, _ in
-                vc.buttonAction()
-            }
-            .disposed(by: disposeBag)
+    private func setup() {
+        view.backgroundColor = .white
+        navigationItem.title = "막차정보"
     }
     
-    private func buttonAction() {
-        print("HELLO WORLD!")
+    private func bind() {
+        let input = MainViewModel.Input(resetCoordinateAction: mainView.button1.rx.tap,
+                                        worldButtonTap: mainView.button2.rx.tap)
+        let output = vm.transform(input: input)
+       
+        output.currentTime
+            .drive(mainView.currentTimeLabel.rx.text)
+            .disposed(by: disposeBag)
+        output.worldText.drive(mainView.currentTimeLabel.rx.text)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -47,7 +53,9 @@ import SwiftUI
 struct MainViewController_Previews: PreviewProvider {
     static var previews: some View {
         ViewControllerPreview {
-            MainViewController()
+            UINavigationController(
+                rootViewController: MainViewController()
+            )
         }
     }
 }
