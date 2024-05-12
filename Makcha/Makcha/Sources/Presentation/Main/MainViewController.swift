@@ -55,6 +55,13 @@ final class MainViewController: UIViewController {
             .disposed(by: disposeBag)
         output.worldText.drive(mainView.currentTimeLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        // 뷰 바인딩 테스트
+        output.startTime
+            .drive(mainView.currentTimeLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        input.viewDidLoadEvent.accept(()) // 바인딩이 끝난 뒤에 viewDldLoad 이벤트 1회 발생
     }
 }
 
