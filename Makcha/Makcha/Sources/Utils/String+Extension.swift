@@ -21,8 +21,9 @@ extension String {
     func toDate() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        // 한국의 TimeZone(KST)이 UTC+9시간이기 때문에 "KST"로 하면 9시간이 줄어듦
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        // 한국의 TimeZone(KST)은 UTC+9시간
+        // 이후 Date()와 비교하기 위해 TimeZone 건들지 않고 그대로 사용
+//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         if let date = dateFormatter.date(from: self) {
             return date
         } else {
