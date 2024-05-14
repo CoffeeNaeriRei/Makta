@@ -24,7 +24,7 @@ struct SeoulRealtimeSubwayArrival: Codable {
     let rowNum: Int // 배열 순서 (1번부터 시작)
     let selectedCount: Int // 파라미터로 넘겼던 최대 결과 개수 값
     let subwayId: String // 지하철호선ID
-    let updnLine: String // 상하행선구분 (상행/하행)
+    let updnLine: String // 상하행선구분 - (0:상행|내선 1:하행|외선)
     let trainLineNm: String // 도착지방면 - (성수행(목적지역) - 구로디지털단지방면(다음역))
     let statnFid: String // 이전지하철역ID
     let statnTid: String // 다음지하철역ID
@@ -32,6 +32,7 @@ struct SeoulRealtimeSubwayArrival: Codable {
     let statnNm: String // 지하철역명
     let trnsitCo: String // 환승노선수
     let ordkey: String // 도착예정열차순번 - (상하행코드(1자리), 순번(첫번째, 두번째 열차 , 1자리), 첫번째 도착예정 정류장 - 현재 정류장(3자리), 목적지 정류장, 급행여부(1자리))
+    // ex) "01000구파발0", "11003봉화산0", ""12004봉화산0""
     let subwayList: String // 연계호선 ID ex) "1003,1006"
     let statnList: String // 연계지하철역 ID ex) "1003000321,1006000614"
     let btrainSttus: String // 열차종류 (급행, ITX, 일반, 특급)
