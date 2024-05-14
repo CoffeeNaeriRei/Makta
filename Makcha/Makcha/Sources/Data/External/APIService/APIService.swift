@@ -17,6 +17,10 @@ protocol APIServiceInterface {
         end: XYCoordinate,
         completion: @escaping (Result<TransPathDTO, APIServiceError>) -> Void
     )
+    func fetchSeoulRealtimeSubwayArrival(
+        stationName: String,
+        completion: @escaping (Result<SeoulRealtimeSubwayDTO, APIServiceError>) -> Void
+    )
 }
 
 // MARK: - APIService 정의
@@ -61,7 +65,6 @@ struct APIService: APIServiceInterface {
             completion(.failure(APIServiceError.invalidURL))
             return
         }
-        print("서울URL: \(seoulRealtimeSubwayURL)")
         
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             if error != nil {
