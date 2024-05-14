@@ -19,6 +19,7 @@ final class MakchaInfoUseCase {
     private let endPointRepository: EndPointRepositoryProtocol
     
     let makchaInfo = PublishSubject<MakchaInfo>() // 막차 정보
+    var realtimeArrivals = [BehaviorSubject<RealtimeArrivalTuple>(value: (nil, nil))] // 막차 경로 별 실시간 도착 정보
     let startPoint = BehaviorRelay<EndPoint>(value: mockStartPoint) // 출발지 정보 // TODO: - 기본값 지정하기
     let destinationPoint: BehaviorRelay<EndPoint> // 도착지 정보
     
@@ -44,6 +45,17 @@ final class MakchaInfoUseCase {
     // 막차 경로 검색
     func loadMakchaPath(start: XYCoordinate, end: XYCoordinate) {
         transPathRepository.getAllMakchaTransPath(start: start, end: end)
+            .do(
+                onNext: { makchaInfo in
+                    // makchaPaths 배열 길이와 같은 실시간 도착 정보 Subject의 배열 생성
+                    self.realtimeArrivals = Array(repeating: BehaviorSubject(value: (nil, nil)), count: makchaInfo.makchaPaths.count)
+                    // 실시간 도착정보 불러오기
+                    self.makeRealtimeArrivalTimes(
+                        currentTime: makchaInfo.startTime,
+                        makchaPaths: makchaInfo.makchaPaths
+                    )
+                }
+            )
             .bind(to: makchaInfo)
             .disposed(by: disposeBag)
     }
@@ -67,5 +79,36 @@ final class MakchaInfoUseCase {
         let start = startPoint.value.coordinate
         let end = destinationPoint.value.coordinate
         loadMakchaPath(start: start, end: end)
+    }
+  
+    // MakchaPath 배열을 받아와서 각 경로별 실시간 도착정보를 만들어주는 메서드
+    func makeRealtimeArrivalTimes(currentTime: Date, makchaPaths: [MakchaPath]) {
+        // 각각의 막차경로에 대해 1번째 대중교통 세부경로 타입에 따른 실시간 도착정보 받아오기
+        for makchaPathIdx in 0..<makchaPaths.count {
+            // 첫번째 대중교통 세부경로가 있을 때만 실시간 도착정보를 받아옴 (0번 인덱스는 항상 도보임)
+            if let firstTransSubPath = makchaPaths[makchaPathIdx].subPath.filter({ $0.idx == 1 }).first {
+                switch firstTransSubPath.subPathType {
+                case .subway: // 지하철
+                    if let stationName = firstTransSubPath.startName,
+                       let subwayLine = firstTransSubPath.lane?.first?.subwayCode,
+                       let wayCode = firstTransSubPath.wayCode {
+                        
+                        transPathRepository.getSeoulRealtimeSubwayArrival(
+                            stationName: stationName,
+                            subwayLineCodeInt: subwayLine,
+                            wayCodeInt: wayCode,
+                            currentTime: currentTime
+                        )
+                        .bind(to: realtimeArrivals[makchaPathIdx])
+                        .disposed(by: disposeBag)
+                    }
+                case .bus: // 버스
+                    // TODO: - 버스 처리
+                    print("실시간 버스 도착정보 API 호출하기")
+                default:
+                    continue
+                }
+            }
+        }
     }
 }
