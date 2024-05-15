@@ -21,7 +21,7 @@ struct SeoulRealtimeSubwayErrorMessage: Codable {
     let total: Int // 결과 개수
 }
 
-struct SeoulRealtimeSubwayArrival: Codable {
+struct SeoulRealtimeSubwayArrival: Codable, Equatable {
     let totalCount: Int // 응답 결과 배열 크기
     let rowNum: Int // 배열 순서 (1번부터 시작)
     let selectedCount: Int // 파라미터로 넘겼던 최대 결과 개수 값
@@ -50,7 +50,7 @@ struct SeoulRealtimeSubwayArrival: Codable {
 
 #if DEBUG
 extension SeoulRealtimeSubwayDTO {
-    var mockData: Data {
+    static var mockData: Data {
         Data(
             """
             {
@@ -324,5 +324,59 @@ extension SeoulRealtimeSubwayDTO {
             """.utf8
         )
     }
+}
+extension SeoulRealtimeSubwayArrival {
+    static let mock3호선상행1번째Data: [Self] = [
+        SeoulRealtimeSubwayArrival(
+            totalCount: 8,
+            rowNum: 1,
+            selectedCount: 8,
+            subwayId: "1003",
+            updnLine: "상행",
+            trainLineNm: "대화행 - 구파발방면",
+            statnFid: "1003000322",
+            statnTid: "1003000320",
+            statnId: "1003000321",
+            statnNm: "연신내",
+            trnsitCo: "2",
+            ordkey: "01000대화0",
+            subwayList: "1003,1006",
+            statnList: "1003000321,1006000614",
+            btrainSttus: "일반",
+            barvlDt: "0",
+            btrainNo: "3250",
+            bstatnId: "152",
+            bstatnNm: "대화",
+            recptnDt: "2024-05-15 17:49:30",
+            arvlMsg2: "연신내 도착",
+            arvlMsg3: "연신내",
+            arvlCd: "1"
+        ),
+        SeoulRealtimeSubwayArrival(
+            totalCount: 8,
+            rowNum: 2,
+            selectedCount: 8,
+            subwayId: "1003",
+            updnLine: "상행",
+            trainLineNm: "대화행 - 구파발방면",
+            statnFid: "1003000322",
+            statnTid: "1003000320",
+            statnId: "1003000321",
+            statnNm: "연신내",
+            trnsitCo: "2",
+            ordkey: "01001대화0",
+            subwayList: "1003,1006",
+            statnList: "1003000321,1006000614",
+            btrainSttus: "일반",
+            barvlDt: "129",
+            btrainNo: "3250",
+            bstatnId: "152",
+            bstatnNm: "대화",
+            recptnDt: "2024-05-15 17:49:27",
+            arvlMsg2: "전역 출발",
+            arvlMsg3: "불광",
+            arvlCd: "3"
+        )
+    ]
 }
 #endif
