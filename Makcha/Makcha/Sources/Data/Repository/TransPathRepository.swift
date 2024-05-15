@@ -174,7 +174,9 @@ extension TransPathRepository {
                 lane: laneInfoArr.isEmpty ? nil : laneInfoArr,
                 startName: subPathArr[subPathIdx].startName,
                 endName: subPathArr[subPathIdx].endName,
-                stations: passStationArr.isEmpty ? nil : passStationArr
+                stations: passStationArr.isEmpty ? nil : passStationArr,
+                way: subPathArr[subPathIdx].way,
+                wayCode: subPathArr[subPathIdx].wayCode
             )
             
             makchaSubPathArr.append(makchaSubPath)
@@ -200,12 +202,12 @@ extension TransPathRepository {
             var laneInfoArr = [LaneInfo]()
             for eachLane in laneArr {
                 let laneInfo: LaneInfo
-                if let subwayLine = eachLane.name {
-                    laneInfo = LaneInfo(name: subwayLine)
+                if let subwayLine = eachLane.name { // 지하철 노선 정보
+                    laneInfo = LaneInfo(name: subwayLine, subwayCode: eachLane.subwayCode)
                     laneInfoArr.append(laneInfo)
                     continue
                 }
-                if let busNo = eachLane.busNo {
+                if let busNo = eachLane.busNo { // 버스 노선 정보
                     laneInfo = LaneInfo(name: busNo)
                     laneInfoArr.append(laneInfo)
                     continue
