@@ -42,6 +42,7 @@ final class MainViewModel: ViewModelType {
         let startLocation: Driver<String> // 출발지
         let destinationLocation: Driver<String> // 도착지
         let makchaPaths: Driver<[MakchaPath]> // 막차 경로 배열
+        let realTimeArrivals: Driver<[RealtimeArrivalTuple]> // 실시간 도착 정보
     }
     
     func transform(input: Input) -> Output {
@@ -81,13 +82,17 @@ final class MainViewModel: ViewModelType {
             .map { $0.makchaPaths }
             .asDriver(onErrorJustReturn: [])
         
+        let realtimeArrivals = makchaInfoUseCase.realtimeArrivals
+            .asDriver(onErrorJustReturn: [])
+        
         return Output(
             currentTime: currentTime,
             worldText: worldText,
             startTime: startTime,
             startLocation: startLocation,
             destinationLocation: destinationLocation,
-            makchaPaths: makchaPaths
+            makchaPaths: makchaPaths,
+            realTimeArrivals: realtimeArrivals
         )
     }
 }
