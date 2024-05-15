@@ -43,6 +43,27 @@ final class MainViewController: UIViewController {
     private func setup() {
         view.backgroundColor = .white
         navigationItem.title = "막차정보"
+        
+        // Sheet Setting
+        setupSheet()
+    }
+    
+    private func setupSheet() {
+        let searchPathSheet = SearchPathViewController()
+        
+        let initDent: UISheetPresentationController.Detent = .custom(identifier: .init("initDent")) { _ in
+            185 - self.mainView.safeAreaInsets.bottom
+        }
+        
+        if let sheet = searchPathSheet.sheetPresentationController {
+            sheet.detents = [initDent, .large()]
+            sheet.largestUndimmedDetentIdentifier = initDent.identifier
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+            sheet.presentedViewController.isModalInPresentation = true
+        }
+        present(searchPathSheet, animated: true)
     }
     
     private func bind() {
