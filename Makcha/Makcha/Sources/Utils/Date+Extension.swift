@@ -38,4 +38,9 @@ extension Date {
     func timeAfterMinute(after minute: Int) -> Date {
         return Calendar.current.date(byAdding: .minute, value: minute, to: self) ?? self
     }
+    
+    // Date로부터 second초 만큼 지난 시간
+    func timeAfterSecond(after second: Int) -> Date {
+        return Calendar.current.date(byAdding: .second, value: second, to: self) ?? self
+    }
 }

@@ -116,7 +116,7 @@ final class LocationServiceTests: XCTestCase {
         let mockLon = CLLocationDegrees(mockStartPoint.coordinate.lonX)!
         let mockLat = CLLocationDegrees(mockStartPoint.coordinate.latY)!
         var isSuccess: Bool = false
-        var expectedAddressName = mockStartPoint.name
+        let expectedAddressName = mockStartPoint.name
         var result = ""
         let completionExpectation = expectation(description: "convertCoordinateToAddress() completion expectation")
         
