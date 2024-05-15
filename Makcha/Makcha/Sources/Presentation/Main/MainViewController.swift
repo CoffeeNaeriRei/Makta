@@ -57,7 +57,17 @@ final class MainViewController: UIViewController {
             .disposed(by: disposeBag)
         
         // 뷰 바인딩 테스트
-        output.startTime
+//        output.startTime
+//            .drive(mainView.currentTimeLabel.rx.text)
+//            .disposed(by: disposeBag)
+        output.realTimeArrivals // 실시간 도착정보 뷰 확인용
+            .map {
+                if let time = $0[0].first {
+                    return String(time)
+                } else {
+                    return ""
+                }
+            }
             .drive(mainView.currentTimeLabel.rx.text)
             .disposed(by: disposeBag)
         

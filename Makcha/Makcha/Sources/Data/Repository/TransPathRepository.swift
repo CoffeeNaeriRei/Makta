@@ -265,10 +265,10 @@ extension TransPathRepository {
     // 도착 정보가 담겨있는 배열에서 가장 유효한 데이터(실제 도착까지 남은 시간(초))를 골라서 반환
     func extractRealRemainingFromArrivals(from arrivalArr: [SeoulRealtimeSubwayArrival], currentTime: Date) -> Int {
         if arrivalArr.count == 1 {
-            guard let arrival = arrivalArr.last else { return -1 } // TODO: - 실시간 정보를 불러오지 못함
+            guard let arrival = arrivalArr.last else { return -1 }
             // 실제 도착까지 남은 시간
             let realRemainingTime = getRealRemainingTimeFromSeoulSubway(arrival: arrival, currentTime: currentTime)
-            return realRemainingTime // TODO: - 음수면 이미 도착 or 실시간 정보를 불러오지 못한 것임
+            return realRemainingTime
             
         } else if arrivalArr.count > 1 {
             // 실제 도착까지 남은 시간이 0 이상인 값 중 가장 작은 값을 사용 (가장 금방 도착하는 값)
@@ -282,7 +282,6 @@ extension TransPathRepository {
             }
             
         } else {
-            // TODO: - 실시간 정보를 불러오지 못함
             return -1
         }
     }
