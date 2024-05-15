@@ -38,7 +38,7 @@ final class TransPathRepository: TransPathRepositoryProtocol {
                     emitter.onNext(makchaInfo)
                     emitter.onCompleted()
                 case .failure(let error):
-                    print("[APIService] - ❌ fetchTransPathData() 호출 실패")
+                    print("[APIService] - ❌ fetchTransPathData() 호출 실패 \(error.localizedDescription)")
                     emitter.onError(error)
                 }
             }

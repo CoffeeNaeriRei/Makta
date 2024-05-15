@@ -38,7 +38,6 @@ struct APIService: APIServiceInterface {
             completion(.failure(APIServiceError.invalidURL))
             return
         }
-            
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             if error != nil {
                 completion(.failure(APIServiceError.requestFail))
@@ -65,7 +64,6 @@ struct APIService: APIServiceInterface {
             completion(.failure(APIServiceError.invalidURL))
             return
         }
-        
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             if error != nil {
                 completion(.failure(APIServiceError.requestFail))
