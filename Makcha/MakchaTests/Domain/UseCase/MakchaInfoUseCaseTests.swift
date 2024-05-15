@@ -35,6 +35,9 @@ struct MockTransPathRepository: TransPathRepositoryProtocol {
         }
     }
     
+    func getSeoulRealtimeSubwayArrival(stationName: String, subwayLineCodeInt: Int, wayCodeInt: Int, currentTime: Date) -> Observable<RealtimeArrivalTuple> {
+        return Observable<RealtimeArrivalTuple>.just((nil, nil))
+    }
 }
 
 // Mock EndPointRepository
