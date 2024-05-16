@@ -55,4 +55,17 @@ final class UtilsTest: XCTestCase {
         // Then
         XCTAssertEqual(expectedResult, result)
     }
+    
+    func test_IntExtension의_remainingTimeString이_초값을_제대로_변환하는지_확인() {
+        // Given
+        let second = 150
+        var result: String
+        let expectedResult = "02분 30초"
+        
+        // When
+        result = second.remainingTimeString
+        
+        // Then
+        XCTAssertEqual(result, expectedResult)
+    }
 }

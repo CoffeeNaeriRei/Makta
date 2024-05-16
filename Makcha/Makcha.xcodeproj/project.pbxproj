@@ -11,6 +11,7 @@
 		20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20674F942BF0894D004E8566 /* MainViewModel.swift */; };
 		206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */ = {isa = PBXBuildFile; productRef = 206AA6052BE7A95B0057FA40 /* makcha-design-system */; };
 		2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB382BEFAB7F00501E2D /* MainView.swift */; };
+		B82953D22BF5DDBB00EABD57 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */; };
 		B86232E02BE7A7F0003959FB /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */; };
 		B86232E42BE7B152003959FB /* APIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232E32BE7B152003959FB /* APIServiceTests.swift */; };
 		B862332E2BE9FC86003959FB /* LocationServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862332D2BE9FC86003959FB /* LocationServiceError.swift */; };
@@ -67,6 +68,7 @@
 		2090BB362BEFAADC00501E2D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		2090BB382BEFAB7F00501E2D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		20B88A732BE79DC40088AF73 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B86232CD2BE77D2B003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232CF2BE77D2F003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232D62BE7A761003959FB /* MakchaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MakchaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -361,6 +363,7 @@
 				B862333C2BEA059A003959FB /* CommonTypealias.swift */,
 				B8C31EA22BEF41220049B47C /* Date+Extension.swift */,
 				B8D48C162BF2164200DA2EB6 /* String+Extension.swift */,
+				B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -563,6 +566,7 @@
 				B8C31E9D2BEE18890049B47C /* EndPointRepositoryProtocol.swift in Sources */,
 				B862333D2BEA059A003959FB /* CommonTypealias.swift in Sources */,
 				B8D48C0F2BF0CFC800DA2EB6 /* MainViewController.swift in Sources */,
+				B82953D22BF5DDBB00EABD57 /* Int+Extension.swift in Sources */,
 				2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */,
 				20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */,
 				B8D48C172BF2164200DA2EB6 /* String+Extension.swift in Sources */,

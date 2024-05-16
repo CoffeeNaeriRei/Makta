@@ -63,7 +63,7 @@ final class MainViewController: UIViewController {
         output.realTimeArrivals // 실시간 도착정보 뷰 확인용
             .map {
                 if let time = $0[0].first {
-                    return String(time)
+                    return time.remainingTimeString
                 } else {
                     return ""
                 }
