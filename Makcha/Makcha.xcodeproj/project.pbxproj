@@ -13,6 +13,8 @@
 		205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D20F62BE912B100A7BD98 /* Preview+Extension.swift */; };
 		20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20674F942BF0894D004E8566 /* MainViewModel.swift */; };
 		206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */ = {isa = PBXBuildFile; productRef = 206AA6052BE7A95B0057FA40 /* makcha-design-system */; };
+		206B51052BFA348600FC6F76 /* MainCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206B51042BFA348600FC6F76 /* MainCollectionView.swift */; };
+		206B51072BFA349200FC6F76 /* MainCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206B51062BFA349200FC6F76 /* MainCollectionCell.swift */; };
 		2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB382BEFAB7F00501E2D /* MainView.swift */; };
 		B86232E02BE7A7F0003959FB /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */; };
 		B86232E42BE7B152003959FB /* APIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232E32BE7B152003959FB /* APIServiceTests.swift */; };
@@ -70,6 +72,8 @@
 		205075DA2BF9A41200BAC30E /* RemarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemarkViewController.swift; sourceTree = "<group>"; };
 		205D20F62BE912B100A7BD98 /* Preview+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Preview+Extension.swift"; sourceTree = "<group>"; };
 		20674F942BF0894D004E8566 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		206B51042BFA348600FC6F76 /* MainCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionView.swift; sourceTree = "<group>"; };
+		206B51062BFA349200FC6F76 /* MainCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionCell.swift; sourceTree = "<group>"; };
 		2090BB362BEFAADC00501E2D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		2090BB382BEFAB7F00501E2D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		20B88A732BE79DC40088AF73 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
@@ -149,6 +153,15 @@
 				205075DA2BF9A41200BAC30E /* RemarkViewController.swift */,
 			);
 			path = Remark;
+			sourceTree = "<group>";
+		};
+		206B51032BFA33EC00FC6F76 /* MainCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				206B51042BFA348600FC6F76 /* MainCollectionView.swift */,
+				206B51062BFA349200FC6F76 /* MainCollectionCell.swift */,
+			);
+			path = MainCollectionView;
 			sourceTree = "<group>";
 		};
 		B86232D72BE7A761003959FB /* MakchaTests */ = {
@@ -354,6 +367,7 @@
 		B89E7F9A2BE7700F00A13B58 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				206B51032BFA33EC00FC6F76 /* MainCollectionView */,
 				20674F942BF0894D004E8566 /* MainViewModel.swift */,
 				2090BB362BEFAADC00501E2D /* MainViewController.swift */,
 				2090BB382BEFAB7F00501E2D /* MainView.swift */,
@@ -573,9 +587,11 @@
 				B89E7F8D2BE765D200A13B58 /* TestViewController.swift in Sources */,
 				B86233382BEA035F003959FB /* TransPathRepository.swift in Sources */,
 				B89E7FB02BE773D100A13B58 /* TransPathDTO.swift in Sources */,
+				206B51072BFA349200FC6F76 /* MainCollectionCell.swift in Sources */,
 				205075D52BF55F3A00BAC30E /* SearchPathViewController.swift in Sources */,
 				B89E7FB42BE7743600A13B58 /* LocationService.swift in Sources */,
 				B86233342BEA004A003959FB /* MakchaInfo.swift in Sources */,
+				206B51052BFA348600FC6F76 /* MainCollectionView.swift in Sources */,
 				B8C31EA32BEF41220049B47C /* Date+Extension.swift in Sources */,
 				B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */,
 				B89E7FAE2BE773B700A13B58 /* APIService.swift in Sources */,

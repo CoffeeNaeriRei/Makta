@@ -12,7 +12,6 @@ import RxSwift
 import RxCocoa
 
 // MARK: - 메인 화면의 뷰모델 (막차 경로 불러오는 화면)
-
 final class MainViewModel: ViewModelType {
     
     private let makchaInfoUseCase: MakchaInfoUseCase

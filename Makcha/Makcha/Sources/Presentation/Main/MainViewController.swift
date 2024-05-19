@@ -106,6 +106,7 @@ final class MainViewController: UIViewController {
                 vc.pushNavigation(.settings)
             }
             .disposed(by: disposeBag)
+        
         input.starButtonTap
             .withUnretained(self)
             .bind { vc, _ in
@@ -124,6 +125,11 @@ final class MainViewController: UIViewController {
                 }
             }
             .drive(mainView.currentTimeLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.makchaPaths
+            .map { $0.count.description }
+            .drive(mainView.currentPathCountLabel.rx.text)
             .disposed(by: disposeBag)
         
         input.viewDidLoadEvent.accept(()) // 바인딩이 끝난 뒤에 viewDldLoad 이벤트 1회 발생
