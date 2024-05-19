@@ -42,10 +42,14 @@ final class MainViewController: UIViewController {
     
     private func setup() {
         view.backgroundColor = .white
-        navigationItem.title = "막차정보"
-        
         // Sheet Setting
         setupSheet()
+        // NavigationLink Setting
+        setupNavigationItems()
+    }
+    
+    private func setupNavigationItems() {
+        navigationItem.title = "막차정보"
     }
     
     private func setupSheet() {
@@ -67,20 +71,9 @@ final class MainViewController: UIViewController {
     }
     
     private func bind() {
-        let input = MainViewModel.Input(resetCoordinateAction: mainView.button1.rx.tap,
-                                        worldButtonTap: mainView.button2.rx.tap)
+        let input = MainViewModel.Input()
         let output = mainViewModel.transform(input: input)
-       
-        output.currentTime
-            .drive(mainView.currentTimeLabel.rx.text)
-            .disposed(by: disposeBag)
-        output.worldText.drive(mainView.currentTimeLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        // 뷰 바인딩 테스트
-//        output.startTime
-//            .drive(mainView.currentTimeLabel.rx.text)
-//            .disposed(by: disposeBag)
+
         output.realTimeArrivals // 실시간 도착정보 뷰 확인용
             .map {
                 if let time = $0[0].first {
