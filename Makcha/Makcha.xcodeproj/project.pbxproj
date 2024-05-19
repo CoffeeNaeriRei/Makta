@@ -15,6 +15,9 @@
 		206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */ = {isa = PBXBuildFile; productRef = 206AA6052BE7A95B0057FA40 /* makcha-design-system */; };
 		206B51052BFA348600FC6F76 /* MainCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206B51042BFA348600FC6F76 /* MainCollectionView.swift */; };
 		206B51072BFA349200FC6F76 /* MainCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206B51062BFA349200FC6F76 /* MainCollectionCell.swift */; };
+		206B510A2BFA36D700FC6F76 /* Reusable in Frameworks */ = {isa = PBXBuildFile; productRef = 206B51092BFA36D700FC6F76 /* Reusable */; };
+		206B510D2BFA36F800FC6F76 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 206B510C2BFA36F800FC6F76 /* Differentiator */; };
+		206B510F2BFA36F800FC6F76 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 206B510E2BFA36F800FC6F76 /* RxDataSources */; };
 		2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB382BEFAB7F00501E2D /* MainView.swift */; };
 		B86232E02BE7A7F0003959FB /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */; };
 		B86232E42BE7B152003959FB /* APIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232E32BE7B152003959FB /* APIServiceTests.swift */; };
@@ -128,9 +131,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */,
+				206B510A2BFA36D700FC6F76 /* Reusable in Frameworks */,
 				B89E7FA62BE7725000A13B58 /* RxCocoa in Frameworks */,
 				B89E7FA32BE771BE00A13B58 /* PinLayout in Frameworks */,
+				206B510D2BFA36F800FC6F76 /* Differentiator in Frameworks */,
 				B89E7FAA2BE7725000A13B58 /* RxSwift in Frameworks */,
+				206B510F2BFA36F800FC6F76 /* RxDataSources in Frameworks */,
 				B89E7FA82BE7725000A13B58 /* RxRelay in Frameworks */,
 				B89E7FA02BE771AE00A13B58 /* FlexLayout in Frameworks */,
 			);
@@ -475,6 +481,9 @@
 				B89E7FA72BE7725000A13B58 /* RxRelay */,
 				B89E7FA92BE7725000A13B58 /* RxSwift */,
 				206AA6052BE7A95B0057FA40 /* makcha-design-system */,
+				206B51092BFA36D700FC6F76 /* Reusable */,
+				206B510C2BFA36F800FC6F76 /* Differentiator */,
+				206B510E2BFA36F800FC6F76 /* RxDataSources */,
 			);
 			productName = Makcha;
 			productReference = B89E7F732BE7613800A13B58 /* Makcha.app */;
@@ -513,6 +522,8 @@
 				B89E7FA12BE771BE00A13B58 /* XCRemoteSwiftPackageReference "PinLayout" */,
 				B89E7FA42BE7725000A13B58 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				206AA6042BE7A95B0057FA40 /* XCRemoteSwiftPackageReference "makcha-design-system" */,
+				206B51082BFA36D700FC6F76 /* XCRemoteSwiftPackageReference "Reusable" */,
+				206B510B2BFA36F800FC6F76 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = B89E7F742BE7613800A13B58 /* Products */;
 			projectDirPath = "";
@@ -931,6 +942,22 @@
 				kind = branch;
 			};
 		};
+		206B51082BFA36D700FC6F76 /* XCRemoteSwiftPackageReference "Reusable" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AliSoftware/Reusable";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.1.2;
+			};
+		};
+		206B510B2BFA36F800FC6F76 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
 		B89E7F9E2BE771AE00A13B58 /* XCRemoteSwiftPackageReference "FlexLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/layoutBox/FlexLayout";
@@ -962,6 +989,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 206AA6042BE7A95B0057FA40 /* XCRemoteSwiftPackageReference "makcha-design-system" */;
 			productName = "makcha-design-system";
+		};
+		206B51092BFA36D700FC6F76 /* Reusable */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 206B51082BFA36D700FC6F76 /* XCRemoteSwiftPackageReference "Reusable" */;
+			productName = Reusable;
+		};
+		206B510C2BFA36F800FC6F76 /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 206B510B2BFA36F800FC6F76 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		206B510E2BFA36F800FC6F76 /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 206B510B2BFA36F800FC6F76 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
 		};
 		B86233452BEA52FB003959FB /* RxTest */ = {
 			isa = XCSwiftPackageProductDependency;
