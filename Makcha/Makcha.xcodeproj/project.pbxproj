@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		205075D52BF55F3A00BAC30E /* SearchPathViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */; };
+		205075D82BF9A15E00BAC30E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075D72BF9A15E00BAC30E /* SettingsViewController.swift */; };
+		205075DB2BF9A41200BAC30E /* RemarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075DA2BF9A41200BAC30E /* RemarkViewController.swift */; };
 		205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D20F62BE912B100A7BD98 /* Preview+Extension.swift */; };
 		20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20674F942BF0894D004E8566 /* MainViewModel.swift */; };
 		206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */ = {isa = PBXBuildFile; productRef = 206AA6052BE7A95B0057FA40 /* makcha-design-system */; };
@@ -64,6 +66,8 @@
 
 /* Begin PBXFileReference section */
 		205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPathViewController.swift; sourceTree = "<group>"; };
+		205075D72BF9A15E00BAC30E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		205075DA2BF9A41200BAC30E /* RemarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemarkViewController.swift; sourceTree = "<group>"; };
 		205D20F62BE912B100A7BD98 /* Preview+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Preview+Extension.swift"; sourceTree = "<group>"; };
 		20674F942BF0894D004E8566 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		2090BB362BEFAADC00501E2D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +135,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		205075D62BF9A14800BAC30E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				205075D72BF9A15E00BAC30E /* SettingsViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		205075D92BF9A40400BAC30E /* Remark */ = {
+			isa = PBXGroup;
+			children = (
+				205075DA2BF9A41200BAC30E /* RemarkViewController.swift */,
+			);
+			path = Remark;
+			sourceTree = "<group>";
+		};
 		B86232D72BE7A761003959FB /* MakchaTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,6 +340,8 @@
 		B89E7F992BE7700700A13B58 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				205075D92BF9A40400BAC30E /* Remark */,
+				205075D62BF9A14800BAC30E /* Settings */,
 				B89E7F8A2BE765D200A13B58 /* TestView.swift */,
 				B89E7F8B2BE765D200A13B58 /* TestViewController.swift */,
 				B89E7F9C2BE7707700A13B58 /* SearchPath */,
@@ -570,6 +592,8 @@
 				B8D48C172BF2164200DA2EB6 /* String+Extension.swift in Sources */,
 				B89E7FB22BE7742600A13B58 /* LocationManagerInterface.swift in Sources */,
 				B862333A2BEA04D9003959FB /* APIServiceType.swift in Sources */,
+				205075D82BF9A15E00BAC30E /* SettingsViewController.swift in Sources */,
+				205075DB2BF9A41200BAC30E /* RemarkViewController.swift in Sources */,
 				B8D48C152BF206DA00DA2EB6 /* SubwayInfo.swift in Sources */,
 				B86233322BE9FF78003959FB /* TransPathRepositoryProtocol.swift in Sources */,
 				B862334B2BEC99AB003959FB /* MakchaInfoUseCase.swift in Sources */,

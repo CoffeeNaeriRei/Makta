@@ -10,12 +10,22 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+enum MainNavLink {
+    case searchPath
+    case detail
+    case settings
+    case remark
+}
+
 final class MainViewController: UIViewController {
     // swiftlint: disable force_cast
     private var mainView: MainView {
         view as! MainView
     }
     // swiftlint: enable force_cast
+    
+    private let leftUIBarButtonItem = UIBarButtonItem()
+    private let rightUIBarButtonItem = UIBarButtonItem()
     
     private let mainViewModel: MainViewModel
     
@@ -36,6 +46,11 @@ final class MainViewController: UIViewController {
         bind()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupSheet()
+    }
+    
     public override func loadView() {
         view = MainView()
     }
@@ -49,7 +64,20 @@ final class MainViewController: UIViewController {
     }
     
     private func setupNavigationItems() {
-        navigationItem.title = "막차정보"
+        let _title = "막차정보"
+        let _leftBarButtonImage = UIImage(systemName: "gearshape")?
+            .withTintColor(UIColor(Color.cf(.grayScale(.gray700))), renderingMode: .alwaysOriginal)
+        let _rightBarButtonImage = UIImage(systemName: "star")?
+            .withTintColor(UIColor(Color.cf(.grayScale(.gray700))), renderingMode: .alwaysOriginal)
+        
+        leftUIBarButtonItem.title = "Link to Setting"
+        leftUIBarButtonItem.image = _leftBarButtonImage
+        rightUIBarButtonItem.title = "Link to Remark"
+        rightUIBarButtonItem.image = _rightBarButtonImage
+        
+        navigationItem.title = _title
+        navigationItem.leftBarButtonItem = leftUIBarButtonItem
+        navigationItem.rightBarButtonItem = rightUIBarButtonItem
     }
     
     private func setupSheet() {
@@ -71,9 +99,23 @@ final class MainViewController: UIViewController {
     }
     
     private func bind() {
-        let input = MainViewModel.Input()
+        let input = MainViewModel.Input(settingButtonTap: leftUIBarButtonItem.rx.tap, 
+                                        starButtonTap: rightUIBarButtonItem.rx.tap)
+        input.settingButtonTap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.pushNavigation(.settings)
+            }
+            .disposed(by: disposeBag)
+        input.starButtonTap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.pushNavigation(.remark)
+            }
+            .disposed(by: disposeBag)
+        
         let output = mainViewModel.transform(input: input)
-
+        
         output.realTimeArrivals // 실시간 도착정보 뷰 확인용
             .map {
                 if let time = $0[0].first {
@@ -86,6 +128,22 @@ final class MainViewController: UIViewController {
             .disposed(by: disposeBag)
         
         input.viewDidLoadEvent.accept(()) // 바인딩이 끝난 뒤에 viewDldLoad 이벤트 1회 발생
+    }
+    
+    private func pushNavigation(_ link: MainNavLink) {
+        switch link {
+        case .searchPath:
+            print("Navigation To")
+        case .detail:
+            print("Navigation To")
+        case .settings:
+            print("Navigation To")
+            navigationController?.dismiss(animated: true)
+            navigationController?.pushViewController(SettingsViewController(), animated: true)
+        case .remark:
+            navigationController?.dismiss(animated: true)
+            navigationController?.pushViewController(RemarkViewController(), animated: true)
+        }
     }
 }
 

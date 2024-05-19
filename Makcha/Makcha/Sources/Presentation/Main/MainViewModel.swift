@@ -25,8 +25,8 @@ final class MainViewModel: ViewModelType {
     
     struct Input {
         let viewDidLoadEvent = PublishRelay<Void>() // 화면 최초 로딩 이벤트 (현재 위치 기반 경로 불러오기)
-        let settingButtonTap = PublishRelay<Void>() // [설정] 버튼 탭
-        let starButtonTap = PublishRelay<Void>() // [즐겨찾기] 버튼 탭
+        let settingButtonTap: ControlEvent<Void> // [설정] 버튼 탭
+        let starButtonTap: ControlEvent<Void> // [즐겨찾기] 버튼 탭
         let resetToCurrentLocationTap = PublishRelay<Void>() // [현재 위치로 재설정] 버튼 탭
         let detailViewTap = PublishRelay<Int>() // [자세히보기] 탭
     }
@@ -46,6 +46,19 @@ final class MainViewModel: ViewModelType {
                 self?.makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
             })
             .disposed(by: disposeBag)
+        input.settingButtonTap
+            .withUnretained(self)
+            .subscribe { _, _ in
+                print("Setting Link Click")
+            }
+            .disposed(by: disposeBag)
+        input.starButtonTap
+            .withUnretained(self)
+            .subscribe { _, _ in
+                print("Setting Link Click")
+            }
+            .disposed(by: disposeBag)
+
         
         // output
         let startTime = makchaInfoUseCase.makchaInfo
