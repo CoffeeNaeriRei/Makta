@@ -47,6 +47,9 @@
 		B8C31EA32BEF41220049B47C /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31EA22BEF41220049B47C /* Date+Extension.swift */; };
 		B8C31EA62BEF415E0049B47C /* UtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31EA52BEF415E0049B47C /* UtilsTest.swift */; };
 		B8D48C0F2BF0CFC800DA2EB6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB362BEFAADC00501E2D /* MainViewController.swift */; };
+		B8D48C112BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D48C102BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift */; };
+		B8D48C152BF206DA00DA2EB6 /* SubwayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D48C142BF206DA00DA2EB6 /* SubwayInfo.swift */; };
+		B8D48C172BF2164200DA2EB6 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D48C162BF2164200DA2EB6 /* String+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +101,9 @@
 		B8C31EA02BEE1A2A0049B47C /* EndPointRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointRepositoryTests.swift; sourceTree = "<group>"; };
 		B8C31EA22BEF41220049B47C /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		B8C31EA52BEF415E0049B47C /* UtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTest.swift; sourceTree = "<group>"; };
+		B8D48C102BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeoulRealtimeSubwayDTO.swift; sourceTree = "<group>"; };
+		B8D48C142BF206DA00DA2EB6 /* SubwayInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayInfo.swift; sourceTree = "<group>"; };
+		B8D48C162BF2164200DA2EB6 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				B89E7FAF2BE773D100A13B58 /* TransPathDTO.swift */,
+				B8D48C102BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -288,6 +295,7 @@
 			children = (
 				B86233332BEA004A003959FB /* MakchaInfo.swift */,
 				B86233472BEA9B2D003959FB /* EndPoint.swift */,
+				B8D48C142BF206DA00DA2EB6 /* SubwayInfo.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -353,6 +361,7 @@
 				205D20F62BE912B100A7BD98 /* Preview+Extension.swift */,
 				B862333C2BEA059A003959FB /* CommonTypealias.swift */,
 				B8C31EA22BEF41220049B47C /* Date+Extension.swift */,
+				B8D48C162BF2164200DA2EB6 /* String+Extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -551,14 +560,17 @@
 				B89E7F8C2BE765D200A13B58 /* TestView.swift in Sources */,
 				205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */,
 				B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */,
+				B8D48C112BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift in Sources */,
 				B862332E2BE9FC86003959FB /* LocationServiceError.swift in Sources */,
 				B8C31E9D2BEE18890049B47C /* EndPointRepositoryProtocol.swift in Sources */,
 				B862333D2BEA059A003959FB /* CommonTypealias.swift in Sources */,
 				B8D48C0F2BF0CFC800DA2EB6 /* MainViewController.swift in Sources */,
 				2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */,
 				20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */,
+				B8D48C172BF2164200DA2EB6 /* String+Extension.swift in Sources */,
 				B89E7FB22BE7742600A13B58 /* LocationManagerInterface.swift in Sources */,
 				B862333A2BEA04D9003959FB /* APIServiceType.swift in Sources */,
+				B8D48C152BF206DA00DA2EB6 /* SubwayInfo.swift in Sources */,
 				B86233322BE9FF78003959FB /* TransPathRepositoryProtocol.swift in Sources */,
 				B862334B2BEC99AB003959FB /* MakchaInfoUseCase.swift in Sources */,
 				B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */,

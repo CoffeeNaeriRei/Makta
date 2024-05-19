@@ -26,8 +26,6 @@ struct MakchaPath: Equatable {
     let makchaPathType: MakchaPathType // 경로 유형
     let arrivalTime: Date // 도착시간
     let totalTime: Int // 총 소요시간 (단위: 분)
-//    let firstSubPathRemaining: Int // 첫번째 세부경로 이동수단 도착까지 남은 시간 (단위: 분) // TODO: - 실시간 도착 정보 활용하기
-//    let firstSubPathNextRemaining: Int // 첫번째 세부경로 이동수단 다음 2번째 도착까지 남은 시간 (단위: 분) // TODO: - 실시간 도착 정보 활용하기
     let subPath: [MakchaSubPath] // 세부경로들
 }
 
@@ -52,6 +50,10 @@ struct MakchaSubPath: Equatable {
     let endName: String? // 하차 정류장
     let stations: [PassStation]? // 거치는 정거장(역)들
     
+    // 지하철🚇일 경우에만
+    let way: String? // 방면 정보 ex) "종로3가"
+    let wayCode: Int? // 방면 정보 코드 (1:상행, 2:하행)
+    
     init(
         idx: Int,
         subPathType: SubPathType,
@@ -62,7 +64,9 @@ struct MakchaSubPath: Equatable {
         lane: [LaneInfo]? = nil,
         startName: String? = nil,
         endName: String? = nil,
-        stations: [PassStation]? = nil
+        stations: [PassStation]? = nil,
+        way: String? = nil,
+        wayCode: Int? = nil
     ) {
         self.idx = idx
         self.subPathType = subPathType
@@ -74,6 +78,8 @@ struct MakchaSubPath: Equatable {
         self.startName = startName
         self.endName = endName
         self.stations = stations
+        self.way = way
+        self.wayCode = wayCode
     }
 }
 
@@ -86,8 +92,16 @@ enum SubPathType: String {
 // 세부경로의 교통수단 정보
 struct LaneInfo: Equatable {
     let name: String // 지하철 노선명 or 버스 번호
+    let subwayCode: Int? // 지하철 노선 번호
     
     // 필요시 지하철 노선 번호, 버스 코드 등 추가 가능
+    init(
+        name: String,
+        subwayCode: Int? = nil
+    ) {
+        self.name = name
+        self.subwayCode = subwayCode
+    }
 }
 
 // 세부경로에서 거치는 정거장(역) 정보 (Station 이름이 DTO 모델과 겹쳐서 PassStation으로 함)
@@ -121,7 +135,7 @@ let mockMakchaInfo = MakchaInfo(
                     time: 15,
                     stationCount: 7,
                     lane: [
-                        LaneInfo(name: "수도권 3호선")
+                        LaneInfo(name: "수도권 3호선", subwayCode: 3)
                     ],
                     startName: "불광",
                     endName: "종로3가",
@@ -134,7 +148,9 @@ let mockMakchaInfo = MakchaInfo(
                         PassStation(index: 5,name: "경복궁"),
                         PassStation(index: 6,name: "안국"),
                         PassStation(index: 7,name: "종로3가")
-                    ]
+                    ],
+                    way: "종로3가",
+                    wayCode: 2
                 ),
                 MakchaSubPath(
                     idx: 2,
@@ -149,7 +165,7 @@ let mockMakchaInfo = MakchaInfo(
                     time: 37,
                     stationCount: 18,
                     lane: [
-                        LaneInfo(name: "수도권 5호선")
+                        LaneInfo(name: "수도권 5호선", subwayCode: 5)
                     ],
                     startName: "종로3가",
                     endName: "오금",
@@ -173,7 +189,9 @@ let mockMakchaInfo = MakchaInfo(
                         PassStation(index: 16, name: "올림픽공원"),
                         PassStation(index: 17, name: "방이"),
                         PassStation(index: 18, name: "오금")
-                    ]
+                    ],
+                    way: "오금",
+                    wayCode: 2
                 ),
                 MakchaSubPath(
                     idx: 4,
@@ -237,7 +255,7 @@ let mockMakchaInfo = MakchaInfo(
                     time: 40,
                     stationCount: 20,
                     lane: [
-                        LaneInfo(name: "수도권 5호선")
+                        LaneInfo(name: "수도권 5호선", subwayCode: 5)
                     ],
                     startName: "서대문",
                     endName: "오금",
@@ -263,7 +281,9 @@ let mockMakchaInfo = MakchaInfo(
                         PassStation(index: 18, name: "올림픽공원"),
                         PassStation(index: 19, name: "방이"),
                         PassStation(index: 20, name: "오금")
-                    ]
+                    ],
+                    way: "오금",
+                    wayCode: 2
                 ),
                 MakchaSubPath(
                     idx: 4,
