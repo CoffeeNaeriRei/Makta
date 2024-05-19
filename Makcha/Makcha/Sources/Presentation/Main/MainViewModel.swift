@@ -59,7 +59,6 @@ final class MainViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
 
-        
         // output
         let startTime = makchaInfoUseCase.makchaInfo
             .map { "\($0.startTimeStr) 출발" }

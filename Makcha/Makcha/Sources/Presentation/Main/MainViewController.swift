@@ -47,7 +47,8 @@ final class MainViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        super.viewDidAppear(animated)
+        // Sheet Setting
         setupSheet()
     }
     
@@ -57,8 +58,6 @@ final class MainViewController: UIViewController {
     
     private func setup() {
         view.backgroundColor = .white
-        // Sheet Setting
-        setupSheet()
         // NavigationLink Setting
         setupNavigationItems()
     }
@@ -137,7 +136,6 @@ final class MainViewController: UIViewController {
         case .detail:
             print("Navigation To")
         case .settings:
-            print("Navigation To")
             navigationController?.dismiss(animated: true)
             navigationController?.pushViewController(SettingsViewController(), animated: true)
         case .remark:
