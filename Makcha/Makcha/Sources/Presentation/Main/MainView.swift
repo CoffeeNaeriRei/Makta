@@ -18,6 +18,7 @@ final class MainView: UIView {
     var currentTimeLabel = UILabel()
     // test용
     var currentPathCountLabel = UILabel()
+    private let cellTemplate = MainCollectionCell()
     var collectionViewLayout = UICollectionViewFlowLayout()
     var collectionView: UICollectionView
     
@@ -25,7 +26,9 @@ final class MainView: UIView {
         collectionView = MainCollectionView(collectionViewLayout)
         super.init(frame: .zero)
         layout()
+        
         addSubview(rootView)
+        addSubview(collectionView)
     }
     
     required init?(coder: NSCoder) {
@@ -35,11 +38,26 @@ final class MainView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        rootView.pin.all(pin.safeArea)
-        rootView.flex.layout()
+        rootView.pin.top(pin.safeArea).horizontally()
+        rootView.flex.layout(mode: .adjustHeight)
+        
+        collectionView.pin.top(pin.safeArea)
+            .horizontally().vertically()
+            .margin(rootView.frame.height, 0, 185, 0)
+    }
+    
+    private func setupCollectionView() {
+        collectionViewLayout.minimumLineSpacing = 0
+        collectionViewLayout.minimumInteritemSpacing = 0
+        collectionViewLayout.sectionHeadersPinToVisibleBounds = true
+        
+        collectionView.delegate = self
+        collectionView.register(cellType: MainCollectionCell.self)
     }
     
     private func layout() {
+        setupCollectionView()
+        
         currentTimeLabel.attributedText = .pretendard("오늘의 시간", scale: .title)
         currentPathCountLabel.attributedText = .pretendard("갯수", scale: .headline)
         
@@ -49,11 +67,16 @@ final class MainView: UIView {
                     $0.addItem(currentTimeLabel).grow(1)
                     $0.addItem(currentPathCountLabel).grow(1)
                 }
-                $0.addItem(collectionView)
             }
             .padding(.cfSpacing(.large))
         }
         .border(1, .red)
+    }
+}
+
+extension MainView: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        cellTemplate.sizeThatFits(.init(width: collectionView.bounds.width, height: .greatestFiniteMagnitude))
     }
 }
 

@@ -18,6 +18,13 @@ final class MainViewModel: ViewModelType {
     
     private let disposeBag = DisposeBag()
     
+    // 임시
+    var tempSections = BehaviorRelay(value: [SectionOfMainCard]()) {
+        didSet {
+            print(tempSections)
+        }
+    }
+    
     init(_ makchaInfoUseCase: MakchaInfoUseCase) {
         self.makchaInfoUseCase = makchaInfoUseCase
     }
@@ -74,7 +81,15 @@ final class MainViewModel: ViewModelType {
         let makchaPaths = makchaInfoUseCase.makchaInfo
             .map { $0.makchaPaths }
             .asDriver(onErrorJustReturn: [])
-        
+
+        makchaInfoUseCase.makchaInfo
+            .map { [SectionOfMainCard(model: "collection", items: $0.makchaPaths)] }
+            .withUnretained(self)
+            .subscribe { vm, sections in
+                vm.tempSections.accept(sections)
+            }
+            .disposed(by: disposeBag)
+
         let realtimeArrivals = makchaInfoUseCase.realtimeArrivals
             .asDriver(onErrorJustReturn: [])
         

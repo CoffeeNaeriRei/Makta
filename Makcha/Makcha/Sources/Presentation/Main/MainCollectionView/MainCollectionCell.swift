@@ -10,8 +10,9 @@ import UIKit
 import PinLayout
 import FlexLayout
 import MakchaDesignSystem
+import Reusable
 
-final class MainCollectionCell: UICollectionViewCell {
+final class MainCollectionCell: UICollectionViewCell, Reusable {
     var pathTypelabel: UILabel {
         let label = UILabel()
         label.attributedText = .pretendard("경로 종류",

@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 enum MainNavLink {
     case searchPath
@@ -16,6 +17,8 @@ enum MainNavLink {
     case settings
     case remark
 }
+
+typealias SectionOfMainCard = SectionModel<String, MakchaPath>
 
 final class MainViewController: UIViewController {
     // swiftlint: disable force_cast
@@ -26,6 +29,8 @@ final class MainViewController: UIViewController {
     
     private let leftUIBarButtonItem = UIBarButtonItem()
     private let rightUIBarButtonItem = UIBarButtonItem()
+    
+    private var dataSource: RxCollectionViewSectionedReloadDataSource<SectionOfMainCard>?
     
     private let mainViewModel: MainViewModel
     
@@ -60,6 +65,7 @@ final class MainViewController: UIViewController {
         view.backgroundColor = .white
         // NavigationLink Setting
         setupNavigationItems()
+        setupCollectionView()
     }
     
     private func setupNavigationItems() {
@@ -97,6 +103,16 @@ final class MainViewController: UIViewController {
         present(searchPathSheet, animated: true)
     }
     
+    private func setupCollectionView() {
+        dataSource = RxCollectionViewSectionedReloadDataSource<SectionOfMainCard>(
+            configureCell: { _, collectionView, indexPath, cardInfo in
+                let cell: MainCollectionCell = collectionView.dequeueReusableCell(for: indexPath)
+                
+                return cell
+            }
+        )
+    }
+    
     private func bind() {
         let input = MainViewModel.Input(settingButtonTap: leftUIBarButtonItem.rx.tap, 
                                         starButtonTap: rightUIBarButtonItem.rx.tap)
@@ -131,10 +147,15 @@ final class MainViewController: UIViewController {
             .map { $0.count.description }
             .drive(mainView.currentPathCountLabel.rx.text)
             .disposed(by: disposeBag)
+    
+        guard let dataSource = dataSource else { return }
+        mainViewModel.tempSections
+            .bind(to: mainView.collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
         
         input.viewDidLoadEvent.accept(()) // 바인딩이 끝난 뒤에 viewDldLoad 이벤트 1회 발생
     }
-    
+
     private func pushNavigation(_ link: MainNavLink) {
         switch link {
         case .searchPath:
