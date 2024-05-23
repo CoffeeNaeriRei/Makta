@@ -11,6 +11,7 @@
 		20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20674F942BF0894D004E8566 /* MainViewModel.swift */; };
 		206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */ = {isa = PBXBuildFile; productRef = 206AA6052BE7A95B0057FA40 /* makcha-design-system */; };
 		2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB382BEFAB7F00501E2D /* MainView.swift */; };
+		B81BDE502BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */; };
 		B82953D22BF5DDBB00EABD57 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */; };
 		B86232E02BE7A7F0003959FB /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */; };
 		B86232E42BE7B152003959FB /* APIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232E32BE7B152003959FB /* APIServiceTests.swift */; };
@@ -68,6 +69,7 @@
 		2090BB362BEFAADC00501E2D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		2090BB382BEFAB7F00501E2D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		20B88A732BE79DC40088AF73 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeoulRealtimeBusStationDTO.swift; sourceTree = "<group>"; };
 		B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B86232CD2BE77D2B003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232CF2BE77D2F003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 			children = (
 				B89E7FAF2BE773D100A13B58 /* TransPathDTO.swift */,
 				B8D48C102BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift */,
+				B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 				2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */,
 				20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */,
 				B8D48C172BF2164200DA2EB6 /* String+Extension.swift in Sources */,
+				B81BDE502BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift in Sources */,
 				B89E7FB22BE7742600A13B58 /* LocationManagerInterface.swift in Sources */,
 				B862333A2BEA04D9003959FB /* APIServiceType.swift in Sources */,
 				B8D48C152BF206DA00DA2EB6 /* SubwayInfo.swift in Sources */,
