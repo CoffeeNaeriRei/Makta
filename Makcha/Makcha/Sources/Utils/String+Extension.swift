@@ -30,4 +30,10 @@ extension String {
             return nil
         }
     }
+    
+    // String에서 하이픈(-)을 제거해주는 메서드
+    /// 정류소고유번호 ardID를 "12-022" 👉 "12022" 형식으로 변환할 때 사용
+    func removeHyphen() -> Self {
+        return self.replacingOccurrences(of: "-", with: "")
+    }
 }

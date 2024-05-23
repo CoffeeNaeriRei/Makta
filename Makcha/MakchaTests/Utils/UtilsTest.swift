@@ -68,4 +68,17 @@ final class UtilsTest: XCTestCase {
         // Then
         XCTAssertEqual(result, expectedResult)
     }
+    
+    func test_StringExtension의_removeSymbol() {
+        // Given
+        let mockStr = "12-022"
+        let result: String
+        let expectedResult = "12022"
+        
+        // When
+        result = mockStr.removeHyphen()
+        
+        // Then
+        XCTAssertEqual(result, expectedResult)
+    }
 }
