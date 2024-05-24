@@ -54,6 +54,9 @@ struct MakchaSubPath: Equatable {
     let way: String? // 방면 정보 ex) "종로3가"
     let wayCode: Int? // 방면 정보 코드 (1:상행, 2:하행)
     
+    // 버스🚌일 경우에만
+    let startArsID: String? // 출발 정류장 고유번호(arsID)
+    
     init(
         idx: Int,
         subPathType: SubPathType,
@@ -66,7 +69,8 @@ struct MakchaSubPath: Equatable {
         endName: String? = nil,
         stations: [PassStation]? = nil,
         way: String? = nil,
-        wayCode: Int? = nil
+        wayCode: Int? = nil,
+        startArsID: String? = nil
     ) {
         self.idx = idx
         self.subPathType = subPathType
@@ -80,6 +84,7 @@ struct MakchaSubPath: Equatable {
         self.stations = stations
         self.way = way
         self.wayCode = wayCode
+        self.startArsID = startArsID
     }
 }
 
@@ -240,7 +245,8 @@ let mockMakchaInfo = MakchaInfo(
                         PassStation(index: 10, name: "영천시장"),
                         PassStation(index: 11, name: "금화초등학교.서울시교육청"),
                         PassStation(index: 12, name: "서대문역사거리.농협중앙회")
-                    ]
+                    ],
+                    startArsID: "12-022"
                 ),
                 MakchaSubPath(
                     idx: 2,
