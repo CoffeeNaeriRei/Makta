@@ -14,7 +14,7 @@ import Foundation
 struct SeoulRealtimeBusStationDTO: Codable, Equatable {
     let comMsgHeader: ComMsgHeader
     let msgHeader: MsgHeader
-    let arrivals: Arrivals
+    let arrivals: BusArrivals
     
     enum CodingKeys: String, CodingKey {
         case comMsgHeader
@@ -26,11 +26,11 @@ struct SeoulRealtimeBusStationDTO: Codable, Equatable {
 struct ComMsgHeader: Codable, Equatable { }
 struct MsgHeader: Codable, Equatable { }
 
-struct Arrivals: Codable, Equatable {
-    let itemList: [Arrival]
+struct BusArrivals: Codable, Equatable {
+    let itemList: [BusArrival]
 }
 
-struct Arrival: Codable, Equatable {
+struct BusArrival: Codable, Equatable {
     let stationID: String // 정류소 고유 ID
     let stationName: String // 정류소명
     let arsID: String // 정류소 번호
@@ -345,8 +345,8 @@ extension SeoulRealtimeBusStationDTO {
         SeoulRealtimeBusStationDTO(
             comMsgHeader: ComMsgHeader(),
             msgHeader: MsgHeader(),
-            arrivals: Arrivals(itemList: [
-                Arrival(
+            arrivals: BusArrivals(itemList: [
+                BusArrival(
                     stationID: "111000931",
                     stationName: "불광역3.6호선",
                     arsID: "12022",
@@ -394,7 +394,7 @@ extension SeoulRealtimeBusStationDTO {
                     congestion1: "0",
                     congestion2: "0"
                 ),
-                Arrival(
+                BusArrival(
                     stationID: "111000931",
                     stationName: "불광역3.6호선",
                     arsID: "12022",
@@ -442,7 +442,7 @@ extension SeoulRealtimeBusStationDTO {
                     congestion1: "3",
                     congestion2: "4"
                 ),
-                Arrival(
+                BusArrival(
                     stationID: "111000931",
                     stationName: "불광역3.6호선",
                     arsID: "12022",
