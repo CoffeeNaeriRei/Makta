@@ -104,10 +104,8 @@ struct APIService: APIServiceInterface {
             }
             guard let seoulRealtimeBusStationDTO = try? JSONDecoder().decode(SeoulRealtimeBusStationDTO.self, from: data) else {
                 completion(.failure(APIServiceError.decodingError))
-                print("실패 APIServiceError.decodingError")
                 return
             }
-            print("성공")
             completion(.success(seoulRealtimeBusStationDTO))
         }.resume()
     }
@@ -166,7 +164,6 @@ extension APIService {
         seoulRealtimeBusStationURL += "?serviceKey=\(apiKey)"
         seoulRealtimeBusStationURL += "&arsId=\(arsID.removeHyphen())"
         seoulRealtimeBusStationURL += "&resultType=json"
-        print("URL: \(seoulRealtimeBusStationURL)")
         
         return seoulRealtimeBusStationURL
     }

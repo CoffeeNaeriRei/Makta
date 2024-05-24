@@ -67,7 +67,7 @@ final class TransPathRepository: TransPathRepositoryProtocol {
             print("지하철역 이름: \(stationName)")
             print("호선 정보: subwayLineCodeInt(\(subwayLineCodeInt)) 👉 subwayLineCode(\(subwayLineCode))")
             print("호선 정보:  wayCodeInt(\(wayCodeInt)) 👉 wayCode\(wayCode)")
-            // 서울시 실시간 도착정보 API 호출
+            // 서울시 실시간 지하철 도착정보 API 호출
             self.apiService.fetchSeoulRealtimeSubwayArrival(stationName: stationName) { result in
                 switch result {
                 case .success(let seoulRealtimeSubwayDTO):
@@ -80,11 +80,11 @@ final class TransPathRepository: TransPathRepositoryProtocol {
                     // TODO: - 지하철 도착 메세지 등 정보도 확인해서 적절한 ArrivalStatus로 반환할 수 있도록 수정하기
                     // 1번째 도착정보 구해서 반영
                     let firstArrivalTime = self.extractRealRemainingFromArrivals(from: firstArr, currentTime: currentTime)
-                    realtimeArrival.first = .coming(remaingSecond: firstArrivalTime)
+                    realtimeArrival.first = .coming(remainingSecond: firstArrivalTime)
                     
                     // 2번째 도착정보 구해서 반영
                     let secondArrivalTime = self.extractRealRemainingFromArrivals(from: secondArr, currentTime: currentTime)
-                    realtimeArrival.second = .coming(remaingSecond: secondArrivalTime)
+                    realtimeArrival.second = .coming(remainingSecond: secondArrivalTime)
                     
                     emitter.onNext(realtimeArrival)
                     emitter.onCompleted()
@@ -235,7 +235,10 @@ extension TransPathRepository {
             for eachLane in laneArr {
                 let laneInfo: LaneInfo
                 if let subwayLine = eachLane.name { // 지하철 노선 정보
-                    laneInfo = LaneInfo(name: subwayLine, subwayCode: eachLane.subwayCode)
+                    laneInfo = LaneInfo(
+                        name: subwayLine,
+                        subwayCode: eachLane.subwayCode
+                    )
                     laneInfoArr.append(laneInfo)
                     continue
                 }
@@ -344,7 +347,7 @@ extension TransPathRepository {
         } else if arrivalMessage.contains("곧 도착") {
             return .arriveSoon
         } else if arrivalMessage.isContainsNumber() {
-            return .coming(remaingSecond: arrivalMessage.getSeoulBusRemainingSecond())
+            return .coming(remainingSecond: arrivalMessage.getSeoulBusRemainingSecond())
         } else {
             return .unknown
         }

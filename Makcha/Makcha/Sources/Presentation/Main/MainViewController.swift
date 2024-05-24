@@ -64,7 +64,7 @@ final class MainViewController: UIViewController {
             .map {
                 let firstArrivalStatus = $0[0].first
                 switch firstArrivalStatus {
-                case .coming(remaingSecond: let sec):
+                case .coming(remainingSecond: let sec):
                     return sec.remainingTimeString
                 case .arriveSoon:
                     return "곧 도착"
