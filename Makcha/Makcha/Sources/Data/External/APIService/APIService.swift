@@ -21,6 +21,10 @@ protocol APIServiceInterface {
         stationName: String,
         completion: @escaping (Result<SeoulRealtimeSubwayDTO, APIServiceError>) -> Void
     )
+    func fetchSeoulRealtimeBusStationInfo(
+        arsID: String,
+        completion: @escaping (Result<SeoulRealtimeBusStationDTO, APIServiceError>) -> Void
+    )
 }
 
 // MARK: - APIService 정의
