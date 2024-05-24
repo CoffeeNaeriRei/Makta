@@ -62,10 +62,18 @@ final class MainViewController: UIViewController {
 //            .disposed(by: disposeBag)
         output.realTimeArrivals // 실시간 도착정보 뷰 확인용
             .map {
-                if let time = $0[0].first {
-                    return time.remainingTimeString
-                } else {
-                    return ""
+                let firstArrivalStatus = $0[0].first
+                switch firstArrivalStatus {
+                case .coming(remaingSecond: let sec):
+                    return sec.remainingTimeString
+                case .arriveSoon:
+                    return "곧 도착"
+                case .finished:
+                    return "운행 종료"
+                case .waiting:
+                    return "출발 대기"
+                case .unknown:
+                    return "불러오지 못함"
                 }
             }
             .drive(mainView.currentTimeLabel.rx.text)

@@ -54,7 +54,7 @@ final class TransPathRepository: TransPathRepositoryProtocol {
         currentTime: Date // 현재 시간 (남은 시간 계산 시 필요)
     ) -> Observable<RealtimeArrivalTuple> {
         return Observable.create { emitter in
-            var realtimeArrival: RealtimeArrivalTuple = (nil, nil) // 반환할 실시간 도착정보 튜플
+            var realtimeArrival: RealtimeArrivalTuple = (.unknown, .unknown) // 반환할 실시간 도착정보 튜플
             
             // 서울시 실시간 지하철 도착정보 API에 필요한 [호선ID]와 [방면코드] 추출
             guard let subwayLineCode = SubwayCode(rawValue: subwayLineCodeInt)?.seoulRealtimeSubwayID,
@@ -77,19 +77,51 @@ final class TransPathRepository: TransPathRepositoryProtocol {
                     let firstArr = self.filteringSeoulArrivalSubway(from: arrivals, subwayLine: subwayLineCode, wayCode: wayCode, isFirst: true)
                     let secondArr = self.filteringSeoulArrivalSubway(from: arrivals, subwayLine: subwayLineCode, wayCode: wayCode, isFirst: false)
                     
+                    // TODO: - 지하철 도착 메세지 등 정보도 확인해서 적절한 ArrivalStatus로 반환할 수 있도록 수정하기
                     // 1번째 도착정보 구해서 반영
                     let firstArrivalTime = self.extractRealRemainingFromArrivals(from: firstArr, currentTime: currentTime)
-                    realtimeArrival.first = firstArrivalTime
+                    realtimeArrival.first = .coming(remaingSecond: firstArrivalTime)
                     
                     // 2번째 도착정보 구해서 반영
                     let secondArrivalTime = self.extractRealRemainingFromArrivals(from: secondArr, currentTime: currentTime)
-                    realtimeArrival.second = secondArrivalTime
+                    realtimeArrival.second = .coming(remaingSecond: secondArrivalTime)
                     
                     emitter.onNext(realtimeArrival)
                     emitter.onCompleted()
                 case .failure(let error):
                     print("[APIService] - ❌ fetchSeoulRealtimeSubwayArrival() 호출 실패 \(error.localizedDescription)")
                     // 실시간 정보를 불러오지 못해도 기본값으로 전달
+                    emitter.onNext(realtimeArrival)
+                    emitter.onCompleted()
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    // 노선ID + 노선명 + 버스정류장 ID를 기반으로 해당하는 서울시 버스 정류장에서 해당 노선의 실시간 도착정보를 2개 받아와서 전달
+    func getSeoulRealtimeBusArrival(
+        routeID: String, // 노선ID (Lane > busID)
+        routeName: String, // 노선명(버스노선번호) (Lane > busNo)
+        arsID: String // 정류장ID
+    ) -> Observable<RealtimeArrivalTuple> {
+        return Observable.create() { emitter in
+            var realtimeArrival: RealtimeArrivalTuple = (.unknown, .unknown) // 반환할 실시간 도착정보 튜플
+            // 서울시 정류소정보조회 API 호출
+            self.apiService.fetchSeoulRealtimeBusStationInfo(arsID: arsID) { result in
+                switch result {
+                case .success(let seoulRealtimeBusStationDTO):
+                    print("[APIService] - ✅ fetchSeoulRealtimeBusStationInfo() 호출 성공!!")
+                    for arrival in seoulRealtimeBusStationDTO.arrivals.itemList {
+                        if (arrival.busRouteID == routeID) && (arrival.busRouteName == routeName) {
+                            let firstArrivalStatus = self.getBusArrivalStatusFromSeoulBusStation(arrivalMessage: arrival.arrivalMessage1)
+                            let secondArrivalStatus = self.getBusArrivalStatusFromSeoulBusStation(arrivalMessage: arrival.arrivalMessage2)
+                            
+                            // TODO: - arrivalStatus에 따라 튜플 만들기
+                        }
+                    }
+                case .failure(let error):
+                    print("[APIService] - ❌ fetchSeoulRealtimeBusStationInfo() 호출 실패 \(error.localizedDescription)")
                     emitter.onNext(realtimeArrival)
                     emitter.onCompleted()
                 }
@@ -295,6 +327,26 @@ extension TransPathRepository {
             return realRemainingTime
         } else {
             return -1
+        }
+    }
+}
+
+// MARK: - 서울시 실시간 버스 도착정보 불러오기 관련 유틸리티 메서드
+
+extension TransPathRepository {
+    
+    // 버스의 도착 상태를 구해서 BusArrivalStatus 타입 값을 반환하는 메서드
+    func getBusArrivalStatusFromSeoulBusStation(arrivalMessage: String) -> ArrivalStatus {
+        if arrivalMessage.contains("출발대기") {
+            return .waiting
+        } else if arrivalMessage.contains("운행종료") {
+            return .finished
+        } else if arrivalMessage.contains("곧 도착") {
+            return .arriveSoon
+        } else if arrivalMessage.isContainsNumber() {
+            return .coming(remaingSecond: arrivalMessage.getSeoulBusRemainingSecond())
+        } else {
+            return .unknown
         }
     }
 }

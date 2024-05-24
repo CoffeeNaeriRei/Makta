@@ -8,7 +8,7 @@
 // MARK: - 버스|지하철의 도착 정보와 관련된 타입들을 정의
 
 // 실시간 도착 정보를 나타내는 튜플 (첫번째도착상태, 두번째도착상태)
-typealias RealtimeArrivalTuple = (first: ArrivalStatus?, second: ArrivalStatus?)
+typealias RealtimeArrivalTuple = (first: ArrivalStatus, second: ArrivalStatus)
 
 // 버스와 지하철의 실시간 도착 상태를 나타내는 타입
 enum ArrivalStatus {
