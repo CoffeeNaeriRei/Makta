@@ -88,7 +88,7 @@ final class MakchaInfoUseCase {
             // 첫번째 대중교통 세부경로가 있을 때만 실시간 도착정보를 받아옴 (0번 인덱스는 항상 도보임)
             if let firstTransSubPath = makchaPath.subPath.first(where: { $0.idx == 1 }) {
                 switch firstTransSubPath.subPathType {
-                case .subway: // 지하철
+                case .subway: // 🚇지하철
                     print("실시간 지하철 도착정보 API 호출")
                     if let stationName = firstTransSubPath.startName,
                        let subwayLine = firstTransSubPath.lane?.first?.subwayCode,
@@ -101,9 +101,23 @@ final class MakchaInfoUseCase {
                         )
                         realtimeArrivalObservables.append(observable)
                     }
-                case .bus: // 버스
-                    // TODO: - 버스 실시간 도착정보 불러오기
-                    print("실시간 버스 도착정보 API 호출하기")
+                    
+                case .bus: // 🚌버스
+                    // 노선ID, 노선명, arsID 구해서 전달
+                    if let lanes = firstTransSubPath.lane,
+                       let arsID = firstTransSubPath.startArsID {
+                        
+                        let routeIDs = lanes.compactMap { $0.busRouteID }
+                        let routeNames = lanes.map { $0.name }
+                        print("실시간 버스 도착정보 API 호출")
+                        let observable = transPathRepository.getSeoulRealtimeBusArrival(
+                            routeIDs: routeIDs,
+                            routeNames: routeNames,
+                            arsID: arsID
+                        )
+                        realtimeArrivalObservables.append(observable)
+                    }
+                    
                 default:
                     break
                 }
