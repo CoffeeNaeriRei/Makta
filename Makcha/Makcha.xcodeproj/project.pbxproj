@@ -12,7 +12,7 @@
 		206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */ = {isa = PBXBuildFile; productRef = 206AA6052BE7A95B0057FA40 /* makcha-design-system */; };
 		2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB382BEFAB7F00501E2D /* MainView.swift */; };
 		B81BDE502BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */; };
-		B81BDE522BFF9A8700CFDC7A /* BusInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81BDE512BFF9A8700CFDC7A /* BusInfo.swift */; };
+		B81BDE522BFF9A8700CFDC7A /* ArrivalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81BDE512BFF9A8700CFDC7A /* ArrivalType.swift */; };
 		B82953D22BF5DDBB00EABD57 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */; };
 		B86232E02BE7A7F0003959FB /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */; };
 		B86232E42BE7B152003959FB /* APIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232E32BE7B152003959FB /* APIServiceTests.swift */; };
@@ -22,7 +22,7 @@
 		B86233342BEA004A003959FB /* MakchaInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86233332BEA004A003959FB /* MakchaInfo.swift */; };
 		B86233382BEA035F003959FB /* TransPathRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86233372BEA035F003959FB /* TransPathRepository.swift */; };
 		B862333A2BEA04D9003959FB /* APIServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86233392BEA04D9003959FB /* APIServiceType.swift */; };
-		B862333D2BEA059A003959FB /* CommonTypealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862333C2BEA059A003959FB /* CommonTypealias.swift */; };
+		B862333D2BEA059A003959FB /* CommonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862333C2BEA059A003959FB /* CommonType.swift */; };
 		B86233432BEA505B003959FB /* TransPathRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86233422BEA505B003959FB /* TransPathRepositoryTests.swift */; };
 		B86233462BEA52FB003959FB /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = B86233452BEA52FB003959FB /* RxTest */; };
 		B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86233472BEA9B2D003959FB /* EndPoint.swift */; };
@@ -71,7 +71,7 @@
 		2090BB382BEFAB7F00501E2D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		20B88A732BE79DC40088AF73 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeoulRealtimeBusStationDTO.swift; sourceTree = "<group>"; };
-		B81BDE512BFF9A8700CFDC7A /* BusInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusInfo.swift; sourceTree = "<group>"; };
+		B81BDE512BFF9A8700CFDC7A /* ArrivalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalType.swift; sourceTree = "<group>"; };
 		B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B86232CD2BE77D2B003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232CF2BE77D2F003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -84,7 +84,7 @@
 		B86233332BEA004A003959FB /* MakchaInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaInfo.swift; sourceTree = "<group>"; };
 		B86233372BEA035F003959FB /* TransPathRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransPathRepository.swift; sourceTree = "<group>"; };
 		B86233392BEA04D9003959FB /* APIServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceType.swift; sourceTree = "<group>"; };
-		B862333C2BEA059A003959FB /* CommonTypealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTypealias.swift; sourceTree = "<group>"; };
+		B862333C2BEA059A003959FB /* CommonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonType.swift; sourceTree = "<group>"; };
 		B86233422BEA505B003959FB /* TransPathRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransPathRepositoryTests.swift; sourceTree = "<group>"; };
 		B86233472BEA9B2D003959FB /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		B862334A2BEC99AB003959FB /* MakchaInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaInfoUseCase.swift; sourceTree = "<group>"; };
@@ -302,7 +302,7 @@
 				B86233332BEA004A003959FB /* MakchaInfo.swift */,
 				B86233472BEA9B2D003959FB /* EndPoint.swift */,
 				B8D48C142BF206DA00DA2EB6 /* SubwayInfo.swift */,
-				B81BDE512BFF9A8700CFDC7A /* BusInfo.swift */,
+				B81BDE512BFF9A8700CFDC7A /* ArrivalType.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -366,7 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				205D20F62BE912B100A7BD98 /* Preview+Extension.swift */,
-				B862333C2BEA059A003959FB /* CommonTypealias.swift */,
+				B862333C2BEA059A003959FB /* CommonType.swift */,
 				B8C31EA22BEF41220049B47C /* Date+Extension.swift */,
 				B8D48C162BF2164200DA2EB6 /* String+Extension.swift */,
 				B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */,
@@ -561,7 +561,7 @@
 				B89E7FB02BE773D100A13B58 /* TransPathDTO.swift in Sources */,
 				B89E7FB42BE7743600A13B58 /* LocationService.swift in Sources */,
 				B86233342BEA004A003959FB /* MakchaInfo.swift in Sources */,
-				B81BDE522BFF9A8700CFDC7A /* BusInfo.swift in Sources */,
+				B81BDE522BFF9A8700CFDC7A /* ArrivalType.swift in Sources */,
 				B8C31EA32BEF41220049B47C /* Date+Extension.swift in Sources */,
 				B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */,
 				B89E7FAE2BE773B700A13B58 /* APIService.swift in Sources */,
@@ -571,7 +571,7 @@
 				B8D48C112BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift in Sources */,
 				B862332E2BE9FC86003959FB /* LocationServiceError.swift in Sources */,
 				B8C31E9D2BEE18890049B47C /* EndPointRepositoryProtocol.swift in Sources */,
-				B862333D2BEA059A003959FB /* CommonTypealias.swift in Sources */,
+				B862333D2BEA059A003959FB /* CommonType.swift in Sources */,
 				B8D48C0F2BF0CFC800DA2EB6 /* MainViewController.swift in Sources */,
 				B82953D22BF5DDBB00EABD57 /* Int+Extension.swift in Sources */,
 				2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */,
