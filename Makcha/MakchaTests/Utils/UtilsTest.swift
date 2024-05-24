@@ -81,4 +81,38 @@ final class UtilsTest: XCTestCase {
         // Then
         XCTAssertEqual(result, expectedResult)
     }
+    
+    func test_StringExtension의_isContainsNumber() {
+        // Given
+        let mockStr = "11분54초후[4번째 전]"
+        let result: Bool
+        let expectedResult = true
+        
+        // When
+        result = mockStr.isContainsNumber()
+        
+        // Then
+        XCTAssertEqual(result, expectedResult)
+    }
+    
+    func test_StringExtension의_getSeoulBusRemainingSecond이_가능한모든경우에서_초값을_제대로_추출하는지_확인() {
+        // Given
+        let mockStrArr = [
+            "11분54초후[4번째 전]",
+            "6분15초후[5번째 전]",
+            "[막차] 5분19초후[3번째 전]",
+            "2분후[2번째 전]",
+            "40초후[1번째 전]"
+        ]
+        var result = [Int]()
+        let expectedResult = [714, 375, 319, 120, 40]
+        
+        // When
+        for mock in mockStrArr {
+            result.append(mock.getSeoulBusRemainingSecond())
+        }
+        
+        // Then
+        XCTAssertEqual(result, expectedResult)
+    }
 }
