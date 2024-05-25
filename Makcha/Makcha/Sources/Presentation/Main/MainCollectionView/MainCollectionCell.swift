@@ -187,8 +187,6 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
 #if DEBUG
 import SwiftUI
 struct MainCollectionCell_Preview: PreviewProvider {
-    let pretendard: () = { CoffeeFactoryFont.registerFonts() }()
-    
     static var previews: some View {
         ViewPreview {
             MainCollectionCell()

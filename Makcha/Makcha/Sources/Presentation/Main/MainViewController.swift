@@ -109,6 +109,10 @@ final class MainViewController: UIViewController {
                 let cell: MainCollectionCell = collectionView.dequeueReusableCell(for: indexPath)
                 
                 return cell
+            }, configureSupplementaryView: { dataSource, collectionView, title, indexPath in
+                let header: MainCollectionHeaderCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, for: indexPath)
+                
+                return header
             }
         )
     }

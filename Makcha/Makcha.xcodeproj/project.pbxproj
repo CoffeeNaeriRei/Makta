@@ -19,6 +19,7 @@
 		206B510D2BFA36F800FC6F76 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 206B510C2BFA36F800FC6F76 /* Differentiator */; };
 		206B510F2BFA36F800FC6F76 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 206B510E2BFA36F800FC6F76 /* RxDataSources */; };
 		2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB382BEFAB7F00501E2D /* MainView.swift */; };
+		20E277222C0198DF0071F6CA /* MainCollectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */; };
 		B86232E02BE7A7F0003959FB /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */; };
 		B86232E42BE7B152003959FB /* APIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232E32BE7B152003959FB /* APIServiceTests.swift */; };
 		B862332E2BE9FC86003959FB /* LocationServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862332D2BE9FC86003959FB /* LocationServiceError.swift */; };
@@ -80,6 +81,7 @@
 		2090BB362BEFAADC00501E2D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		2090BB382BEFAB7F00501E2D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		20B88A732BE79DC40088AF73 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionHeaderCell.swift; sourceTree = "<group>"; };
 		B86232CD2BE77D2B003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232D62BE7A761003959FB /* MakchaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MakchaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			children = (
 				206B51042BFA348600FC6F76 /* MainCollectionView.swift */,
 				206B51062BFA349200FC6F76 /* MainCollectionCell.swift */,
+				20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */,
 			);
 			path = MainCollectionView;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				B86233382BEA035F003959FB /* TransPathRepository.swift in Sources */,
 				B89E7FB02BE773D100A13B58 /* TransPathDTO.swift in Sources */,
 				206B51072BFA349200FC6F76 /* MainCollectionCell.swift in Sources */,
+				20E277222C0198DF0071F6CA /* MainCollectionHeaderCell.swift in Sources */,
 				205075D52BF55F3A00BAC30E /* SearchPathViewController.swift in Sources */,
 				B89E7FB42BE7743600A13B58 /* LocationService.swift in Sources */,
 				B86233342BEA004A003959FB /* MakchaInfo.swift in Sources */,
