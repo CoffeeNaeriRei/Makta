@@ -54,9 +54,34 @@ final class APIServiceTests: XCTestCase {
         // When
         sut.fetchSeoulRealtimeSubwayArrival(stationName: stationName) { result in
             switch result {
-            case .success(let seoulTraltimeSubwayDTO):
+            case .success(let seoulRealtimeSubwayDTO):
                 isSuccess = true
-                resultDTO = seoulTraltimeSubwayDTO
+                resultDTO = seoulRealtimeSubwayDTO
+            case .failure:
+                isSuccess = false
+            }
+            completionExpectation.fulfill()
+        }
+        wait(for: [completionExpectation], timeout: 5)
+        
+        // Then
+        XCTAssertTrue(isSuccess)
+        XCTAssertNotNil(resultDTO)
+    }
+    
+    func test_fetchSeoulRealtimeBusStationInfo가_정상적으로_API를_호출하는지_확인() {
+        // Given
+        let arsID = "12-022"
+        var isSuccess: Bool = false
+        var resultDTO: SeoulRealtimeBusStationDTO?
+        let completionExpectation = expectation(description: "fetchSeoulRealtimeBusStationInfo completion expectation")
+        
+        // When
+        sut.fetchSeoulRealtimeBusStationInfo(arsID: arsID) { result in
+            switch result {
+            case .success(let seoulRealtimeBusStationDTO):
+                isSuccess = true
+                resultDTO = seoulRealtimeBusStationDTO
             case .failure:
                 isSuccess = false
             }

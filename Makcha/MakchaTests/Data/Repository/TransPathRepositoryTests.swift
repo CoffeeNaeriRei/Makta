@@ -17,6 +17,7 @@ struct MockAPIService: APIServiceInterface {
     
     var mockTransPathResult: Result<TransPathDTO, APIServiceError>?
     var mockSeoulRealtimeSubwayResult: Result<SeoulRealtimeSubwayDTO, APIServiceError>?
+    var mockSeoulRealtimeBusStationResult: Result<SeoulRealtimeBusStationDTO, APIServiceError>?
     
     func fetchTransPathData(
         start: Makcha.XYCoordinate,
@@ -31,6 +32,11 @@ struct MockAPIService: APIServiceInterface {
         completion: @escaping (Result<SeoulRealtimeSubwayDTO, APIServiceError>) -> Void
     ) {
         completion(mockSeoulRealtimeSubwayResult!)
+    }
+    
+    func fetchSeoulRealtimeBusStationInfo(arsID: String, completion: @escaping (Result<SeoulRealtimeBusStationDTO, APIServiceError>) -> Void
+    ) {
+        completion(mockSeoulRealtimeBusStationResult!)
     }
 }
 

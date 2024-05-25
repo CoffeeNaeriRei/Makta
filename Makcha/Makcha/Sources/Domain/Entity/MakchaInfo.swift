@@ -54,6 +54,9 @@ struct MakchaSubPath: Equatable {
     let way: String? // 방면 정보 ex) "종로3가"
     let wayCode: Int? // 방면 정보 코드 (1:상행, 2:하행)
     
+    // 버스🚌일 경우에만
+    let startArsID: String? // 출발 정류장 고유번호(arsID)
+    
     init(
         idx: Int,
         subPathType: SubPathType,
@@ -66,7 +69,8 @@ struct MakchaSubPath: Equatable {
         endName: String? = nil,
         stations: [PassStation]? = nil,
         way: String? = nil,
-        wayCode: Int? = nil
+        wayCode: Int? = nil,
+        startArsID: String? = nil
     ) {
         self.idx = idx
         self.subPathType = subPathType
@@ -80,6 +84,7 @@ struct MakchaSubPath: Equatable {
         self.stations = stations
         self.way = way
         self.wayCode = wayCode
+        self.startArsID = startArsID
     }
 }
 
@@ -92,15 +97,20 @@ enum SubPathType: String {
 // 세부경로의 교통수단 정보
 struct LaneInfo: Equatable {
     let name: String // 지하철 노선명 or 버스 번호
+    
     let subwayCode: Int? // 지하철 노선 번호
+    
+    let busRouteID: String? // 버스 노선 ID
     
     // 필요시 지하철 노선 번호, 버스 코드 등 추가 가능
     init(
         name: String,
-        subwayCode: Int? = nil
+        subwayCode: Int? = nil,
+        busRouteID: String? = nil
     ) {
         self.name = name
         self.subwayCode = subwayCode
+        self.busRouteID = busRouteID
     }
 }
 
@@ -220,9 +230,18 @@ let mockMakchaInfo = MakchaInfo(
                     time: 23,
                     stationCount: 12,
                     lane: [
-                        LaneInfo(name: "720"),
-                        LaneInfo(name: "741"),
-                        LaneInfo(name: "705")
+                        LaneInfo(
+                            name: "720",
+                            busRouteID: "100100111"
+                        ),
+                        LaneInfo(
+                            name: "741",
+                            busRouteID: "123000010"
+                        ),
+                        LaneInfo(
+                            name: "705",
+                            busRouteID: "100100587"
+                        )
                     ],
                     startName: "불광역3.6호선",
                     endName: "서대문역사거리.농협중앙회",
@@ -240,7 +259,8 @@ let mockMakchaInfo = MakchaInfo(
                         PassStation(index: 10, name: "영천시장"),
                         PassStation(index: 11, name: "금화초등학교.서울시교육청"),
                         PassStation(index: 12, name: "서대문역사거리.농협중앙회")
-                    ]
+                    ],
+                    startArsID: "12-022"
                 ),
                 MakchaSubPath(
                     idx: 2,

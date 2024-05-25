@@ -159,8 +159,8 @@ struct Lane: Codable {
     let subwayCityCode: Int? // 지하철 도시코드 (지하철인 경우에만 필수)
     
     // 버스🚌  만 해당
-    let busNo: String? // 버스 번호 (버스인 경우에만 필수)
-    let type: Int? // 버스 타입 (버스인 경우에만 필수,여기 참조)
+    let busNo: String? // 버스 노선 번호 (버스인 경우에만 필수)
+    let type: Int? // 버스 타입 (버스인 경우에만 필수)
     let busID: Int? // 버스 코드 (버스인 경우에만 필수)
     let busLocalBlID: String? // 각 지역 버스노선 ID (BIS 제공지역인 경우에만 필수)
     let busCityCode: Int? // 운수회사 승인 도시코드 (버스인 경우에만 필수)
