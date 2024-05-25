@@ -131,10 +131,26 @@ final class MainViewController: UIViewController {
         let output = mainViewModel.transform(input: input)
 
         guard let dataSource = dataSource else { return }
+
+        mainView.collectionView.rx.willDisplaySupplementaryView
+            .withUnretained(self)
+            .subscribe { _, event in
+                if let header = event.supplementaryView as? MainCollectionHeaderCell {
+                    print("header", header)
+                    header.resetButton.rx.tap
+                        .withUnretained(self)
+                        .subscribe { _, _ in
+                            print("현재 위치로 재설정")
+                        }
+                        .disposed(by: header.disposeBag)
+                }
+            }
+            .disposed(by: disposeBag)
+        
         mainViewModel.tempSections
             .bind(to: mainView.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        
+
         input.viewDidLoadEvent.accept(()) // 바인딩이 끝난 뒤에 viewDldLoad 이벤트 1회 발생
     }
 

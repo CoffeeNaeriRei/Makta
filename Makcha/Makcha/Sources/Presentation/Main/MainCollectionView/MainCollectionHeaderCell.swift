@@ -12,6 +12,7 @@ import FlexLayout
 import MakchaDesignSystem
 import Reusable
 import SwiftUI
+import RxSwift
 
 final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
     private var startTimeLabel: UILabel = {
@@ -24,7 +25,7 @@ final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
         return label
     }()
     
-    private var resetButton: UIButton = {
+    var resetButton: UIButton = {
         let button = UIButton()
         
         let tintColor = UIColor(Color.cf(.grayScale(.gray700)))
@@ -46,6 +47,8 @@ final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
         
         return button
     }()
+    
+    let disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
