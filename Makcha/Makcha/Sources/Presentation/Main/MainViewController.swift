@@ -110,13 +110,17 @@ final class MainViewController: UIViewController {
     }
     
     private func bind() {
-        let input = MainViewModel.Input(settingButtonTap: leftUIBarButtonItem.rx.tap, 
+        bindCollectionView()
+        let input = MainViewModel.Input(settingButtonTap: leftUIBarButtonItem.rx.tap,
                                         starButtonTap: rightUIBarButtonItem.rx.tap)
+
+        let output = mainViewModel.transform(input: input)
         
         // MARK: 페이지 네비게이션 바인딩
         input.settingButtonTap
             .withUnretained(self)
             .bind { vc, _ in
+                print("1111")
                 vc.pushNavigation(.settings)
             }
             .disposed(by: disposeBag)
@@ -128,19 +132,20 @@ final class MainViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        let output = mainViewModel.transform(input: input)
+        input.viewDidLoadEvent.accept(()) // 바인딩이 끝난 뒤에 viewDldLoad 이벤트 1회 발생
+    }
 
+    private func bindCollectionView() {
         guard let dataSource = dataSource else { return }
-
+        // MARK: 어떻게 input으로 처리할 수 있을까요.. 혹은 input으로 처리를 해야할까요?!
         mainView.collectionView.rx.willDisplaySupplementaryView
             .withUnretained(self)
             .subscribe { _, event in
                 if let header = event.supplementaryView as? MainCollectionHeaderCell {
-                    print("header", header)
                     header.resetButton.rx.tap
                         .withUnretained(self)
-                        .subscribe { _, _ in
-                            print("현재 위치로 재설정")
+                        .subscribe { vc, _ in
+                            vc.mainViewModel.resetAction()
                         }
                         .disposed(by: header.disposeBag)
                 }
@@ -150,10 +155,8 @@ final class MainViewController: UIViewController {
         mainViewModel.tempSections
             .bind(to: mainView.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-
-        input.viewDidLoadEvent.accept(()) // 바인딩이 끝난 뒤에 viewDldLoad 이벤트 1회 발생
     }
-
+    
     private func pushNavigation(_ link: MainNavLink) {
         switch link {
         case .searchPath:
