@@ -14,21 +14,38 @@ import Reusable
 import SwiftUI
 
 final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
-    private var startTimeLabel: UILabel {
+    private var startTimeLabel: UILabel = {
         let label = UILabel()
-        
-        label.text = "출발 시간 출발"
+        let text = NSMutableAttributedString.pretendard("출발 시간 출발", scale: .headline)
+
+        label.textColor = UIColor(Color.cf(.grayScale(.gray800)))
+        label.attributedText = text
         
         return label
-    }
+    }()
     
-    private var resetButton: UIButton {
+    private var resetButton: UIButton = {
         let button = UIButton()
-        button.setTitle("현재 위치로 재설정", for: .normal)
-        button.configuration = .filled()
+        
+        let tintColor = UIColor(Color.cf(.grayScale(.gray700)))
+        let borderColor = UIColor(Color.cf(.grayScale(.gray100)))
+        let text = NSMutableAttributedString.pretendard("현재 위치로 재설정", scale: .caption)
+
+        var buttonConfig: UIButton.Configuration = .plain()
+        buttonConfig.contentInsets = .zero
+        
+        button.configuration = buttonConfig
+        button.setAttributedTitle(text, for: .normal)
+        button.tintColor = tintColor
+
+        button.flex.paddingHorizontal(.cfSpacing(.medium))
+            .minHeight(28)
+            .backgroundColor(.clear)
+            .border(.cfStroke(.xsmall), borderColor)
+            .cornerRadius(14)
         
         return button
-    }
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,6 +57,7 @@ final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
     }
     
     private func setup() {
+        contentView.flex.backgroundColor(UIColor(Color.cf(.grayScale(.white))))
         contentView.flex.direction(.row).alignItems(.center).define {
             $0.addItem(startTimeLabel)
                 .grow(1)
@@ -47,7 +65,6 @@ final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
         }
         .padding(0, 16, 0, 8)
         .minHeight(48)
-        .border(1, .red)
     }
     
     private func layout() {
@@ -68,7 +85,14 @@ final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
 }
 
 extension MainCollectionHeaderCell {
-    func configure(startTile: String) {
+    func configure(with startTime: String) {
+        let text = NSMutableAttributedString.pretendard("\(startTime) 출발", scale: .headline)
+        text.addAttributes([.foregroundColor : UIColor(Color.cf(.colorScale(.royalBlue(.mediumLight))))],
+                           range: .init(location: 0, length: startTime.count))
+
+        startTimeLabel.attributedText = text
+        startTimeLabel.flex.markDirty()
+        
         setNeedsLayout()
     }
 }

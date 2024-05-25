@@ -20,6 +20,7 @@ final class MainCollectionView: UICollectionView {
             return cell
         }, configureSupplementaryView: { _, collectionView, _, indexPath in
             let header: MainCollectionHeaderCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, for: indexPath)
+            header.configure(with: "오늘 오후 22:37")
             
             return header
         }
