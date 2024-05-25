@@ -110,17 +110,16 @@ final class MainViewController: UIViewController {
     }
     
     private func bind() {
-        bindCollectionView()
         let input = MainViewModel.Input(settingButtonTap: leftUIBarButtonItem.rx.tap,
                                         starButtonTap: rightUIBarButtonItem.rx.tap)
-
+        bindCollectionView()
+        
         let output = mainViewModel.transform(input: input)
         
         // MARK: 페이지 네비게이션 바인딩
         input.settingButtonTap
             .withUnretained(self)
             .bind { vc, _ in
-                print("1111")
                 vc.pushNavigation(.settings)
             }
             .disposed(by: disposeBag)
@@ -137,6 +136,7 @@ final class MainViewController: UIViewController {
 
     private func bindCollectionView() {
         guard let dataSource = dataSource else { return }
+        
         // MARK: 어떻게 input으로 처리할 수 있을까요.. 혹은 input으로 처리를 해야할까요?!
         mainView.collectionView.rx.willDisplaySupplementaryView
             .withUnretained(self)
@@ -145,7 +145,7 @@ final class MainViewController: UIViewController {
                     header.resetButton.rx.tap
                         .withUnretained(self)
                         .subscribe { vc, _ in
-                            vc.mainViewModel.resetAction()
+                            vc.mainViewModel.resetToCurrentLocationTap()
                         }
                         .disposed(by: header.disposeBag)
                 }
