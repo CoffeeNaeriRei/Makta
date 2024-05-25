@@ -21,6 +21,10 @@ protocol APIServiceInterface {
         stationName: String,
         completion: @escaping (Result<SeoulRealtimeSubwayDTO, APIServiceError>) -> Void
     )
+    func fetchSeoulRealtimeBusStationInfo(
+        arsID: String,
+        completion: @escaping (Result<SeoulRealtimeBusStationDTO, APIServiceError>) -> Void
+    )
 }
 
 // MARK: - APIService 정의
@@ -79,6 +83,32 @@ struct APIService: APIServiceInterface {
             completion(.success(seoulRealtimeSubwayDTO))
         }.resume()
     }
+    
+    // 서울특별시 정류소정보조회 API 요청
+    func fetchSeoulRealtimeBusStationInfo(
+        arsID: String,
+        completion: @escaping (Result<SeoulRealtimeBusStationDTO, APIServiceError>) -> Void
+    ) {
+        guard let seoulRealtimeBusStationURL = makeSeoulRealtimeBusStationURL(arsID: arsID),
+              let url = URL(string: seoulRealtimeBusStationURL) else {
+            completion(.failure(APIServiceError.invalidURL))
+            return
+        }
+        URLSession.shared.dataTask(with: url) { (data, _, error) in
+            if error != nil {
+                completion(.failure(APIServiceError.requestFail))
+            }
+            guard let data = data else {
+                completion(.failure(APIServiceError.noData))
+                return
+            }
+            guard let seoulRealtimeBusStationDTO = try? JSONDecoder().decode(SeoulRealtimeBusStationDTO.self, from: data) else {
+                completion(.failure(APIServiceError.decodingError))
+                return
+            }
+            completion(.success(seoulRealtimeBusStationDTO))
+        }.resume()
+    }
 }
 
 extension APIService {
@@ -112,7 +142,7 @@ extension APIService {
         startIdx: Int = 0, // 페이징 시작번호
         endIdx: Int = 15 // 페이징 끝번호
     ) -> String? {
-        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "REALTIME_STATION_API") as? String else {
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "REALTIME_SUBWAY_API") as? String else {
             return nil
         }
         var seoulRealtimeSubwayURL = "http://swopenAPI.seoul.go.kr/api/subway/\(apiKey)/json/realtimeStationArrival"
@@ -121,5 +151,20 @@ extension APIService {
         seoulRealtimeSubwayURL += "/\(stationName)"
         
         return seoulRealtimeSubwayURL
+    }
+    
+    // [서울특별시 정류소정보조회 API] 요청 URL 생성
+    func makeSeoulRealtimeBusStationURL(
+        arsID: String // 정류소고유번호
+    ) -> String? {
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "REALTIME_BUS_STATION_API") as? String else {
+            return nil
+        }
+        var seoulRealtimeBusStationURL = "http://ws.bus.go.kr/api/rest/stationinfo/getStationByUid"
+        seoulRealtimeBusStationURL += "?serviceKey=\(apiKey)"
+        seoulRealtimeBusStationURL += "&arsId=\(arsID.removeHyphen())"
+        seoulRealtimeBusStationURL += "&resultType=json"
+        
+        return seoulRealtimeBusStationURL
     }
 }

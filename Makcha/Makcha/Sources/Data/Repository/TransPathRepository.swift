@@ -54,7 +54,7 @@ final class TransPathRepository: TransPathRepositoryProtocol {
         currentTime: Date // 현재 시간 (남은 시간 계산 시 필요)
     ) -> Observable<RealtimeArrivalTuple> {
         return Observable.create { emitter in
-            var realtimeArrival: RealtimeArrivalTuple = (nil, nil) // 반환할 실시간 도착정보 튜플
+            var realtimeArrival: RealtimeArrivalTuple = (.unknown, .unknown) // 반환할 실시간 도착정보 튜플
             
             // 서울시 실시간 지하철 도착정보 API에 필요한 [호선ID]와 [방면코드] 추출
             guard let subwayLineCode = SubwayCode(rawValue: subwayLineCodeInt)?.seoulRealtimeSubwayID,
@@ -67,7 +67,7 @@ final class TransPathRepository: TransPathRepositoryProtocol {
             print("지하철역 이름: \(stationName)")
             print("호선 정보: subwayLineCodeInt(\(subwayLineCodeInt)) 👉 subwayLineCode(\(subwayLineCode))")
             print("호선 정보:  wayCodeInt(\(wayCodeInt)) 👉 wayCode\(wayCode)")
-            // 서울시 실시간 도착정보 API 호출
+            // 서울시 실시간 지하철 도착정보 API 호출
             self.apiService.fetchSeoulRealtimeSubwayArrival(stationName: stationName) { result in
                 switch result {
                 case .success(let seoulRealtimeSubwayDTO):
@@ -77,19 +77,64 @@ final class TransPathRepository: TransPathRepositoryProtocol {
                     let firstArr = self.filteringSeoulArrivalSubway(from: arrivals, subwayLine: subwayLineCode, wayCode: wayCode, isFirst: true)
                     let secondArr = self.filteringSeoulArrivalSubway(from: arrivals, subwayLine: subwayLineCode, wayCode: wayCode, isFirst: false)
                     
+                    // TODO: - 지하철 도착 메세지 등 정보도 확인해서 적절한 ArrivalStatus로 반환할 수 있도록 수정하기
                     // 1번째 도착정보 구해서 반영
                     let firstArrivalTime = self.extractRealRemainingFromArrivals(from: firstArr, currentTime: currentTime)
-                    realtimeArrival.first = firstArrivalTime
+                    realtimeArrival.first = .coming(remainingSecond: firstArrivalTime)
                     
                     // 2번째 도착정보 구해서 반영
                     let secondArrivalTime = self.extractRealRemainingFromArrivals(from: secondArr, currentTime: currentTime)
-                    realtimeArrival.second = secondArrivalTime
+                    realtimeArrival.second = .coming(remainingSecond: secondArrivalTime)
                     
                     emitter.onNext(realtimeArrival)
                     emitter.onCompleted()
                 case .failure(let error):
                     print("[APIService] - ❌ fetchSeoulRealtimeSubwayArrival() 호출 실패 \(error.localizedDescription)")
                     // 실시간 정보를 불러오지 못해도 기본값으로 전달
+                    emitter.onNext(realtimeArrival)
+                    emitter.onCompleted()
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    // 노선ID + 노선명 + 버스정류장 ID를 기반으로 해당하는 서울시 버스 정류장에서 해당 노선의 실시간 도착정보를 2개 받아와서 전달
+    func getSeoulRealtimeBusArrival(
+        routeIDs: [String], // 노선ID
+        routeNames: [String], // 노선명(버스번호)
+        arsID: String // 정류장ID
+    ) -> Observable<RealtimeArrivalTuple> {
+        return Observable.create { emitter in
+            var realtimeArrival: RealtimeArrivalTuple = (.unknown, .unknown) // 반환할 실시간 도착정보 튜플
+            // 서울시 정류소정보조회 API 호출
+            self.apiService.fetchSeoulRealtimeBusStationInfo(arsID: arsID) { result in
+                switch result {
+                case .success(let seoulRealtimeBusStationDTO):
+                    print("[APIService] - ✅ fetchSeoulRealtimeBusStationInfo() 호출 성공!!")
+                    // 노선ID+노선명이 매칭되는 도착 정보들만 필터링
+                    let filteredArrivals = seoulRealtimeBusStationDTO.arrivals.itemList.filter {
+                        (routeIDs.contains($0.busRouteID)) && (routeNames.contains($0.busRouteName))
+                    }
+                    // 각 노선들에 대한 도착 정보에서 첫번째, 두번째 도착 메시지를 추출하고, ArrivalStatus의 우선순위가 높은(작은값) 순서대로 정렬
+                    let firstArrivals = filteredArrivals.map { self.getBusArrivalStatusFromSeoulBusStation(arrivalMessage: $0.arrivalMessage1) }.sorted(by: <)
+                    let secondArrivals = filteredArrivals.map { self.getBusArrivalStatusFromSeoulBusStation(arrivalMessage: $0.arrivalMessage2) }.sorted(by: <)
+                    
+                    // 가장 가까운 도착 정보를 튜플에 반영
+                    if let closestFirstArrival = firstArrivals.first {
+                        realtimeArrival.first = closestFirstArrival
+                    }
+                    if let closestSecondArrival = secondArrivals.first {
+                        realtimeArrival.second = closestSecondArrival
+                    }
+                    
+                    // TODO: - 몇번(노선) 버스인지도 알 수 있도록 처리가 필요함
+                    
+                    emitter.onNext(realtimeArrival)
+                    emitter.onCompleted()
+                    
+                case .failure(let error):
+                    print("[APIService] - ❌ fetchSeoulRealtimeBusStationInfo() 호출 실패 \(error.localizedDescription)")
                     emitter.onNext(realtimeArrival)
                     emitter.onCompleted()
                 }
@@ -176,7 +221,8 @@ extension TransPathRepository {
                 endName: subPathArr[subPathIdx].endName,
                 stations: passStationArr.isEmpty ? nil : passStationArr,
                 way: subPathArr[subPathIdx].way,
-                wayCode: subPathArr[subPathIdx].wayCode
+                wayCode: subPathArr[subPathIdx].wayCode,
+                startArsID: subPathArr[subPathIdx].startArsID
             )
             
             makchaSubPathArr.append(makchaSubPath)
@@ -203,12 +249,19 @@ extension TransPathRepository {
             for eachLane in laneArr {
                 let laneInfo: LaneInfo
                 if let subwayLine = eachLane.name { // 지하철 노선 정보
-                    laneInfo = LaneInfo(name: subwayLine, subwayCode: eachLane.subwayCode)
+                    laneInfo = LaneInfo(
+                        name: subwayLine,
+                        subwayCode: eachLane.subwayCode
+                    )
                     laneInfoArr.append(laneInfo)
                     continue
                 }
-                if let busNo = eachLane.busNo { // 버스 노선 정보
-                    laneInfo = LaneInfo(name: busNo)
+                if let busRouteName = eachLane.busNo,
+                   let busRouteID = eachLane.busLocalBlID { // 버스 노선 정보
+                    laneInfo = LaneInfo(
+                        name: busRouteName,
+                        busRouteID: busRouteID
+                    )
                     laneInfoArr.append(laneInfo)
                     continue
                 }
@@ -295,6 +348,26 @@ extension TransPathRepository {
             return realRemainingTime
         } else {
             return -1
+        }
+    }
+}
+
+// MARK: - 서울시 실시간 버스 도착정보 불러오기 관련 유틸리티 메서드
+
+extension TransPathRepository {
+    
+    // 버스의 도착 상태를 구해서 BusArrivalStatus 타입 값을 반환하는 메서드
+    func getBusArrivalStatusFromSeoulBusStation(arrivalMessage: String) -> ArrivalStatus {
+        if arrivalMessage.contains("출발대기") {
+            return .waiting
+        } else if arrivalMessage.contains("운행종료") {
+            return .finished
+        } else if arrivalMessage.contains("곧 도착") {
+            return .arriveSoon
+        } else if arrivalMessage.isContainsNumber() {
+            return .coming(remainingSecond: arrivalMessage.getSeoulBusRemainingSecond())
+        } else {
+            return .unknown
         }
     }
 }
