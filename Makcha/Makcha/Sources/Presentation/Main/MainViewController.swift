@@ -56,6 +56,7 @@ final class MainViewController: UIViewController {
         super.viewDidAppear(animated)
         // Sheet Setting
         pushNavigation(.searchPath)
+//        print(mainViewModel.tempSections.value.count)
     }
     
     public override func loadView() {
@@ -112,10 +113,10 @@ final class MainViewController: UIViewController {
     private func bind() {
         let input = MainViewModel.Input(settingButtonTap: leftUIBarButtonItem.rx.tap,
                                         starButtonTap: rightUIBarButtonItem.rx.tap)
-        bindCollectionView()
-        
+
         let output = mainViewModel.transform(input: input)
         
+        bindCollectionView()
         // MARK: 페이지 네비게이션 바인딩
         input.settingButtonTap
             .withUnretained(self)

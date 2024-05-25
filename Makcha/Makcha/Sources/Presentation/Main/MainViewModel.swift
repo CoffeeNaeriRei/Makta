@@ -60,7 +60,9 @@ final class MainViewModel: ViewModelType {
         input.starButtonTap
             .withUnretained(self)
             .subscribe { _, _ in
-                print("Setting Link Click")
+                print("Star Link Click")
+//                vm.tempSections.accept([])
+//                vm.makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
             }
             .disposed(by: disposeBag)
         // output
@@ -101,6 +103,6 @@ final class MainViewModel: ViewModelType {
     }
     
     func resetToCurrentLocationTap() {
-        print("흠..")
+        makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
     }
 }
