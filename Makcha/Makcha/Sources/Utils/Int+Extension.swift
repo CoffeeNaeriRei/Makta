@@ -10,7 +10,7 @@ import Foundation
 extension Int {
     
     // Int 단위의 초 값을 00분00초 형식의 String으로 변환하는 프로퍼티
-    var remainingTimeString: String {
+    var convertToMinuteSecondString: String {
         var minuteStr = String(self / 60)
         var secondStr = String(self % 60)
         var result = ""

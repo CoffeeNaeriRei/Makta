@@ -105,7 +105,7 @@ final class TransPathRepository: TransPathRepositoryProtocol {
         routeNames: [String], // 노선명(버스번호)
         arsID: String // 정류장ID
     ) -> Observable<RealtimeArrivalTuple> {
-        return Observable.create() { emitter in
+        return Observable.create { emitter in
             var realtimeArrival: RealtimeArrivalTuple = (.unknown, .unknown) // 반환할 실시간 도착정보 튜플
             // 서울시 정류소정보조회 API 호출
             self.apiService.fetchSeoulRealtimeBusStationInfo(arsID: arsID) { result in
