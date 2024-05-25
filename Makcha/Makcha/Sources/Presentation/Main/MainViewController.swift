@@ -9,6 +9,17 @@ import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
+import RxDataSources
+import SwiftUI
+
+enum MainNavLink {
+    case searchPath
+    case detail
+    case settings
+    case remark
+}
+
+typealias SectionOfMainCard = SectionModel<String, MakchaPath>
 
 final class MainViewController: UIViewController {
     // swiftlint: disable force_cast
@@ -16,6 +27,11 @@ final class MainViewController: UIViewController {
         view as! MainView
     }
     // swiftlint: enable force_cast
+    
+    private let leftUIBarButtonItem = UIBarButtonItem()
+    private let rightUIBarButtonItem = UIBarButtonItem()
+    
+    private var dataSource: RxCollectionViewSectionedReloadDataSource<SectionOfMainCard>?
     
     private let mainViewModel: MainViewModel
     
@@ -36,55 +52,109 @@ final class MainViewController: UIViewController {
         bind()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Sheet Setting
+        pushNavigation(.searchPath)
+    }
+    
     public override func loadView() {
         view = MainView()
     }
     
     private func setup() {
         view.backgroundColor = .white
-        navigationItem.title = "막차정보"
+        // NavigationLink Setting
+        setupNavigationItems()
+        setupCollectionView()
+    }
+    
+    private func setupNavigationItems() {
+        let _title = "막차정보"
+        let _leftBarButtonImage = UIImage(systemName: "gearshape")?
+            .withTintColor(UIColor(Color.cf(.grayScale(.gray700))), renderingMode: .alwaysOriginal)
+        let _rightBarButtonImage = UIImage(systemName: "star")?
+            .withTintColor(UIColor(Color.cf(.grayScale(.gray700))), renderingMode: .alwaysOriginal)
+        
+        leftUIBarButtonItem.title = "Link to Setting"
+        leftUIBarButtonItem.image = _leftBarButtonImage
+        rightUIBarButtonItem.title = "Link to Remark"
+        rightUIBarButtonItem.image = _rightBarButtonImage
+        
+        navigationItem.title = _title
+        navigationItem.leftBarButtonItem = leftUIBarButtonItem
+        navigationItem.rightBarButtonItem = rightUIBarButtonItem
+    }
+    
+    private func setupSheet() {
+        let searchPathSheet = SearchPathViewController()
+        
+        let initDent: UISheetPresentationController.Detent = .custom(identifier: .init("initDent")) { _ in
+            185 - self.mainView.safeAreaInsets.bottom
+        }
+        
+        if let sheet = searchPathSheet.sheetPresentationController {
+            sheet.detents = [initDent, .large()]
+            sheet.largestUndimmedDetentIdentifier = initDent.identifier
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+            sheet.presentedViewController.isModalInPresentation = true
+        }
+        present(searchPathSheet, animated: true)
+    }
+    
+    private func setupCollectionView() {
+        let collectionView = mainView.collectionView as? MainCollectionView
+        dataSource = collectionView?.rxDataSource
     }
     
     private func bind() {
-        let input = MainViewModel.Input(resetCoordinateAction: mainView.button1.rx.tap,
-                                        worldButtonTap: mainView.button2.rx.tap)
-        let output = mainViewModel.transform(input: input)
-       
-        output.currentTime
-            .drive(mainView.currentTimeLabel.rx.text)
-            .disposed(by: disposeBag)
-        output.worldText.drive(mainView.currentTimeLabel.rx.text)
+        let input = MainViewModel.Input(settingButtonTap: leftUIBarButtonItem.rx.tap, 
+                                        starButtonTap: rightUIBarButtonItem.rx.tap)
+        
+        // MARK: 페이지 네비게이션 바인딩
+        input.settingButtonTap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.pushNavigation(.settings)
+            }
             .disposed(by: disposeBag)
         
-        // 뷰 바인딩 테스트
-//        output.startTime
-//            .drive(mainView.currentTimeLabel.rx.text)
-//            .disposed(by: disposeBag)
-        output.realTimeArrivals // 실시간 도착정보 뷰 확인용
-            .map {
-                let firstArrivalStatus = $0[0].first
-                switch firstArrivalStatus {
-                case .coming(remainingSecond: let sec):
-                    return sec.remainingTimeString
-                case .arriveSoon:
-                    return "곧 도착"
-                case .finished:
-                    return "운행 종료"
-                case .waiting:
-                    return "출발 대기"
-                case .unknown:
-                    return "불러오지 못함"
-                }
+        input.starButtonTap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.pushNavigation(.remark)
             }
-            .drive(mainView.currentTimeLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        let output = mainViewModel.transform(input: input)
+
+        guard let dataSource = dataSource else { return }
+        mainViewModel.tempSections
+            .bind(to: mainView.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
         input.viewDidLoadEvent.accept(()) // 바인딩이 끝난 뒤에 viewDldLoad 이벤트 1회 발생
     }
+
+    private func pushNavigation(_ link: MainNavLink) {
+        switch link {
+        case .searchPath:
+            setupSheet()
+        case .detail:
+            print("Navigation To")
+        case .settings:
+            navigationController?.dismiss(animated: true)
+            navigationController?.pushViewController(SettingsViewController(), animated: true)
+        case .remark:
+            navigationController?.dismiss(animated: true)
+            navigationController?.pushViewController(RemarkViewController(), animated: true)
+        }
+    }
 }
 
 #if DEBUG
-import SwiftUI
 struct MainViewController_Previews: PreviewProvider {
     static var previews: some View {
         ViewControllerPreview {

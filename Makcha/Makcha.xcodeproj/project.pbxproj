@@ -7,13 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		205075D52BF55F3A00BAC30E /* SearchPathViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */; };
+		205075D82BF9A15E00BAC30E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075D72BF9A15E00BAC30E /* SettingsViewController.swift */; };
+		205075DB2BF9A41200BAC30E /* RemarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075DA2BF9A41200BAC30E /* RemarkViewController.swift */; };
 		205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D20F62BE912B100A7BD98 /* Preview+Extension.swift */; };
 		20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20674F942BF0894D004E8566 /* MainViewModel.swift */; };
 		206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */ = {isa = PBXBuildFile; productRef = 206AA6052BE7A95B0057FA40 /* makcha-design-system */; };
+		206B51052BFA348600FC6F76 /* MainCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206B51042BFA348600FC6F76 /* MainCollectionView.swift */; };
+		206B51072BFA349200FC6F76 /* MainCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206B51062BFA349200FC6F76 /* MainCollectionCell.swift */; };
+		206B510A2BFA36D700FC6F76 /* Reusable in Frameworks */ = {isa = PBXBuildFile; productRef = 206B51092BFA36D700FC6F76 /* Reusable */; };
+		206B510D2BFA36F800FC6F76 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 206B510C2BFA36F800FC6F76 /* Differentiator */; };
+		206B510F2BFA36F800FC6F76 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 206B510E2BFA36F800FC6F76 /* RxDataSources */; };
 		2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB382BEFAB7F00501E2D /* MainView.swift */; };
 		B81BDE502BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */; };
 		B81BDE522BFF9A8700CFDC7A /* ArrivalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81BDE512BFF9A8700CFDC7A /* ArrivalType.swift */; };
 		B82953D22BF5DDBB00EABD57 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */; };
+		20E277222C0198DF0071F6CA /* MainCollectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */; };
 		B86232E02BE7A7F0003959FB /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */; };
 		B86232E42BE7B152003959FB /* APIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232E32BE7B152003959FB /* APIServiceTests.swift */; };
 		B862332E2BE9FC86003959FB /* LocationServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862332D2BE9FC86003959FB /* LocationServiceError.swift */; };
@@ -65,16 +74,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPathViewController.swift; sourceTree = "<group>"; };
+		205075D72BF9A15E00BAC30E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		205075DA2BF9A41200BAC30E /* RemarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemarkViewController.swift; sourceTree = "<group>"; };
 		205D20F62BE912B100A7BD98 /* Preview+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Preview+Extension.swift"; sourceTree = "<group>"; };
 		20674F942BF0894D004E8566 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		206B51042BFA348600FC6F76 /* MainCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionView.swift; sourceTree = "<group>"; };
+		206B51062BFA349200FC6F76 /* MainCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionCell.swift; sourceTree = "<group>"; };
 		2090BB362BEFAADC00501E2D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		2090BB382BEFAB7F00501E2D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		20B88A732BE79DC40088AF73 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeoulRealtimeBusStationDTO.swift; sourceTree = "<group>"; };
 		B81BDE512BFF9A8700CFDC7A /* ArrivalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalType.swift; sourceTree = "<group>"; };
 		B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
+		20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionHeaderCell.swift; sourceTree = "<group>"; };
 		B86232CD2BE77D2B003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		B86232CF2BE77D2F003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232D62BE7A761003959FB /* MakchaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MakchaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
 		B86232E32BE7B152003959FB /* APIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceTests.swift; sourceTree = "<group>"; };
@@ -125,9 +139,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */,
+				206B510A2BFA36D700FC6F76 /* Reusable in Frameworks */,
 				B89E7FA62BE7725000A13B58 /* RxCocoa in Frameworks */,
 				B89E7FA32BE771BE00A13B58 /* PinLayout in Frameworks */,
+				206B510D2BFA36F800FC6F76 /* Differentiator in Frameworks */,
 				B89E7FAA2BE7725000A13B58 /* RxSwift in Frameworks */,
+				206B510F2BFA36F800FC6F76 /* RxDataSources in Frameworks */,
 				B89E7FA82BE7725000A13B58 /* RxRelay in Frameworks */,
 				B89E7FA02BE771AE00A13B58 /* FlexLayout in Frameworks */,
 			);
@@ -136,6 +153,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		205075D62BF9A14800BAC30E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				205075D72BF9A15E00BAC30E /* SettingsViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		205075D92BF9A40400BAC30E /* Remark */ = {
+			isa = PBXGroup;
+			children = (
+				205075DA2BF9A41200BAC30E /* RemarkViewController.swift */,
+			);
+			path = Remark;
+			sourceTree = "<group>";
+		};
+		206B51032BFA33EC00FC6F76 /* MainCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				206B51042BFA348600FC6F76 /* MainCollectionView.swift */,
+				206B51062BFA349200FC6F76 /* MainCollectionCell.swift */,
+				20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */,
+			);
+			path = MainCollectionView;
+			sourceTree = "<group>";
+		};
 		B86232D72BE7A761003959FB /* MakchaTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -327,6 +370,8 @@
 		B89E7F992BE7700700A13B58 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				205075D92BF9A40400BAC30E /* Remark */,
+				205075D62BF9A14800BAC30E /* Settings */,
 				B89E7F8A2BE765D200A13B58 /* TestView.swift */,
 				B89E7F8B2BE765D200A13B58 /* TestViewController.swift */,
 				B89E7F9C2BE7707700A13B58 /* SearchPath */,
@@ -339,6 +384,7 @@
 		B89E7F9A2BE7700F00A13B58 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				206B51032BFA33EC00FC6F76 /* MainCollectionView */,
 				20674F942BF0894D004E8566 /* MainViewModel.swift */,
 				2090BB362BEFAADC00501E2D /* MainViewController.swift */,
 				2090BB382BEFAB7F00501E2D /* MainView.swift */,
@@ -357,7 +403,7 @@
 		B89E7F9C2BE7707700A13B58 /* SearchPath */ = {
 			isa = PBXGroup;
 			children = (
-				B86232CF2BE77D2F003959FB /* .gitkeep */,
+				205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */,
 			);
 			path = SearchPath;
 			sourceTree = "<group>";
@@ -447,6 +493,9 @@
 				B89E7FA72BE7725000A13B58 /* RxRelay */,
 				B89E7FA92BE7725000A13B58 /* RxSwift */,
 				206AA6052BE7A95B0057FA40 /* makcha-design-system */,
+				206B51092BFA36D700FC6F76 /* Reusable */,
+				206B510C2BFA36F800FC6F76 /* Differentiator */,
+				206B510E2BFA36F800FC6F76 /* RxDataSources */,
 			);
 			productName = Makcha;
 			productReference = B89E7F732BE7613800A13B58 /* Makcha.app */;
@@ -485,6 +534,8 @@
 				B89E7FA12BE771BE00A13B58 /* XCRemoteSwiftPackageReference "PinLayout" */,
 				B89E7FA42BE7725000A13B58 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				206AA6042BE7A95B0057FA40 /* XCRemoteSwiftPackageReference "makcha-design-system" */,
+				206B51082BFA36D700FC6F76 /* XCRemoteSwiftPackageReference "Reusable" */,
+				206B510B2BFA36F800FC6F76 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = B89E7F742BE7613800A13B58 /* Products */;
 			projectDirPath = "";
@@ -559,9 +610,13 @@
 				B89E7F8D2BE765D200A13B58 /* TestViewController.swift in Sources */,
 				B86233382BEA035F003959FB /* TransPathRepository.swift in Sources */,
 				B89E7FB02BE773D100A13B58 /* TransPathDTO.swift in Sources */,
+				206B51072BFA349200FC6F76 /* MainCollectionCell.swift in Sources */,
+				20E277222C0198DF0071F6CA /* MainCollectionHeaderCell.swift in Sources */,
+				205075D52BF55F3A00BAC30E /* SearchPathViewController.swift in Sources */,
 				B89E7FB42BE7743600A13B58 /* LocationService.swift in Sources */,
 				B86233342BEA004A003959FB /* MakchaInfo.swift in Sources */,
 				B81BDE522BFF9A8700CFDC7A /* ArrivalType.swift in Sources */,
+				206B51052BFA348600FC6F76 /* MainCollectionView.swift in Sources */,
 				B8C31EA32BEF41220049B47C /* Date+Extension.swift in Sources */,
 				B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */,
 				B89E7FAE2BE773B700A13B58 /* APIService.swift in Sources */,
@@ -580,6 +635,8 @@
 				B81BDE502BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift in Sources */,
 				B89E7FB22BE7742600A13B58 /* LocationManagerInterface.swift in Sources */,
 				B862333A2BEA04D9003959FB /* APIServiceType.swift in Sources */,
+				205075D82BF9A15E00BAC30E /* SettingsViewController.swift in Sources */,
+				205075DB2BF9A41200BAC30E /* RemarkViewController.swift in Sources */,
 				B8D48C152BF206DA00DA2EB6 /* SubwayInfo.swift in Sources */,
 				B86233322BE9FF78003959FB /* TransPathRepositoryProtocol.swift in Sources */,
 				B862334B2BEC99AB003959FB /* MakchaInfoUseCase.swift in Sources */,
@@ -901,6 +958,22 @@
 				kind = branch;
 			};
 		};
+		206B51082BFA36D700FC6F76 /* XCRemoteSwiftPackageReference "Reusable" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AliSoftware/Reusable";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.1.2;
+			};
+		};
+		206B510B2BFA36F800FC6F76 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
 		B89E7F9E2BE771AE00A13B58 /* XCRemoteSwiftPackageReference "FlexLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/layoutBox/FlexLayout";
@@ -932,6 +1005,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 206AA6042BE7A95B0057FA40 /* XCRemoteSwiftPackageReference "makcha-design-system" */;
 			productName = "makcha-design-system";
+		};
+		206B51092BFA36D700FC6F76 /* Reusable */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 206B51082BFA36D700FC6F76 /* XCRemoteSwiftPackageReference "Reusable" */;
+			productName = Reusable;
+		};
+		206B510C2BFA36F800FC6F76 /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 206B510B2BFA36F800FC6F76 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		206B510E2BFA36F800FC6F76 /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 206B510B2BFA36F800FC6F76 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
 		};
 		B86233452BEA52FB003959FB /* RxTest */ = {
 			isa = XCSwiftPackageProductDependency;

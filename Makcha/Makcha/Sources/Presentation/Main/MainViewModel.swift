@@ -12,32 +12,32 @@ import RxSwift
 import RxCocoa
 
 // MARK: - 메인 화면의 뷰모델 (막차 경로 불러오는 화면)
-
 final class MainViewModel: ViewModelType {
     
     private let makchaInfoUseCase: MakchaInfoUseCase
     
     private let disposeBag = DisposeBag()
     
+    // 임시
+    var tempSections = BehaviorRelay(value: [SectionOfMainCard]()) {
+        didSet {
+            print(tempSections)
+        }
+    }
+    
     init(_ makchaInfoUseCase: MakchaInfoUseCase) {
         self.makchaInfoUseCase = makchaInfoUseCase
     }
     
     struct Input {
-        let resetCoordinateAction: ControlEvent<Void>
-        let worldButtonTap: ControlEvent<Void>
-        
         let viewDidLoadEvent = PublishRelay<Void>() // 화면 최초 로딩 이벤트 (현재 위치 기반 경로 불러오기)
-        let settingButtonTap = PublishRelay<Void>() // [설정] 버튼 탭
-        let starButtonTap = PublishRelay<Void>() // [즐겨찾기] 버튼 탭
+        let settingButtonTap: ControlEvent<Void> // [설정] 버튼 탭
+        let starButtonTap: ControlEvent<Void> // [즐겨찾기] 버튼 탭
         let resetToCurrentLocationTap = PublishRelay<Void>() // [현재 위치로 재설정] 버튼 탭
         let detailViewTap = PublishRelay<Int>() // [자세히보기] 탭
     }
     
     struct Output {
-        let currentTime: Driver<String>
-        let worldText: Driver<String>
-        
         let startTime: Driver<String> // 출발 시간 (현재 시간)
         let startLocation: Driver<String> // 출발지
         let destinationLocation: Driver<String> // 도착지
@@ -46,25 +46,25 @@ final class MainViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        // test
-        let currentTime = input.resetCoordinateAction
-            .map { 
-                print("변환")
-                return Date().description
-            }
-            .asDriver(onErrorJustReturn: "")
-        
-        let worldText = input.worldButtonTap
-            .map {"World"}
-            .asDriver(onErrorJustReturn: "")
-        
         // input
         input.viewDidLoadEvent
             .subscribe(onNext: { [weak self] in
                 self?.makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
             })
             .disposed(by: disposeBag)
-        
+        input.settingButtonTap
+            .withUnretained(self)
+            .subscribe { _, _ in
+                print("Setting Link Click")
+            }
+            .disposed(by: disposeBag)
+        input.starButtonTap
+            .withUnretained(self)
+            .subscribe { _, _ in
+                print("Setting Link Click")
+            }
+            .disposed(by: disposeBag)
+
         // output
         let startTime = makchaInfoUseCase.makchaInfo
             .map { "\($0.startTimeStr) 출발" }
@@ -81,13 +81,19 @@ final class MainViewModel: ViewModelType {
         let makchaPaths = makchaInfoUseCase.makchaInfo
             .map { $0.makchaPaths }
             .asDriver(onErrorJustReturn: [])
-        
+
+        makchaInfoUseCase.makchaInfo
+            .map { [SectionOfMainCard(model: "collection", items: $0.makchaPaths)] }
+            .withUnretained(self)
+            .subscribe { vm, sections in
+                vm.tempSections.accept(sections)
+            }
+            .disposed(by: disposeBag)
+
         let realtimeArrivals = makchaInfoUseCase.realtimeArrivals
             .asDriver(onErrorJustReturn: [])
         
         return Output(
-            currentTime: currentTime,
-            worldText: worldText,
             startTime: startTime,
             startLocation: startLocation,
             destinationLocation: destinationLocation,
