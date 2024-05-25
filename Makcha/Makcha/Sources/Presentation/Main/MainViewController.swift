@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import SwiftUI
 
 enum MainNavLink {
     case searchPath
@@ -54,7 +55,7 @@ final class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Sheet Setting
-        setupSheet()
+        pushNavigation(.searchPath)
     }
     
     public override func loadView() {
@@ -104,22 +105,15 @@ final class MainViewController: UIViewController {
     }
     
     private func setupCollectionView() {
-        dataSource = RxCollectionViewSectionedReloadDataSource<SectionOfMainCard>(
-            configureCell: { _, collectionView, indexPath, cardInfo in
-                let cell: MainCollectionCell = collectionView.dequeueReusableCell(for: indexPath)
-                
-                return cell
-            }, configureSupplementaryView: { dataSource, collectionView, title, indexPath in
-                let header: MainCollectionHeaderCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, for: indexPath)
-                
-                return header
-            }
-        )
+        let collectionView = mainView.collectionView as? MainCollectionView
+        dataSource = collectionView?.rxDataSource
     }
     
     private func bind() {
         let input = MainViewModel.Input(settingButtonTap: leftUIBarButtonItem.rx.tap, 
                                         starButtonTap: rightUIBarButtonItem.rx.tap)
+        
+        // MARK: 페이지 네비게이션 바인딩
         input.settingButtonTap
             .withUnretained(self)
             .bind { vc, _ in
@@ -135,23 +129,7 @@ final class MainViewController: UIViewController {
             .disposed(by: disposeBag)
         
         let output = mainViewModel.transform(input: input)
-        
-        output.realTimeArrivals // 실시간 도착정보 뷰 확인용
-            .map {
-                if let time = $0[0].first {
-                    return String(time)
-                } else {
-                    return ""
-                }
-            }
-            .drive(mainView.currentTimeLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        output.makchaPaths
-            .map { $0.count.description }
-            .drive(mainView.currentPathCountLabel.rx.text)
-            .disposed(by: disposeBag)
-    
+
         guard let dataSource = dataSource else { return }
         mainViewModel.tempSections
             .bind(to: mainView.collectionView.rx.items(dataSource: dataSource))
@@ -163,7 +141,7 @@ final class MainViewController: UIViewController {
     private func pushNavigation(_ link: MainNavLink) {
         switch link {
         case .searchPath:
-            print("Navigation To")
+            setupSheet()
         case .detail:
             print("Navigation To")
         case .settings:
@@ -177,7 +155,6 @@ final class MainViewController: UIViewController {
 }
 
 #if DEBUG
-import SwiftUI
 struct MainViewController_Previews: PreviewProvider {
     static var previews: some View {
         ViewControllerPreview {

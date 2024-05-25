@@ -14,20 +14,16 @@ import FlexLayout
 
 final class MainView: UIView {
     private var rootView = UIView()
-    
-    var currentTimeLabel = UILabel()
-    // test용
-    var currentPathCountLabel = UILabel()
     private let cellTemplate = MainCollectionCell()
     private let headerCellTemplate = MainCollectionHeaderCell()
+    
     var collectionViewLayout = UICollectionViewFlowLayout()
     var collectionView: UICollectionView
     
     init() {
         collectionView = MainCollectionView(collectionViewLayout)
         super.init(frame: .zero)
-        layout()
-
+        setup()
         addSubview(collectionView)
     }
     
@@ -38,35 +34,11 @@ final class MainView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         collectionView.pin.top(pin.safeArea)
-            .horizontally().vertically(185)
+            .horizontally().bottom(185)
     }
-    
-    private func setupCollectionView() {
-        collectionViewLayout.minimumLineSpacing = 0
-        collectionViewLayout.minimumInteritemSpacing = 0
-        collectionViewLayout.sectionHeadersPinToVisibleBounds = true
-        
+
+    private func setup() {
         collectionView.delegate = self
-        collectionView.register(cellType: MainCollectionCell.self)
-        collectionView.register(supplementaryViewType: MainCollectionHeaderCell.self,
-                                ofKind: UICollectionView.elementKindSectionHeader)
-    }
-    
-    private func layout() {
-        setupCollectionView()
-        
-        currentTimeLabel.attributedText = .pretendard("오늘의 시간", scale: .title)
-        currentPathCountLabel.attributedText = .pretendard("갯수", scale: .headline)
-        rootView.flex.gap(.cfSpacing(.large)).define {
-            $0.addItem().direction(.column).define {
-                $0.direction(.row).define {
-                    $0.addItem(currentTimeLabel).grow(1)
-                    $0.addItem(currentPathCountLabel).grow(1)
-                }
-            }
-            .padding(.cfSpacing(.large))
-        }
-        .border(1, .red)
     }
 }
 

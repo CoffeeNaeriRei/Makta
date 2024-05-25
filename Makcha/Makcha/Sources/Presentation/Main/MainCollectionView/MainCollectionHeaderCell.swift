@@ -11,11 +11,9 @@ import PinLayout
 import FlexLayout
 import MakchaDesignSystem
 import Reusable
+import SwiftUI
 
 final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
-    
-    private var cellHeight = 48.0
-    
     private var startTimeLabel: UILabel {
         let label = UILabel()
         
@@ -34,7 +32,6 @@ final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         setup()
     }
     
@@ -49,7 +46,7 @@ final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
             $0.addItem(resetButton)
         }
         .padding(0, 16, 0, 8)
-        .minHeight(cellHeight)
+        .minHeight(48)
         .border(1, .red)
     }
     
@@ -77,7 +74,6 @@ extension MainCollectionHeaderCell {
 }
 
 #if DEBUG
-import SwiftUI
 struct MainCollectionHeaderCell_Preview: PreviewProvider {
     static var previews: some View {
         ViewPreview {

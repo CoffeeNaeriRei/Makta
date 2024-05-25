@@ -11,9 +11,10 @@ import PinLayout
 import FlexLayout
 import MakchaDesignSystem
 import Reusable
+import SwiftUI
 
 final class MainCollectionCell: UICollectionViewCell, Reusable {
-    var pathTypelabel: UILabel {
+    var pathTypelabel: UILabel = {
         let label = UILabel()
         label.attributedText = .pretendard("경로 종류",
                                            scale: .body,
@@ -21,23 +22,23 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
         label.textColor = UIColor(Color.cf(.colorScale(.blue(.mediumLight))))
         
         return label
-    }
+    }()
     
-    private var estimatedTimeOfArrivalLabel: UILabel {
+    private var estimatedTimeOfArrivalLabel: UILabel = {
         let label = UILabel()
         label.attributedText = .pretendard("도착 예정 시간", scale: .caption)
         label.textColor = UIColor(Color.cf(.grayScale(.gray600)))
         
         return label
-    }
+    }()
     
-    private var durationTimeLabel: UILabel {
+    private var durationTimeLabel: UILabel = {
         let label = UILabel()
         label.attributedText = .pretendard("NN:NN", scale: .title)
         label.textColor = UIColor(Color.cf(.grayScale(.gray800)))
         
         return label
-    }
+    }()
     
     private var navigationToDetailsButton: UIButton {
         let button = UIButton()
@@ -184,8 +185,19 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
     }
 }
 
+extension MainCollectionCell {
+    func configure(with data: MakchaPath) {
+        estimatedTimeOfArrivalLabel.text = data.arrivalTime.description
+        estimatedTimeOfArrivalLabel.flex.markDirty()
+        
+        durationTimeLabel.text = data.totalTime.description
+        durationTimeLabel.flex.markDirty()
+        
+        setNeedsLayout()
+    }
+}
+
 #if DEBUG
-import SwiftUI
 struct MainCollectionCell_Preview: PreviewProvider {
     static var previews: some View {
         ViewPreview {
