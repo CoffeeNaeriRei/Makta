@@ -40,9 +40,10 @@ final class MainViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         // input
         input.viewDidLoadEvent
-            .subscribe(onNext: { [weak self] in
-                self?.makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
-            })
+            .withUnretained(self)
+            .subscribe { vm, _ in
+                vm.makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
+            }
             .disposed(by: disposeBag)
         
         input.settingButtonTap

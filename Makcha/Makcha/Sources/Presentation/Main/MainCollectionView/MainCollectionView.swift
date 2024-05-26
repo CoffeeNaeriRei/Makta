@@ -30,8 +30,7 @@ final class MainCollectionView: UICollectionView {
     )
     
     init(_ collectionViewLayout: UICollectionViewLayout) {
-        super.init(frame: .zero,
-                   collectionViewLayout: collectionViewLayout)
+        super.init(frame: .zero, collectionViewLayout: collectionViewLayout)
         
         // 생성 시 `UICollectionViewFlowLayout` 일 경우 기본 레이아웃 설정
         let collectionViewLayout = collectionViewLayout as? UICollectionViewFlowLayout

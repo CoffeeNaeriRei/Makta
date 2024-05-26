@@ -93,8 +93,12 @@ extension MainCollectionHeaderCell {
     // MARK: 패치 된 데이터를 활용해 뷰 레이아웃을 설정하기 위한 인터페이스 메서드
     func configure(with startTime: String) {
         let text = NSMutableAttributedString.pretendard("\(startTime) 출발", scale: .headline)
-        text.addAttributes([.foregroundColor : UIColor(Color.cf(.colorScale(.royalBlue(.mediumLight))))],
-                           range: .init(location: 0, length: startTime.count))
+        text.addAttributes(
+            [
+                .foregroundColor : UIColor(Color.cf(.colorScale(.royalBlue(.mediumLight))))
+            ],
+            range: .init(location: 0, length: startTime.count)
+        )
 
         startTimeLabel.attributedText = text
         startTimeLabel.flex.markDirty()
