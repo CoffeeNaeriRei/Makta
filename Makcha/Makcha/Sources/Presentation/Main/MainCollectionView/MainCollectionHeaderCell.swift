@@ -6,16 +6,17 @@
 //
 
 import Foundation
+import SwiftUI
 import UIKit
+
+import MakchaDesignSystem
 import PinLayout
 import FlexLayout
-import MakchaDesignSystem
 import Reusable
-import SwiftUI
 import RxSwift
 
 final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
-    private var startTimeLabel: UILabel = {
+    private let startTimeLabel: UILabel = {
         let label = UILabel()
         let text = NSMutableAttributedString.pretendard("출발 시간 출발", scale: .headline)
 
@@ -25,7 +26,8 @@ final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
         return label
     }()
     
-    var resetButton: UIButton = {
+    // MARK: rxSwift를 활용해 바인딩하기 위해 인터널 선언
+    let resetButton: UIButton = {
         let button = UIButton()
         
         let tintColor = UIColor(Color.cf(.grayScale(.gray700)))
@@ -88,6 +90,7 @@ final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
 }
 
 extension MainCollectionHeaderCell {
+    // MARK: 패치 된 데이터를 활용해 뷰 레이아웃을 설정하기 위한 인터페이스 메서드
     func configure(with startTime: String) {
         let text = NSMutableAttributedString.pretendard("\(startTime) 출발", scale: .headline)
         text.addAttributes([.foregroundColor : UIColor(Color.cf(.colorScale(.royalBlue(.mediumLight))))],

@@ -6,18 +6,20 @@
 //
 
 import Foundation
-import UIKit
 import SwiftUI
+import UIKit
+
 import MakchaDesignSystem
 import PinLayout
 import FlexLayout
 
 final class MainView: UIView {
-    private var rootView = UIView()
+    private let rootView = UIView()
+    // sizeThatFits 호출을 위한 템플릿 인스턴스
     private let cellTemplate = MainCollectionCell()
     private let headerCellTemplate = MainCollectionHeaderCell()
     
-    var collectionViewLayout = UICollectionViewFlowLayout()
+    private var collectionViewLayout = UICollectionViewFlowLayout()
     var collectionView: UICollectionView
     
     init() {
