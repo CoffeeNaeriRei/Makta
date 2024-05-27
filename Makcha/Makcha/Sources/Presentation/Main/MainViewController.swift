@@ -6,20 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 import UIKit
+
 import RxSwift
 import RxCocoa
 import RxDataSources
-import SwiftUI
-
-enum MainNavLink {
-    case searchPath
-    case detail
-    case settings
-    case remark
-}
-
-typealias SectionOfMainCard = SectionModel<String, MakchaPath>
 
 final class MainViewController: UIViewController {
     // swiftlint: disable force_cast
@@ -28,15 +20,14 @@ final class MainViewController: UIViewController {
     }
     // swiftlint: enable force_cast
     
-    private let leftUIBarButtonItem = UIBarButtonItem()
-    private let rightUIBarButtonItem = UIBarButtonItem()
+    private let mainViewModel: MainViewModel
+    private let disposeBag = DisposeBag()
     
     private var dataSource: RxCollectionViewSectionedReloadDataSource<SectionOfMainCard>?
     
-    private let mainViewModel: MainViewModel
-    
-    private let disposeBag = DisposeBag()
-    
+    private let leftUIBarButtonItem = UIBarButtonItem()
+    private let rightUIBarButtonItem = UIBarButtonItem()
+
     init(_ mainViewModel: MainViewModel) {
         self.mainViewModel = mainViewModel
         super.init(nibName: nil, bundle: nil)
@@ -55,6 +46,7 @@ final class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Sheet Setting
+        // 네비게이션 처리 시 바텀 시트를 띄위기 위해 호출
         pushNavigation(.searchPath)
     }
     
@@ -67,6 +59,74 @@ final class MainViewController: UIViewController {
         // NavigationLink Setting
         setupNavigationItems()
         setupCollectionView()
+    }
+        
+    private func bind() {
+        let input = MainViewModel.Input(
+            settingButtonTap: leftUIBarButtonItem.rx.tap,
+            starButtonTap: rightUIBarButtonItem.rx.tap
+        )
+
+        let output = mainViewModel.transform(input: input)
+
+        bindCollectionView()
+        
+        // MARK: 페이지 네비게이션 바인딩
+        input.settingButtonTap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.pushNavigation(.settings)
+            }
+            .disposed(by: disposeBag)
+        
+        input.starButtonTap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.pushNavigation(.remark)
+            }
+            .disposed(by: disposeBag)
+        
+        input.viewDidLoadEvent.accept(()) // 바인딩이 끝난 뒤에 viewDldLoad 이벤트 1회 발생
+    }
+}
+
+// MARK: 메인 뷰 내 컬렉션 뷰 설정 관련
+extension MainViewController {
+    private func setupCollectionView() {
+        let collectionView = mainView.collectionView as? MainCollectionView
+        dataSource = collectionView?.rxDataSource
+    }
+    
+    private func bindCollectionView() {
+        guard let dataSource = dataSource else { return }
+        
+        mainView.collectionView.rx.willDisplaySupplementaryView
+            .withUnretained(self)
+            .subscribe { _, event in
+                if let header = event.supplementaryView as? MainCollectionHeaderCell {
+                    header.resetButton.rx.tap
+                        .withUnretained(self)
+                        .subscribe { vc, _ in
+                            vc.mainViewModel.resetToCurrentLocationTap()
+                        }
+                        .disposed(by: header.disposeBag)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        mainViewModel.tempSections
+            .bind(to: mainView.collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+    }
+}
+
+// MARK: Navigation 처리 관련
+extension MainViewController {
+    enum MainNavLink {
+        case searchPath
+        case detail
+        case settings
+        case remark
     }
     
     private func setupNavigationItems() {
@@ -104,40 +164,6 @@ final class MainViewController: UIViewController {
         present(searchPathSheet, animated: true)
     }
     
-    private func setupCollectionView() {
-        let collectionView = mainView.collectionView as? MainCollectionView
-        dataSource = collectionView?.rxDataSource
-    }
-    
-    private func bind() {
-        let input = MainViewModel.Input(settingButtonTap: leftUIBarButtonItem.rx.tap, 
-                                        starButtonTap: rightUIBarButtonItem.rx.tap)
-        
-        // MARK: 페이지 네비게이션 바인딩
-        input.settingButtonTap
-            .withUnretained(self)
-            .bind { vc, _ in
-                vc.pushNavigation(.settings)
-            }
-            .disposed(by: disposeBag)
-        
-        input.starButtonTap
-            .withUnretained(self)
-            .bind { vc, _ in
-                vc.pushNavigation(.remark)
-            }
-            .disposed(by: disposeBag)
-        
-        let output = mainViewModel.transform(input: input)
-
-        guard let dataSource = dataSource else { return }
-        mainViewModel.tempSections
-            .bind(to: mainView.collectionView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-        
-        input.viewDidLoadEvent.accept(()) // 바인딩이 끝난 뒤에 viewDldLoad 이벤트 1회 발생
-    }
-
     private func pushNavigation(_ link: MainNavLink) {
         switch link {
         case .searchPath:

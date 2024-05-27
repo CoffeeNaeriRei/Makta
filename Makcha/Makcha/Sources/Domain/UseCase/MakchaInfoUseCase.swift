@@ -45,16 +45,13 @@ final class MakchaInfoUseCase {
     // 막차 경로 검색
     func loadMakchaPath(start: XYCoordinate, end: XYCoordinate) {
         transPathRepository.getAllMakchaTransPath(start: start, end: end)
-            .do(
-                onNext: { makchaInfo in
-                    // 실시간 도착정보 불러오기
-                    self.makeRealtimeArrivalTimes(
-                        currentTime: makchaInfo.startTime,
-                        makchaPaths: makchaInfo.makchaPaths
-                    )
-                }
-            )
-            .bind(to: makchaInfo)
+            .withUnretained(self)
+            .subscribe {
+                // 실시간 도착정보 불러오기
+                $0.makeRealtimeArrivalTimes(currentTime: $1.startTime, makchaPaths: $1.makchaPaths)
+                // 새로운 MakchaInfo로 값을 업데이트
+                $0.makchaInfo.onNext($1)
+            }
             .disposed(by: disposeBag)
     }
     

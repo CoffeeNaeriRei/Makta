@@ -6,25 +6,28 @@
 //
 
 import Foundation
-import UIKit
-import PinLayout
-import FlexLayout
-import MakchaDesignSystem
-import Reusable
 import SwiftUI
+import UIKit
+
+import MakchaDesignSystem
+import FlexLayout
+import PinLayout
+import Reusable
 
 final class MainCollectionCell: UICollectionViewCell, Reusable {
-    var pathTypelabel: UILabel = {
+    private let pathTypelabel: UILabel = {
         let label = UILabel()
-        label.attributedText = .pretendard("경로 종류",
-                                           scale: .body,
-                                           weight: .semiBold)
+        label.attributedText = .pretendard(
+            "경로 종류", 
+            scale: .body,
+            weight: .semiBold
+        )
         label.textColor = UIColor(Color.cf(.colorScale(.blue(.mediumLight))))
         
         return label
     }()
     
-    private var estimatedTimeOfArrivalLabel: UILabel = {
+    private let estimatedTimeOfArrivalLabel: UILabel = {
         let label = UILabel()
         label.attributedText = .pretendard("도착 예정 시간", scale: .caption)
         label.textColor = UIColor(Color.cf(.grayScale(.gray600)))
@@ -32,7 +35,7 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
         return label
     }()
     
-    private var durationTimeLabel: UILabel = {
+    private let durationTimeLabel: UILabel = {
         let label = UILabel()
         label.attributedText = .pretendard("NN:NN", scale: .title)
         label.textColor = UIColor(Color.cf(.grayScale(.gray800)))
@@ -40,16 +43,18 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
         return label
     }()
     
-    private var navigationToDetailsButton: UIButton {
+    // 자세히 보기 버튼: 생성 버튼과정이 길어서, 추후 Factory 패턴으로 코드 분리할 예정
+    private let navigationToDetailsButton: UIButton = {
         let button = UIButton()
         
         let tintColor = UIColor(Color.cf(.grayScale(.gray800)))
-        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 14,
-                                                       weight: .regular,
-                                                       scale: .default)
+        let symbolConfig = UIImage.SymbolConfiguration(
+            pointSize: 14,
+            weight: .regular,
+            scale: .default
+        )
         
-        let icon = UIImage(systemName: "chevron.right",
-                           withConfiguration: symbolConfig)?
+        let icon = UIImage(systemName: "chevron.right", withConfiguration: symbolConfig)?
             .withTintColor(tintColor, renderingMode: .alwaysOriginal)
         var titleAttr = AttributedString("자세히 보기")
         titleAttr.font = UIFont.pretendard(.medium, size: 14)
@@ -68,10 +73,10 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
         button.flex.paddingHorizontal(.cfSpacing(.medium)).minHeight(40)
         
         return button
-    }
+    }()
     
     // MARK: 현재 도착 예정인 교통수단이 정거장에 도착하기 까지 남은 시간을 표시하는 라벨
-    var currentArrivalTransportTimeLabel: UILabel {
+    private let currentArrivalTransportTimeLabel: UILabel = {
         let label = UILabel()
         let textColor = UIColor(Color.cf(.grayScale(.black)))
         
@@ -79,10 +84,10 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
         label.textColor = textColor
         
         return label
-    }
+    }()
 
     // MARK: 다음 도착 예정인 교통수단이 정거장에 도착하기 까지 남은 시간을 표시하는 라벨
-    var nextArrivalTransportTimeLabel: UILabel {
+    private let nextArrivalTransportTimeLabel: UILabel = {
         let label = UILabel()
         let textColor = UIColor(Color.cf(.grayScale(.gray500)))
         
@@ -90,16 +95,16 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
         label.textColor = textColor
         
         return label
-    }
+    }()
     
-    private var centerContentsTopLabel: UILabel {
+    private let centerContentsTopLabel: UILabel = {
         let label = UILabel()
         let textColor = UIColor(Color.cf(.grayScale(.gray600)))
         label.attributedText = .pretendard("도착 예정", scale: .caption)
         label.textColor = textColor
         
         return label
-    }
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -155,19 +160,6 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
         .height(240)
     }
     
-    func layoutPathInfo() -> UIView {
-        let rootView = UIView()
-        
-        rootView.flex.define {
-            $0.addItem()
-        }
-        .minHeight(66)
-        .marginBottom(12)
-        .border(1, .red)
-        
-        return rootView
-    }
-    
     private func layout() {
         contentView.flex.layout(mode: .adjustHeight)
     }
@@ -186,6 +178,7 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
 }
 
 extension MainCollectionCell {
+    // MARK: 패치 된 데이터를 활용해 뷰 레이아웃을 설정하기 위한 인터페이스 메서드
     func configure(with data: MakchaPath) {
         estimatedTimeOfArrivalLabel.text = data.arrivalTime.description
         estimatedTimeOfArrivalLabel.flex.markDirty()
@@ -194,6 +187,20 @@ extension MainCollectionCell {
         durationTimeLabel.flex.markDirty()
         
         setNeedsLayout()
+    }
+    
+    // MARK: 들어오는 경로 데이터에 따라 다르게 뷰를 그리기 위한 메서드
+    func layoutPathInfo() -> UIView {
+        let rootView = UIView()
+        
+        rootView.flex.define {
+            $0.addItem()
+        }
+        .minHeight(66)
+        .marginBottom(12)
+        .border(1, .red)
+        
+        return rootView
     }
 }
 

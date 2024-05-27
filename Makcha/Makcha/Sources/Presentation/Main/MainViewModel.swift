@@ -7,23 +7,18 @@
 
 import Foundation
 
-import RxRelay
 import RxSwift
+import RxRelay
 import RxCocoa
 
 // MARK: - 메인 화면의 뷰모델 (막차 경로 불러오는 화면)
 final class MainViewModel: ViewModelType {
-    
     private let makchaInfoUseCase: MakchaInfoUseCase
-    
     private let disposeBag = DisposeBag()
     
-    // 임시
-    var tempSections = BehaviorRelay(value: [SectionOfMainCard]()) {
-        didSet {
-            print(tempSections)
-        }
-    }
+    // 임시로 MainCollectionView의 DataSource를 채우기 위한 프로퍼티
+    // 추후 명칭 변경 필요.
+    var tempSections = BehaviorRelay(value: [SectionOfMainCard]())
     
     init(_ makchaInfoUseCase: MakchaInfoUseCase) {
         self.makchaInfoUseCase = makchaInfoUseCase
@@ -33,43 +28,44 @@ final class MainViewModel: ViewModelType {
         let viewDidLoadEvent = PublishRelay<Void>() // 화면 최초 로딩 이벤트 (현재 위치 기반 경로 불러오기)
         let settingButtonTap: ControlEvent<Void> // [설정] 버튼 탭
         let starButtonTap: ControlEvent<Void> // [즐겨찾기] 버튼 탭
-        let resetToCurrentLocationTap = PublishRelay<Void>() // [현재 위치로 재설정] 버튼 탭
-        let detailViewTap = PublishRelay<Int>() // [자세히보기] 탭
+        // 자세히 보기 클릭 시, 현재 위치로 재설정 클릭 시 이벤트 CollectionViewBinding으로 위치 변경
     }
     
     struct Output {
-        let startTime: Driver<String> // 출발 시간 (현재 시간)
         let startLocation: Driver<String> // 출발지
         let destinationLocation: Driver<String> // 도착지
-        let makchaPaths: Driver<[MakchaPath]> // 막차 경로 배열
         let realTimeArrivals: Driver<[RealtimeArrivalTuple]> // 실시간 도착 정보
     }
     
     func transform(input: Input) -> Output {
         // input
         input.viewDidLoadEvent
-            .subscribe(onNext: { [weak self] in
-                self?.makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
-            })
+            .withUnretained(self)
+            .subscribe { vm, _ in
+                vm.makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
+            }
             .disposed(by: disposeBag)
+        
         input.settingButtonTap
             .withUnretained(self)
             .subscribe { _, _ in
                 print("Setting Link Click")
             }
             .disposed(by: disposeBag)
+        
         input.starButtonTap
             .withUnretained(self)
             .subscribe { _, _ in
-                print("Setting Link Click")
+                print("Star Link Click")
             }
             .disposed(by: disposeBag)
 
-        // output
-        let startTime = makchaInfoUseCase.makchaInfo
-            .map { "\($0.startTimeStr) 출발" }
-            .asDriver(onErrorJustReturn: "\(Date().endPointTimeString) 출발")
-        
+        // MARK: makchaInfo 데이터 처리
+        makchaInfoUseCase.makchaInfo
+            .withUnretained(self)
+            .subscribe { $0.tempSections.accept([.init(model: $1.startTimeStr, items: $1.makchaPaths)]) }
+            .disposed(by: disposeBag)
+ 
         let startLocation = makchaInfoUseCase.startPoint
             .map { "\($0.name)" }
             .asDriver(onErrorJustReturn: "출발지를 설정해주세요.")
@@ -78,27 +74,19 @@ final class MainViewModel: ViewModelType {
             .map { "\($0.name) "}
             .asDriver(onErrorJustReturn: "도착지를 설정해주세요.")
         
-        let makchaPaths = makchaInfoUseCase.makchaInfo
-            .map { $0.makchaPaths }
-            .asDriver(onErrorJustReturn: [])
-
-        makchaInfoUseCase.makchaInfo
-            .map { [SectionOfMainCard(model: "collection", items: $0.makchaPaths)] }
-            .withUnretained(self)
-            .subscribe { vm, sections in
-                vm.tempSections.accept(sections)
-            }
-            .disposed(by: disposeBag)
-
         let realtimeArrivals = makchaInfoUseCase.realtimeArrivals
             .asDriver(onErrorJustReturn: [])
         
         return Output(
-            startTime: startTime,
             startLocation: startLocation,
             destinationLocation: destinationLocation,
-            makchaPaths: makchaPaths,
             realTimeArrivals: realtimeArrivals
         )
+    }
+    
+    // 현재 위치 재설정 버튼 클릭시 이벤트 처리를 위한 메서드
+    func resetToCurrentLocationTap() {
+        tempSections.accept([])
+        makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
     }
 }
