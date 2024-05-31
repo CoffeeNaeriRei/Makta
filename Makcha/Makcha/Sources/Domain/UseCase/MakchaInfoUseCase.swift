@@ -14,7 +14,6 @@ import RxSwift
 // MARK: - 막차 정보 관련 유즈케이스
 
 final class MakchaInfoUseCase {
-    
     private let transPathRepository: TransPathRepositoryProtocol
     private let endPointRepository: EndPointRepositoryProtocol
     

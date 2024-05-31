@@ -13,7 +13,6 @@ import RxSwift
 // DTO -> Entity 변환 후 Domain 계층(UseCase)에 전달
 
 final class EndPointRepository: EndPointRepositoryProtocol {
-    
     private let locationService: LocationServiceInterface
     
     init(_ locationService: LocationServiceInterface) {

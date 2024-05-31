@@ -15,7 +15,6 @@ import RxTest
 
 // Mock LocationService
 struct MockLocationService: LocationServiceInterface {
-    
     var mockEndPoint: EndPoint?
     var isConvertSuccess: Bool = true
     var mockError: Error?
@@ -42,7 +41,6 @@ struct MockLocationService: LocationServiceInterface {
 }
 
 final class EndPointRepositoryTests: XCTestCase {
-    
     private var sut: EndPointRepository!
     private var scheduler: TestScheduler!
     private var disposeBag: DisposeBag!

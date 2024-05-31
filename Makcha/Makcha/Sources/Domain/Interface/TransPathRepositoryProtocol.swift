@@ -13,6 +13,15 @@ import RxSwift
 
 protocol TransPathRepositoryProtocol {
     func getAllMakchaTransPath(start: XYCoordinate, end: XYCoordinate) -> Observable<MakchaInfo>
-    func getSeoulRealtimeSubwayArrival(stationName: String, subwayLineCodeInt: Int, wayCodeInt: Int, currentTime: Date) -> Observable<RealtimeArrivalTuple>
-    func getSeoulRealtimeBusArrival(routeIDs: [String], routeNames: [String], arsID: String) -> Observable<RealtimeArrivalTuple>
+    func getSeoulRealtimeSubwayArrival(
+        stationName: String,
+        subwayLineCodeInt: Int,
+        wayCodeInt: Int,
+        currentTime: Date
+    ) -> Observable<RealtimeArrivalTuple>
+    func getSeoulRealtimeBusArrival(
+        routeIDs: [String],
+        routeNames: [String],
+        arsID: String
+    ) -> Observable<RealtimeArrivalTuple>
 }

@@ -13,7 +13,6 @@ import RxSwift
 // DTO -> Entity 변환 후 Domain 계층(UseCase)에 전달
 
 final class TransPathRepository: TransPathRepositoryProtocol {
-    
     private let apiService: APIServiceInterface
     
     init(_ apiService: APIServiceInterface) {
@@ -147,7 +146,6 @@ final class TransPathRepository: TransPathRepositoryProtocol {
 // MARK: - 대중교통 환승정보 불러오기 관련 유틸리티 메서드
 
 extension TransPathRepository {
-    
     // TransPathDTO -> MakchaInfo 변환 메서드
     func convertTransPathDTOToMakchaInfo(transPathDTO: TransPathDTO) -> MakchaInfo? {
         let startTime = Date() // 출발시간(현재시간)
@@ -289,7 +287,6 @@ extension TransPathRepository {
 // MARK: - 서울시 실시간 지하철 도착정보 불러오기 관련 유틸리티 메서드
 
 extension TransPathRepository {
-    
     // 서울시 실시간 지하철 도착정보 배열에서 호선+방면이 일치하는 도착정보를 필터링해서 반환 (1번째/2번째 도착 열차 구분)
     func filteringSeoulArrivalSubway(
         from arrivals: [SeoulRealtimeSubwayArrival],
@@ -355,7 +352,6 @@ extension TransPathRepository {
 // MARK: - 서울시 실시간 버스 도착정보 불러오기 관련 유틸리티 메서드
 
 extension TransPathRepository {
-    
     // 버스의 도착 상태를 구해서 BusArrivalStatus 타입 값을 반환하는 메서드
     func getBusArrivalStatusFromSeoulBusStation(arrivalMessage: String) -> ArrivalStatus {
         if arrivalMessage.contains("출발대기") {

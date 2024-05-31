@@ -14,7 +14,6 @@ import RxTest
 
 // Mock APIService
 struct MockAPIService: APIServiceInterface {
-    
     var mockTransPathResult: Result<TransPathDTO, APIServiceError>?
     var mockSeoulRealtimeSubwayResult: Result<SeoulRealtimeSubwayDTO, APIServiceError>?
     var mockSeoulRealtimeBusStationResult: Result<SeoulRealtimeBusStationDTO, APIServiceError>?
@@ -41,7 +40,6 @@ struct MockAPIService: APIServiceInterface {
 }
 
 final class TransPathRepositoryTests: XCTestCase {
-    
     private var sut: TransPathRepository!
     private var scheduler: TestScheduler!
     private var disposeBag: DisposeBag!

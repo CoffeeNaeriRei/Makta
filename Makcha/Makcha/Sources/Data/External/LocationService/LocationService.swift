@@ -13,15 +13,15 @@ import CoreLocation
 typealias LocationCallback = (CLLocation?, Error?) -> Void // 위치 값을 인자로 전달하는 콜백 타입
 
 protocol LocationServiceInterface {
-    
     func fetchCurrentLocation(completion: @escaping LocationCallback)
-    func convertCoordinateToAddress(lon: CLLocationDegrees, lat: CLLocationDegrees,
-                                    completion: @escaping ((String?) -> Void)
+    func convertCoordinateToAddress(
+        lon: CLLocationDegrees,
+        lat: CLLocationDegrees,
+        completion: @escaping ((String?) -> Void)
     )
 }
 
 final class LocationService: NSObject, LocationServiceInterface {
-    
     var locationManager: LocationManagerInterface
     private var fetchLocationCallBack: LocationCallback?
     
@@ -82,7 +82,6 @@ final class LocationService: NSObject, LocationServiceInterface {
 // MARK: - LocationManagerDelegate 델리게이트 구현
 
 extension LocationService: LocationManagerDelegate {
-    
     // [LocationManager가 초기화됐을 때 .notDetermined일 경우] or [권한 상태가 변경되었을 때] 호출
     func locationManagerAbstract(_ manager: LocationManagerInterface, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
@@ -116,7 +115,6 @@ extension LocationService: LocationManagerDelegate {
 // MARK: - CLLocationManagerDelegate 델리게이트 구현
 
 extension LocationService: CLLocationManagerDelegate {
-    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         locationManagerAbstract(manager, didChangeAuthorization: manager.authorizationStatus)
     }
