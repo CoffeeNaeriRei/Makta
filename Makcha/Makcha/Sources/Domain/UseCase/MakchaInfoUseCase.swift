@@ -85,7 +85,7 @@ final class MakchaInfoUseCase {
             if let firstTransSubPath = makchaPath.subPath.first(where: { $0.idx == 1 }) {
                 switch firstTransSubPath.subPathType {
                 case .subway: // 🚇지하철
-                    print("실시간 지하철 도착정보 API 호출")
+//                    print("실시간 지하철 도착정보 API 호출")
                     if let stationName = firstTransSubPath.startName,
                        let subwayLine = firstTransSubPath.lane?.first?.subwayCode,
                        let wayCode = firstTransSubPath.wayCode {
@@ -105,7 +105,7 @@ final class MakchaInfoUseCase {
                         
                         let routeIDs = lanes.compactMap { $0.busRouteID }
                         let routeNames = lanes.map { $0.name }
-                        print("실시간 버스 도착정보 API 호출")
+//                        print("실시간 버스 도착정보 API 호출")
                         let observable = transPathRepository.getSeoulRealtimeBusArrival(
                             routeIDs: routeIDs,
                             routeNames: routeNames,
@@ -122,7 +122,7 @@ final class MakchaInfoUseCase {
         
         // TODO: - combineLatest 동작 원리 제대로 모름. 다른 방법도 있는지 생각해보기
         Observable.combineLatest(realtimeArrivalObservables)
-            .debug()
+//            .debug()
             .subscribe(onNext: { [weak self] arrivals in
                 self?.realtimeArrivals.onNext(arrivals)
             })
