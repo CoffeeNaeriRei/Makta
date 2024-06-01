@@ -59,7 +59,7 @@ final class MainViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
 
-        // MARK: makchaInfo 데이터 처리
+        // MARK: makchaSectionModel 데이터 처리
         makchaInfoUseCase.makchaSectionModel
             .withUnretained(self)
             .subscribe(onNext: {
