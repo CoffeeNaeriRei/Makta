@@ -179,12 +179,19 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
 
 extension MainCollectionCell {
     // MARK: 패치 된 데이터를 활용해 뷰 레이아웃을 설정하기 위한 인터페이스 메서드
-    func configure(with data: MakchaPath) {
-        estimatedTimeOfArrivalLabel.text = data.arrivalTime.description
+    func configure(with data: MakchaCellData) {
+        
+        estimatedTimeOfArrivalLabel.text = data.makchaPath.arrivalTime.description
         estimatedTimeOfArrivalLabel.flex.markDirty()
         
-        durationTimeLabel.text = data.totalTime.description
+        durationTimeLabel.text = data.makchaPath.totalTime.description
         durationTimeLabel.flex.markDirty()
+        
+        currentArrivalTransportTimeLabel.text = data.arrival.first.arrivalMessage
+        currentArrivalTransportTimeLabel.flex.markDirty()
+        
+        nextArrivalTransportTimeLabel.text = data.arrival.second.arrivalMessage
+        nextArrivalTransportTimeLabel.flex.markDirty()
         
         setNeedsLayout()
     }

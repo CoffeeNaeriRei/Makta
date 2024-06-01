@@ -34,7 +34,6 @@ final class MainViewModel: ViewModelType {
     struct Output {
         let startLocation: Driver<String> // 출발지
         let destinationLocation: Driver<String> // 도착지
-        let realTimeArrivals: Driver<[RealtimeArrivalTuple]> // 실시간 도착 정보
     }
     
     func transform(input: Input) -> Output {
@@ -61,9 +60,11 @@ final class MainViewModel: ViewModelType {
             .disposed(by: disposeBag)
 
         // MARK: makchaInfo 데이터 처리
-        makchaInfoUseCase.makchaInfo
+        makchaInfoUseCase.makchaSectionModel
             .withUnretained(self)
-            .subscribe { $0.tempSections.accept([.init(model: $1.startTimeStr, items: $1.makchaPaths)]) }
+            .subscribe(onNext: {
+                $0.tempSections.accept([.init(model: $1.startTimeStr, items: $1.makchaCellData)])
+            })
             .disposed(by: disposeBag)
  
         let startLocation = makchaInfoUseCase.startPoint
@@ -74,13 +75,9 @@ final class MainViewModel: ViewModelType {
             .map { "\($0.name) "}
             .asDriver(onErrorJustReturn: "도착지를 설정해주세요.")
         
-        let realtimeArrivals = makchaInfoUseCase.realtimeArrivals
-            .asDriver(onErrorJustReturn: [])
-        
         return Output(
             startLocation: startLocation,
-            destinationLocation: destinationLocation,
-            realTimeArrivals: realtimeArrivals
+            destinationLocation: destinationLocation
         )
     }
     

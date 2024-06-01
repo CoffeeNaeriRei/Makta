@@ -22,7 +22,7 @@ final class MainCollectionView: UICollectionView {
             return cell
         }, configureSupplementaryView: { dataSource, collectionView, _, indexPath in
             let header: MainCollectionHeaderCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, for: indexPath)
-            print(#line, dataSource.sectionModels[indexPath.section].model)
+//            print(#line, dataSource.sectionModels[indexPath.section].model)
             header.configure(with: dataSource.sectionModels[indexPath.section].model)
             
             return header
