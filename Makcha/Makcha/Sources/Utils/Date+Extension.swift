@@ -29,7 +29,6 @@ extension Date {
         } else if isTomorrow {
             timeString = "다음날 " + timeString
         }
-        print("시간 문자열 => \(timeString)")
         return timeString
     }
     

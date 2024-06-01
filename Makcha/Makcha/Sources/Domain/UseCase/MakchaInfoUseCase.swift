@@ -13,6 +13,9 @@ import RxSwift
 
 // MARK: - 막차 정보 관련 유즈케이스
 
+// 컬렉션뷰의 셀에 전달할 데이터 타입 (막차경로, 해당경로의실시간도착정보)
+typealias MakchaCellData = (makchaPath: MakchaPath, arrival: RealtimeArrivalTuple)
+
 final class MakchaInfoUseCase {
     private let transPathRepository: TransPathRepositoryProtocol
     private let endPointRepository: EndPointRepositoryProtocol
