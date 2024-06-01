@@ -19,7 +19,6 @@ let MOCK_END = mockDestinationPoint.coordinate
 
 // Mock TransPathRepository
 struct MockTransPathRepository: TransPathRepositoryProtocol {
-    
     var isMakchaInfo: Bool = false
     var mockAPIServiceError = APIServiceError.requestFail
     
@@ -42,7 +41,6 @@ struct MockTransPathRepository: TransPathRepositoryProtocol {
 
 // Mock EndPointRepository
 struct MockEndPointRepository: EndPointRepositoryProtocol {
-    
     var isCurrentLocation: Bool?
     var mockLocationServiceError = LocationServiceError.fetchFailed
     

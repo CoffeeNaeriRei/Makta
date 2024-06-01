@@ -38,7 +38,6 @@ class LocationManagerMock: LocationManagerMockInterface {
 }
 
 final class LocationServiceTests: XCTestCase {
-    
     private var sut: LocationService!
 
     override func setUpWithError() throws {

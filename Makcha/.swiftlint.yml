@@ -14,6 +14,7 @@ excluded: # 린트 과정에서 무시할 파일 경로. `included`보다 우선
 - SdeneDelegate.swift
 - Makcha/Sources/Data/DTO # DTO 모델 제외
 - Makcha/Sources/Domain/Entity/SubwayInfo.swift # SubwayInfo에 열거형의 한글이름 case들이 있어서 제외
+- MakchaTests # 테스트 코드 제외
 # - Projects/App/Sources # AppDelegate, SceneDelegate는 제외
 # - Projects/Data/Sources/DTO
 

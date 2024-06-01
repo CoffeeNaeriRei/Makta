@@ -11,7 +11,6 @@ import Foundation
 // API 호출 동작을 수행하는 APIService 객체의 인터페이스를 정의
 
 protocol APIServiceInterface {
-
     func fetchTransPathData(
         start: XYCoordinate,
         end: XYCoordinate,
@@ -30,7 +29,6 @@ protocol APIServiceInterface {
 // MARK: - APIService 정의
 
 struct APIService: APIServiceInterface {
-    
     // 대중교통 환승경로 API 요청
     func fetchTransPathData(
         start: XYCoordinate,
@@ -112,7 +110,6 @@ struct APIService: APIServiceInterface {
 }
 
 extension APIService {
-    
     // [대중교통 환승경로 API] 요청 URL 생성
     func makeTransPathURL(
         start: XYCoordinate,

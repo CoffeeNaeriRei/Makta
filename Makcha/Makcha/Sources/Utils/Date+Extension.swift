@@ -8,7 +8,6 @@
 import Foundation
 
 extension Date {
-    
     // 해당 날짜가 오늘인지 확인
     var isToday: Bool {
         Calendar.current.isDateInToday(self)
