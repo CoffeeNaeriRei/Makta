@@ -21,6 +21,7 @@ protocol Coordinator: AnyObject {
     func start()
 }
 
+// MARK: - 기본 코디네이터 구현
 class BaseCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
@@ -39,6 +40,10 @@ class BaseCoordinator: Coordinator {
     func removeChild(_ coordinator: Coordinator) {
         children = children.filter { $0 !== coordinator }
     }
+    
+    func removeAll() {
+        children = []
+    }
 }
 
 final class AppCoordinator: BaseCoordinator {
@@ -54,9 +59,9 @@ final class AppCoordinator: BaseCoordinator {
 
 extension AppCoordinator: AppNavigation {
     func goToMain() {
+        removeAll()
         let coordinator = MainCoordinator(navigationController)
-        children.removeAll()
-        children.append(coordinator)
+        addChild(coordinator)
         coordinator.parentCoordinator = self
         coordinator.start()
     }

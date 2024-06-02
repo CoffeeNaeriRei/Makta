@@ -13,6 +13,10 @@ import MakchaDesignSystem
 import RxSwift
 import RxDataSources
 
+protocol MainCollectionViewDelegate: AnyObject {
+    func goToDetails(_ indexPath: IndexPath)
+}
+
 final class MainCollectionView: UICollectionView {
     weak var mainCollectionViewDelegate: MainCollectionViewDelegate?
     
@@ -20,6 +24,7 @@ final class MainCollectionView: UICollectionView {
     let rxDataSource: RxCollectionViewSectionedReloadDataSource<SectionOfMainCard>
     
     init(_ collectionViewLayout: UICollectionViewLayout) {
+        // 1. rxDataSOurce 초기화
         self.rxDataSource = RxCollectionViewSectionedReloadDataSource<SectionOfMainCard>(
             configureCell: { _, _, _, _ in
                 UICollectionViewCell()
@@ -27,15 +32,18 @@ final class MainCollectionView: UICollectionView {
                 UICollectionReusableView()
             }
         )
+        
         super.init(frame: .zero, collectionViewLayout: collectionViewLayout)
+        
         // 생성 시 `UICollectionViewFlowLayout` 일 경우 기본 레이아웃 설정
         let collectionViewLayout = collectionViewLayout as? UICollectionViewFlowLayout
         collectionViewLayout?.minimumLineSpacing = 4
         collectionViewLayout?.minimumInteritemSpacing = 0
         collectionViewLayout?.sectionHeadersPinToVisibleBounds = true
-                
-        setup()
+        
+        // 2. DataSource 설정
         configureDataSoruce()
+        setup()
     }
 
     required init?(coder: NSCoder) {

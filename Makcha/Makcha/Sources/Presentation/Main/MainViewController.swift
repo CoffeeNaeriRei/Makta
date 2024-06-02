@@ -13,10 +13,6 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-protocol MainCollectionViewDelegate: AnyObject {
-    func goToDetails(_ indexPath: IndexPath)
-}
-
 final class MainViewController: UIViewController {
     // swiftlint: disable force_cast
     private var mainView: MainView {
@@ -49,7 +45,6 @@ final class MainViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // Sheet Setting
         setupSheet()
     }
     
@@ -59,7 +54,6 @@ final class MainViewController: UIViewController {
     
     private func setup() {
         view.backgroundColor = .white
-        // NavigationLink Setting
         setupNavigationItems()
         setupCollectionView()
     }
@@ -78,7 +72,7 @@ final class MainViewController: UIViewController {
 }
 
 // MARK: 메인 뷰 내 컬렉션 뷰 설정 관련
-extension MainViewController {
+extension MainViewController: MainCollectionViewDelegate {
     private func setupCollectionView() {
         let collectionView = mainView.collectionView as? MainCollectionView
         dataSource = collectionView?.rxDataSource
@@ -106,6 +100,10 @@ extension MainViewController {
             .bind(to: mainView.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
+    
+    func goToDetails(_ indexPath: IndexPath) {
+        mainViewModel.goToDetails(indexPath)
+    }
 }
 
 // MARK: Navigation 처리 관련
@@ -131,13 +129,6 @@ extension MainViewController {
         mainViewModel.showSheet(185 - self.mainView.safeAreaInsets.bottom, with: mainViewModel)
     }
 }
-
-extension MainViewController: MainCollectionViewDelegate {
-    func goToDetails(_ indexPath: IndexPath) {
-        mainViewModel.goToDetails(indexPath)
-    }
-}
-
 #if DEBUG
 struct MainViewController_Previews: PreviewProvider {
     static var previews: some View {
