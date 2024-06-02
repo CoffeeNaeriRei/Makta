@@ -30,7 +30,6 @@ final class MainViewModel: ViewModelType {
         let viewDidLoadEvent = PublishRelay<Void>() // 화면 최초 로딩 이벤트 (현재 위치 기반 경로 불러오기)
         let settingButtonTap: ControlEvent<Void>? // [설정] 버튼 탭
         let starButtonTap: ControlEvent<Void>? // [즐겨찾기] 버튼 탭
-        // 자세히 보기 클릭 시, 현재 위치로 재설정 클릭 시 이벤트 CollectionViewBinding으로 위치 변경
     }
     
     struct Output {
@@ -94,7 +93,6 @@ final class MainViewModel: ViewModelType {
     }
 }
 
-// MARK:
 extension MainViewModel: MainCollectionViewDelegate {
     func goToDetails(_ indexPath: IndexPath) {
         let (sectionIndex, modelIndex) = (indexPath.section, indexPath.row)
@@ -104,7 +102,7 @@ extension MainViewModel: MainCollectionViewDelegate {
     }
 }
 
-// MARK: 코디네이터 처리를 위한
+// MARK: 델리게이션을 통한 코디네이터 처리
 extension MainViewModel: MainNavigation {
     func goToSettings() {
         print("뷰모델에서 세팅 버튼 클릭 호출")
