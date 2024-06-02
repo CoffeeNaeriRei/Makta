@@ -21,17 +21,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         coordinator = AppCoordinator(vc)
         coordinator?.start()
         window = UIWindow(windowScene: windowScene)
-//        let vc = UINavigationController(
-//            rootViewController: MainViewController(
-//                MainViewModel(
-//                    MakchaInfoUseCase(
-//                        TransPathRepository(APIService()),
-//                        EndPointRepository(LocationService())
-//                    )
-//                )
-//            )
-//        )
-
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }

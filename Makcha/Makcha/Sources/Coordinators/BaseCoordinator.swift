@@ -41,6 +41,7 @@ extension AppCoordinator {
     func goToMain() {
         let coordinator = MainCoordinator(navigationController)
         children.removeAll()
+        children.append(coordinator)
         coordinator.parentCoordinator = self
         coordinator.start()
     }

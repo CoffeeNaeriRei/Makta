@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		204A39DC2C0BF88E00C2F403 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A39DB2C0BF88E00C2F403 /* BaseCoordinator.swift */; };
 		204A39DE2C0BFA6C00C2F403 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A39DD2C0BFA6C00C2F403 /* MainCoordinator.swift */; };
+		204A39E02C0C1A4C00C2F403 /* SearchPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A39DF2C0C1A4C00C2F403 /* SearchPathView.swift */; };
 		205075D52BF55F3A00BAC30E /* SearchPathViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */; };
 		205075D82BF9A15E00BAC30E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075D72BF9A15E00BAC30E /* SettingsViewController.swift */; };
 		205075DB2BF9A41200BAC30E /* RemarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075DA2BF9A41200BAC30E /* RemarkViewController.swift */; };
@@ -79,6 +80,7 @@
 /* Begin PBXFileReference section */
 		204A39DB2C0BF88E00C2F403 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		204A39DD2C0BFA6C00C2F403 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		204A39DF2C0C1A4C00C2F403 /* SearchPathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPathView.swift; sourceTree = "<group>"; };
 		205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPathViewController.swift; sourceTree = "<group>"; };
 		205075D72BF9A15E00BAC30E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		205075DA2BF9A41200BAC30E /* RemarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemarkViewController.swift; sourceTree = "<group>"; };
@@ -420,6 +422,7 @@
 			isa = PBXGroup;
 			children = (
 				205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */,
+				204A39DF2C0C1A4C00C2F403 /* SearchPathView.swift */,
 			);
 			path = SearchPath;
 			sourceTree = "<group>";
@@ -660,6 +663,7 @@
 				B86233322BE9FF78003959FB /* TransPathRepositoryProtocol.swift in Sources */,
 				B862334B2BEC99AB003959FB /* MakchaInfoUseCase.swift in Sources */,
 				B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */,
+				204A39E02C0C1A4C00C2F403 /* SearchPathView.swift in Sources */,
 				20E277242C02E4340071F6CA /* Rx+Extension.swift in Sources */,
 				B86233302BE9FCD5003959FB /* APIServiceError.swift in Sources */,
 			);

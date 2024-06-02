@@ -46,8 +46,7 @@ final class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Sheet Setting
-        // 네비게이션 처리 시 바텀 시트를 띄위기 위해 호출
-        pushNavigation(.searchPath)
+        setupSheet()
     }
     
     public override func loadView() {
@@ -67,25 +66,9 @@ final class MainViewController: UIViewController {
             starButtonTap: rightUIBarButtonItem.rx.tap
         )
 
-        let output = mainViewModel.transform(input: input)
+        _ = mainViewModel.transform(input: input)
 
         bindCollectionView()
-        
-        // MARK: 페이지 네비게이션 바인딩
-        input.settingButtonTap
-            .withUnretained(self)
-            .bind { vc, _ in
-                vc.pushNavigation(.settings)
-            }
-            .disposed(by: disposeBag)
-        
-        input.starButtonTap
-            .withUnretained(self)
-            .bind { vc, _ in
-                vc.pushNavigation(.remark)
-            }
-            .disposed(by: disposeBag)
-        
         input.viewDidLoadEvent.accept(()) // 바인딩이 끝난 뒤에 viewDldLoad 이벤트 1회 발생
     }
 }
@@ -122,13 +105,6 @@ extension MainViewController {
 
 // MARK: Navigation 처리 관련
 extension MainViewController {
-    enum MainNavLink {
-        case searchPath
-        case detail
-        case settings
-        case remark
-    }
-    
     private func setupNavigationItems() {
         let _title = "막차정보"
         let _leftBarButtonImage = UIImage(systemName: "gearshape")?
@@ -147,36 +123,7 @@ extension MainViewController {
     }
     
     private func setupSheet() {
-        let searchPathSheet = SearchPathViewController()
-        
-        let initDent: UISheetPresentationController.Detent = .custom(identifier: .init("initDent")) { _ in
-            185 - self.mainView.safeAreaInsets.bottom
-        }
-        
-        if let sheet = searchPathSheet.sheetPresentationController {
-            sheet.detents = [initDent, .large()]
-            sheet.largestUndimmedDetentIdentifier = initDent.identifier
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            sheet.prefersEdgeAttachedInCompactHeight = true
-            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
-            sheet.presentedViewController.isModalInPresentation = true
-        }
-        present(searchPathSheet, animated: true)
-    }
-    
-    private func pushNavigation(_ link: MainNavLink) {
-        switch link {
-        case .searchPath:
-            setupSheet()
-        case .detail:
-            print("Navigation To")
-        case .settings:
-            navigationController?.dismiss(animated: true)
-            navigationController?.pushViewController(SettingsViewController(), animated: true)
-        case .remark:
-            navigationController?.dismiss(animated: true)
-            navigationController?.pushViewController(RemarkViewController(), animated: true)
-        }
+        mainViewModel.showSheet(185 - self.mainView.safeAreaInsets.bottom, with: mainViewModel)
     }
 }
 
