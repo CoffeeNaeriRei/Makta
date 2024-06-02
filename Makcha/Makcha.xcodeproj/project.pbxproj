@@ -98,7 +98,6 @@
 		B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeoulRealtimeBusStationDTO.swift; sourceTree = "<group>"; };
 		B81BDE512BFF9A8700CFDC7A /* ArrivalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalType.swift; sourceTree = "<group>"; };
 		B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
-		B86232CD2BE77D2B003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232D62BE7A761003959FB /* MakchaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MakchaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
 		B86232E32BE7B152003959FB /* APIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceTests.swift; sourceTree = "<group>"; };
@@ -415,7 +414,6 @@
 		B89E7F9B2BE7706E00A13B58 /* DetailPath */ = {
 			isa = PBXGroup;
 			children = (
-				B86232CD2BE77D2B003959FB /* .gitkeep */,
 				204A39E12C0C4DF500C2F403 /* DetailViewController.swift */,
 			);
 			path = DetailPath;
