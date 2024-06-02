@@ -9,4 +9,4 @@ import Foundation
 
 import RxDataSources
 
-typealias SectionOfMainCard = SectionModel<String, MakchaPath>
+typealias SectionOfMainCard = SectionModel<String, MakchaCellData>

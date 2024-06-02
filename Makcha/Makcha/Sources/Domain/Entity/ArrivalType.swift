@@ -19,7 +19,7 @@ enum ArrivalStatus: Comparable {
     case finished // 운행종료
     case unknown // 알 수 없음
     
-    // 각각의 Arrivalstatus case에 따라 화면에 표시할 String 반환
+    // MARK: - 각각의 Arrivalstatus case에 따라 화면에 표시할 String 반환
     var arrivalMessage: String {
         switch self {
         case .arriveSoon:
@@ -32,6 +32,23 @@ enum ArrivalStatus: Comparable {
             return "운행 종료"
         case .unknown:
             return "불러오지 못함"
+        }
+    }
+    
+    // MARK: - ArrivalStatus의 남은 시간 카운트다운
+    /// ArrivalStatus가 .coming일 경우 남은시간(초)를 1 줄여줌
+    func decreaseTimeFromArrivalStatus() -> Self {
+        switch self {
+        case .coming(let remainingSecond):
+            if remainingSecond > 0 {
+                return .coming(remainingSecond: remainingSecond - 1)
+            } else if remainingSecond == 0 {
+                return .arriveSoon
+            } else {
+                return .unknown
+            }
+        default:
+            return self
         }
     }
 }

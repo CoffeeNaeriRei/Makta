@@ -13,12 +13,17 @@ import RxSwift
 
 // MARK: - 막차 정보 관련 유즈케이스
 
+// 컬렉션뷰의 셀에 전달할 데이터 타입 (막차경로, 해당경로의실시간도착정보)
+typealias MakchaCellData = (makchaPath: MakchaPath, arrival: RealtimeArrivalTuple)
+
 final class MakchaInfoUseCase {
     private let transPathRepository: TransPathRepositoryProtocol
     private let endPointRepository: EndPointRepositoryProtocol
     
-    let makchaInfo = PublishSubject<MakchaInfo>() // 막차 정보
-    var realtimeArrivals = PublishSubject<[RealtimeArrivalTuple]>() // 막차 경로 별 실시간 도착 정보
+    private let makchaInfo = PublishSubject<MakchaInfo>() // 막차 정보
+    private let realtimeArrivals = PublishSubject<[RealtimeArrivalTuple]>() // 막차 경로 별 실시간 도착 정보
+    
+    let makchaSectionModel = PublishSubject<(startTimeStr: String, makchaCellData: [MakchaCellData])>() // 컬렉션뷰 바인딩을 위한 SectionModel에 전달할 데이터
     let startPoint = BehaviorRelay<EndPoint>(value: mockStartPoint) // 출발지 정보 // TODO: - 기본값 지정하기
     let destinationPoint: BehaviorRelay<EndPoint> // 도착지 정보
     let timerEvent = PublishRelay<Void>() // 실시간 도착 정보 타이머 이벤트
@@ -34,25 +39,8 @@ final class MakchaInfoUseCase {
         let destionationCoordinate = mockDestinationPoint
         destinationPoint = BehaviorRelay<EndPoint>(value: destionationCoordinate)
         
-        bind()
-    }
-    
-    func bind() {
-        // 타이머 이벤트 구독
-        timerEvent
-            .withUnretained(self)
-            .withLatestFrom(realtimeArrivals)
-            .map { prevRealtimeArrivals in
-                prevRealtimeArrivals.map { arrival in
-                    (
-                        first: self.decreaseSecondFromArrivalStatus(arrival.first),
-                        second: self.decreaseSecondFromArrivalStatus(arrival.second)
-                    )
-                }
-            }
-            .debug()
-            .bind(to: realtimeArrivals)
-            .disposed(by: disposeBag)
+        subscribeTimer()
+        subscribeMakchaSectionModel()
     }
     
     func updateStartPointToSearchedLocation() {
@@ -61,19 +49,6 @@ final class MakchaInfoUseCase {
     
     func updateDestinationPointToSearchedLocation() {
         
-    }
-    
-    // MARK: - 막차 경로 검색
-    func loadMakchaPath(start: XYCoordinate, end: XYCoordinate) {
-        transPathRepository.getAllMakchaTransPath(start: start, end: end)
-            .withUnretained(self)
-            .subscribe {
-                // 실시간 도착정보 불러오기
-                $0.makeRealtimeArrivalTimes(currentTime: $1.startTime, makchaPaths: $1.makchaPaths)
-                // 새로운 MakchaInfo로 값을 업데이트
-                $0.makchaInfo.onNext($1)
-            }
-            .disposed(by: disposeBag)
     }
     
     // MARK: - 현재 위치 기반으로 막차 경로 불러오기
@@ -97,8 +72,21 @@ final class MakchaInfoUseCase {
         loadMakchaPath(start: start, end: end)
     }
     
+    // MARK: - 막차 경로 검색
+    private func loadMakchaPath(start: XYCoordinate, end: XYCoordinate) {
+        transPathRepository.getAllMakchaTransPath(start: start, end: end)
+            .withUnretained(self)
+            .subscribe {
+                // 실시간 도착정보 불러오기
+                $0.makeRealtimeArrivalTimes(currentTime: $1.startTime, makchaPaths: $1.makchaPaths)
+                // 새로운 MakchaInfo로 값을 업데이트
+                $0.makchaInfo.onNext($1)
+            }
+            .disposed(by: disposeBag)
+    }
+    
     // MARK: - MakchaPath 배열을 받아와서 각 경로별 실시간 도착정보를 만들어주는 메서드
-    func makeRealtimeArrivalTimes(currentTime: Date, makchaPaths: [MakchaPath]) {
+    private func makeRealtimeArrivalTimes(currentTime: Date, makchaPaths: [MakchaPath]) {
         var realtimeArrivalObservables: [Observable<RealtimeArrivalTuple>] = []
         
         // 각각의 막차경로에 대해 1번째 대중교통 세부경로 타입에 따른 실시간 도착정보 받아오기
@@ -107,7 +95,6 @@ final class MakchaInfoUseCase {
             if let firstTransSubPath = makchaPath.subPath.first(where: { $0.idx == 1 }) {
                 switch firstTransSubPath.subPathType {
                 case .subway: // 🚇지하철
-//                    print("실시간 지하철 도착정보 API 호출")
                     if let stationName = firstTransSubPath.startName,
                        let subwayLine = firstTransSubPath.lane?.first?.subwayCode,
                        let wayCode = firstTransSubPath.wayCode {
@@ -127,7 +114,6 @@ final class MakchaInfoUseCase {
                         
                         let routeIDs = lanes.compactMap { $0.busRouteID }
                         let routeNames = lanes.map { $0.name }
-//                        print("실시간 버스 도착정보 API 호출")
                         let observable = transPathRepository.getSeoulRealtimeBusArrival(
                             routeIDs: routeIDs,
                             routeNames: routeNames,
@@ -153,6 +139,7 @@ final class MakchaInfoUseCase {
     }
     
     // MARK: - 타이머 시작
+    // TODO: - 새 타이머가 시작될 때 외에도 동작 중인 타이머를 종료시킬 시점이 더 필요한지 생각해보기
     private func startTimer() {
         print("타이머 시작")
         timerDisposable?.dispose() // 기존 타이머 종료
@@ -166,24 +153,40 @@ final class MakchaInfoUseCase {
             })
         
         timerDisposable?.disposed(by: disposeBag)
-        
-        // TODO: - 새 타이머가 시작될 때 외에도 동작 중인 타이머를 종료시킬 시점이 더 필요한지 생각해보기
     }
+}
 
-    // MARK: - ArrivalStatus의 남은 시간 카운트
-    /// ArrivalStatus가 .coming일 경우 남은시간(초)를 1 줄여줌
-    private func decreaseSecondFromArrivalStatus(_ arrivalStatus: ArrivalStatus) -> ArrivalStatus {
-        switch arrivalStatus {
-        case .coming(let remainingSecond):
-            if remainingSecond == 0 {
-                return .coming(remainingSecond: 0)
-            } else if remainingSecond > 0 {
-                return .coming(remainingSecond: remainingSecond - 1)
-            } else {
-                return .unknown
+// MARK: - init() 시점에서의 구독
+
+extension MakchaInfoUseCase {
+    // 타이머 이벤트 구독
+    private func subscribeTimer() {
+        timerEvent
+            .withUnretained(self)
+            .withLatestFrom(realtimeArrivals)
+            .map { prevRealtimeArrivals in
+                prevRealtimeArrivals.map { arrival in
+                    (
+                        first: arrival.first.decreaseTimeFromArrivalStatus(),
+                        second: arrival.second.decreaseTimeFromArrivalStatus()
+                    )
+                }
             }
-        default:
-            return arrivalStatus
-        }
+            .bind(to: realtimeArrivals)
+            .disposed(by: disposeBag)
+    }
+    
+    // makchaSectionModel 구독 (실제 컬렉션뷰로 넘겨줄 데이터를 만들어주는 스트림)
+    private func subscribeMakchaSectionModel() {
+        Observable.combineLatest(makchaInfo, realtimeArrivals)
+            .subscribe(onNext: { [weak self] makchaInfo, realtimeArrivals in
+                var updatedMakchaCell = [MakchaCellData]()
+                for makchaIdx in 0..<realtimeArrivals.count {
+                    let cellData: MakchaCellData = (makchaInfo.makchaPaths[makchaIdx], realtimeArrivals[makchaIdx])
+                    updatedMakchaCell.append(cellData)
+                }
+                self?.makchaSectionModel.onNext((makchaInfo.startTimeStr, updatedMakchaCell))
+            })
+            .disposed(by: disposeBag)
     }
 }
