@@ -13,19 +13,14 @@ protocol MainNavigation: AnyObject {
     func goToSettings()
     func goToRemark()
     func showSheet(_ height: CGFloat, with vm: MainViewModel)
+    func goToDetails(with data: MakchaCellData)
 }
 
-final class MainCoordinator: Coordinator, MainNavigation {
-    var parentCoordinator: Coordinator?
-    var children: [Coordinator] = []
-    var navigationController: UINavigationController
-    
-    init(_ vc: UINavigationController) {
-        self.navigationController = vc
-    }
-    
+final class MainCoordinator: BaseCoordinator {
     // MARK: Navigation 처리
-    func start() {
+    override func start() {
+        super.start()
+        
         let vm = MainViewModel(
             MakchaInfoUseCase(
                 TransPathRepository(APIService()),
@@ -36,7 +31,9 @@ final class MainCoordinator: Coordinator, MainNavigation {
         let vc = MainViewController(vm)
         navigationController.pushViewController(vc, animated: true)
     }
-    
+}
+
+extension MainCoordinator: MainNavigation {
     func goToSettings() {
         print("MainCoordinator에서 세팅 네비게이션 호출")
         navigationController.dismiss(animated: true)
@@ -65,5 +62,10 @@ final class MainCoordinator: Coordinator, MainNavigation {
             sheet.presentedViewController.isModalInPresentation = true
         }
         navigationController.present(searchPathSheet, animated: true)
+    }
+    
+    func goToDetails(with data: MakchaCellData) {
+        navigationController.dismiss(animated: true)
+        navigationController.pushViewController(DetailViewController(data: data), animated: true)
     }
 }

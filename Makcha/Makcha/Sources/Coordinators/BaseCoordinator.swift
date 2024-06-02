@@ -8,6 +8,10 @@
 import Foundation
 import UIKit
 
+protocol AppNavigation: AnyObject {
+    func goToMain()
+}
+
 // MARK: - 코디네이터 구현을 위한 인터페이스
 protocol Coordinator: AnyObject {
     var parentCoordinator: Coordinator? { get set }
@@ -17,7 +21,7 @@ protocol Coordinator: AnyObject {
     func start()
 }
 
-final class AppCoordinator: Coordinator {
+class BaseCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController
@@ -26,10 +30,21 @@ final class AppCoordinator: Coordinator {
         self.navigationController = vc
     }
     
-    func start() {
-        print("App Coordiantor Start")
+    func start() {}
+    
+    func addChild(_ coordinator: Coordinator) {
+        children.append(coordinator)
+    }
+
+    func removeChild(_ coordinator: Coordinator) {
+        children = children.filter { $0 !== coordinator }
+    }
+}
+
+final class AppCoordinator: BaseCoordinator {
+    override func start() {
+        super.start()
         goToMain()
-        
     }
     
     deinit {
@@ -37,7 +52,7 @@ final class AppCoordinator: Coordinator {
     }
 }
 
-extension AppCoordinator {
+extension AppCoordinator: AppNavigation {
     func goToMain() {
         let coordinator = MainCoordinator(navigationController)
         children.removeAll()

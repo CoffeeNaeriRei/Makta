@@ -13,6 +13,10 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
+protocol MainCollectionViewDelegate: AnyObject {
+    func goToDetails(_ indexPath: IndexPath)
+}
+
 final class MainViewController: UIViewController {
     // swiftlint: disable force_cast
     private var mainView: MainView {
@@ -78,6 +82,7 @@ extension MainViewController {
     private func setupCollectionView() {
         let collectionView = mainView.collectionView as? MainCollectionView
         dataSource = collectionView?.rxDataSource
+        collectionView?.mainCollectionViewDelegate = self
     }
     
     private func bindCollectionView() {
@@ -96,7 +101,7 @@ extension MainViewController {
                 }
             }
             .disposed(by: disposeBag)
-        
+
         mainViewModel.tempSections
             .bind(to: mainView.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -124,6 +129,12 @@ extension MainViewController {
     
     private func setupSheet() {
         mainViewModel.showSheet(185 - self.mainView.safeAreaInsets.bottom, with: mainViewModel)
+    }
+}
+
+extension MainViewController: MainCollectionViewDelegate {
+    func goToDetails(_ indexPath: IndexPath) {
+        mainViewModel.goToDetails(indexPath)
     }
 }
 

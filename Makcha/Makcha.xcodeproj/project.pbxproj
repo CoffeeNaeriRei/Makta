@@ -10,6 +10,7 @@
 		204A39DC2C0BF88E00C2F403 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A39DB2C0BF88E00C2F403 /* BaseCoordinator.swift */; };
 		204A39DE2C0BFA6C00C2F403 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A39DD2C0BFA6C00C2F403 /* MainCoordinator.swift */; };
 		204A39E02C0C1A4C00C2F403 /* SearchPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A39DF2C0C1A4C00C2F403 /* SearchPathView.swift */; };
+		204A39E22C0C4DF500C2F403 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A39E12C0C4DF500C2F403 /* DetailViewController.swift */; };
 		205075D52BF55F3A00BAC30E /* SearchPathViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */; };
 		205075D82BF9A15E00BAC30E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075D72BF9A15E00BAC30E /* SettingsViewController.swift */; };
 		205075DB2BF9A41200BAC30E /* RemarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075DA2BF9A41200BAC30E /* RemarkViewController.swift */; };
@@ -81,6 +82,7 @@
 		204A39DB2C0BF88E00C2F403 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		204A39DD2C0BFA6C00C2F403 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		204A39DF2C0C1A4C00C2F403 /* SearchPathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPathView.swift; sourceTree = "<group>"; };
+		204A39E12C0C4DF500C2F403 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPathViewController.swift; sourceTree = "<group>"; };
 		205075D72BF9A15E00BAC30E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		205075DA2BF9A41200BAC30E /* RemarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemarkViewController.swift; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 			isa = PBXGroup;
 			children = (
 				B86232CD2BE77D2B003959FB /* .gitkeep */,
+				204A39E12C0C4DF500C2F403 /* DetailViewController.swift */,
 			);
 			path = DetailPath;
 			sourceTree = "<group>";
@@ -636,6 +639,7 @@
 				B89E7FB42BE7743600A13B58 /* LocationService.swift in Sources */,
 				B86233342BEA004A003959FB /* MakchaInfo.swift in Sources */,
 				B81BDE522BFF9A8700CFDC7A /* ArrivalType.swift in Sources */,
+				204A39E22C0C4DF500C2F403 /* DetailViewController.swift in Sources */,
 				204A39DE2C0BFA6C00C2F403 /* MainCoordinator.swift in Sources */,
 				206B51052BFA348600FC6F76 /* MainCollectionView.swift in Sources */,
 				B8C31EA32BEF41220049B47C /* Date+Extension.swift in Sources */,

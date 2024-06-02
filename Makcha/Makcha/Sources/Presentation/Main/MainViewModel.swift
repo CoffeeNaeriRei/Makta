@@ -94,6 +94,16 @@ final class MainViewModel: ViewModelType {
     }
 }
 
+// MARK:
+extension MainViewModel: MainCollectionViewDelegate {
+    func goToDetails(_ indexPath: IndexPath) {
+        let (sectionIndex, modelIndex) = (indexPath.section, indexPath.row)
+        let cellData = tempSections.value[sectionIndex].items[modelIndex]
+        
+        goToDetails(with: cellData)
+    }
+}
+
 // MARK: 코디네이터 처리를 위한
 extension MainViewModel: MainNavigation {
     func goToSettings() {
@@ -108,5 +118,9 @@ extension MainViewModel: MainNavigation {
     
     func showSheet(_ height: CGFloat, with vm: MainViewModel) {
         navigation?.showSheet(height, with: vm)
+    }
+    
+    func goToDetails(with data: MakchaCellData) {
+        navigation?.goToDetails(with: data)
     }
 }
