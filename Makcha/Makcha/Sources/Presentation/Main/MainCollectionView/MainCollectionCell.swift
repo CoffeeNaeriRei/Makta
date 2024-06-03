@@ -19,7 +19,7 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
     private let pathTypelabel: UILabel = {
         let label = UILabel()
         label.attributedText = .pretendard(
-            "경로 종류", 
+            "경로 종류",
             scale: .body,
             weight: .semiBold
         )
@@ -86,7 +86,7 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
         
         return label
     }()
-
+    
     // MARK: 다음 도착 예정인 교통수단이 정거장에 도착하기 까지 남은 시간을 표시하는 라벨
     private let nextArrivalTransportTimeLabel: UILabel = {
         let label = UILabel()
@@ -106,6 +106,8 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
         
         return label
     }()
+    
+    private let pathsContentView = ContentView()
     
     var disposeBag = DisposeBag()
     
@@ -153,7 +155,7 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
             $0.addItem(layoutPathInfo())
                 .width(100%)
                 .position(.absolute).bottom(0)
-                
+            
             /// BottomLine
             $0.addItem()
                 .width(100%).height(.cfStroke(.xsmall))
@@ -185,6 +187,16 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
     }
 }
 
+private final class ContentView: UIView {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        flex.layout(mode: .adjustHeight)
+        if let scrollView = superview as? UIScrollView {
+            scrollView.contentSize = frame.size
+        }
+    }
+}
+
 extension MainCollectionCell {
     // MARK: 패치 된 데이터를 활용해 뷰 레이아웃을 설정하기 위한 인터페이스 메서드
     func configure(with data: MakchaCellData) {
@@ -200,6 +212,10 @@ extension MainCollectionCell {
         
         nextArrivalTransportTimeLabel.text = data.arrival.second.arrivalMessage
         nextArrivalTransportTimeLabel.flex.markDirty()
+
+        let totalDistance = data.makchaPath.subPath.reduce(0) { $0 + $1.distance }
+        pathsContentView.flex.width(CGFloat(totalDistance) * 0.1)
+        pathsContentView.flex.markDirty()
         
         setNeedsLayout()
     }
@@ -207,9 +223,21 @@ extension MainCollectionCell {
     // MARK: 들어오는 경로 데이터에 따라 다르게 뷰를 그리기 위한 메서드
     func layoutPathInfo() -> UIView {
         let rootView = UIView()
+        let scrollView = UIScrollView()
+//        let totalDistance = subPaths?.reduce(0) { $0 + $1.distance }
         
+        let contentView = pathsContentView
         rootView.flex.define {
-            $0.addItem()
+            $0.addItem(scrollView).direction(.row).define {
+                $0.addItem(contentView).direction(.row).define { content in
+                    for index  in 0..<10 {
+                        let itemView = UIView()
+                        itemView.backgroundColor = (index % 2 == 0) ? .red : .blue
+                        itemView.flex.width(100).height(60) // 각 아이템의 크기
+                        content.addItem(itemView) // 각 아이템 사이의 간격
+                    }
+                }
+            }
         }
         .minHeight(66)
         .marginBottom(12)
@@ -217,13 +245,23 @@ extension MainCollectionCell {
         
         return rootView
     }
+    
+    private func layoutPaths(paths: [MakchaSubPath]) {
+        let totalDistance = paths.reduce(0) { $0 + $1.distance }
+        let total2 = paths.map { $0.distance }
+        print(total2)
+        print(totalDistance)
+    }
 }
 
 #if DEBUG
 struct MainCollectionCell_Preview: PreviewProvider {
     static var previews: some View {
+        let cell = MainCollectionCell()
+        let data: MakchaCellData = (mockMakchaInfo.makchaPaths.first!, (ArrivalStatus.arriveSoon, ArrivalStatus.arriveSoon))
         ViewPreview {
-            MainCollectionCell()
+            cell.configure(with: data)
+            return cell
         }
     }
 }
