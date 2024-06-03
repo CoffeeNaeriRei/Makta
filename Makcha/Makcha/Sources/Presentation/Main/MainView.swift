@@ -26,7 +26,6 @@ final class MainView: UIView {
         collectionView = MainCollectionView(collectionViewLayout)
         super.init(frame: .zero)
         setup()
-        addSubview(collectionView)
     }
     
     required init?(coder: NSCoder) {
@@ -41,6 +40,7 @@ final class MainView: UIView {
 
     private func setup() {
         collectionView.delegate = self
+        addSubview(collectionView)
     }
 }
 

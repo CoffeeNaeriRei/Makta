@@ -16,6 +16,8 @@ final class MainViewModel: ViewModelType {
     private let makchaInfoUseCase: MakchaInfoUseCase
     private let disposeBag = DisposeBag()
     
+    weak var navigation: MainNavigation?
+    
     // 임시로 MainCollectionView의 DataSource를 채우기 위한 프로퍼티
     // 추후 명칭 변경 필요.
     var tempSections = BehaviorRelay(value: [SectionOfMainCard]())
@@ -26,9 +28,8 @@ final class MainViewModel: ViewModelType {
     
     struct Input {
         let viewDidLoadEvent = PublishRelay<Void>() // 화면 최초 로딩 이벤트 (현재 위치 기반 경로 불러오기)
-        let settingButtonTap: ControlEvent<Void> // [설정] 버튼 탭
-        let starButtonTap: ControlEvent<Void> // [즐겨찾기] 버튼 탭
-        // 자세히 보기 클릭 시, 현재 위치로 재설정 클릭 시 이벤트 CollectionViewBinding으로 위치 변경
+        let settingButtonTap: ControlEvent<Void>? // [설정] 버튼 탭
+        let starButtonTap: ControlEvent<Void>? // [즐겨찾기] 버튼 탭
     }
     
     struct Output {
@@ -45,17 +46,21 @@ final class MainViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
-        input.settingButtonTap
+        input.settingButtonTap?
             .withUnretained(self)
-            .subscribe { _, _ in
-                print("Setting Link Click")
+            .subscribe { vm, _ in
+                print("뷰모델에서 세팅 버튼 클릭 이벤트 바인딩")
+                // navigation으로 직접 호출
+                vm.navigation?.goToSettings()
             }
             .disposed(by: disposeBag)
         
-        input.starButtonTap
+        input.starButtonTap?
             .withUnretained(self)
-            .subscribe { _, _ in
-                print("Star Link Click")
+            .subscribe { vm, _ in
+                print("뷰모델에서 스타 버튼 클릭 이벤트 바인딩")
+                // 프로토콜을 통한 메서드로 호출
+                vm.goToRemark()
             }
             .disposed(by: disposeBag)
 
@@ -85,5 +90,35 @@ final class MainViewModel: ViewModelType {
     func resetToCurrentLocationTap() {
         tempSections.accept([])
         makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
+    }
+}
+
+extension MainViewModel: MainCollectionViewDelegate {
+    func goToDetails(_ indexPath: IndexPath) {
+        let (sectionIndex, modelIndex) = (indexPath.section, indexPath.row)
+        let cellData = tempSections.value[sectionIndex].items[modelIndex]
+        
+        goToDetails(with: cellData)
+    }
+}
+
+// MARK: 델리게이션을 통한 코디네이터 처리
+extension MainViewModel: MainNavigation {
+    func goToSettings() {
+        print("뷰모델에서 세팅 버튼 클릭 호출")
+        navigation?.goToSettings()
+    }
+    
+    func goToRemark() {
+        print("뷰모델에서 스타 버튼 클릭 호출")
+        navigation?.goToRemark()
+    }
+    
+    func showSheet(_ height: CGFloat, with vm: MainViewModel) {
+        navigation?.showSheet(height, with: vm)
+    }
+    
+    func goToDetails(with data: MakchaCellData) {
+        navigation?.goToDetails(with: data)
     }
 }

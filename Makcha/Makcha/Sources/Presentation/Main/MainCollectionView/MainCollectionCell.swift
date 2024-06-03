@@ -13,6 +13,7 @@ import MakchaDesignSystem
 import FlexLayout
 import PinLayout
 import Reusable
+import RxSwift
 
 final class MainCollectionCell: UICollectionViewCell, Reusable {
     private let pathTypelabel: UILabel = {
@@ -44,7 +45,7 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
     }()
     
     // 자세히 보기 버튼: 생성 버튼과정이 길어서, 추후 Factory 패턴으로 코드 분리할 예정
-    private let navigationToDetailsButton: UIButton = {
+    let navigationToDetailsButton: UIButton = {
         let button = UIButton()
         
         let tintColor = UIColor(Color.cf(.grayScale(.gray800)))
@@ -105,6 +106,8 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
         
         return label
     }()
+    
+    var disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -174,6 +177,11 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
     override func layoutSubviews() {
         super.layoutSubviews()
         layout()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
     }
 }
 

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		204A39DC2C0BF88E00C2F403 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A39DB2C0BF88E00C2F403 /* BaseCoordinator.swift */; };
+		204A39DE2C0BFA6C00C2F403 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A39DD2C0BFA6C00C2F403 /* MainCoordinator.swift */; };
+		204A39E02C0C1A4C00C2F403 /* SearchPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A39DF2C0C1A4C00C2F403 /* SearchPathView.swift */; };
+		204A39E22C0C4DF500C2F403 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A39E12C0C4DF500C2F403 /* DetailViewController.swift */; };
 		205075D52BF55F3A00BAC30E /* SearchPathViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */; };
 		205075D82BF9A15E00BAC30E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075D72BF9A15E00BAC30E /* SettingsViewController.swift */; };
 		205075DB2BF9A41200BAC30E /* RemarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075DA2BF9A41200BAC30E /* RemarkViewController.swift */; };
@@ -75,6 +79,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		204A39DB2C0BF88E00C2F403 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		204A39DD2C0BFA6C00C2F403 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		204A39DF2C0C1A4C00C2F403 /* SearchPathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPathView.swift; sourceTree = "<group>"; };
+		204A39E12C0C4DF500C2F403 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPathViewController.swift; sourceTree = "<group>"; };
 		205075D72BF9A15E00BAC30E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		205075DA2BF9A41200BAC30E /* RemarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemarkViewController.swift; sourceTree = "<group>"; };
@@ -90,7 +98,6 @@
 		B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeoulRealtimeBusStationDTO.swift; sourceTree = "<group>"; };
 		B81BDE512BFF9A8700CFDC7A /* ArrivalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalType.swift; sourceTree = "<group>"; };
 		B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
-		B86232CD2BE77D2B003959FB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		B86232D62BE7A761003959FB /* MakchaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MakchaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
 		B86232E32BE7B152003959FB /* APIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceTests.swift; sourceTree = "<group>"; };
@@ -155,6 +162,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		204A39DA2C0BF80D00C2F403 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				204A39DB2C0BF88E00C2F403 /* BaseCoordinator.swift */,
+				204A39DD2C0BFA6C00C2F403 /* MainCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
 		205075D62BF9A14800BAC30E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +290,7 @@
 			children = (
 				B89E7F762BE7613800A13B58 /* AppDelegate.swift */,
 				B89E7F782BE7613800A13B58 /* SceneDelegate.swift */,
+				204A39DA2C0BF80D00C2F403 /* Coordinators */,
 				B89E7F992BE7700700A13B58 /* Presentation */,
 				B89E7F952BE76FE100A13B58 /* Domain */,
 				B89E7F912BE76FAF00A13B58 /* Data */,
@@ -397,7 +414,7 @@
 		B89E7F9B2BE7706E00A13B58 /* DetailPath */ = {
 			isa = PBXGroup;
 			children = (
-				B86232CD2BE77D2B003959FB /* .gitkeep */,
+				204A39E12C0C4DF500C2F403 /* DetailViewController.swift */,
 			);
 			path = DetailPath;
 			sourceTree = "<group>";
@@ -406,6 +423,7 @@
 			isa = PBXGroup;
 			children = (
 				205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */,
+				204A39DF2C0C1A4C00C2F403 /* SearchPathView.swift */,
 			);
 			path = SearchPath;
 			sourceTree = "<group>";
@@ -619,11 +637,14 @@
 				B89E7FB42BE7743600A13B58 /* LocationService.swift in Sources */,
 				B86233342BEA004A003959FB /* MakchaInfo.swift in Sources */,
 				B81BDE522BFF9A8700CFDC7A /* ArrivalType.swift in Sources */,
+				204A39E22C0C4DF500C2F403 /* DetailViewController.swift in Sources */,
+				204A39DE2C0BFA6C00C2F403 /* MainCoordinator.swift in Sources */,
 				206B51052BFA348600FC6F76 /* MainCollectionView.swift in Sources */,
 				B8C31EA32BEF41220049B47C /* Date+Extension.swift in Sources */,
 				B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */,
 				B89E7FAE2BE773B700A13B58 /* APIService.swift in Sources */,
 				B89E7F8C2BE765D200A13B58 /* TestView.swift in Sources */,
+				204A39DC2C0BF88E00C2F403 /* BaseCoordinator.swift in Sources */,
 				205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */,
 				B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */,
 				B8D48C112BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift in Sources */,
@@ -644,6 +665,7 @@
 				B86233322BE9FF78003959FB /* TransPathRepositoryProtocol.swift in Sources */,
 				B862334B2BEC99AB003959FB /* MakchaInfoUseCase.swift in Sources */,
 				B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */,
+				204A39E02C0C1A4C00C2F403 /* SearchPathView.swift in Sources */,
 				20E277242C02E4340071F6CA /* Rx+Extension.swift in Sources */,
 				B86233302BE9FCD5003959FB /* APIServiceError.swift in Sources */,
 			);
