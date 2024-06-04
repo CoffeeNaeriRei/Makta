@@ -152,7 +152,14 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
             .position(.absolute).top(64)
             
             /// BottomContents
-            $0.addItem(layoutPathInfo())
+            $0.addItem().define {
+                $0.addItem(UIScrollView()).direction(.row).define {
+                    $0.addItem(pathsContentView)
+                }
+                .minHeight(66)
+                .marginBottom(12)
+                .border(1, .red)
+            }
                 .width(100%)
                 .position(.absolute).bottom(0)
             
@@ -200,7 +207,6 @@ private final class ContentView: UIView {
 extension MainCollectionCell {
     // MARK: 패치 된 데이터를 활용해 뷰 레이아웃을 설정하기 위한 인터페이스 메서드
     func configure(with data: MakchaCellData) {
-        
         estimatedTimeOfArrivalLabel.text = data.makchaPath.arrivalTime.description
         estimatedTimeOfArrivalLabel.flex.markDirty()
         
@@ -213,31 +219,81 @@ extension MainCollectionCell {
         nextArrivalTransportTimeLabel.text = data.arrival.second.arrivalMessage
         nextArrivalTransportTimeLabel.flex.markDirty()
 
-        let totalDistance = data.makchaPath.subPath.reduce(0) { $0 + $1.distance }
-        pathsContentView.flex.width(CGFloat(totalDistance) * 0.1)
+//        let totalDistance = data.makchaPath.subPath.reduce(0) { $0 + $1.distance }
+        pathsContentView.subviews.forEach { $0.removeFromSuperview() }
+        pathsContentView.flex.direction(.row).define {
+            $0.addItem(layoutPathInfo(with: data.makchaPath.subPath))
+        }
+        .paddingHorizontal(24)
+//        pathsContentView.flex.width(CGFloat(totalDistance) * 0.1)
         pathsContentView.flex.markDirty()
         
         setNeedsLayout()
     }
     
     // MARK: 들어오는 경로 데이터에 따라 다르게 뷰를 그리기 위한 메서드
-    func layoutPathInfo() -> UIView {
+    func layoutPathInfo(with subPaths:[MakchaSubPath]) -> UIView {
         let rootView = UIView()
-        let scrollView = UIScrollView()
-//        let totalDistance = subPaths?.reduce(0) { $0 + $1.distance }
-        
-        let contentView = pathsContentView
-        rootView.flex.define {
-            $0.addItem(scrollView).direction(.row).define {
-                $0.addItem(contentView).direction(.row).define { content in
-                    for index  in 0..<10 {
-                        let itemView = UIView()
-                        itemView.backgroundColor = (index % 2 == 0) ? .red : .blue
-                        itemView.flex.width(100).height(60) // 각 아이템의 크기
-                        content.addItem(itemView) // 각 아이템 사이의 간격
+
+        rootView.flex.direction(.row).define {
+            for subPath in subPaths {
+                let isLastPath = subPath.idx == subPaths.count - 1
+                
+                let subPathType = subPath.subPathType
+                
+                let label = UILabel()
+                label.text = subPathType.rawValue
+                
+                let symbolConfig = UIImage.SymbolConfiguration(
+                    pointSize: 14,
+                    weight: .regular,
+                    scale: .default
+                )
+                let icon = UIImage(
+                    systemName: isLastPath ? "house.fill" : subPathType.iconName,
+                    withConfiguration: symbolConfig
+                )
+                switch subPathType {
+                case .walk:
+                    let bgColor = UIColor(Color.cf(.grayScale(.gray500)))
+                    let iconTintColor = UIColor(Color.cf(.grayScale(.gray300)))
+                    let iconBgColor = UIColor(Color.cf(.grayScale(.gray50)))
+                    let iconBorderColor = UIColor(Color.cf(.grayScale(.white)))
+
+                    $0.addItem().direction(.row).alignItems(.end).define {
+                        $0.addItem()
+                            .width(isLastPath ?
+                                   CGFloat(subPath.distance - 12) :
+                                    CGFloat(subPath.distance - 12)).height(10)
+                            .backgroundColor(bgColor)
+                            .cornerRadius(5)
+                            .marginBottom(7)
+                            .marginLeft(isLastPath ? 0 : 12)
+                            .marginRight(isLastPath ? 12 : 0)
+                        $0.addItem().position(.absolute).define {
+                            let imageView = UIImageView(image: icon?.withTintColor(iconTintColor, renderingMode: .alwaysOriginal))
+                            imageView.contentMode = .center
+                            $0.addItem(imageView)
+                                .width(24).height(24)
+                                .backgroundColor(iconBgColor)
+                                .border(1, iconBorderColor)
+                                .cornerRadius(12)
+                        }
+                        .left(isLastPath ? CGFloat(subPath.distance - 24) : 0)
+                        .border(1, .red)
+                    }
+                    .border(1, .blue)
+                case .bus:
+                    $0.addItem().define {
+                        $0.addItem(label)
+                    }
+                case .subway:
+                    $0.addItem().define {
+                        $0.addItem(label)
                     }
                 }
             }
+            
         }
         .minHeight(66)
         .marginBottom(12)
@@ -245,20 +301,13 @@ extension MainCollectionCell {
         
         return rootView
     }
-    
-    private func layoutPaths(paths: [MakchaSubPath]) {
-        let totalDistance = paths.reduce(0) { $0 + $1.distance }
-        let total2 = paths.map { $0.distance }
-        print(total2)
-        print(totalDistance)
-    }
 }
 
 #if DEBUG
 struct MainCollectionCell_Preview: PreviewProvider {
     static var previews: some View {
         let cell = MainCollectionCell()
-        let data: MakchaCellData = (mockMakchaInfo.makchaPaths.first!, (ArrivalStatus.arriveSoon, ArrivalStatus.arriveSoon))
+        let data: MakchaCellData = (mockMakchaInfo.makchaPaths.last!, (ArrivalStatus.arriveSoon, ArrivalStatus.arriveSoon))
         ViewPreview {
             cell.configure(with: data)
             return cell

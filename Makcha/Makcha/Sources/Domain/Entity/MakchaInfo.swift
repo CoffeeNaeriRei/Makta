@@ -92,6 +92,17 @@ enum SubPathType: String {
     case walk = "도보"
     case bus = "버스"
     case subway = "지하철"
+    
+    var iconName: String {
+        switch self {
+        case .walk:
+            "figure.walk"
+        case .bus:
+            "bus"
+        case .subway:
+            "tram"
+        }
+    }
 }
 
 // 세부경로의 교통수단 정보
