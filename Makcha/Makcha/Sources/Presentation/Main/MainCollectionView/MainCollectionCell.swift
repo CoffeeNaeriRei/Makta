@@ -285,12 +285,42 @@ extension MainCollectionCell {
                     .minWidth(24)
                     .border(1, .blue)
                 case .bus:
+                    // 첫번째 버스로부터 색상정보 가져오도록 함
+                    guard let busType = subPath.lane?.first?.busRouteType else { return }
+                    let bgColor = busType.busUIColor
+                    let distanceBgColor = UIColor(busType.busColor.opacity(0.6))
+                    let iconTintColor = UIColor(Color.cf(.grayScale(.white)))
+                    
                     $0.addItem().define {
                         $0.addItem(label)
+                            .backgroundColor(distanceBgColor)
+                        $0.addItem().position(.absolute).define {
+                            let imageView = UIImageView(image: icon?.withTintColor(iconTintColor, renderingMode:  .alwaysOriginal))
+                            imageView.contentMode = .center
+                            $0.addItem(imageView)
+                                .width(24).height(24)
+                                .backgroundColor(bgColor)
+                                .cornerRadius(12)
+                        }
                     }
                 case .subway:
+                    // 첫번째 버스로부터 색상정보 가져오도록 함
+                    guard let subwayType = subPath.lane?.first?.subwayCode else { return }
+                    let bgColor = subwayType.subWayUIColor
+                    let distanceBgColor = UIColor(subwayType.subwayColor.opacity(0.6))
+                    let iconTintColor = UIColor(Color.cf(.grayScale(.white)))
+                    
                     $0.addItem().define {
                         $0.addItem(label)
+                            .backgroundColor(distanceBgColor)
+                        $0.addItem().position(.absolute).define {
+                            let imageView = UIImageView(image: icon?.withTintColor(iconTintColor, renderingMode:  .alwaysOriginal))
+                            imageView.contentMode = .center
+                            $0.addItem(imageView)
+                                .width(24).height(24)
+                                .backgroundColor(bgColor)
+                                .cornerRadius(12)
+                        }
                     }
                 }
             }

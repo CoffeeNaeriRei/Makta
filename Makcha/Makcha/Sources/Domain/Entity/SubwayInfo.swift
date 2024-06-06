@@ -5,6 +5,10 @@
 //  Created by 김영빈 on 5/13/24.
 //
 
+import SwiftUI
+
+import MakchaDesignSystem
+
 // ODSay API의 응답 데이터에서 지하철 노선을 구분하는 타입
 enum SubwayCode: Int {
     case 수도권1호선 = 1
@@ -65,6 +69,65 @@ enum SubwayCode: Int {
 //        case .인천2호선: return ""
         }
     }
+    
+    var subwayColor: Color {
+        switch self {
+        case .수도권1호선:
+            Color.cf(.colorScale(.limeGreen(.brightest)))
+        case .수도권2호선:
+            Color.cf(.colorScale(.limeGreen(.lightest)))
+        case .수도권3호선:
+            Color.cf(.colorScale(.limeGreen(.lighter)))
+        case .수도권4호선:
+            Color.cf(.colorScale(.limeGreen(.light)))
+        case .수도권5호선:
+            Color.cf(.colorScale(.limeGreen(.mediumLight)))
+        case .수도권6호선:
+            Color.cf(.colorScale(.limeGreen(.medium)))
+        case .수도권7호선:
+            Color.cf(.colorScale(.limeGreen(.mediumDark)))
+        case .수도권8호선:
+            Color.cf(.colorScale(.limeGreen(.dark)))
+        case .수도권9호선:
+            Color.cf(.colorScale(.limeGreen(.darker)))
+        case .GTX:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .공항철도:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .자기부상철도:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .경의중앙선:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .에버라인:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .경춘선:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .신분당선:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .의정부경전철:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .경강선:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .우이신설선:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .서해선:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .김포골드라인:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .수인분당선:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .신림선:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .인천1호선:
+            Color.cf(.colorScale(.yellow(.medium)))
+        case .인천2호선:
+            Color.cf(.colorScale(.yellow(.medium)))
+        }
+    }
+    
+    var subWayUIColor: UIColor {
+        UIColor(self.subwayColor)
+    }
 }
 
 // ODSay API의 응답 데이터에서 지하철 방면을 구분하는 타입
@@ -103,4 +166,45 @@ enum BusRouteType: Int {
     case 농어촌버스 = 20
     case 경기도시외형버스 = 22
     case 급행간선 = 26
+    
+    var busColor: Color {
+        switch self {
+        case .일반:
+            Color.cf(.colorScale(.darkRed(.brightest)))
+        case .좌석:
+            Color.cf(.colorScale(.darkRed(.lightest)))
+        case .마을버스:
+            Color.cf(.colorScale(.darkRed(.lighter)))
+        case .직행좌석:
+            Color.cf(.colorScale(.darkRed(.light)))
+        case .공항버스:
+            Color.cf(.colorScale(.darkRed(.mediumLight)))
+        case .간선급행:
+            Color.cf(.colorScale(.darkRed(.medium)))
+        case .외곽:
+            Color.cf(.colorScale(.darkRed(.mediumDark)))
+        case .간선:
+            Color.cf(.colorScale(.darkRed(.dark)))
+        case .지선:
+            Color.cf(.colorScale(.darkRed(.darker)))
+        case .순환:
+            Color.cf(.colorScale(.darkRed(.lighter)))
+        case .광역:
+            Color.cf(.colorScale(.blue(.light)))
+        case .급행:
+            Color.cf(.colorScale(.blue(.mediumLight)))
+        case .광관버스:
+            Color.cf(.colorScale(.blue(.medium)))
+        case .농어촌버스:
+            Color.cf(.colorScale(.blue(.mediumDark)))
+        case .경기도시외형버스:
+            Color.cf(.colorScale(.blue(.dark)))
+        case .급행간선:
+            Color.cf(.colorScale(.blue(.darker)))
+        }
+    }
+    
+    var busUIColor: UIColor {
+        UIColor(self.busColor)
+    }
 }

@@ -98,9 +98,9 @@ enum SubPathType: String {
         case .walk:
             "figure.walk"
         case .bus:
-            "bus"
+            "bus.fill"
         case .subway:
-            "tram"
+            "tram.fill"
         }
     }
 }
@@ -109,14 +109,14 @@ enum SubPathType: String {
 struct LaneInfo: Equatable {
     let name: String // 지하철 노선명 or 버스 번호
     
-    let subwayCode: Int? // 지하철 노선 번호
+    let subwayCode: SubwayCode? // 지하철 노선 번호
     
     let busRouteID: String? // 버스 노선 ID
     let busRouteType: BusRouteType? // 버스 노선 타입
     // 필요시 지하철 노선 번호, 버스 코드 등 추가 가능
     init(
         name: String,
-        subwayCode: Int? = nil,
+        subwayCode: SubwayCode? = nil,
         busRouteID: String? = nil,
         busRouteType: BusRouteType? = nil
     ) {
@@ -158,7 +158,7 @@ let mockMakchaInfo = MakchaInfo(
                     time: 15,
                     stationCount: 7,
                     lane: [
-                        LaneInfo(name: "수도권 3호선", subwayCode: 3)
+                        LaneInfo(name: "수도권 3호선", subwayCode: .수도권3호선)
                     ],
                     startName: "불광",
                     endName: "종로3가",
@@ -188,7 +188,7 @@ let mockMakchaInfo = MakchaInfo(
                     time: 37,
                     stationCount: 18,
                     lane: [
-                        LaneInfo(name: "수도권 5호선", subwayCode: 5)
+                        LaneInfo(name: "수도권 5호선", subwayCode: .수도권5호선)
                     ],
                     startName: "종로3가",
                     endName: "오금",
@@ -291,7 +291,7 @@ let mockMakchaInfo = MakchaInfo(
                     time: 40,
                     stationCount: 20,
                     lane: [
-                        LaneInfo(name: "수도권 5호선", subwayCode: 5)
+                        LaneInfo(name: "수도권 5호선", subwayCode: .수도권5호선)
                     ],
                     startName: "서대문",
                     endName: "오금",

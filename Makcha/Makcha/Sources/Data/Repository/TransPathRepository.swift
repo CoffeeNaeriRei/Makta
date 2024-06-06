@@ -246,10 +246,11 @@ extension TransPathRepository {
             var laneInfoArr = [LaneInfo]()
             for eachLane in laneArr {
                 let laneInfo: LaneInfo
-                if let subwayLine = eachLane.name { // 지하철 노선 정보
+                if let subwayLine = eachLane.name,
+                let subwayCode = eachLane.subwayCode { // 지하철 노선 정보
                     laneInfo = LaneInfo(
                         name: subwayLine,
-                        subwayCode: eachLane.subwayCode
+                        subwayCode: SubwayCode(rawValue: subwayCode)
                     )
                     laneInfoArr.append(laneInfo)
                     continue
@@ -260,7 +261,7 @@ extension TransPathRepository {
                     laneInfo = LaneInfo(
                         name: busRouteName,
                         busRouteID: busRouteID,
-                        busRouteType: BusRouteType(rawValue: busRouteType) 
+                        busRouteType: BusRouteType(rawValue: busRouteType)
                     )
                     laneInfoArr.append(laneInfo)
                     continue
