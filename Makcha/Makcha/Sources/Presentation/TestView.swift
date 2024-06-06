@@ -33,7 +33,7 @@ public final class TestView: UIView {
         count.font = UIFont.systemFont(ofSize: 60.0)
         
         footer.text = "테스트 완"
-        footer.textColor = UIColor(Color.cf(.colorScale(.fuchsia(.dark))))
+        footer.textColor = UIColor.cf(.colorScale(.fuchsia(.dark)))
         footer.attributedText = .pretendard("HELLO\nWORLD RED", scale: .largeTitle)
         footer.numberOfLines = 0
         

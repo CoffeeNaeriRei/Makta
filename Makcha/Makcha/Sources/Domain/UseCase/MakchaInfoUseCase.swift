@@ -100,7 +100,8 @@ final class MakchaInfoUseCase {
                        let wayCode = firstTransSubPath.wayCode {
                         let observable = transPathRepository.getSeoulRealtimeSubwayArrival(
                             stationName: stationName,
-                            subwayLineCodeInt: subwayLine,
+                            // MARK: 타입 변경 확인필요
+                            subwayLineCodeInt: subwayLine.rawValue,
                             wayCodeInt: wayCode,
                             currentTime: currentTime
                         )

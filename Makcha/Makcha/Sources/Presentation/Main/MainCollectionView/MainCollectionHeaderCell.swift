@@ -20,7 +20,7 @@ final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
         let label = UILabel()
         let text = NSMutableAttributedString.pretendard("출발 시간 출발", scale: .headline)
 
-        label.textColor = UIColor(Color.cf(.grayScale(.gray800)))
+        label.textColor = UIColor.cf(.grayScale(.gray800))
         label.attributedText = text
         
         return label
@@ -30,8 +30,8 @@ final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
     let resetButton: UIButton = {
         let button = UIButton()
         
-        let tintColor = UIColor(Color.cf(.grayScale(.gray700)))
-        let borderColor = UIColor(Color.cf(.grayScale(.gray100)))
+        let tintColor = UIColor.cf(.grayScale(.gray700))
+        let borderColor = UIColor.cf(.grayScale(.gray100))
         let text = NSMutableAttributedString.pretendard("현재 위치로 재설정", scale: .caption)
 
         var buttonConfig: UIButton.Configuration = .plain()
@@ -62,7 +62,7 @@ final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
     }
     
     private func setup() {
-        contentView.flex.backgroundColor(UIColor(Color.cf(.grayScale(.white))))
+        contentView.flex.backgroundColor(.cf(.grayScale(.white)))
         contentView.flex.direction(.row).alignItems(.center).define {
             $0.addItem(startTimeLabel)
                 .grow(1)
@@ -95,7 +95,7 @@ extension MainCollectionHeaderCell {
         let text = NSMutableAttributedString.pretendard("\(startTime) 출발", scale: .headline)
         text.addAttributes(
             [
-                .foregroundColor : UIColor(Color.cf(.colorScale(.royalBlue(.mediumLight))))
+                .foregroundColor : UIColor.cf(.colorScale(.royalBlue(.mediumLight)))
             ],
             range: .init(location: 0, length: startTime.count)
         )
