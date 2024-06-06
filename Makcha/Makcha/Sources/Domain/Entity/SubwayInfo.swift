@@ -82,3 +82,25 @@ enum SubwayWay: Int {
         }
     }
 }
+
+// MARK: ODSay API 응답 데이터 중 버스노선을 구분하는 타입
+/// - https://lab.odsay.com/guide/releaseReference#searchBusLane
+/// - 버스 종류 별로 색상 관리를 위해 사용
+enum BusRouteType: Int {
+    case 일반 = 1
+    case 좌석 = 2
+    case 마을버스 = 3
+    case 직행좌석 = 4
+    case 공항버스 = 5
+    case 간선급행 = 6
+    case 외곽 = 10
+    case 간선 = 11
+    case 지선 = 12
+    case 순환 = 13
+    case 광역 = 14
+    case 급행 = 15
+    case 광관버스 = 16
+    case 농어촌버스 = 20
+    case 경기도시외형버스 = 22
+    case 급행간선 = 26
+}

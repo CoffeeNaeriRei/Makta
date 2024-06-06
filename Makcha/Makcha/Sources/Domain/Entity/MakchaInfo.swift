@@ -112,16 +112,18 @@ struct LaneInfo: Equatable {
     let subwayCode: Int? // 지하철 노선 번호
     
     let busRouteID: String? // 버스 노선 ID
-    
+    let busRouteType: BusRouteType? // 버스 노선 타입
     // 필요시 지하철 노선 번호, 버스 코드 등 추가 가능
     init(
         name: String,
         subwayCode: Int? = nil,
-        busRouteID: String? = nil
+        busRouteID: String? = nil,
+        busRouteType: BusRouteType? = nil
     ) {
         self.name = name
         self.subwayCode = subwayCode
         self.busRouteID = busRouteID
+        self.busRouteType = busRouteType
     }
 }
 
@@ -243,15 +245,18 @@ let mockMakchaInfo = MakchaInfo(
                     lane: [
                         LaneInfo(
                             name: "720",
-                            busRouteID: "100100111"
+                            busRouteID: "100100111",
+                            busRouteType: .간선
                         ),
                         LaneInfo(
                             name: "741",
-                            busRouteID: "123000010"
+                            busRouteID: "123000010",
+                            busRouteType: .간선
                         ),
                         LaneInfo(
                             name: "705",
-                            busRouteID: "100100587"
+                            busRouteID: "100100587",
+                            busRouteType: .간선
                         )
                     ],
                     startName: "불광역3.6호선",

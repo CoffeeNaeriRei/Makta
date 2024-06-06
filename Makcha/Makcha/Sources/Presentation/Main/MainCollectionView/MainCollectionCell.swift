@@ -219,7 +219,7 @@ extension MainCollectionCell {
         nextArrivalTransportTimeLabel.text = data.arrival.second.arrivalMessage
         nextArrivalTransportTimeLabel.flex.markDirty()
 
-//        let totalDistance = data.makchaPath.subPath.reduce(0) { $0 + $1.distance }
+//	let totalDistance = data.makchaPath.subPath.reduce(0) { $0 + $1.distance }
         pathsContentView.subviews.forEach { $0.removeFromSuperview() }
         pathsContentView.flex.direction(.row).define {
             $0.addItem(layoutPathInfo(with: data.makchaPath.subPath))
@@ -282,6 +282,7 @@ extension MainCollectionCell {
                         .left(isLastPath ? CGFloat(subPath.distance - 24) : 0)
                         .border(1, .red)
                     }
+                    .minWidth(24)
                     .border(1, .blue)
                 case .bus:
                     $0.addItem().define {

@@ -255,10 +255,12 @@ extension TransPathRepository {
                     continue
                 }
                 if let busRouteName = eachLane.busNo,
-                   let busRouteID = eachLane.busLocalBlID { // 버스 노선 정보
+                   let busRouteID = eachLane.busLocalBlID,
+                   let busRouteType = eachLane.type { // 버스 노선 정보
                     laneInfo = LaneInfo(
                         name: busRouteName,
-                        busRouteID: busRouteID
+                        busRouteID: busRouteID,
+                        busRouteType: BusRouteType(rawValue: busRouteType) 
                     )
                     laneInfoArr.append(laneInfo)
                     continue
