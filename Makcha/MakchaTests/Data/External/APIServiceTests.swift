@@ -9,7 +9,7 @@ import XCTest
 @testable import Makcha
 
 final class APIServiceTests: XCTestCase {
-    private var sut: APIService!
+    private var sut: APIServiceInterface!
     
     override func setUpWithError() throws {
         super.setUp()
@@ -82,6 +82,31 @@ final class APIServiceTests: XCTestCase {
             case .success(let seoulRealtimeBusStationDTO):
                 isSuccess = true
                 resultDTO = seoulRealtimeBusStationDTO
+            case .failure:
+                isSuccess = false
+            }
+            completionExpectation.fulfill()
+        }
+        wait(for: [completionExpectation], timeout: 5)
+        
+        // Then
+        XCTAssertTrue(isSuccess)
+        XCTAssertNotNil(resultDTO)
+    }
+    
+    func test_fetchKakaoAddressSearchResult가_정상적으로_API를_호출하는지_확인() {
+        // Given
+        let addressQuery = "서울 은평구 대조동 2-44"
+        var isSuccess: Bool = false
+        var resultDTO: KakaoAddressSearchResultDTO?
+        let completionExpectation = expectation(description: "fetchKakaoAddressSearchResult completion expectation")
+        
+        // When
+        sut.fetchKakaoAddressSearchResult(address: addressQuery) { result in
+            switch result {
+            case .success(let kakaoAddressSearchResultDTO):
+                isSuccess = true
+                resultDTO = kakaoAddressSearchResultDTO
             case .failure:
                 isSuccess = false
             }
