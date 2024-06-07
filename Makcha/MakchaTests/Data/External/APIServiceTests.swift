@@ -94,19 +94,19 @@ final class APIServiceTests: XCTestCase {
         XCTAssertNotNil(resultDTO)
     }
     
-    func test_fetchKakaoAddressSearchResult가_정상적으로_API를_호출하는지_확인() {
+    func test_fetchKakaoPlaceSearchResult가_정상적으로_API를_호출하는지_확인() {
         // Given
-        let addressQuery = "서울 은평구 대조동 2-44"
+        let placeKeyword = "홍익대학교"
         var isSuccess: Bool = false
-        var resultDTO: KakaoAddressSearchResultDTO?
-        let completionExpectation = expectation(description: "fetchKakaoAddressSearchResult completion expectation")
+        var resultDTO: KakaoPlaceSearchResultDTO?
+        let completionExpectation = expectation(description: "fetchKakaoPlaceSearchResult completion expectation")
         
         // When
-        sut.fetchKakaoAddressSearchResult(address: addressQuery) { result in
+        sut.fetchKakaoPlaceSearchResult(placeKeyword: placeKeyword) { result in
             switch result {
-            case .success(let kakaoAddressSearchResultDTO):
+            case .success(let kakaoPlaceSearchResultDTO):
                 isSuccess = true
-                resultDTO = kakaoAddressSearchResultDTO
+                resultDTO = kakaoPlaceSearchResultDTO
             case .failure:
                 isSuccess = false
             }
