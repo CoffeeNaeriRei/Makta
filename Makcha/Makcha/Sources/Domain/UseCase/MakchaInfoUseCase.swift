@@ -55,7 +55,6 @@ final class MakchaInfoUseCase {
             .disposed(by: disposeBag)
     }
     
-    
     // MARK: - 출발지를 검색한 주소로 업데이트
     func updateStartPointToSearchedAddress(addressIdx: Int) {
         

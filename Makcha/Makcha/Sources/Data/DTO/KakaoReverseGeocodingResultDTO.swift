@@ -21,7 +21,7 @@ struct KakaoReverseGeocodingResultDTO: Codable {
 }
 
 struct KakaoAddressInfo: Codable {
-    let roadAddress: KakaoRoadAddress // 도로명 주소 상세 정보
+    let roadAddress: KakaoRoadAddress? // 도로명 주소 상세 정보
     let address: KakaoAddress // 지번 주소 상세 정보
     
     enum CodingKeys: String, CodingKey {
@@ -85,3 +85,54 @@ struct KakaoReverseGeocodingMeta: Codable {
         case totalCount = "total_count"
     }
 }
+
+#if DEBUG
+extension KakaoReverseGeocodingResultDTO {
+    static let mockStartPointReverseGeocodedData: Self = KakaoReverseGeocodingResultDTO(
+        results: [
+            KakaoAddressInfo(
+                roadAddress: KakaoRoadAddress(
+                    addressName: "서울특별시 은평구 연서로22길 9-30",
+                    region1Depth: "서울",
+                    region2Depth: "은평구",
+                    region3Depth: "",
+                    roadName: "연서로22길",
+                    isUnderground: "N",
+                    mainBuildingNo: "9",
+                    subBuildingNo: "30",
+                    buildingName: "",
+                    postNo: "03387"
+                ),
+                address: KakaoAddress(
+                    addressName: "서울 은평구 대조동 212",
+                    region1Depth: "서울",
+                    region2Depth: "은평구",
+                    region3Depth: "대조동",
+                    isMountain: "N",
+                    mainAddressNo: "212",
+                    subAddressNo: ""
+                )
+            )
+        ],
+        meta: KakaoReverseGeocodingMeta(totalCount: 1)
+    )
+    
+    static let mockDestinationPointReverseGeocodedData: Self = KakaoReverseGeocodingResultDTO(
+        results: [
+            KakaoAddressInfo(
+                roadAddress: nil,
+                address: KakaoAddress(
+                    addressName: "서울 송파구 가락동 10-15",
+                    region1Depth: "서울",
+                    region2Depth: "송파구",
+                    region3Depth: "가락동",
+                    isMountain: "N",
+                    mainAddressNo: "10",
+                    subAddressNo: "15"
+                )
+            )
+        ],
+        meta: KakaoReverseGeocodingMeta(totalCount: 1)
+    )
+}
+#endif
