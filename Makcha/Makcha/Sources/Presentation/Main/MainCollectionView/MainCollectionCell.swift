@@ -109,6 +109,8 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
     
     private let pathScrollView = UIScrollView()
     private let pathsContentView = ContentView()
+    private let centerContentsTopContainer = UIView()
+    private let nextArrivalTransportTimeContainer = UIView()
     
     var disposeBag = DisposeBag()
     
@@ -146,9 +148,13 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
             
             /// CenterContents
             $0.addItem().alignItems(.center).alignSelf(.center).define {
-                $0.addItem(centerContentsTopLabel)
+                $0.addItem(centerContentsTopContainer).define {
+                    $0.addItem(centerContentsTopLabel)
+                }
                 $0.addItem(currentArrivalTransportTimeLabel)
-                $0.addItem(nextArrivalTransportTimeLabel)
+                $0.addItem(nextArrivalTransportTimeContainer).define {
+                    $0.addItem(nextArrivalTransportTimeLabel)
+                }
             }
             .position(.absolute).top(64)
             
@@ -233,11 +239,70 @@ private final class ContentView: UIView {
 extension MainCollectionCell {
     // MARK: 패치 된 데이터를 활용해 뷰 레이아웃을 설정하기 위한 인터페이스 메서드
     func configure(with data: MakchaCellData) {
-        estimatedTimeOfArrivalLabel.text = data.makchaPath.arrivalTime.description
+        estimatedTimeOfArrivalLabel.text = data.makchaPath.arrivalTime.endPointTimeString
         estimatedTimeOfArrivalLabel.flex.markDirty()
+
+        let totalTimeDescription = calcTotalTimeDescription(data.makchaPath.totalTime)
+        let totalTimeText = NSMutableAttributedString.pretendard(totalTimeDescription.text, scale: .title)
         
-        durationTimeLabel.text = data.makchaPath.totalTime.description
+        if let hourIdx = totalTimeDescription.idx.first, let hourIdx = hourIdx {
+            totalTimeText.addAttributes(
+                [
+                    .font : UIFont.pretendard(.medium, size: 12),
+                    .foregroundColor: UIColor.cf(.grayScale(.gray600))
+                ],
+                range: .init(location: hourIdx, length: 2)
+            )
+        }
+        
+        if let minuteIdx = totalTimeDescription.idx.last, let minuteIdx = minuteIdx {
+            if let hourIdx = totalTimeDescription.idx.first, let hourIdx = hourIdx {
+                totalTimeText.addAttributes(
+                    [
+                        .font : UIFont.pretendard(.medium, size: 12),
+                        .foregroundColor: UIColor.cf(.grayScale(.gray600))
+                    ],
+                    range: .init(location: hourIdx + 2 + minuteIdx, length: 1)
+                )
+            } else {
+                totalTimeText.addAttributes(
+                    [
+                        .font : UIFont.pretendard(.medium, size: 12),
+                        .foregroundColor: UIColor.cf(.grayScale(.gray600))
+                    ],
+                    range: .init(location: minuteIdx, length: 1)
+                )
+            }
+        }
+
+        durationTimeLabel.attributedText = totalTimeText
         durationTimeLabel.flex.markDirty()
+
+        centerContentsTopContainer.subviews.forEach { $0.removeFromSuperview() }
+        centerContentsTopContainer.flex.direction(.row).define {
+            let firstTransport = data.makchaPath.subPath
+                .filter { $0.subPathType != .walk }
+                .first
+            
+            if firstTransport?.subPathType == .bus, let busInfo = firstTransport?.lane?.first {
+                let busColor: UIColor = busInfo.busRouteType?.busUIColor ?? .clear
+                let busNoLabel = UILabel()
+                busNoLabel.attributedText = .pretendard(busInfo.name, scale: .caption2)
+                busNoLabel.textAlignment = .center
+                busNoLabel.textColor = busColor
+
+                $0.addItem(centerContentsTopLabel)
+                    .marginLeft(busNoLabel.intrinsicContentSize.width + 12)
+                $0.addItem(busNoLabel)
+                    .marginLeft(4)
+                    .padding(2, 4)
+                    .border(1, busColor)
+                    .cornerRadius(2)
+            } else {
+                $0.addItem(centerContentsTopLabel)
+            }
+        }
+        centerContentsTopContainer.flex.markDirty()
         
         currentArrivalTransportTimeLabel.text = data.arrival.first.arrivalMessage
         currentArrivalTransportTimeLabel.flex.markDirty()
@@ -245,16 +310,30 @@ extension MainCollectionCell {
         nextArrivalTransportTimeLabel.text = data.arrival.second.arrivalMessage
         nextArrivalTransportTimeLabel.flex.markDirty()
 
-//	let totalDistance = data.makchaPath.subPath.reduce(0) { $0 + $1.distance }
         pathsContentView.subviews.forEach { $0.removeFromSuperview() }
         pathsContentView.flex.direction(.row).define {
             $0.addItem(layoutPathInfo(with: data.makchaPath.subPath))
         }
         .paddingHorizontal(24)
-//        pathsContentView.flex.width(CGFloat(totalDistance) * 0.1)
         pathsContentView.flex.markDirty()
         
         setNeedsLayout()
+    }
+    
+    private func calcTotalTimeDescription(_ totalTime: Int) -> (text: String, idx: [Int?]) {
+        let hour = totalTime / 60
+        let minute = totalTime - hour * 60
+        
+        let hourDescription = hour > 0 ? "\(hour)시간" : ""
+        let minuteDescription = minute > 0 ? "\(minute)분" : ""
+
+        let hourIdx = hourDescription.isEmpty ? nil : hourDescription.count - 2
+        let minuteIdx = minuteDescription.isEmpty ? nil : minuteDescription.count - 1
+        
+        return (
+            hourDescription + minuteDescription,
+            [hourIdx, minuteIdx]
+        )
     }
     
     // MARK: 들어오는 경로 데이터에 따라 다르게 뷰를 그리기 위한 메서드
