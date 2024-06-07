@@ -118,4 +118,29 @@ final class APIServiceTests: XCTestCase {
         XCTAssertTrue(isSuccess)
         XCTAssertNotNil(resultDTO)
     }
+    
+    func test_fetchKakaoReverseGeocodingResult가_정상적으로_API를_호출하는지_확인() {
+        // Given
+        let mockCoordinate: XYCoordinate = (mockStartPoint.coordinate.lonX, mockStartPoint.coordinate.latY)
+        var isSuccess: Bool = false
+        var resultDTO: KakaoReverseGeocodingResultDTO?
+        let completionExpectation = expectation(description: "fetchKakaoReverseGeocodingResult completion expectation")
+        
+        // When
+        sut.fetchKakaoReverseGeocodingResult(lonX: mockCoordinate.lonX, latY: mockCoordinate.latY) { result in
+            switch result {
+            case .success(let kakaoReverseGeocodingResultDTO):
+                isSuccess = true
+                resultDTO = kakaoReverseGeocodingResultDTO
+            case .failure:
+                isSuccess = false
+            }
+            completionExpectation.fulfill()
+        }
+        wait(for: [completionExpectation], timeout: 5)
+        
+        // Then
+        XCTAssertTrue(isSuccess)
+        XCTAssertNotNil(resultDTO)
+    }
 }

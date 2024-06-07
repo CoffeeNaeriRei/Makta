@@ -28,6 +28,11 @@ protocol APIServiceInterface {
         placeKeyword: String,
         completion: @escaping (Result<KakaoPlaceSearchResultDTO, APIServiceError>) -> Void
     )
+    func fetchKakaoReverseGeocodingResult(
+        lonX: String,
+        latY: String,
+        completion: @escaping (Result<KakaoReverseGeocodingResultDTO, APIServiceError>) -> Void
+    )
 }
 
 // MARK: - APIService 정의
@@ -142,6 +147,38 @@ struct APIService: APIServiceInterface {
             completion(.success(kakaoPlaceSearchResultDTO))
         }.resume()
     }
+    
+    // 카카오 로컬 - 좌표로 주소 변환하기 API 요청
+    func fetchKakaoReverseGeocodingResult(
+        lonX: String,
+        latY: String,
+        completion: @escaping (Result<KakaoReverseGeocodingResultDTO, APIServiceError>) -> Void
+    ) {
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_LOCAL_API") as? String,
+              let kakaoReverseGeocodingURL = makeKakaoReverseGeocodingURL(lonX: lonX, latY: latY),
+              let url = URL(string: kakaoReverseGeocodingURL) else {
+            completion(.failure(APIServiceError.invalidURL))
+            return
+        }
+        // 헤더 구성
+        var requestURL = URLRequest(url: url)
+        requestURL.addValue("KakaoAK \(apiKey)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            if error != nil {
+                completion(.failure(APIServiceError.requestFail))
+            }
+            guard let data = data else {
+                completion(.failure(APIServiceError.noData))
+                return
+            }
+            guard let kakaoReverseGeocodingResultDTO = try? JSONDecoder().decode(KakaoReverseGeocodingResultDTO.self, from: data) else {
+                completion(.failure(APIServiceError.decodingError))
+                return
+            }
+            completion(.success(kakaoReverseGeocodingResultDTO))
+        }.resume()
+    }
 }
 
 extension APIService {
@@ -210,7 +247,17 @@ extension APIService {
         kakaoPlaceSearchURL += "?query=\(placeKeywordQuery)"
         kakaoPlaceSearchURL += "&page=\(page)"
         kakaoPlaceSearchURL += "&size=\(size)"
-        print("\n\(kakaoPlaceSearchURL)\n")
+        
         return kakaoPlaceSearchURL
+    }
+    
+    // [카카오 로컬 API - 좌표로 주소 변환하기] 요청 URL 생성
+    private func makeKakaoReverseGeocodingURL(lonX: String, latY: String) -> String? {
+        var kakaoReverseGeocodingURL = "https://dapi.kakao.com/v2/local/geo/"
+        kakaoReverseGeocodingURL += "coord2address.json"
+        kakaoReverseGeocodingURL += "?x=\(lonX)"
+        kakaoReverseGeocodingURL += "&y=\(latY)"
+        
+        return kakaoReverseGeocodingURL
     }
 }

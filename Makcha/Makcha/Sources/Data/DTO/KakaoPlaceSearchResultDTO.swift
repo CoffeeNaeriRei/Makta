@@ -12,7 +12,7 @@ import Foundation
 
 struct KakaoPlaceSearchResultDTO: Codable {
     let places: [KakaoPlace] // 응답 결과 (장소 데이터의 배열)
-    let meta: Meta // 응답 관련 정보
+    let meta: KakaoPlaceSearchMeta // 응답 관련 정보
     
     enum CodingKeys: String, CodingKey {
         case places = "documents"
@@ -50,7 +50,7 @@ struct KakaoPlace: Codable {
     }
 }
 
-struct Meta: Codable {
+struct KakaoPlaceSearchMeta: Codable {
     let isEnd: Bool // 현재 페이지가 마지막 페이지인지
     let pageableCount: Int // total_count 중 노충 가능 문서 수 (최대: 45)
     let totalCount: Int // 검색어에 검색된 문서 수
