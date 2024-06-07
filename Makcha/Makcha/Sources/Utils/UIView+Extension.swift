@@ -52,3 +52,34 @@ final class GradientView: UIView {
         gradientLayer.colors = colors.map { $0.cgColor }
     }
 }
+
+struct UILabelFactory {
+    static func build(
+        attributedText: NSAttributedString = .pretendard("UILabel", scale: .body),
+        textAlignment: NSTextAlignment = .center,
+        textColor: UIColor = .cf(.grayScale(.black))
+    ) -> UILabel {
+        let label = UILabel()
+        
+        label.attributedText = attributedText
+        label.textAlignment = textAlignment
+        label.textColor = textColor
+        
+        return label
+    }
+    
+    static func build(
+        text: String,
+        textScale: Pretendard.FontScale = .body,
+        textAlignment: NSTextAlignment = .center,
+        textColor: UIColor = .cf(.grayScale(.black))
+    ) -> UILabel {
+        let label = UILabel()
+        
+        label.attributedText = .pretendard(text, scale: textScale)
+        label.textAlignment = textAlignment
+        label.textColor = textColor
+        
+        return label
+    }
+}
