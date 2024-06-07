@@ -14,6 +14,7 @@ import RxSwift
 
 final class EndPointRepository: EndPointRepositoryProtocol {
     private let locationService: LocationServiceInterface
+    private let apiService: APIServiceInterface
     
     init(_ locationService: LocationServiceInterface) {
         self.locationService = locationService
@@ -51,6 +52,34 @@ final class EndPointRepository: EndPointRepositoryProtocol {
                     let endPoint = EndPoint(name: nameStr, coordinate: (lon.description, lat.description))
                     emitter.onNext(endPoint)
                     emitter.onCompleted()
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    // 키워드로 검색된 장소들을 EndPoint의 배열로 반환
+    func getSearchedAddresses(searchKeyword: String) -> Observable<[EndPoint]> {
+        return Observable.create() { emitter in
+            self.apiService.fetchKakaoPlaceSearchResult(placeKeyword: searchKeyword) { result in
+                switch result {
+                case .success(let kakaoPlaceSearchResultDTO):
+                    print("[APIService] - ✅ fetchKakaoPlaceSearchResult() 호출 성공!!")
+                    var searchedAddressArr = [EndPoint]()
+                    for kakaoPlace in kakaoPlaceSearchResultDTO.places {
+                        let searchedAddress = EndPoint(
+                            name: kakaoPlace.placeName,
+                            addressName: kakaoPlace.addressName,
+                            roadAddressName: kakaoPlace.roadAddressName,
+                            coordinate: (kakaoPlace.x, kakaoPlace.y)
+                        )
+                        searchedAddressArr.append(searchedAddress)
+                    }
+                    emitter.onNext(searchedAddressArr)
+                    emitter.onCompleted()
+                case .failure(let error):
+                    print("[APIService] - ❌ fetchKakaoPlaceSearchResult() 호출 실패 \(error.localizedDescription)")
+                    emitter.onError(error)
                 }
             }
             return Disposables.create()

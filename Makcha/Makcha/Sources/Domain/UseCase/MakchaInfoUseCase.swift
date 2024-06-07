@@ -22,11 +22,12 @@ final class MakchaInfoUseCase {
     
     private let makchaInfo = PublishSubject<MakchaInfo>() // 막차 정보
     private let realtimeArrivals = PublishSubject<[RealtimeArrivalTuple]>() // 막차 경로 별 실시간 도착 정보
+    private let timerEvent = PublishRelay<Void>() // 실시간 도착 정보 타이머 이벤트
     
     let makchaSectionModel = PublishSubject<(startTimeStr: String, makchaCellData: [MakchaCellData])>() // 컬렉션뷰 바인딩을 위한 SectionModel에 전달할 데이터
     let startPoint = BehaviorRelay<EndPoint>(value: mockStartPoint) // 출발지 정보 // TODO: - 기본값 지정하기
     let destinationPoint: BehaviorRelay<EndPoint> // 도착지 정보
-    let timerEvent = PublishRelay<Void>() // 실시간 도착 정보 타이머 이벤트
+    let searchedEndPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 주소들
     
     private let disposeBag = DisposeBag()
     private var timerDisposable: Disposable? // 타이머 구독을 제어하기 위한 Disposable
@@ -43,11 +44,25 @@ final class MakchaInfoUseCase {
         subscribeMakchaSectionModel()
     }
     
-    func updateStartPointToSearchedLocation() {
+    // MARK: - 주소 검색 결과 불러오기
+    func searchWithAddressText(searchKeyword: String) {
+        print("[MakchaInfoUseCase] - \"\(searchKeyword)\" 키워드에 대한 주소 검색 결과 불러오기")
+        endPointRepository.getSearchedAddresses(searchKeyword: searchKeyword)
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, searchedAddressArr in
+                self.searchedEndPoints.onNext(searchedAddressArr)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    
+    // MARK: - 출발지를 검색한 주소로 업데이트
+    func updateStartPointToSearchedAddress(addressIdx: Int) {
         
     }
     
-    func updateDestinationPointToSearchedLocation() {
+    // MARK: - 도착지를 검색한 주소로 업데이트
+    func updateDestinationPointToSearchedAddress(addressIdx: Int) {
         
     }
     
@@ -65,12 +80,12 @@ final class MakchaInfoUseCase {
             .disposed(by: disposeBag)
     }
     
-    // MARK: - 검색한 위치 기반으로 막차 경로 불러오기
-    func loadMakchaPathWithSearchedLocation() {
-        let start = startPoint.value.coordinate
-        let end = destinationPoint.value.coordinate
-        loadMakchaPath(start: start, end: end)
-    }
+//    // MARK: - 검색한 위치 기반으로 막차 경로 불러오기
+//    func loadMakchaPathWithSearchedLocation() {
+//        let start = startPoint.value.coordinate
+//        let end = destinationPoint.value.coordinate
+//        loadMakchaPath(start: start, end: end)
+//    }
     
     // MARK: - 막차 경로 검색
     private func loadMakchaPath(start: XYCoordinate, end: XYCoordinate) {
