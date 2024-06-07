@@ -24,6 +24,10 @@ protocol APIServiceInterface {
         arsID: String,
         completion: @escaping (Result<SeoulRealtimeBusStationDTO, APIServiceError>) -> Void
     )
+    func fetchKakaoAddressSearchResult(
+        address: String,
+        completion: @escaping (Result<KakaoAddressSearchResultDTO, APIServiceError>) -> Void
+    )
 }
 
 // MARK: - APIService 정의
@@ -107,6 +111,37 @@ struct APIService: APIServiceInterface {
             completion(.success(seoulRealtimeBusStationDTO))
         }.resume()
     }
+    
+    // 카카오 로컬 - 주소검색 API 요청
+    func fetchKakaoAddressSearchResult(
+        address: String,
+        completion: @escaping (Result<KakaoAddressSearchResultDTO, APIServiceError>) -> Void
+    ) {
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_LOCAL_API") as? String,
+              let kakaoAddressSearchURL = makeKakaoAddressSearchURL(address: address),
+              let url = URL(string: kakaoAddressSearchURL) else {
+            completion(.failure(APIServiceError.invalidURL))
+            return
+        }
+        // 헤더 구성
+        var requestURL = URLRequest(url: url)
+        requestURL.addValue("KakaoAK \(apiKey)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            if error != nil {
+                completion(.failure(APIServiceError.requestFail))
+            }
+            guard let data = data else {
+                completion(.failure(APIServiceError.noData))
+                return
+            }
+            guard let kakaoAddressSearchResultDTO = try? JSONDecoder().decode(KakaoAddressSearchResultDTO.self, from: data) else {
+                completion(.failure(APIServiceError.decodingError))
+                return
+            }
+            completion(.success(kakaoAddressSearchResultDTO))
+        }.resume()
+    }
 }
 
 extension APIService {
@@ -151,9 +186,8 @@ extension APIService {
     }
     
     // [서울특별시 정류소정보조회 API] 요청 URL 생성
-    func makeSeoulRealtimeBusStationURL(
-        arsID: String // 정류소고유번호
-    ) -> String? {
+    /// arsID: 정류소고유번호
+    func makeSeoulRealtimeBusStationURL(arsID: String) -> String? {
         guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "REALTIME_BUS_STATION_API") as? String else {
             return nil
         }
@@ -163,5 +197,20 @@ extension APIService {
         seoulRealtimeBusStationURL += "&resultType=json"
         
         return seoulRealtimeBusStationURL
+    }
+    
+    // [카카오 로컬 API - 주소 검색하기] 요청 URL 생성
+    func makeKakaoAddressSearchURL(
+        address addressQuery: String,
+        page: Int = 1, // 결과 페이지 번호
+        size: Int = 15 // 한 페이지에 보여질 문서 개수
+    ) -> String? {
+        var kakaoAddressSearchURL = "https://dapi.kakao.com/v2/local/search/"
+        kakaoAddressSearchURL += "address.json"
+        kakaoAddressSearchURL += "?query=\(addressQuery)"
+        kakaoAddressSearchURL += "&page=\(page)"
+        kakaoAddressSearchURL += "&size=\(size)"
+        
+        return kakaoAddressSearchURL
     }
 }

@@ -22,12 +22,12 @@ struct KakaoAddressSearchResultDTO: Codable {
 
 // 1개 주소에 대한 정보
 struct KakaoAddressInfo: Codable {
-    let address: KakaoAddress // 지번 주소 정보
-    let addressName: String // 전체 지번 주소 or 전체 도로명 주소 (입력 형식에 따라 결정)
-    let addressType: String // REGION(지명) | ROAD(도로명) | REGION_ADDR(지번 주소) | ROAD_ADDR(도로명 주소)
-    let roadAddress: KakaoRoadAddress // 도로명 주소 정보
-    let x: String // 경도
-    let y: String // 위도
+    let address: KakaoAddress? // 지번 주소 정보
+    let addressName: String? // 전체 지번 주소 or 전체 도로명 주소 (입력 형식에 따라 결정)
+    let addressType: String? // REGION(지명) | ROAD(도로명) | REGION_ADDR(지번 주소) | ROAD_ADDR(도로명 주소)
+    let roadAddress: KakaoRoadAddress? // 도로명 주소 정보
+    let x: String? // 경도
+    let y: String? // 위도
     
     enum CodingKeys: String, CodingKey {
         case address
