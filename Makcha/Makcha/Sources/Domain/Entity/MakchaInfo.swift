@@ -92,25 +92,38 @@ enum SubPathType: String {
     case walk = "도보"
     case bus = "버스"
     case subway = "지하철"
+    
+    var iconName: String {
+        switch self {
+        case .walk:
+            "figure.walk"
+        case .bus:
+            "bus.fill"
+        case .subway:
+            "tram.fill"
+        }
+    }
 }
 
 // 세부경로의 교통수단 정보
 struct LaneInfo: Equatable {
     let name: String // 지하철 노선명 or 버스 번호
     
-    let subwayCode: Int? // 지하철 노선 번호
+    let subwayCode: SubwayCode? // 지하철 노선 번호
     
     let busRouteID: String? // 버스 노선 ID
-    
+    let busRouteType: BusRouteType? // 버스 노선 타입
     // 필요시 지하철 노선 번호, 버스 코드 등 추가 가능
     init(
         name: String,
-        subwayCode: Int? = nil,
-        busRouteID: String? = nil
+        subwayCode: SubwayCode? = nil,
+        busRouteID: String? = nil,
+        busRouteType: BusRouteType? = nil
     ) {
         self.name = name
         self.subwayCode = subwayCode
         self.busRouteID = busRouteID
+        self.busRouteType = busRouteType
     }
 }
 
@@ -145,7 +158,7 @@ extension MakchaInfo {
                         time: 15,
                         stationCount: 7,
                         lane: [
-                            LaneInfo(name: "수도권 3호선", subwayCode: 3)
+                            LaneInfo(name: "수도권 3호선", subwayCode: .수도권3호선)
                         ],
                         startName: "불광",
                         endName: "종로3가",
@@ -175,7 +188,7 @@ extension MakchaInfo {
                         time: 37,
                         stationCount: 18,
                         lane: [
-                            LaneInfo(name: "수도권 5호선", subwayCode: 5)
+                            LaneInfo(name: "수도권 5호선", subwayCode: .수도권5호선)
                         ],
                         startName: "종로3가",
                         endName: "오금",
@@ -232,15 +245,18 @@ extension MakchaInfo {
                         lane: [
                             LaneInfo(
                                 name: "720",
-                                busRouteID: "100100111"
+                                busRouteID: "100100111",
+                                busRouteType: .간선
                             ),
                             LaneInfo(
                                 name: "741",
-                                busRouteID: "123000010"
+                                busRouteID: "123000010",
+                                busRouteType: .간선
                             ),
                             LaneInfo(
                                 name: "705",
-                                busRouteID: "100100587"
+                                busRouteID: "100100587",
+                                busRouteType: .간선
                             )
                         ],
                         startName: "불광역3.6호선",
@@ -275,7 +291,7 @@ extension MakchaInfo {
                         time: 40,
                         stationCount: 20,
                         lane: [
-                            LaneInfo(name: "수도권 5호선", subwayCode: 5)
+                            LaneInfo(name: "수도권 5호선", subwayCode: .수도권5호선)
                         ],
                         startName: "서대문",
                         endName: "오금",

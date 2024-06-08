@@ -116,7 +116,8 @@ final class MakchaInfoUseCase {
                        let wayCode = firstTransSubPath.wayCode {
                         let observable = transPathRepository.getSeoulRealtimeSubwayArrival(
                             stationName: stationName,
-                            subwayLineCodeInt: subwayLine,
+                            // MARK: 타입 변경 확인필요
+                            subwayLineCodeInt: subwayLine.rawValue,
                             wayCodeInt: wayCode,
                             currentTime: currentTime
                         )
@@ -148,7 +149,7 @@ final class MakchaInfoUseCase {
             .withUnretained(self)
             .subscribe(onNext: { _, arrivals in
                 self.realtimeArrivals.onNext(arrivals)
-                self.startTimer()
+//                self.startTimer()
             })
             .disposed(by: disposeBag)
     }

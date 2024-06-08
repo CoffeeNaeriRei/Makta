@@ -53,7 +53,7 @@ final class MainViewController: UIViewController {
     }
     
     private func setup() {
-        view.backgroundColor = .white
+        view.backgroundColor = .cf(.grayScale(.white))
         setupNavigationItems()
         setupCollectionView()
     }
@@ -111,9 +111,9 @@ extension MainViewController {
     private func setupNavigationItems() {
         let _title = "막차정보"
         let _leftBarButtonImage = UIImage(systemName: "gearshape")?
-            .withTintColor(UIColor(Color.cf(.grayScale(.gray700))), renderingMode: .alwaysOriginal)
+            .withTintColor(.cf(.grayScale(.gray700)), renderingMode: .alwaysOriginal)
         let _rightBarButtonImage = UIImage(systemName: "star")?
-            .withTintColor(UIColor(Color.cf(.grayScale(.gray700))), renderingMode: .alwaysOriginal)
+            .withTintColor(.cf(.grayScale(.gray700)), renderingMode: .alwaysOriginal)
         
         leftUIBarButtonItem.title = "Link to Setting"
         leftUIBarButtonItem.image = _leftBarButtonImage
