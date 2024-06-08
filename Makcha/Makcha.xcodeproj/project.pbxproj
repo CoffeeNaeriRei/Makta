@@ -29,6 +29,8 @@
 		B81BDE502BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */; };
 		B81BDE522BFF9A8700CFDC7A /* ArrivalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81BDE512BFF9A8700CFDC7A /* ArrivalType.swift */; };
 		B82953D22BF5DDBB00EABD57 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */; };
+		B83FBDD12C12D6D7004805ED /* KakaoPlaceSearchResultDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83FBDD02C12D6D7004805ED /* KakaoPlaceSearchResultDTO.swift */; };
+		B83FBDD32C1375A3004805ED /* KakaoReverseGeocodingResultDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83FBDD22C1375A3004805ED /* KakaoReverseGeocodingResultDTO.swift */; };
 		B86232E02BE7A7F0003959FB /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */; };
 		B86232E42BE7B152003959FB /* APIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86232E32BE7B152003959FB /* APIServiceTests.swift */; };
 		B862332E2BE9FC86003959FB /* LocationServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862332D2BE9FC86003959FB /* LocationServiceError.swift */; };
@@ -100,6 +102,8 @@
 		B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeoulRealtimeBusStationDTO.swift; sourceTree = "<group>"; };
 		B81BDE512BFF9A8700CFDC7A /* ArrivalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalType.swift; sourceTree = "<group>"; };
 		B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
+		B83FBDD02C12D6D7004805ED /* KakaoPlaceSearchResultDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoPlaceSearchResultDTO.swift; sourceTree = "<group>"; };
+		B83FBDD22C1375A3004805ED /* KakaoReverseGeocodingResultDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoReverseGeocodingResultDTO.swift; sourceTree = "<group>"; };
 		B86232D62BE7A761003959FB /* MakchaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MakchaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B86232DF2BE7A7F0003959FB /* LocationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
 		B86232E32BE7B152003959FB /* APIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceTests.swift; sourceTree = "<group>"; };
@@ -346,6 +350,8 @@
 				B89E7FAF2BE773D100A13B58 /* TransPathDTO.swift */,
 				B8D48C102BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift */,
 				B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */,
+				B83FBDD02C12D6D7004805ED /* KakaoPlaceSearchResultDTO.swift */,
+				B83FBDD22C1375A3004805ED /* KakaoReverseGeocodingResultDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -645,12 +651,14 @@
 				206B51052BFA348600FC6F76 /* MainCollectionView.swift in Sources */,
 				B8C31EA32BEF41220049B47C /* Date+Extension.swift in Sources */,
 				B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */,
+				B83FBDD32C1375A3004805ED /* KakaoReverseGeocodingResultDTO.swift in Sources */,
 				B89E7FAE2BE773B700A13B58 /* APIService.swift in Sources */,
 				B89E7F8C2BE765D200A13B58 /* TestView.swift in Sources */,
 				204A39DC2C0BF88E00C2F403 /* BaseCoordinator.swift in Sources */,
 				205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */,
 				B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */,
 				B8D48C112BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift in Sources */,
+				B83FBDD12C12D6D7004805ED /* KakaoPlaceSearchResultDTO.swift in Sources */,
 				B862332E2BE9FC86003959FB /* LocationServiceError.swift in Sources */,
 				B8C31E9D2BEE18890049B47C /* EndPointRepositoryProtocol.swift in Sources */,
 				B862333D2BEA059A003959FB /* CommonType.swift in Sources */,

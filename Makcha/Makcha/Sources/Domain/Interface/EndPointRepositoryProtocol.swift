@@ -12,4 +12,5 @@ import RxSwift
 
 protocol EndPointRepositoryProtocol {
     func getCurrentLocation() -> Observable<EndPoint>
+    func getSearchedAddresses(searchKeyword: String) -> Observable<[EndPoint]>
 }

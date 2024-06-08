@@ -58,7 +58,7 @@ final class LocationServiceTests: XCTestCase {
     
     func test_fetchCurrentLocation을_호출시_위치서비스권한이_허용상태이고_위치가_반환됐을_때_위치정보가_제대로_전달되는지_확인() {
         // Given
-        let mockLocation = mockStartPoint
+        let mockLocation = EndPoint.mockStartPoint
         let mockLat = CLLocationDegrees(floatLiteral: Double(mockLocation.coordinate.latY)!)
         let mockLon = CLLocationDegrees(floatLiteral: Double(mockLocation.coordinate.lonX)!)
         if var locationManagerMock = sut.locationManager as? LocationManagerMockInterface {
@@ -108,29 +108,5 @@ final class LocationServiceTests: XCTestCase {
         // Then
         XCTAssertNil(result.location)
         XCTAssertNotNil(result.error)
-    }
-    
-    func test_위경도_주소변환_메서드_테스트() {
-        // Given
-        let mockLon = CLLocationDegrees(mockStartPoint.coordinate.lonX)!
-        let mockLat = CLLocationDegrees(mockStartPoint.coordinate.latY)!
-        var isSuccess: Bool = false
-        let expectedAddressName = mockStartPoint.name
-        var result = ""
-        let completionExpectation = expectation(description: "convertCoordinateToAddress() completion expectation")
-        
-        // When
-        sut.convertCoordinateToAddress(lon: mockLon, lat: mockLat) { addressStr in
-            if let addressStr = addressStr {
-                isSuccess = true
-                result = addressStr
-            }
-            completionExpectation.fulfill()
-        }
-        wait(for: [completionExpectation], timeout: 5)
-        
-        // Then
-        XCTAssertTrue(isSuccess)
-        XCTAssertEqual(expectedAddressName, result)
     }
 }
