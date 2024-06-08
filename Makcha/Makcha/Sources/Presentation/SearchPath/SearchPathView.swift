@@ -19,7 +19,7 @@ final class SearchPathView: UIView {
     let startLocationLabel = {
         let label = UILabel()
         label.attributedText = .pretendard("test", scale: .title)
-        label.textColor = UIColor(Color.cf(.colorScale(.blue(.mediumLight))))
+        label.textColor = UIColor.cf(.colorScale(.blue(.mediumLight)))
         
         return label
     }()

@@ -23,6 +23,7 @@
 		206B510D2BFA36F800FC6F76 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 206B510C2BFA36F800FC6F76 /* Differentiator */; };
 		206B510F2BFA36F800FC6F76 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 206B510E2BFA36F800FC6F76 /* RxDataSources */; };
 		2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB382BEFAB7F00501E2D /* MainView.swift */; };
+		20C053D32C11F9E700DB78C8 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */; };
 		20E277222C0198DF0071F6CA /* MainCollectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */; };
 		20E277242C02E4340071F6CA /* Rx+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E277232C02E4340071F6CA /* Rx+Extension.swift */; };
 		B81BDE502BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */; };
@@ -93,6 +94,7 @@
 		2090BB362BEFAADC00501E2D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		2090BB382BEFAB7F00501E2D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		20B88A732BE79DC40088AF73 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionHeaderCell.swift; sourceTree = "<group>"; };
 		20E277232C02E4340071F6CA /* Rx+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+Extension.swift"; sourceTree = "<group>"; };
 		B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeoulRealtimeBusStationDTO.swift; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 				B8D48C162BF2164200DA2EB6 /* String+Extension.swift */,
 				B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */,
 				20E277232C02E4340071F6CA /* Rx+Extension.swift */,
+				20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -663,6 +666,7 @@
 				205075DB2BF9A41200BAC30E /* RemarkViewController.swift in Sources */,
 				B8D48C152BF206DA00DA2EB6 /* SubwayInfo.swift in Sources */,
 				B86233322BE9FF78003959FB /* TransPathRepositoryProtocol.swift in Sources */,
+				20C053D32C11F9E700DB78C8 /* UIView+Extension.swift in Sources */,
 				B862334B2BEC99AB003959FB /* MakchaInfoUseCase.swift in Sources */,
 				B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */,
 				204A39E02C0C1A4C00C2F403 /* SearchPathView.swift in Sources */,
