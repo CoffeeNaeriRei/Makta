@@ -83,3 +83,77 @@ struct UILabelFactory {
         return label
     }
 }
+
+import RxSwift
+import RxCocoa
+final class CustomUITextField: UITextField {
+    var textPadding = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 6)
+
+    private let disposeBag = DisposeBag()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupBindings()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupBindings()
+    }
+    
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        bounds.inset(by: textPadding)
+    }
+    
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        bounds.inset(by: textPadding)
+    }
+    
+    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        bounds.inset(by: textPadding)
+    }
+    
+    private func setupBindings() {
+        self.rx.controlEvent([.editingDidBegin])
+            .asObservable()
+            .withUnretained(self)
+            .subscribe { field, _ in
+                field.focus()
+            }
+            .disposed(by: disposeBag)
+        
+        self.rx.controlEvent([.editingDidEnd])
+            .asObservable()
+            .withUnretained(self)
+            .subscribe { field, _ in
+                field.unfocus()
+            }
+            .disposed(by: disposeBag)
+        
+        self.rx.controlEvent([.editingDidEndOnExit])
+            .asObservable()
+            .withUnretained(self)
+            .subscribe { field, _ in
+                field.unfocus()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func focus() {
+        layer.borderColor = UIColor.cf(.colorScale(.royalBlue(.medium))).cgColor
+        layer.borderWidth = 1.0
+        layer.shadowColor = UIColor.cf(.colorScale(.royalBlue(.medium))).cgColor
+//        self.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        self.layer.shadowOpacity = 0.8
+//        self.layer.shadowRadius = 4.0
+    }
+    
+    private func unfocus() {
+        layer.borderColor = UIColor.clear.cgColor
+        layer.borderWidth = .zero
+        layer.shadowColor = UIColor.clear.cgColor
+//        self.layer.shadowOffset = CGSize.zero
+//        self.layer.shadowOpacity = 0.0
+//        self.layer.shadowRadius = 0.0
+    }
+}

@@ -63,6 +63,8 @@ final class MakchaInfoUseCase {
             )
             .bind(to: startPoint)
             .disposed(by: disposeBag)
+        // 도착지도 다시 불러옴
+        destinationPoint.accept(mockDestinationPoint)
     }
     
     // MARK: - 검색한 위치 기반으로 막차 경로 불러오기

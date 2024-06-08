@@ -520,7 +520,6 @@ extension MainCollectionCell {
                     textContainerWidth = arrivalStationLabel.intrinsicContentSize.width
                 }
                 .left(-(textContainerWidth / 2) + 12).bottom(24)
-                
                 // IconContainer
                 $0.addItem().define {
                     $0.addItem(imageView)
