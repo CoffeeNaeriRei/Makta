@@ -75,3 +75,74 @@ struct SameName: Codable {
         case selectedRegion = "selected_region"
     }
 }
+
+#if DEBUG
+extension KakaoPlaceSearchResultDTO {
+    static let mockData: Self = KakaoPlaceSearchResultDTO(
+        places: [
+            KakaoPlace(
+                id: "8663561",
+                categoryGroupCode: "SC4",
+                categoryGroupName: "학교",
+                categoryName: "교육,학문 > 학교 > 대학교",
+                addressName: "서울 마포구 상수동 72-1",
+                roadAddressName: "서울 마포구 와우산로 94",
+                placeName: "홍익대학교 서울캠퍼스",
+                phoneNum: "02-320-1114",
+                placeURL: "http://place.map.kakao.com/8663561",
+                x: "126.925554591431",
+                y: "37.550874837441",
+                distance: ""
+            ),
+            KakaoPlace(
+                id: "11202857",
+                categoryGroupCode: "SC4",
+                categoryGroupName: "학교",
+                categoryName: "교육,학문 > 학교 > 대학교",
+                addressName: "세종특별자치시 조치원읍 신안리 300",
+                roadAddressName: "세종특별자치시 조치원읍 세종로 2639",
+                placeName: "홍익대학교 세종캠퍼스",
+                phoneNum: "044-860-2114",
+                placeURL: "http://place.map.kakao.com/11202857",
+                x: "127.28775790295296",
+                y: "36.62102674811619",
+                distance: ""
+            ),
+            KakaoPlace(
+                id: "23774540",
+                categoryGroupCode: "",
+                categoryGroupName: "",
+                categoryName: "교통,수송 > 입출구",
+                addressName: "서울 마포구 서교동 338-19",
+                roadAddressName: "",
+                placeName: "홍익대학교 서울캠퍼스 정문",
+                phoneNum: "",
+                placeURL: "http://place.map.kakao.com/23774540",
+                x: "126.92443913897051",
+                y: "37.55275180872968",
+                distance: ""
+            ),
+            KakaoPlace(
+                id: "26874803",
+                categoryGroupCode: "FD6",
+                categoryGroupName: "음식점",
+                categoryName: "음식점 > 한식 > 육류,고기 > 닭요리",
+                addressName: "서울 마포구 서교동 333-13",
+                roadAddressName: "서울 마포구 와우산로29라길 20",
+                placeName: "홍익닭한마리 홍대본점",
+                phoneNum: "02-322-7523",
+                placeURL: "http://place.map.kakao.com/26874803",
+                x: "126.926817973835",
+                y: "37.5550490491891",
+                distance: ""
+            )
+        ],
+        meta: KakaoPlaceSearchMeta(
+            isEnd: false,
+            pageableCount: 45,
+            totalCount: 3106,
+            sameName: SameName(keyword: "홍익대학교", region: [], selectedRegion: "")
+        )
+    )
+}
+#endif

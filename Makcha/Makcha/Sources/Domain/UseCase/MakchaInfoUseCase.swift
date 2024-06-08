@@ -25,7 +25,7 @@ final class MakchaInfoUseCase {
     private let timerEvent = PublishRelay<Void>() // 실시간 도착 정보 타이머 이벤트
     
     let makchaSectionModel = PublishSubject<(startTimeStr: String, makchaCellData: [MakchaCellData])>() // 컬렉션뷰 바인딩을 위한 SectionModel에 전달할 데이터
-    let startPoint = BehaviorRelay<EndPoint>(value: mockStartPoint) // 출발지 정보 // TODO: - 기본값 지정하기
+    let startPoint = BehaviorRelay<EndPoint>(value: EndPoint.mockStartPoint) // 출발지 정보 // TODO: - 기본값 지정하기
     let destinationPoint: BehaviorRelay<EndPoint> // 도착지 정보
     let searchedEndPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 주소들
     
@@ -37,7 +37,7 @@ final class MakchaInfoUseCase {
         self.endPointRepository = endPointRepository
         
         // TODO: 사용자가 설정한 기본 목적지로 초기화하기
-        let destionationCoordinate = mockDestinationPoint
+        let destionationCoordinate = EndPoint.mockDestinationPoint
         destinationPoint = BehaviorRelay<EndPoint>(value: destionationCoordinate)
         
         subscribeTimer()
