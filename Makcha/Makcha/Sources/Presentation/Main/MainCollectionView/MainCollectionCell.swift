@@ -133,12 +133,34 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
             /// BottomContents
             $0.addItem().define {
                 let pathContentsHeight: CGFloat = 66
+                let startColor = UIColor.cf(.grayScale(.white))
+                let endColor = UIColor.cf(.grayScale(.white)).withAlphaComponent(0)
+                let leftGradientView = GradientView()
+                leftGradientView.setGradientColors([startColor, endColor])
+                leftGradientView.setGradientDirection(
+                    startPoint: .init(x: 0, y: 0),
+                    endPoint: .init(x: 1, y: 0)
+                )
+                
+                let rightGradientView = GradientView()
+                rightGradientView.setGradientColors([startColor, endColor])
+                rightGradientView.setGradientDirection(
+                    startPoint: .init(x: 1, y: 0),
+                    endPoint: .init(x: 0, y: 0)
+                )
+                
                 $0.addItem(pathScrollView).direction(.row).define {
                     $0.addItem(pathsContentView)
                 }
                 .minHeight(pathContentsHeight)
                 .marginBottom(12)
-                layoutGradientDecorationContainer($0, height: pathContentsHeight)
+                $0.addItem(leftGradientView)
+                    .position(.absolute)
+                    .width(24).height(pathContentsHeight)
+                $0.addItem(rightGradientView)
+                    .position(.absolute)
+                    .width(24).height(pathContentsHeight)
+                    .right(0)
             }
             .width(100%)
             .position(.absolute).bottom(0)
@@ -225,11 +247,14 @@ extension MainCollectionCell {
     // MARK: 들어오는 경로 데이터에 따라 다르게 뷰를 그리기 위한 메서드
     private func layoutPathInfo(with subPaths:[MakchaSubPath]) -> UIView {
         let rootView = UIView()
+        // 1. 경로의 전체 길이를 구한다.
         let totalDistance = subPaths.map { CGFloat($0.distance) }.reduce(0) { $0 + $1 }
         
         rootView.flex.direction(.row).define {
             for subPath in subPaths {
                 let isLastPath = subPath.idx == subPaths.count - 1
+                // 2. (패스 길이 / 전체 길이 == 패스비율) * (스크린 사이즈 * 1.25) or 24(최소 아이콘 사이즈 길이 보장)
+                // 패스 길이 비율에 따라 뷰를 그린다. -> 전체적인 뷰의 비율 보장
                 let distanceForUI = max(CGFloat(subPath.distance) / totalDistance * UIScreen.main.bounds.width * 1.25, 24)
                 let subPathType = subPath.subPathType
                 
@@ -267,31 +292,6 @@ extension MainCollectionCell {
 
 // MARK: 하위 뷰 작성하는 코드가 길어져서 분리
 extension MainCollectionCell {
-    private func layoutGradientDecorationContainer(_ :Flex, height: CGFloat) {
-        let startColor = UIColor.cf(.grayScale(.white))
-        let endColor = UIColor.cf(.grayScale(.white)).withAlphaComponent(0)
-        let leftGradientView = GradientView()
-        leftGradientView.setGradientColors([startColor, endColor])
-        leftGradientView.setGradientDirection(
-            startPoint: .init(x: 0, y: 0),
-            endPoint: .init(x: 1, y: 0)
-        )
-        
-        let rightGradientView = GradientView()
-        rightGradientView.setGradientColors([startColor, endColor])
-        rightGradientView.setGradientDirection(
-            startPoint: .init(x: 1, y: 0),
-            endPoint: .init(x: 0, y: 0)
-        )
-        flex.addItem(leftGradientView)
-            .position(.absolute)
-            .width(24).height(height)
-        flex.addItem(rightGradientView)
-            .position(.absolute)
-            .width(24).height(height)
-            .right(0)
-    }
-    
     private func layoutTopContentsContainer(_ text: String) {
         estimatedTimeOfArrivalLabel.text = text
         estimatedTimeOfArrivalLabel.flex.markDirty()

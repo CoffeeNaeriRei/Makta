@@ -177,8 +177,8 @@ extension SearchPathView {
         setNeedsLayout()
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
             self.searchButton.flex.backgroundColor(detent == .large ? .cf(.primaryScale(.primary(.medium))) : .clear)
-            self.flex.markDirty()
-            self.layoutIfNeeded()
+            self.searchButton.flex.markDirty()
+            self.searchButton.layoutIfNeeded()
         }
     }
 }
