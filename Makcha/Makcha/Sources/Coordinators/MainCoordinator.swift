@@ -21,10 +21,13 @@ final class MainCoordinator: BaseCoordinator {
     override func start() {
         super.start()
         
+        let apiService = APIService()
+        let locationService = LocationService()
+        
         let vm = MainViewModel(
             MakchaInfoUseCase(
-                TransPathRepository(APIService()),
-                EndPointRepository(LocationService())
+                TransPathRepository(apiService),
+                EndPointRepository(locationService, apiService)
             )
         )
         vm.navigation = self

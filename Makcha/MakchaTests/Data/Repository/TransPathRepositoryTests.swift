@@ -17,6 +17,8 @@ struct MockAPIService: APIServiceInterface {
     var mockTransPathResult: Result<TransPathDTO, APIServiceError>?
     var mockSeoulRealtimeSubwayResult: Result<SeoulRealtimeSubwayDTO, APIServiceError>?
     var mockSeoulRealtimeBusStationResult: Result<SeoulRealtimeBusStationDTO, APIServiceError>?
+    var mockKakaoPlaceSearchResult: Result<KakaoPlaceSearchResultDTO, APIServiceError>?
+    var mockKakaoReverseGeocodingResult: Result<KakaoReverseGeocodingResultDTO, APIServiceError>?
     
     func fetchTransPathData(
         start: Makcha.XYCoordinate,
@@ -33,9 +35,26 @@ struct MockAPIService: APIServiceInterface {
         completion(mockSeoulRealtimeSubwayResult!)
     }
     
-    func fetchSeoulRealtimeBusStationInfo(arsID: String, completion: @escaping (Result<SeoulRealtimeBusStationDTO, APIServiceError>) -> Void
+    func fetchSeoulRealtimeBusStationInfo(
+        arsID: String,
+        completion: @escaping (Result<SeoulRealtimeBusStationDTO, APIServiceError>) -> Void
     ) {
         completion(mockSeoulRealtimeBusStationResult!)
+    }
+    
+    func fetchKakaoPlaceSearchResult(
+        placeKeyword: String,
+        completion: @escaping (Result<KakaoPlaceSearchResultDTO, APIServiceError>) -> Void
+    ) {
+        completion(mockKakaoPlaceSearchResult!)
+    }
+    
+    func fetchKakaoReverseGeocodingResult(
+        lonX: String,
+        latY: String,
+        completion: @escaping (Result<KakaoReverseGeocodingResultDTO, APIServiceError>) -> Void
+    ) {
+        completion(mockKakaoReverseGeocodingResult!)
     }
 }
 
@@ -60,7 +79,7 @@ final class TransPathRepositoryTests: XCTestCase {
     
     func test_정상적인_TransPathDTO_객체를_받았을때_convertTransPathDTOToMakchaInfo가_제대로_변환을_수행하는지_확인() {
         // Given
-        let givenTransPathDTO = mockTransPathDTO
+        let givenTransPathDTO = TransPathDTO.mockDTO
         var result: MakchaInfo?
         
         // When
@@ -72,7 +91,7 @@ final class TransPathRepositoryTests: XCTestCase {
     
     func test_getAllMakchaTransPath이_정상적으로_이벤트를_방출하는지_확인() {
         // Given
-        let mockApiSuccess: Result<TransPathDTO, APIServiceError>? = .success(mockTransPathDTO)
+        let mockApiSuccess: Result<TransPathDTO, APIServiceError>? = .success(TransPathDTO.mockDTO)
         sut = TransPathRepository(MockAPIService(mockTransPathResult: mockApiSuccess))
         let makchaInfoObserver = scheduler.createObserver(MakchaInfo.self) // 결과값을 관찰하기 위한 Observer
         

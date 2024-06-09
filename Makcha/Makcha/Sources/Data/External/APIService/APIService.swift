@@ -24,6 +24,15 @@ protocol APIServiceInterface {
         arsID: String,
         completion: @escaping (Result<SeoulRealtimeBusStationDTO, APIServiceError>) -> Void
     )
+    func fetchKakaoPlaceSearchResult(
+        placeKeyword: String,
+        completion: @escaping (Result<KakaoPlaceSearchResultDTO, APIServiceError>) -> Void
+    )
+    func fetchKakaoReverseGeocodingResult(
+        lonX: String,
+        latY: String,
+        completion: @escaping (Result<KakaoReverseGeocodingResultDTO, APIServiceError>) -> Void
+    )
 }
 
 // MARK: - APIService 정의
@@ -107,6 +116,69 @@ struct APIService: APIServiceInterface {
             completion(.success(seoulRealtimeBusStationDTO))
         }.resume()
     }
+    
+    // 카카오 로컬 - 키워드로 장소 검색하기 API 요청
+    func fetchKakaoPlaceSearchResult(
+        placeKeyword: String,
+        completion: @escaping (Result<KakaoPlaceSearchResultDTO, APIServiceError>) -> Void
+    ) {
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_LOCAL_API") as? String,
+              let kakaoPlaceSearchURL = makeKakaoPlaceSearchURL(keyword: placeKeyword),
+              let url = URL(string: kakaoPlaceSearchURL) else {
+            completion(.failure(APIServiceError.invalidURL))
+            return
+        }
+        // 헤더 구성
+        var requestURL = URLRequest(url: url)
+        requestURL.addValue("KakaoAK \(apiKey)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            if error != nil {
+                completion(.failure(APIServiceError.requestFail))
+            }
+            guard let data = data else {
+                completion(.failure(APIServiceError.noData))
+                return
+            }
+            guard let kakaoPlaceSearchResultDTO = try? JSONDecoder().decode(KakaoPlaceSearchResultDTO.self, from: data) else {
+                completion(.failure(APIServiceError.decodingError))
+                return
+            }
+            completion(.success(kakaoPlaceSearchResultDTO))
+        }.resume()
+    }
+    
+    // 카카오 로컬 - 좌표로 주소 변환하기 API 요청
+    func fetchKakaoReverseGeocodingResult(
+        lonX: String,
+        latY: String,
+        completion: @escaping (Result<KakaoReverseGeocodingResultDTO, APIServiceError>) -> Void
+    ) {
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_LOCAL_API") as? String,
+              let kakaoReverseGeocodingURL = makeKakaoReverseGeocodingURL(lonX: lonX, latY: latY),
+              let url = URL(string: kakaoReverseGeocodingURL) else {
+            completion(.failure(APIServiceError.invalidURL))
+            return
+        }
+        // 헤더 구성
+        var requestURL = URLRequest(url: url)
+        requestURL.addValue("KakaoAK \(apiKey)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            if error != nil {
+                completion(.failure(APIServiceError.requestFail))
+            }
+            guard let data = data else {
+                completion(.failure(APIServiceError.noData))
+                return
+            }
+            guard let kakaoReverseGeocodingResultDTO = try? JSONDecoder().decode(KakaoReverseGeocodingResultDTO.self, from: data) else {
+                completion(.failure(APIServiceError.decodingError))
+                return
+            }
+            completion(.success(kakaoReverseGeocodingResultDTO))
+        }.resume()
+    }
 }
 
 extension APIService {
@@ -151,9 +223,8 @@ extension APIService {
     }
     
     // [서울특별시 정류소정보조회 API] 요청 URL 생성
-    func makeSeoulRealtimeBusStationURL(
-        arsID: String // 정류소고유번호
-    ) -> String? {
+    /// arsID: 정류소고유번호
+    func makeSeoulRealtimeBusStationURL(arsID: String) -> String? {
         guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "REALTIME_BUS_STATION_API") as? String else {
             return nil
         }
@@ -163,5 +234,30 @@ extension APIService {
         seoulRealtimeBusStationURL += "&resultType=json"
         
         return seoulRealtimeBusStationURL
+    }
+    
+    // [카카오 로컬 API - 키워드로 장소 검색하기] 요청 URL 생성
+    func makeKakaoPlaceSearchURL(
+        keyword placeKeywordQuery: String, // 검색 질의어
+        page: Int = 1, // 결과 페이지 번호
+        size: Int = 15 // 한 페이지에 보여질 문서 개수
+    ) -> String? {
+        var kakaoPlaceSearchURL = "https://dapi.kakao.com/v2/local/search/"
+        kakaoPlaceSearchURL += "keyword.json"
+        kakaoPlaceSearchURL += "?query=\(placeKeywordQuery)"
+        kakaoPlaceSearchURL += "&page=\(page)"
+        kakaoPlaceSearchURL += "&size=\(size)"
+        
+        return kakaoPlaceSearchURL
+    }
+    
+    // [카카오 로컬 API - 좌표로 주소 변환하기] 요청 URL 생성
+    private func makeKakaoReverseGeocodingURL(lonX: String, latY: String) -> String? {
+        var kakaoReverseGeocodingURL = "https://dapi.kakao.com/v2/local/geo/"
+        kakaoReverseGeocodingURL += "coord2address.json"
+        kakaoReverseGeocodingURL += "?x=\(lonX)"
+        kakaoReverseGeocodingURL += "&y=\(latY)"
+        
+        return kakaoReverseGeocodingURL
     }
 }

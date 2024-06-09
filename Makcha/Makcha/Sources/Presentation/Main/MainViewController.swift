@@ -138,7 +138,7 @@ struct MainViewController_Previews: PreviewProvider {
                     MainViewModel(
                         MakchaInfoUseCase(
                             TransPathRepository(APIService()),
-                            EndPointRepository(LocationService())
+                            EndPointRepository(LocationService(), APIService())
                         )
                     )
                 )

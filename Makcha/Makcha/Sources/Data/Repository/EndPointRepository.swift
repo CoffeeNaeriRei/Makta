@@ -14,9 +14,11 @@ import RxSwift
 
 final class EndPointRepository: EndPointRepositoryProtocol {
     private let locationService: LocationServiceInterface
+    private let apiService: APIServiceInterface
     
-    init(_ locationService: LocationServiceInterface) {
+    init(_ locationService: LocationServiceInterface, _ apiService: APIServiceInterface) {
         self.locationService = locationService
+        self.apiService = apiService
     }
     
     // 현재 위치의 좌표를 불러와서 EndPoint 값으로 반환
@@ -34,23 +36,57 @@ final class EndPointRepository: EndPointRepositoryProtocol {
                 }
                 print("[LocationService] - ✅ 위치 불러오기 성공")
                 
-                let lon = location.coordinate.longitude
-                let lat = location.coordinate.latitude
+                let lon = String(location.coordinate.longitude)
+                let lat = String(location.coordinate.latitude)
                 // 경/위도 -> 주소 변환
-                self.locationService.convertCoordinateToAddress(lon: lon, lat: lat) { addressStr in
-                    
-                    var nameStr = ""
-                    if let addressStr = addressStr {
-                        print("[LocationService] - ✅ 좌표→주소 변환 성공")
-                        nameStr = addressStr
-                    } else {
-                        print("[LocationService] - ❌ 좌표→주소 변환 실패")
-                        nameStr = "\(lat.description),\(lon.description) (좌표변환 실패)"
+                self.apiService.fetchKakaoReverseGeocodingResult(lonX: lon, latY: lat) { result in
+                    switch result {
+                    case .success(let kakaoReverseGeocodingResultDTO):
+                        print("[APIService] - ✅ fetchKakaoReverseGeocodingResult() 호출 성공!!")
+                        guard let addressInfo = kakaoReverseGeocodingResultDTO.results.first else {
+                            print("리버스 지오코딩 실패")
+                            emitter.onError(APIServiceError.noData)
+                            return
+                        }
+                        let endPoint = EndPoint(
+                            addressName: addressInfo.address.addressName,
+                            roadAddressName: addressInfo.roadAddress?.addressName,
+                            coordinate: (lon, lat)
+                        )
+                        emitter.onNext(endPoint)
+                        emitter.onCompleted()
+                    case .failure(let error):
+                        print("[APIService] - ❌ fetchKakaoReverseGeocodingResult() 호출 실패 \(error.localizedDescription)")
+                        emitter.onError(error)
                     }
-                    
-                    let endPoint = EndPoint(name: nameStr, coordinate: (lon.description, lat.description))
-                    emitter.onNext(endPoint)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    // 키워드로 검색된 장소들을 EndPoint의 배열로 반환
+    func getSearchedAddresses(searchKeyword: String) -> Observable<[EndPoint]> {
+        return Observable.create { emitter in
+            self.apiService.fetchKakaoPlaceSearchResult(placeKeyword: searchKeyword) { result in
+                switch result {
+                case .success(let kakaoPlaceSearchResultDTO):
+                    print("[APIService] - ✅ fetchKakaoPlaceSearchResult() 호출 성공!!")
+                    var searchedAddressArr = [EndPoint]()
+                    for kakaoPlace in kakaoPlaceSearchResultDTO.places {
+                        let searchedAddress = EndPoint(
+                            name: kakaoPlace.placeName,
+                            addressName: kakaoPlace.addressName,
+                            roadAddressName: kakaoPlace.roadAddressName,
+                            coordinate: (kakaoPlace.x, kakaoPlace.y)
+                        )
+                        searchedAddressArr.append(searchedAddress)
+                    }
+                    emitter.onNext(searchedAddressArr)
                     emitter.onCompleted()
+                case .failure(let error):
+                    print("[APIService] - ❌ fetchKakaoPlaceSearchResult() 호출 실패 \(error.localizedDescription)")
+                    emitter.onError(error)
                 }
             }
             return Disposables.create()

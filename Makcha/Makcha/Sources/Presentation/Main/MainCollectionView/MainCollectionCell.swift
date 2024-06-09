@@ -537,7 +537,7 @@ extension MainCollectionCell {
 struct MainCollectionCell_Preview: PreviewProvider {
     static var previews: some View {
         let cell = MainCollectionCell()
-        let data: MakchaCellData = (mockMakchaInfo.makchaPaths.last!, (ArrivalStatus.arriveSoon, ArrivalStatus.arriveSoon))
+        let data: MakchaCellData = (MakchaInfo.mockMakchaInfo.makchaPaths.last!, (ArrivalStatus.arriveSoon, ArrivalStatus.arriveSoon))
         ViewPreview {
             cell.configure(with: data)
             return cell

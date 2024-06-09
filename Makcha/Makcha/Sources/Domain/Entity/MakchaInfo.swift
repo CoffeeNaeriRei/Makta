@@ -135,200 +135,201 @@ struct PassStation: Equatable {
 
 #if DEBUG
 // MARK: - Mock
-
-let mockMakchaInfo = MakchaInfo(
-    startTime: Date(),
-    makchaPaths: [
-        MakchaPath(
-            fastest: true,
-            makchaPathType: .subway,
-            arrivalTime: Date().timeAfterMinute(after: 62),
-            totalTime: 62,
-            subPath: [
-                MakchaSubPath(
-                    idx: 0,
-                    subPathType: .walk,
-                    distance: 498,
-                    time: 7
-                ),
-                MakchaSubPath(
-                    idx: 1,
-                    subPathType: .subway,
-                    distance: 8400,
-                    time: 15,
-                    stationCount: 7,
-                    lane: [
-                        LaneInfo(name: "수도권 3호선", subwayCode: .수도권3호선)
-                    ],
-                    startName: "불광",
-                    endName: "종로3가",
-                    stations: [
-                        PassStation(index: 0,name: "불광"),
-                        PassStation(index: 1,name: "녹번"),
-                        PassStation(index: 2,name: "홍제"),
-                        PassStation(index: 3,name: "무악재"),
-                        PassStation(index: 4,name: "독립문"),
-                        PassStation(index: 5,name: "경복궁"),
-                        PassStation(index: 6,name: "안국"),
-                        PassStation(index: 7,name: "종로3가")
-                    ],
-                    way: "종로3가",
-                    wayCode: 2
-                ),
-                MakchaSubPath(
-                    idx: 2,
-                    subPathType: .walk,
-                    distance: 0,
-                    time: 0
-                ),
-                MakchaSubPath(
-                    idx: 3,
-                    subPathType: .subway,
-                    distance: 19500,
-                    time: 37,
-                    stationCount: 18,
-                    lane: [
-                        LaneInfo(name: "수도권 5호선", subwayCode: .수도권5호선)
-                    ],
-                    startName: "종로3가",
-                    endName: "오금",
-                    stations: [
-                        PassStation(index: 0, name: "종로3가"),
-                        PassStation(index: 1, name: "을지로4가"),
-                        PassStation(index: 2, name: "동대문역사문화공원"),
-                        PassStation(index: 3, name: "청구"),
-                        PassStation(index: 4, name: "신금호"),
-                        PassStation(index: 5, name: "행당"),
-                        PassStation(index: 6, name: "왕십리"),
-                        PassStation(index: 7, name: "마장"),
-                        PassStation(index: 8, name: "답십리"),
-                        PassStation(index: 9, name: "장한평"),
-                        PassStation(index: 10, name: "군자"),
-                        PassStation(index: 11, name: "아차산"),
-                        PassStation(index: 12, name: "광나루"),
-                        PassStation(index: 13, name: "천호"),
-                        PassStation(index: 14, name: "강동"),
-                        PassStation(index: 15, name: "둔촌동"),
-                        PassStation(index: 16, name: "올림픽공원"),
-                        PassStation(index: 17, name: "방이"),
-                        PassStation(index: 18, name: "오금")
-                    ],
-                    way: "오금",
-                    wayCode: 2
-                ),
-                MakchaSubPath(
-                    idx: 4,
-                    subPathType: .walk,
-                    distance: 221,
-                    time: 3
-                )
-            ]
-        ),
-        MakchaPath(
-            fastest: false,
-            makchaPathType: .both,
-            arrivalTime: Date().timeAfterMinute(after: 71),
-            totalTime: 71,
-            subPath: [
-                MakchaSubPath(
-                    idx: 0,
-                    subPathType: .walk,
-                    distance: 191,
-                    time: 3
-                ),
-                MakchaSubPath(
-                    idx: 1,
-                    subPathType: .bus,
-                    distance: 6461,
-                    time: 23,
-                    stationCount: 12,
-                    lane: [
-                        LaneInfo(
-                            name: "720",
-                            busRouteID: "100100111",
-                            busRouteType: .간선
-                        ),
-                        LaneInfo(
-                            name: "741",
-                            busRouteID: "123000010",
-                            busRouteType: .간선
-                        ),
-                        LaneInfo(
-                            name: "705",
-                            busRouteID: "100100587",
-                            busRouteType: .간선
-                        )
-                    ],
-                    startName: "불광역3.6호선",
-                    endName: "서대문역사거리.농협중앙회",
-                    stations: [
-                        PassStation(index: 0, name: "불광역3.6호선"),
-                        PassStation(index: 1, name: "불광역3호선.서울혁신파크"),
-                        PassStation(index: 2, name: "한전성서지사.북한산푸르지오"),
-                        PassStation(index: 3, name: "녹번역"),
-                        PassStation(index: 4, name: "산골고개"),
-                        PassStation(index: 5, name: "홍제역.서대문세무서"),
-                        PassStation(index: 6, name: "홍제삼거리.인왕산한신휴플러스"),
-                        PassStation(index: 7, name: "무악재역"),
-                        PassStation(index: 8, name: "안산초등학교"),
-                        PassStation(index: 9, name: "독립문역.한성과학고"),
-                        PassStation(index: 10, name: "영천시장"),
-                        PassStation(index: 11, name: "금화초등학교.서울시교육청"),
-                        PassStation(index: 12, name: "서대문역사거리.농협중앙회")
-                    ],
-                    startArsID: "12-022"
-                ),
-                MakchaSubPath(
-                    idx: 2,
-                    subPathType: .walk,
-                    distance: 155,
-                    time: 2
-                ),
-                MakchaSubPath(
-                    idx: 3,
-                    subPathType: .subway,
-                    distance: 21800,
-                    time: 40,
-                    stationCount: 20,
-                    lane: [
-                        LaneInfo(name: "수도권 5호선", subwayCode: .수도권5호선)
-                    ],
-                    startName: "서대문",
-                    endName: "오금",
-                    stations: [
-                        PassStation(index: 0, name: "서대문"),
-                        PassStation(index: 1, name: "광화문"),
-                        PassStation(index: 2, name: "종로3가"),
-                        PassStation(index: 3, name: "을지로4가"),
-                        PassStation(index: 4, name: "동대문역사문화공원"),
-                        PassStation(index: 5, name: "청구"),
-                        PassStation(index: 6, name: "신금호"),
-                        PassStation(index: 7, name: "행당"),
-                        PassStation(index: 8, name: "왕십리"),
-                        PassStation(index: 9, name: "마장"),
-                        PassStation(index: 10, name: "답십리"),
-                        PassStation(index: 11, name: "장한평"),
-                        PassStation(index: 12, name: "군자"),
-                        PassStation(index: 13, name: "아차산"),
-                        PassStation(index: 14, name: "광나루"),
-                        PassStation(index: 15, name: "천호"),
-                        PassStation(index: 16, name: "강동"),
-                        PassStation(index: 17, name: "둔촌동"),
-                        PassStation(index: 18, name: "올림픽공원"),
-                        PassStation(index: 19, name: "방이"),
-                        PassStation(index: 20, name: "오금")
-                    ],
-                    way: "오금",
-                    wayCode: 2
-                ),
-                MakchaSubPath(
-                    idx: 4,
-                    subPathType: .walk,
-                    distance: 221,
-                    time: 3
-                )
-            ]
-        )
-    ]
-)
+extension MakchaInfo {
+    static let mockMakchaInfo = MakchaInfo(
+        startTime: Date(),
+        makchaPaths: [
+            MakchaPath(
+                fastest: true,
+                makchaPathType: .subway,
+                arrivalTime: Date().timeAfterMinute(after: 62),
+                totalTime: 62,
+                subPath: [
+                    MakchaSubPath(
+                        idx: 0,
+                        subPathType: .walk,
+                        distance: 498,
+                        time: 7
+                    ),
+                    MakchaSubPath(
+                        idx: 1,
+                        subPathType: .subway,
+                        distance: 8400,
+                        time: 15,
+                        stationCount: 7,
+                        lane: [
+                            LaneInfo(name: "수도권 3호선", subwayCode: .수도권3호선)
+                        ],
+                        startName: "불광",
+                        endName: "종로3가",
+                        stations: [
+                            PassStation(index: 0,name: "불광"),
+                            PassStation(index: 1,name: "녹번"),
+                            PassStation(index: 2,name: "홍제"),
+                            PassStation(index: 3,name: "무악재"),
+                            PassStation(index: 4,name: "독립문"),
+                            PassStation(index: 5,name: "경복궁"),
+                            PassStation(index: 6,name: "안국"),
+                            PassStation(index: 7,name: "종로3가")
+                        ],
+                        way: "종로3가",
+                        wayCode: 2
+                    ),
+                    MakchaSubPath(
+                        idx: 2,
+                        subPathType: .walk,
+                        distance: 0,
+                        time: 0
+                    ),
+                    MakchaSubPath(
+                        idx: 3,
+                        subPathType: .subway,
+                        distance: 19500,
+                        time: 37,
+                        stationCount: 18,
+                        lane: [
+                            LaneInfo(name: "수도권 5호선", subwayCode: .수도권5호선)
+                        ],
+                        startName: "종로3가",
+                        endName: "오금",
+                        stations: [
+                            PassStation(index: 0, name: "종로3가"),
+                            PassStation(index: 1, name: "을지로4가"),
+                            PassStation(index: 2, name: "동대문역사문화공원"),
+                            PassStation(index: 3, name: "청구"),
+                            PassStation(index: 4, name: "신금호"),
+                            PassStation(index: 5, name: "행당"),
+                            PassStation(index: 6, name: "왕십리"),
+                            PassStation(index: 7, name: "마장"),
+                            PassStation(index: 8, name: "답십리"),
+                            PassStation(index: 9, name: "장한평"),
+                            PassStation(index: 10, name: "군자"),
+                            PassStation(index: 11, name: "아차산"),
+                            PassStation(index: 12, name: "광나루"),
+                            PassStation(index: 13, name: "천호"),
+                            PassStation(index: 14, name: "강동"),
+                            PassStation(index: 15, name: "둔촌동"),
+                            PassStation(index: 16, name: "올림픽공원"),
+                            PassStation(index: 17, name: "방이"),
+                            PassStation(index: 18, name: "오금")
+                        ],
+                        way: "오금",
+                        wayCode: 2
+                    ),
+                    MakchaSubPath(
+                        idx: 4,
+                        subPathType: .walk,
+                        distance: 221,
+                        time: 3
+                    )
+                ]
+            ),
+            MakchaPath(
+                fastest: false,
+                makchaPathType: .both,
+                arrivalTime: Date().timeAfterMinute(after: 71),
+                totalTime: 71,
+                subPath: [
+                    MakchaSubPath(
+                        idx: 0,
+                        subPathType: .walk,
+                        distance: 191,
+                        time: 3
+                    ),
+                    MakchaSubPath(
+                        idx: 1,
+                        subPathType: .bus,
+                        distance: 6461,
+                        time: 23,
+                        stationCount: 12,
+                        lane: [
+                            LaneInfo(
+                                name: "720",
+                                busRouteID: "100100111",
+                                busRouteType: .간선
+                            ),
+                            LaneInfo(
+                                name: "741",
+                                busRouteID: "123000010",
+                                busRouteType: .간선
+                            ),
+                            LaneInfo(
+                                name: "705",
+                                busRouteID: "100100587",
+                                busRouteType: .간선
+                            )
+                        ],
+                        startName: "불광역3.6호선",
+                        endName: "서대문역사거리.농협중앙회",
+                        stations: [
+                            PassStation(index: 0, name: "불광역3.6호선"),
+                            PassStation(index: 1, name: "불광역3호선.서울혁신파크"),
+                            PassStation(index: 2, name: "한전성서지사.북한산푸르지오"),
+                            PassStation(index: 3, name: "녹번역"),
+                            PassStation(index: 4, name: "산골고개"),
+                            PassStation(index: 5, name: "홍제역.서대문세무서"),
+                            PassStation(index: 6, name: "홍제삼거리.인왕산한신휴플러스"),
+                            PassStation(index: 7, name: "무악재역"),
+                            PassStation(index: 8, name: "안산초등학교"),
+                            PassStation(index: 9, name: "독립문역.한성과학고"),
+                            PassStation(index: 10, name: "영천시장"),
+                            PassStation(index: 11, name: "금화초등학교.서울시교육청"),
+                            PassStation(index: 12, name: "서대문역사거리.농협중앙회")
+                        ],
+                        startArsID: "12-022"
+                    ),
+                    MakchaSubPath(
+                        idx: 2,
+                        subPathType: .walk,
+                        distance: 155,
+                        time: 2
+                    ),
+                    MakchaSubPath(
+                        idx: 3,
+                        subPathType: .subway,
+                        distance: 21800,
+                        time: 40,
+                        stationCount: 20,
+                        lane: [
+                            LaneInfo(name: "수도권 5호선", subwayCode: .수도권5호선)
+                        ],
+                        startName: "서대문",
+                        endName: "오금",
+                        stations: [
+                            PassStation(index: 0, name: "서대문"),
+                            PassStation(index: 1, name: "광화문"),
+                            PassStation(index: 2, name: "종로3가"),
+                            PassStation(index: 3, name: "을지로4가"),
+                            PassStation(index: 4, name: "동대문역사문화공원"),
+                            PassStation(index: 5, name: "청구"),
+                            PassStation(index: 6, name: "신금호"),
+                            PassStation(index: 7, name: "행당"),
+                            PassStation(index: 8, name: "왕십리"),
+                            PassStation(index: 9, name: "마장"),
+                            PassStation(index: 10, name: "답십리"),
+                            PassStation(index: 11, name: "장한평"),
+                            PassStation(index: 12, name: "군자"),
+                            PassStation(index: 13, name: "아차산"),
+                            PassStation(index: 14, name: "광나루"),
+                            PassStation(index: 15, name: "천호"),
+                            PassStation(index: 16, name: "강동"),
+                            PassStation(index: 17, name: "둔촌동"),
+                            PassStation(index: 18, name: "올림픽공원"),
+                            PassStation(index: 19, name: "방이"),
+                            PassStation(index: 20, name: "오금")
+                        ],
+                        way: "오금",
+                        wayCode: 2
+                    ),
+                    MakchaSubPath(
+                        idx: 4,
+                        subPathType: .walk,
+                        distance: 221,
+                        time: 3
+                    )
+                ]
+            )
+        ]
+    )
+}
 #endif
