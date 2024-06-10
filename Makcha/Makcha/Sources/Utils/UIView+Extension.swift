@@ -142,7 +142,7 @@ final class CustomUITextField: UITextField {
     private func focus() {
         layer.borderColor = UIColor.cf(.colorScale(.royalBlue(.medium))).cgColor
         layer.borderWidth = 1.0
-        layer.shadowColor = UIColor.cf(.colorScale(.royalBlue(.medium))).cgColor
+//        layer.shadowColor = UIColor.cf(.colorScale(.royalBlue(.medium))).cgColor
 //        self.layer.shadowOffset = CGSize(width: 0, height: 2)
 //        self.layer.shadowOpacity = 0.8
 //        self.layer.shadowRadius = 4.0
@@ -151,7 +151,7 @@ final class CustomUITextField: UITextField {
     private func unfocus() {
         layer.borderColor = UIColor.clear.cgColor
         layer.borderWidth = .zero
-        layer.shadowColor = UIColor.clear.cgColor
+//        layer.shadowColor = UIColor.clear.cgColor
 //        self.layer.shadowOffset = CGSize.zero
 //        self.layer.shadowOpacity = 0.0
 //        self.layer.shadowRadius = 0.0

@@ -129,16 +129,20 @@ extension MainViewController {
         mainViewModel.showSheet(185 - self.mainView.safeAreaInsets.bottom, with: mainViewModel)
     }
 }
+
 #if DEBUG
 struct MainViewController_Previews: PreviewProvider {
     static var previews: some View {
         ViewControllerPreview {
-            UINavigationController(
+            let apiService = APIService()
+            let locationService = LocationService()
+            
+            return UINavigationController(
                 rootViewController: MainViewController(
                     MainViewModel(
                         MakchaInfoUseCase(
-                            TransPathRepository(APIService()),
-                            EndPointRepository(LocationService(), APIService())
+                            TransPathRepository(apiService),
+                            EndPointRepository(locationService, apiService)
                         )
                     )
                 )

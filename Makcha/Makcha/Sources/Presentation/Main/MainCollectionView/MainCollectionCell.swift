@@ -31,7 +31,7 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
         attributedText: .pretendard("NN:NN", scale: .title),
         textColor: .cf(.grayScale(.gray800))
     )
-    
+
     // 자세히 보기 버튼: 생성 버튼과정이 길어서, 추후 Factory 패턴으로 코드 분리할 예정
     let navigationToDetailsButton: UIButton = {
         let button = UIButton()

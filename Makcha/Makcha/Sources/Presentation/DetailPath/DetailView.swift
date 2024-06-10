@@ -16,6 +16,7 @@ import PinLayout
 final class DetailView: UIView {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
+    private let subPathContainer = UIView()
     
     private let pathTypelabel = UILabelFactory.build(
         attributedText: .pretendard("경로 종류", scale: .body, weight: .semiBold),
@@ -49,7 +50,7 @@ final class DetailView: UIView {
         attributedText: .pretendard("도착 예정", scale: .caption),
         textColor: .cf(.grayScale(.gray600))
     )
-
+    
     private let centerContentsTopContainer = UIView()
     private let nextArrivalTransportTimeContainer = UIView()
     
@@ -100,19 +101,29 @@ final class DetailView: UIView {
                     }
                 }
                 .position(.absolute).top(64)
-                /// BottomLine
-                $0.addItem()
-                    .width(100%).height(.cfStroke(.xsmall))
-                    .backgroundColor(.cf(.grayScale(.gray200)))
             }
             .backgroundColor(.cf(.grayScale(.white)))
-            .border(1, .green)
             .height(160)
-            for _ in 0...20 {
-                $0.addItem()
-                    .height(120)
-                    .border(1, .red)
+            /// 상세 경로 정보
+            let detailContainer = DottedLineView()
+            detailContainer.lineColor = .cf(.grayScale(.gray200))
+            detailContainer.lineWidth = 1
+            detailContainer.position = .top
+            
+            $0.addItem().gap(8).define {
+                let titleLabel = UILabelFactory.build(text: "경로 정보", textAlignment: .left)
+                // headerContainer
+                $0.addItem(detailContainer).define {
+                    $0.addItem(titleLabel)
+                }
+                .padding(16, 24, 12)
+                // SubPathContainer
+                $0.addItem(subPathContainer).define {
+                    $0.addItem()
+                }
             }
+            .backgroundColor(.cf(.grayScale(.gray100)).withAlphaComponent(0.8))
+            
         }
         .border(1, .blue)
     }
@@ -128,13 +139,30 @@ final class DetailView: UIView {
 extension DetailView {
     func configure(data: MakchaCellData) {
         
+        subPathContainer.flex.define {
+            for subPath in data.makchaPath.subPath {
+                $0.addItem(
+                    DetailSubPathView(
+                        subPath: subPath,
+                        totalTime: data.makchaPath.totalTime
+                    )
+                )
+            }
+        }
+        subPathContainer.flex.markDirty()
     }
 }
 
+#if DEBUG
 struct DetailView_Preview: PreviewProvider {
     static var previews: some View {
         ViewPreview {
-            DetailView()
+            let makchaPath = MakchaInfo.mockMakchaInfo.makchaPaths.first!
+            let rtat: RealtimeArrivalTuple = (ArrivalStatus.arriveSoon, ArrivalStatus.arriveSoon)
+            let view = DetailView()
+            view.configure(data: (makchaPath, (rtat)))
+            return view
         }
     }
 }
+#endif

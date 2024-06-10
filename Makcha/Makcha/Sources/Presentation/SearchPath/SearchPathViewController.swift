@@ -84,11 +84,14 @@ extension SearchPathViewController {
 struct SearchPathViewController_Previews: PreviewProvider {
     static var previews: some View {
         ViewControllerPreview {
-            SearchPathViewController(
+            let apiService = APIService()
+            let locationService = LocationService()
+            
+            return SearchPathViewController(
                 vm: MainViewModel(
                     MakchaInfoUseCase(
-                        TransPathRepository(APIService()),
-                        EndPointRepository(LocationService())
+                        TransPathRepository(apiService),
+                        EndPointRepository(locationService, apiService)
                     )
                 )
             )

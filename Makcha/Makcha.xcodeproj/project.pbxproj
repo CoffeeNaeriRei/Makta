@@ -25,8 +25,10 @@
 		2090BB392BEFAB7F00501E2D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090BB382BEFAB7F00501E2D /* MainView.swift */; };
 		20C053D32C11F9E700DB78C8 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */; };
 		20C053D52C14A40000DB78C8 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C053D42C14A40000DB78C8 /* DetailView.swift */; };
+		20C053D82C1576CA00DB78C8 /* DottedLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C053D72C1576CA00DB78C8 /* DottedLineView.swift */; };
 		20E277222C0198DF0071F6CA /* MainCollectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */; };
 		20E277242C02E4340071F6CA /* Rx+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E277232C02E4340071F6CA /* Rx+Extension.swift */; };
+		20EB5D1C2C17500F0028287C /* DetailSubPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EB5D1B2C17500F0028287C /* DetailSubPathView.swift */; };
 		B81BDE502BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */; };
 		B81BDE522BFF9A8700CFDC7A /* ArrivalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81BDE512BFF9A8700CFDC7A /* ArrivalType.swift */; };
 		B82953D22BF5DDBB00EABD57 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */; };
@@ -99,8 +101,10 @@
 		20B88A732BE79DC40088AF73 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		20C053D42C14A40000DB78C8 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		20C053D72C1576CA00DB78C8 /* DottedLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DottedLineView.swift; sourceTree = "<group>"; };
 		20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionHeaderCell.swift; sourceTree = "<group>"; };
 		20E277232C02E4340071F6CA /* Rx+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+Extension.swift"; sourceTree = "<group>"; };
+		20EB5D1B2C17500F0028287C /* DetailSubPathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSubPathView.swift; sourceTree = "<group>"; };
 		B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeoulRealtimeBusStationDTO.swift; sourceTree = "<group>"; };
 		B81BDE512BFF9A8700CFDC7A /* ArrivalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalType.swift; sourceTree = "<group>"; };
 		B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
@@ -203,6 +207,14 @@
 				20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */,
 			);
 			path = MainCollectionView;
+			sourceTree = "<group>";
+		};
+		20C053D62C1576B300DB78C8 /* UIView+Extension */ = {
+			isa = PBXGroup;
+			children = (
+				20C053D72C1576CA00DB78C8 /* DottedLineView.swift */,
+			);
+			path = "UIView+Extension";
 			sourceTree = "<group>";
 		};
 		B86232D72BE7A761003959FB /* MakchaTests */ = {
@@ -426,6 +438,7 @@
 			children = (
 				204A39E12C0C4DF500C2F403 /* DetailViewController.swift */,
 				20C053D42C14A40000DB78C8 /* DetailView.swift */,
+				20EB5D1B2C17500F0028287C /* DetailSubPathView.swift */,
 			);
 			path = DetailPath;
 			sourceTree = "<group>";
@@ -442,6 +455,7 @@
 		B89E7F9D2BE770A300A13B58 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				20C053D62C1576B300DB78C8 /* UIView+Extension */,
 				205D20F62BE912B100A7BD98 /* Preview+Extension.swift */,
 				B862333C2BEA059A003959FB /* CommonType.swift */,
 				B8C31EA22BEF41220049B47C /* Date+Extension.swift */,
@@ -639,6 +653,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20C053D82C1576CA00DB78C8 /* DottedLineView.swift in Sources */,
 				B8C31E9F2BEE18C80049B47C /* EndPointRepository.swift in Sources */,
 				B89E7F8D2BE765D200A13B58 /* TestViewController.swift in Sources */,
 				B86233382BEA035F003959FB /* TransPathRepository.swift in Sources */,
@@ -661,6 +676,7 @@
 				205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */,
 				B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */,
 				B8D48C112BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift in Sources */,
+				20EB5D1C2C17500F0028287C /* DetailSubPathView.swift in Sources */,
 				B83FBDD12C12D6D7004805ED /* KakaoPlaceSearchResultDTO.swift in Sources */,
 				B862332E2BE9FC86003959FB /* LocationServiceError.swift in Sources */,
 				B8C31E9D2BEE18890049B47C /* EndPointRepositoryProtocol.swift in Sources */,
