@@ -138,8 +138,13 @@ final class DetailView: UIView {
 
 extension DetailView {
     func configure(data: MakchaCellData) {
+        let startLocationLabel = UILabelFactory.build(
+            attributedText: .pretendard("", scale: .headline),
+            textAlignment: .left
+        )
         
         subPathContainer.flex.define {
+            $0.addItem()
             for subPath in data.makchaPath.subPath {
                 $0.addItem(
                     DetailSubPathView(
@@ -148,6 +153,7 @@ extension DetailView {
                     )
                 )
             }
+            $0.addItem()
         }
         subPathContainer.flex.markDirty()
     }
