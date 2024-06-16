@@ -13,6 +13,10 @@ import MakchaDesignSystem
 import FlexLayout
 import PinLayout
 
+protocol DetailViewDelegate {
+    func didSubPathViewHeightChange()
+}
+
 final class DetailView: UIView {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -122,9 +126,10 @@ final class DetailView: UIView {
                     $0.addItem()
                 }
             }
-            .backgroundColor(.cf(.grayScale(.gray100)).withAlphaComponent(0.8))
+            .backgroundColor(.cf(.grayScale(.gray100)).withAlphaComponent(0.28))
             
         }
+        .grow(1)
         .border(1, .blue)
     }
     
@@ -136,22 +141,23 @@ final class DetailView: UIView {
     }
 }
 
-extension DetailView {
+extension DetailView: DetailViewDelegate {
+    func didSubPathViewHeightChange() {
+        subPathContainer.flex.markDirty()
+        scrollView.flex.layout()
+        scrollView.contentSize = contentView.frame.size
+    }
+    
     func configure(data: MakchaCellData) {
-        let startLocationLabel = UILabelFactory.build(
-            attributedText: .pretendard("", scale: .headline),
-            textAlignment: .left
-        )
-        
         subPathContainer.flex.define {
             $0.addItem()
             for subPath in data.makchaPath.subPath {
-                $0.addItem(
-                    DetailSubPathView(
-                        subPath: subPath,
-                        totalTime: data.makchaPath.totalTime
-                    )
+                let detailView = DetailSubPathView(
+                    subPath: subPath,
+                    totalTime: data.makchaPath.totalTime
                 )
+                detailView.delegate = self
+                $0.addItem(detailView)
             }
             $0.addItem()
         }
@@ -163,7 +169,7 @@ extension DetailView {
 struct DetailView_Preview: PreviewProvider {
     static var previews: some View {
         ViewPreview {
-            let makchaPath = MakchaInfo.mockMakchaInfo.makchaPaths.first!
+            let makchaPath = MakchaInfo.mockMakchaInfo.makchaPaths.last!
             let rtat: RealtimeArrivalTuple = (ArrivalStatus.arriveSoon, ArrivalStatus.arriveSoon)
             let view = DetailView()
             view.configure(data: (makchaPath, (rtat)))
