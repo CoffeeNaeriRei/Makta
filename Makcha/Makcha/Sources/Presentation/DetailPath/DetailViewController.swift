@@ -9,6 +9,11 @@ import Foundation
 import UIKit
 
 final class DetailViewController: UIViewController {
+    // swiftlint: disable force_cast
+    private var mainView: DetailView {
+        view as! DetailView
+    }
+    // swiftlint: enable force_cast
     
     let data: MakchaCellData
     
@@ -23,8 +28,12 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .orange
+        mainView.configure(data: data)
         print(data.arrival.first.arrivalMessage)
         print(data.arrival.second.arrivalMessage)
+    }
+    
+    override func loadView() {
+        view = DetailView()
     }
 }

@@ -63,6 +63,7 @@ extension MainCoordinator: MainNavigation {
             sheet.prefersEdgeAttachedInCompactHeight = true
             sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
             sheet.presentedViewController.isModalInPresentation = true
+            sheet.delegate = searchPathSheet
         }
         navigationController.present(searchPathSheet, animated: true)
     }

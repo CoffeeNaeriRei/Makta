@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import UIKit
 
 import RxSwift
@@ -20,7 +21,7 @@ final class SearchPathViewController: UIViewController {
     
     private let vm: MainViewModel
     private let disposeBag = DisposeBag()
-    
+
     init(vm: MainViewModel) {
         self.vm = vm
         super.init(nibName: nil, bundle: nil)
@@ -35,14 +36,66 @@ final class SearchPathViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        let output = vm.transform(input: MainViewModel.Input(settingButtonTap: nil, starButtonTap: nil))
-        
-        output.startLocation
-            .drive(mainView.startLocationLabel.rx.text)
-            .disposed(by: disposeBag)
+        super.viewDidLoad()
+        setup()
+        bind()
     }
-    
+
     deinit {
         print("SearchPathViewController Deinit")
     }
+    
+    private func setup() {
+        mainView.configure(.custom)
+    }
+    private func bind() {
+        let output = vm.transform(input: MainViewModel.Input(settingButtonTap: nil, starButtonTap: nil))
+        output.startLocation
+            .drive(mainView.startLocationTextField.rx.text)
+            .disposed(by: disposeBag)
+        output.destinationLocation
+            .drive(mainView.endLocationTextField.rx.text)
+            .disposed(by: disposeBag)
+    }
 }
+
+extension SearchPathViewController: UISheetPresentationControllerDelegate {
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+        if let detentIdentifier = sheetPresentationController.selectedDetentIdentifier {
+            switch detentIdentifier {
+            case UISheetPresentationController.Detent.Identifier(rawValue: "initDent"):
+                mainView.configure(.custom)
+            case .large:
+                mainView.configure(.large)
+            default:
+                return
+            }
+        }
+    }
+}
+
+extension SearchPathViewController {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+}
+
+#if DEBUG
+struct SearchPathViewController_Previews: PreviewProvider {
+    static var previews: some View {
+        ViewControllerPreview {
+            let apiService = APIService()
+            let locationService = LocationService()
+            
+            return SearchPathViewController(
+                vm: MainViewModel(
+                    MakchaInfoUseCase(
+                        TransPathRepository(apiService),
+                        EndPointRepository(locationService, apiService)
+                    )
+                )
+            )
+        }
+    }
+}
+#endif

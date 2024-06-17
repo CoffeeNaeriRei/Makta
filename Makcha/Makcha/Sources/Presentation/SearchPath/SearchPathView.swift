@@ -16,6 +16,31 @@ import FlexLayout
 final class SearchPathView: UIView {
     private let rootView = UIView()
     
+    private let titleLabel = UILabelFactory.build(
+        text: "경로 정보",
+        textScale: .title3,
+        textAlignment: .left,
+        textColor: .cf(.grayScale(.gray900))
+    )
+        
+    private let titleContainer = UIView()
+    private let textFieldContainer = UIView()
+    private let searchInfoContainer = UIView()
+    
+    let closeButton: UIButton = {
+        let button = UIButton(type: .close)
+        button.isHidden = true
+        
+        return button
+    }()
+    
+    let searchButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("검색", for: .normal)
+        
+        return button
+    }()
+    
     let startLocationLabel = {
         let label = UILabel()
         label.attributedText = .pretendard("test", scale: .title)
@@ -24,6 +49,38 @@ final class SearchPathView: UIView {
         return label
     }()
     
+    let startLocationTextField: UITextField = {
+        let textField = CustomUITextField()
+        textField.font = .pretendard(.regular, size: 14)
+        textField.placeholder = "출발지를 입력해주세요."
+        textField.clearButtonMode = .whileEditing
+        
+        return textField
+    }()
+    
+    let endLocationTextField: UITextField = {
+        let textField = CustomUITextField()
+        textField.font = .pretendard(.regular, size: 14)
+        textField.placeholder = "도착지를 입력해주세요."
+        textField.clearButtonMode = .whileEditing
+
+        return textField
+    }()
+    
+    let resetStartLocationButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("출", for: .normal)
+        
+        return button
+    }()
+    
+    let resetEndLocationButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("도", for: .normal)
+        
+        return button
+    }()
+
     init() {
         super.init(frame: .zero)
         setup()
@@ -34,18 +91,62 @@ final class SearchPathView: UIView {
     }
     
     private func setup() {
-        backgroundColor = .white
+        backgroundColor = .cf(.grayScale(.white))
         
         rootView.flex.define {
-            $0.addItem(startLocationLabel)
+            // titleContainer
+            $0.addItem(titleContainer).direction(.row).justifyContent(.spaceBetween).define {
+                $0.addItem(titleLabel)
+                $0.addItem(closeButton)
+            }
+            .padding(14, 16, 12)
+            // textFieldContainer
+            $0.addItem(textFieldContainer).gap(8).define {
+                for idx in 0...1 {
+                    let label = UILabelFactory.build(
+                        text: idx == 0 ? "출발지" : "도착지",
+                        textScale: .caption,
+                        textColor: .cf(.grayScale(.gray500))
+                    )
+                    
+                    let textField = idx == 0 ? startLocationTextField : endLocationTextField
+                    let resetButton = idx == 0 ? resetStartLocationButton : resetEndLocationButton
+                    
+                    $0.addItem().gap(8).direction(.row).alignItems(.center).define {
+                        $0.addItem().direction(.row).gap(8).define {
+                            $0.addItem(label)
+                            $0.addItem(textField)
+                                .minHeight(36)
+                                .cornerRadius(4)
+                                .grow(1)
+                        }
+                        .grow(1)
+                        $0.addItem(resetButton)
+                            .width(24).height(24)
+                            .border(1, .red)
+                    }
+                }
+            }
+            .padding(8, 16, 20)
+            // searchListContainer
+            $0.addItem().define {
+                $0.addItem(searchInfoContainer)
+                    .border(1, .red)
+                    .grow(1)
+                $0.addItem(searchButton)
+                    .backgroundColor(.cf(.primaryScale(.primary(.medium))))
+                    .minHeight(56)
+                    .cornerRadius(6)
+                    .marginHorizontal(16)
+            }
+            .grow(1)
         }
-        .border(1, .red)
-
+        
         addSubview(rootView)
     }
     
     private func layout() {
-        rootView.pin.all()
+        rootView.pin.all(pin.safeArea)
         rootView.flex.layout()
     }
     
@@ -54,3 +155,40 @@ final class SearchPathView: UIView {
         layout()
     }
 }
+
+extension SearchPathView {
+    enum Detent {
+        case custom
+        case large
+        
+        var title: String {
+            switch self {
+            case .custom:
+                "경로 정보"
+            case .large:
+                "경로 검색"
+            }
+        }
+    }
+    
+    func configure(_ detent: SearchPathView.Detent) {
+        titleLabel.text = detent.title
+        closeButton.isHidden = detent == .large ? false : true
+        setNeedsLayout()
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
+            self.searchButton.flex.backgroundColor(detent == .large ? .cf(.primaryScale(.primary(.medium))) : .clear)
+            self.searchButton.flex.markDirty()
+            self.searchButton.layoutIfNeeded()
+        }
+    }
+}
+
+#if DEBUG
+struct SearchPathView_Preview: PreviewProvider {
+    static var previews: some View {
+        ViewPreview {
+            SearchPathView()
+        }
+    }
+}
+#endif
