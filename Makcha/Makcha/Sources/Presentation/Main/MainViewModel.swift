@@ -43,7 +43,7 @@ final class MainViewModel: ViewModelType {
     struct Output {
         let startPointLabel: Driver<String> // 출발지
         let destinationPointLabel: Driver<String> // 도착지
-        let pointSearchResult: Driver<[EndPoint]> // 장소 검색 결과 리스트
+        let pointSearchResult: Observable<[EndPoint]> // 장소 검색 결과 리스트
     }
     
     func transform(input: Input) -> Output {
@@ -113,7 +113,6 @@ final class MainViewModel: ViewModelType {
             .asDriver(onErrorJustReturn: "")
         
         let pointSearchResult = makchaInfoUseCase.searchedEndPoints
-            .asDriver(onErrorJustReturn: [])
         
         return Output(
             startPointLabel: startPointLabel,

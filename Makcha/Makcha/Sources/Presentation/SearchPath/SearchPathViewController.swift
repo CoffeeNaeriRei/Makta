@@ -47,6 +47,7 @@ final class SearchPathViewController: UIViewController {
     
     private func setup() {
         mainView.configure(.custom)
+//        mainView.searchResultTableView.register(SearchResultCell.self, forCellReuseIdentifier: SearchResultCell.cellIdentifier)
     }
     private func bind() {
         let output = vm.transform(
@@ -64,10 +65,14 @@ final class SearchPathViewController: UIViewController {
             .drive(mainView.destinationPointTextField.rx.text)
             .disposed(by: disposeBag)
         
-//        // TODO: - 검색 결과 바인딩 처리
-//        output.pointSearchResult
-//            .drive()
-//            .disposed(by: disposeBag)
+        output.pointSearchResult
+            .bind(to: mainView.searchResultTableView.rx.items) { tableView, row, item in
+                let cell = tableView.dequeueReusableCell(for: IndexPath(row: row, section: 0)) as SearchResultCell
+                cell.configure(with: item)
+                return cell
+            }
+            .disposed(by: disposeBag)
+
     }
 }
 

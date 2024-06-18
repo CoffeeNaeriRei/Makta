@@ -10,8 +10,9 @@ import SwiftUI
 import UIKit
 
 import MakchaDesignSystem
-import PinLayout
 import FlexLayout
+import PinLayout
+import Reusable
 
 final class SearchPathView: UIView {
     private let rootView = UIView()
@@ -25,7 +26,7 @@ final class SearchPathView: UIView {
         
     private let titleContainer = UIView()
     private let textFieldContainer = UIView()
-    private let searchInfoContainer = UIView()
+//    private let searchInfoContainer = UIView()
     
     let closeButton: UIButton = {
         let button = UIButton(type: .close)
@@ -86,6 +87,11 @@ final class SearchPathView: UIView {
         
         return button
     }()
+    
+    let searchResultTableView: UITableView = {
+        let tableView = UITableView()
+        return tableView
+    }()
 
     init() {
         super.init(frame: .zero)
@@ -98,6 +104,7 @@ final class SearchPathView: UIView {
     
     private func setup() {
         backgroundColor = .cf(.grayScale(.white))
+        searchResultTableView.register(cellType: SearchResultCell.self) // 재사용 셀 등록
         
         rootView.flex.define {
             // titleContainer
@@ -138,7 +145,8 @@ final class SearchPathView: UIView {
             
             // searchListContainer
             $0.addItem().define {
-                $0.addItem(searchInfoContainer)
+//                $0.addItem(searchInfoContainer)
+                $0.addItem(searchResultTableView)
                     .border(1, .red)
                     .grow(1)
                 $0.addItem(searchButton)
