@@ -37,7 +37,7 @@ final class MakchaInfoUseCase {
         self.transPathRepository = transPathRepository
         self.endPointRepository = endPointRepository
         
-        // TODO: 사용자가 설정한 기본 목적지로 초기화하기
+        // TODO: 사용자가 설정한 기본 목적지로 초기화하기 - UserDefaults 값으로
         let destionationCoordinate = EndPoint.mockDestinationPoint
         destinationPoint = BehaviorSubject<EndPoint>(value: destionationCoordinate)
         
@@ -51,6 +51,11 @@ final class MakchaInfoUseCase {
         endPointRepository.getSearchedAddresses(searchKeyword: searchKeyword)
             .withUnretained(self)
             .subscribe(onNext: { `self`, searchedAddressArr in
+//                print()
+//                _ = searchedAddressArr.map {
+//                    print($0.name)
+//                }
+//                print()
                 self.searchedEndPoints.onNext(searchedAddressArr)
             })
             .disposed(by: disposeBag)
@@ -73,6 +78,7 @@ final class MakchaInfoUseCase {
             .withUnretained(self)
             .subscribe(onNext: { `self`, currentLocation in
                 self.startPoint.onNext(currentLocation)
+                // TODO: - endPoint에도 이벤트 전달해야 함 (UserDefaults값 활용하기)
                 
                 if let destinationCoordinate = try? self.destinationPoint.value().coordinate {
                     self.loadMakchaPath(start: currentLocation.coordinate, end: destinationCoordinate)

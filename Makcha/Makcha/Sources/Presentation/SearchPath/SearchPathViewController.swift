@@ -49,13 +49,25 @@ final class SearchPathViewController: UIViewController {
         mainView.configure(.custom)
     }
     private func bind() {
-        let output = vm.transform(input: MainViewModel.Input(settingButtonTap: nil, starButtonTap: nil))
-        output.startLocation
-            .drive(mainView.startLocationTextField.rx.text)
+        let output = vm.transform(
+            input: MainViewModel.Input(
+                settingButtonTap: nil,
+                starButtonTap: nil,
+                startPointTextFieldChanged: mainView.startPointTextField.rx.text.orEmpty,
+                destinationPointTextFieldChanged: mainView.destinationPointTextField.rx.text.orEmpty
+            )
+        )
+        output.startPointLabel
+            .drive(mainView.startPointTextField.rx.text)
             .disposed(by: disposeBag)
-        output.destinationLocation
-            .drive(mainView.endLocationTextField.rx.text)
+        output.destinationPointLabel
+            .drive(mainView.destinationPointTextField.rx.text)
             .disposed(by: disposeBag)
+        
+//        // TODO: - 검색 결과 바인딩 처리
+//        output.pointSearchResult
+//            .drive()
+//            .disposed(by: disposeBag)
     }
 }
 

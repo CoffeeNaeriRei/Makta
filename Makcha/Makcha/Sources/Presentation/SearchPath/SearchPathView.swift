@@ -41,7 +41,7 @@ final class SearchPathView: UIView {
         return button
     }()
     
-    let startLocationLabel = {
+    let startPointLabel = {
         let label = UILabel()
         label.attributedText = .pretendard("test", scale: .title)
         label.textColor = UIColor.cf(.colorScale(.blue(.mediumLight)))
@@ -49,7 +49,7 @@ final class SearchPathView: UIView {
         return label
     }()
     
-    let startLocationTextField: UITextField = {
+    let startPointTextField: UITextField = {
         let textField = CustomUITextField()
         textField.font = .pretendard(.regular, size: 14)
         textField.placeholder = "출발지를 입력해주세요."
@@ -58,7 +58,7 @@ final class SearchPathView: UIView {
         return textField
     }()
     
-    let endLocationTextField: UITextField = {
+    let destinationPointTextField: UITextField = {
         let textField = CustomUITextField()
         textField.font = .pretendard(.regular, size: 14)
         textField.placeholder = "도착지를 입력해주세요."
@@ -67,14 +67,14 @@ final class SearchPathView: UIView {
         return textField
     }()
     
-    let resetStartLocationButton: UIButton = {
+    let resetStartPointButton: UIButton = {
         let button = UIButton()
         button.setTitle("출", for: .normal)
         
         return button
     }()
     
-    let resetEndLocationButton: UIButton = {
+    let resetDestinationPointButton: UIButton = {
         let button = UIButton()
         button.setTitle("도", for: .normal)
         
@@ -100,6 +100,7 @@ final class SearchPathView: UIView {
                 $0.addItem(closeButton)
             }
             .padding(14, 16, 12)
+            
             // textFieldContainer
             $0.addItem(textFieldContainer).gap(8).define {
                 for idx in 0...1 {
@@ -109,8 +110,8 @@ final class SearchPathView: UIView {
                         textColor: .cf(.grayScale(.gray500))
                     )
                     
-                    let textField = idx == 0 ? startLocationTextField : endLocationTextField
-                    let resetButton = idx == 0 ? resetStartLocationButton : resetEndLocationButton
+                    let textField = idx == 0 ? startPointTextField : destinationPointTextField
+                    let resetButton = idx == 0 ? resetStartPointButton : resetDestinationPointButton
                     
                     $0.addItem().gap(8).direction(.row).alignItems(.center).define {
                         $0.addItem().direction(.row).gap(8).define {
@@ -128,6 +129,7 @@ final class SearchPathView: UIView {
                 }
             }
             .padding(8, 16, 20)
+            
             // searchListContainer
             $0.addItem().define {
                 $0.addItem(searchInfoContainer)
