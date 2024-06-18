@@ -71,6 +71,21 @@ final class MakchaInfoUseCase {
         
     }
     
+    // MARK: - 출발지 리셋
+    func resetStartPointTo() {
+        // 현재 위치로 갱신
+        // 검색 시트가 닫혀있다면 막차경로도 새로 불러오기
+        // searchedEndPoints 빈 배열로
+    }
+    
+    // MARK: - 도착지 리셋
+    func resetDestinationPoint() {
+        // UserDefaults의 "defaultDestination"으로 갱신
+        // UserDefaults의 "tempDestination"도 기본 도착지로 갱신
+        // 검색 시트가 닫혀있다면 막차경로도 새로 불러오기
+        // searchedEndPoints 빈 배열로
+    }
+    
     // MARK: - 현재 위치 기반으로 막차 경로 불러오기
     func loadMakchaPathWithCurrentLocation() {
         print("[MakchaInfoUseCase] - 현재 위치 기반으로 막차 경로 불러오기")

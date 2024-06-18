@@ -35,7 +35,7 @@ extension EndPoint {
         coordinate: ("126.919971934734", "37.6155372675701")
     )
     static let mockDestinationPoint = EndPoint(
-        name: nil, // 경찰병원역 3호선
+        name: "경찰병원역 3호선", // 경찰병원역 3호선
         addressName: "서울 송파구 가락동 10-15",
         roadAddressName: nil, // 서울 송파구 중대로 지하 149
         coordinate: ("127.124482397777", "37.4960049150853")

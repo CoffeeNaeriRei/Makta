@@ -37,6 +37,8 @@ final class SearchPathView: UIView {
     let searchButton: UIButton = {
         let button = UIButton()
         button.setTitle("검색", for: .normal)
+        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        button.semanticContentAttribute = .forceRightToLeft
         
         return button
     }()
@@ -69,14 +71,18 @@ final class SearchPathView: UIView {
     
     let resetStartPointButton: UIButton = {
         let button = UIButton()
-        button.setTitle("출", for: .normal)
+//        button.setTitle("출", for: .normal)
+        button.setBackgroundImage(UIImage(systemName: "arrow.counterclockwise"), for: .normal)
+        button.tintColor = UIColor.cf(.grayScale(.black))
         
         return button
     }()
     
     let resetDestinationPointButton: UIButton = {
         let button = UIButton()
-        button.setTitle("도", for: .normal)
+//        button.setTitle("도", for: .normal)
+        button.setBackgroundImage(UIImage(systemName: "arrow.counterclockwise"), for: .normal)
+        button.tintColor = UIColor.cf(.grayScale(.black))
         
         return button
     }()
@@ -103,7 +109,7 @@ final class SearchPathView: UIView {
             
             // textFieldContainer
             $0.addItem(textFieldContainer).gap(8).define {
-                for idx in 0...1 {
+                for idx in 0..<2 {
                     let label = UILabelFactory.build(
                         text: idx == 0 ? "출발지" : "도착지",
                         textScale: .caption,
@@ -123,8 +129,8 @@ final class SearchPathView: UIView {
                         }
                         .grow(1)
                         $0.addItem(resetButton)
-                            .width(24).height(24)
-                            .border(1, .red)
+//                            .width(24).height(24)
+//                            .border(1, .red)
                     }
                 }
             }
