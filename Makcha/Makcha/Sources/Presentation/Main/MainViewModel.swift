@@ -36,8 +36,8 @@ final class MainViewModel: ViewModelType {
         let startPointTextFieldChange: ControlProperty<String>? // 출발지 텍스트필드 입력 변화 감지
         let destinationPointTextFieldChange: ControlProperty<String>? // 도착지 텍스트필드 입력 변화
         let searchedPointSelect: ControlEvent<IndexPath>? // 출발지/도착지 검색 결과 목록 중 하나를 선택
-//        let startPointResetButtonTap = PublishRelay<Void>() // 출발지 리셋버튼 탭
-//        let destinationPointResetButtonTap = PublishRelay<Void>() // 도착지 리셋버튼 탭
+//        let startPointResetButtonTap = ControlEvent<Void>() // 출발지 리셋버튼 탭
+        let destinationPointResetButtonTap: ControlEvent<Void>? // 도착지 리셋버튼 탭
 //        let searchButtonTap = PublishRelay<Void>() // 검색 버튼 탭
     }
     
@@ -109,6 +109,13 @@ final class MainViewModel: ViewModelType {
             .withUnretained(self)
             .subscribe(onNext: { `self`, event in
                 self.makchaInfoUseCase.updatePointToSearchedAddress(idx: event.row)
+            })
+            .disposed(by: disposeBag)
+        
+        input.destinationPointResetButtonTap?
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, _ in
+                self.makchaInfoUseCase.resetDestinationPoint()
             })
             .disposed(by: disposeBag)
         
