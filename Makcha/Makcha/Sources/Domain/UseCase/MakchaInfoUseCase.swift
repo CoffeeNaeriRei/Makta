@@ -95,8 +95,12 @@ final class MakchaInfoUseCase {
                 self.startPoint.onNext(currentLocation)
                 // TODO: - endPoint에도 이벤트 전달해야 함 (UserDefaults값 활용하기)
                 
-                if let destinationCoordinate = try? self.destinationPoint.value().coordinate {
-                    self.loadMakchaPath(start: currentLocation.coordinate, end: destinationCoordinate)
+                if let destinationLonX = try? self.destinationPoint.value().lonx,
+                   let destinationLatY = try? self.destinationPoint.value().latY {
+                    let currentLocationCoordinate = (currentLocation.lonx, currentLocation.latY)
+                    let destinationLocationCoordinate = (destinationLonX, destinationLatY)
+                    
+                    self.loadMakchaPath(start: currentLocationCoordinate, end: destinationLocationCoordinate)
                 }
             })
             .disposed(by: disposeBag)
