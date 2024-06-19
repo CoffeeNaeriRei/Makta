@@ -65,6 +65,7 @@ final class MainViewController: UIViewController {
             startPointTextFieldChange: nil,
             destinationPointTextFieldChange: nil,
             searchedPointSelect: nil,
+            startPointResetButtonTap: nil,
             destinationPointResetButtonTap: nil
         )
 
