@@ -20,8 +20,8 @@ struct MockLocationService: LocationServiceInterface {
     
     func fetchCurrentLocation(completion: @escaping LocationCallback) {
         let mockCLLocation = CLLocation(
-            latitude: CLLocationDegrees(mockEndPoint!.coordinate.latY)!,
-            longitude: CLLocationDegrees(mockEndPoint!.coordinate.lonX)!
+            latitude: CLLocationDegrees(mockEndPoint!.latY)!,
+            longitude: CLLocationDegrees(mockEndPoint!.lonX)!
         )
         completion(mockCLLocation, mockError)
     }

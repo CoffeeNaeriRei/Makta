@@ -8,23 +8,53 @@
 // MARK: - EndPoint
 // 막차 경로 검색의 기준이 되는 출발점, 도착점의 좌표
 
+import Foundation
+
+/// UserDefaults에 저장될 Destination key
+enum DestinationKey: String {
+    case defaultDestination
+    case tempDestination
+}
+
 struct EndPoint: Codable, Equatable {
     let name: String? // 장소 이름 (검색 시에만 활용)
     let addressName: String // 지번주소
     let roadAddressName: String? // 도로명주소
-    let lonx: String
+    let lonX: String
     let latY: String
     
     static func == (lhs: EndPoint, rhs: EndPoint) -> Bool {
-        return (lhs.name == rhs.name) || (lhs.addressName == rhs.addressName) || (lhs.roadAddressName == rhs.roadAddressName) || (lhs.lonx == rhs.lonx) || (lhs.latY == rhs.latY)
+        return (lhs.name == rhs.name) || (lhs.addressName == rhs.addressName) || (lhs.roadAddressName == rhs.roadAddressName) || (lhs.lonX == rhs.lonX) || (lhs.latY == rhs.latY)
     }
     
     init(name: String? = nil, addressName: String, roadAddressName: String?, lonX: String, latY: String) {
         self.name = name
         self.addressName = addressName
         self.roadAddressName = roadAddressName
-        self.lonx = lonX
+        self.lonX = lonX
         self.latY = latY
+    }
+    
+    /// EndPoint를 UserDefaults로 저장하는 메서드
+    func saveAsUserDefaults(key: DestinationKey) {
+        let encoder = JSONEncoder()
+        guard let encoded = try? encoder.encode(self) else {
+            print("UserDefaults에 \(key.rawValue) 저장 실패")
+            return
+        }
+        UserDefaults.standard.setValue(encoded, forKey: key.rawValue)
+        print("UserDefaults에 \(key.rawValue) 저장 성공!!")
+    }
+    
+    /// UserDefaults로부터 EndPoint 데이터를 불러오는 메서드
+    static func loadFromUserDefaults(key: DestinationKey) -> EndPoint? {
+        let decoder = JSONDecoder()
+        guard let data = UserDefaults.standard.object(forKey: key.rawValue) as? Data,
+              let endPoint = try? decoder.decode(EndPoint.self, from: data) else {
+            print("UserDefaults에서 \(key.rawValue) 불러오기 실패")
+            return nil
+        }
+        return endPoint
     }
 }
 

@@ -59,8 +59,8 @@ final class LocationServiceTests: XCTestCase {
     func test_fetchCurrentLocation을_호출시_위치서비스권한이_허용상태이고_위치가_반환됐을_때_위치정보가_제대로_전달되는지_확인() {
         // Given
         let mockLocation = EndPoint.mockStartPoint
-        let mockLat = CLLocationDegrees(floatLiteral: Double(mockLocation.coordinate.latY)!)
-        let mockLon = CLLocationDegrees(floatLiteral: Double(mockLocation.coordinate.lonX)!)
+        let mockLat = CLLocationDegrees(floatLiteral: Double(mockLocation.latY)!)
+        let mockLon = CLLocationDegrees(floatLiteral: Double(mockLocation.lonX)!)
         if var locationManagerMock = sut.locationManager as? LocationManagerMockInterface {
             locationManagerMock.locationToReturn = {
                 // locationManager가 반환할 위치값
