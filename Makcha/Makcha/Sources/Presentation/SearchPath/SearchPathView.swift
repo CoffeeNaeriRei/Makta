@@ -27,6 +27,7 @@ final class SearchPathView: UIView {
     private let titleContainer = UIView()
     private let textFieldContainer = UIView()
     private let searchInfoContainer = UIView()
+    private let searchResultScrollView = UIScrollView()
     
     let closeButton: UIButton = {
         let button = UIButton(type: .close)
@@ -149,18 +150,21 @@ final class SearchPathView: UIView {
             
             // searchInfoContainer
             $0.addItem().define {
-                $0.addItem(searchInfoContainer).define {
-                    // 검색 결과 상단 구분선
-                    $0.addItem()
-                        .width(100%).height(.cfStroke(.xsmall))
-                        .backgroundColor(UIColor.cf(.grayScale(.gray500)))
-                    $0.addItem(searchResultTableView)
-                        .grow(1)
-                    $0.addItem(searchButton)
-                        .backgroundColor(.cf(.primaryScale(.primary(.medium))))
-                        .minHeight(56)
-                        .cornerRadius(6)
-                        .marginHorizontal(16)
+                $0.addItem(searchResultScrollView).direction(.column).define {
+                    $0.addItem(searchInfoContainer).define {
+                        // 검색 결과 상단 구분선
+                        $0.addItem()
+                            .width(100%).height(.cfStroke(.xsmall))
+                            .backgroundColor(UIColor.cf(.grayScale(.gray500)))
+                        $0.addItem(searchResultTableView)
+                            .grow(1)
+                        $0.addItem(searchButton)
+                            .backgroundColor(.cf(.primaryScale(.primary(.medium))))
+                            .minHeight(56)
+                            .cornerRadius(6)
+                            .marginHorizontal(16)
+                    }
+                    .grow(1)
                 }
                 .grow(1)
             }
