@@ -49,12 +49,17 @@ final class SearchPathViewController: UIViewController {
         mainView.configure(.custom)
     }
     private func bind() {
+        let startPointTextFieldChange = mainView.startPointTextField.rx.text.orEmpty
+        let destinationPointTextFieldChange = mainView.destinationPointTextField.rx.text.orEmpty
+        let searchedPointSelected = mainView.searchResultTableView.rx.itemSelected
+        
         let output = vm.transform(
             input: MainViewModel.Input(
                 settingButtonTap: nil,
                 starButtonTap: nil,
-                startPointTextFieldChanged: mainView.startPointTextField.rx.text.orEmpty,
-                destinationPointTextFieldChanged: mainView.destinationPointTextField.rx.text.orEmpty
+                startPointTextFieldChange: startPointTextFieldChange,
+                destinationPointTextFieldChange: destinationPointTextFieldChange,
+                searchedPointSelect: searchedPointSelected
             )
         )
         // 출발지 검색 텍스트필드
@@ -66,14 +71,14 @@ final class SearchPathViewController: UIViewController {
             .drive(mainView.destinationPointTextField.rx.text)
             .disposed(by: disposeBag)
         // 검색 결과 바인딩
-        output.pointSearchResult
+        /// merge()를 사용하여 파라미터 항목들이 각각 이벤트를 방출할 때마다 가장 최근 것으로 방출
+        Observable.merge(output.startPointSearchedResult, output.destinationPointSearchedResult)
             .bind(to: mainView.searchResultTableView.rx.items) { tableView, row, item in
                 let cell = tableView.dequeueReusableCell(for: IndexPath(row: row, section: 0)) as SearchResultCell
                 cell.configure(with: item)
                 return cell
             }
             .disposed(by: disposeBag)
-
     }
 }
 

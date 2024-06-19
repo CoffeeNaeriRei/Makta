@@ -62,8 +62,9 @@ final class MainViewController: UIViewController {
         let input = MainViewModel.Input(
             settingButtonTap: leftUIBarButtonItem.rx.tap,
             starButtonTap: rightUIBarButtonItem.rx.tap,
-            startPointTextFieldChanged: nil,
-            destinationPointTextFieldChanged: nil
+            startPointTextFieldChange: nil,
+            destinationPointTextFieldChange: nil,
+            searchedPointSelect: nil
         )
 
         _ = mainViewModel.transform(input: input)

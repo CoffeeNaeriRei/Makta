@@ -27,23 +27,25 @@ final class MainViewModel: ViewModelType {
     }
     
     struct Input {
+        // MainView 관련 인풋
         let viewDidLoadEvent = PublishRelay<Void>() // 화면 최초 로딩 이벤트 (현재 위치 기반 경로 불러오기)
         let settingButtonTap: ControlEvent<Void>? // [설정] 버튼 탭
         let starButtonTap: ControlEvent<Void>? // [즐겨찾기] 버튼 탭
         
-        let startPointTextFieldChanged: ControlProperty<String>? // 출발지 텍스트필드 입력 변화 감지
-        let destinationPointTextFieldChanged: ControlProperty<String>? // 도착지 텍스트필드 입력 변화
+        // SearchPathView 관련 인풋
+        let startPointTextFieldChange: ControlProperty<String>? // 출발지 텍스트필드 입력 변화 감지
+        let destinationPointTextFieldChange: ControlProperty<String>? // 도착지 텍스트필드 입력 변화
+        let searchedPointSelect: ControlEvent<IndexPath>? // 출발지/도착지 검색 결과 목록 중 하나를 선택
 //        let startPointResetButtonTap = PublishRelay<Void>() // 출발지 리셋버튼 탭
 //        let destinationPointResetButtonTap = PublishRelay<Void>() // 도착지 리셋버튼 탭
-//        let startPointSelected = PublishRelay<Int>() // 출발지 검색 결과에서 출발지 선택
-//        let destinationPointSelected = PublishRelay<Int>() // 도착지 검색 결과에서 도착지 선택
 //        let searchButtonTap = PublishRelay<Void>() // 검색 버튼 탭
     }
     
     struct Output {
         let startPointLabel: Driver<String> // 출발지
         let destinationPointLabel: Driver<String> // 도착지
-        let pointSearchResult: Observable<[EndPoint]> // 장소 검색 결과 리스트
+        let startPointSearchedResult: Observable<[EndPoint]> // 출발지 검색 결과 리스트
+        let destinationPointSearchedResult: Observable<[EndPoint]> // 도착지 검색 결과 리스트
     }
     
     func transform(input: Input) -> Output {
@@ -81,25 +83,32 @@ final class MainViewModel: ViewModelType {
             })
             .disposed(by: disposeBag)
         
-        input.startPointTextFieldChanged?
+        input.startPointTextFieldChange?
             .distinctUntilChanged()
             .withUnretained(self)
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: { `self`, inputText in
                 if inputText != "" {
-                    self.makchaInfoUseCase.searchWithAddressText(searchKeyword: inputText)
+                    self.makchaInfoUseCase.searchWithAddressText(isStartPoint: true, searchKeyword: inputText)
                 }
             })
             .disposed(by: disposeBag)
         
-        input.destinationPointTextFieldChanged?
+        input.destinationPointTextFieldChange?
             .distinctUntilChanged()
             .withUnretained(self)
             .debounce(.seconds(3), scheduler: MainScheduler.instance)
             .subscribe(onNext: { `self`, inputText in
                 if inputText != "" {
-                    self.makchaInfoUseCase.searchWithAddressText(searchKeyword: inputText)
+                    self.makchaInfoUseCase.searchWithAddressText(isStartPoint: false, searchKeyword: inputText)
                 }
+            })
+            .disposed(by: disposeBag)
+        
+        input.searchedPointSelect?
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, event in
+                self.makchaInfoUseCase.updatePointToSearchedAddress(idx: event.row)
             })
             .disposed(by: disposeBag)
         
@@ -112,12 +121,14 @@ final class MainViewModel: ViewModelType {
             .map { $0.name ?? $0.roadAddressName ?? $0.addressName }
             .asDriver(onErrorJustReturn: "")
         
-        let pointSearchResult = makchaInfoUseCase.searchedEndPoints
+        let startPointSearchedResult = makchaInfoUseCase.searchedStartPoints
+        let destinationPointSearchedResult = makchaInfoUseCase.searchedDestinationPoints
         
         return Output(
             startPointLabel: startPointLabel,
             destinationPointLabel: destinationPointLabel,
-            pointSearchResult: pointSearchResult
+            startPointSearchedResult: startPointSearchedResult,
+            destinationPointSearchedResult: destinationPointSearchedResult
         )
     }
     

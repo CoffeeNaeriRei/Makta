@@ -28,25 +28,27 @@ final class MakchaInfoUseCase {
     let makchaSectionModel = PublishSubject<(startTimeStr: String, makchaCellData: [MakchaCellData])>() // 컬렉션뷰 바인딩을 위한 SectionModel에 전달할 데이터
     let startPoint = PublishSubject<EndPoint>() // 출발지 정보
     let destinationPoint: BehaviorSubject<EndPoint> // 도착지 정보
-    let searchedEndPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 주소들
+    let searchedStartPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 출발지 주소들
+    let searchedDestinationPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 도착지 주소들
     
     private let disposeBag = DisposeBag()
     private var timerDisposable: Disposable? // 타이머 구독을 제어하기 위한 Disposable
+    
+    private var isStartPointSearch: Bool = true // 출발지/도착지 중 어느 곳에 대한 검색인지 여부를 체크
     
     init(_ transPathRepository: TransPathRepositoryProtocol, _ endPointRepository: EndPointRepositoryProtocol) {
         self.transPathRepository = transPathRepository
         self.endPointRepository = endPointRepository
         
-        // TODO: 사용자가 설정한 기본 목적지로 초기화하기 - UserDefaults 값으로
-        let destionationCoordinate = EndPoint.mockDestinationPoint
-        destinationPoint = BehaviorSubject<EndPoint>(value: destionationCoordinate)
+        let defaultDestination = EndPoint.loadFromUserDefaults(key: .defaultDestination) ?? EndPoint.mockDestinationPoint
+        destinationPoint = BehaviorSubject(value: defaultDestination)
         
         subscribeTimer()
         subscribeMakchaSectionModel()
     }
     
     // MARK: - 주소 검색 결과 불러오기
-    func searchWithAddressText(searchKeyword: String) {
+    func searchWithAddressText(isStartPoint: Bool, searchKeyword: String) {
         print("[MakchaInfoUseCase] - \"\(searchKeyword)\" 키워드에 대한 주소 검색 결과 불러오기")
         endPointRepository.getSearchedAddresses(searchKeyword: searchKeyword)
             .withUnretained(self)
@@ -56,19 +58,30 @@ final class MakchaInfoUseCase {
 //                    print($0.name)
 //                }
 //                print()
-                self.searchedEndPoints.onNext(searchedAddressArr)
+                if isStartPoint {
+                    self.isStartPointSearch = true
+                    self.searchedStartPoints.onNext(searchedAddressArr)
+                } else {
+                    self.isStartPointSearch = false
+                    self.searchedDestinationPoints.onNext(searchedAddressArr)
+                }
             })
             .disposed(by: disposeBag)
     }
     
-    // MARK: - 출발지를 검색한 주소로 업데이트
-    func updateStartPointToSearchedAddress(addressIdx: Int) {
-        
-    }
-    
-    // MARK: - 도착지를 검색한 주소로 업데이트
-    func updateDestinationPointToSearchedAddress(addressIdx: Int) {
-        
+    // MARK: - 검색 결과에서 선택한 주소로 출발지/도착지를 업데이트
+    func updatePointToSearchedAddress(idx: Int) {
+        if isStartPointSearch {
+            // 출발지 업데이트
+            guard let selectedEndPoint = try? searchedStartPoints.value()[idx] else { return }
+            startPoint.onNext(selectedEndPoint)
+        } else {
+            // 도착지 업데이트
+            guard let selectedEndPoint = try? searchedDestinationPoints.value()[idx] else { return }
+            destinationPoint.onNext(selectedEndPoint)
+            selectedEndPoint.saveAsUserDefaults(key: .tempDestination)
+            
+        }
     }
     
     // MARK: - 출발지 리셋
