@@ -47,7 +47,6 @@ final class SearchPathViewController: UIViewController {
     
     private func setup() {
         mainView.configure(.custom)
-//        mainView.searchResultTableView.register(SearchResultCell.self, forCellReuseIdentifier: SearchResultCell.cellIdentifier)
     }
     private func bind() {
         let output = vm.transform(
@@ -58,13 +57,15 @@ final class SearchPathViewController: UIViewController {
                 destinationPointTextFieldChanged: mainView.destinationPointTextField.rx.text.orEmpty
             )
         )
+        // 출발지 검색 텍스트필드
         output.startPointLabel
             .drive(mainView.startPointTextField.rx.text)
             .disposed(by: disposeBag)
+        // 도착지 검색 텍스트필드
         output.destinationPointLabel
             .drive(mainView.destinationPointTextField.rx.text)
             .disposed(by: disposeBag)
-        
+        // 검색 결과 바인딩
         output.pointSearchResult
             .bind(to: mainView.searchResultTableView.rx.items) { tableView, row, item in
                 let cell = tableView.dequeueReusableCell(for: IndexPath(row: row, section: 0)) as SearchResultCell

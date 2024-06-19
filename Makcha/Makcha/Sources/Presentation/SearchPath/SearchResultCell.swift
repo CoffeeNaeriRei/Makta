@@ -15,16 +15,18 @@ import PinLayout
 import Reusable
 
 final class SearchResultCell: UITableViewCell, Reusable {
+    private let resultContentView = UIView()
+    
     private let pointName = UILabelFactory.build(
         text: "장소 이름",
-//        textAlignment: .left,
+        textAlignment: .left,
         textColor: UIColor.cf(.grayScale(.gray900))
     )
     
     private let pointAddress = UILabelFactory.build(
         text: "주소",
         textScale: .caption2,
-//        textAlignment: .left,
+        textAlignment: .left,
         textColor: UIColor.cf(.grayScale(.gray500))
     )
     
@@ -42,16 +44,15 @@ final class SearchResultCell: UITableViewCell, Reusable {
     
     private func setup() {
         contentView.flex.define {
-            $0.addItem().direction(.column).alignItems(.start).define {
-                $0.addItem(pointName)
-                    .border(1, .red)
-                $0.addItem(pointAddress)
-                    .border(1, .blue)
+            $0.addItem(resultContentView).define {
+                $0.addItem().direction(.column).alignItems(.start).define {
+                    $0.addItem(pointName)
+                    $0.addItem(pointAddress)
+                }
             }
             .padding(12, 20, 8)
-            .border(1, .yellow)
-            .grow(1)
         }
+        .grow(1)
     }
     
     private func layout() {

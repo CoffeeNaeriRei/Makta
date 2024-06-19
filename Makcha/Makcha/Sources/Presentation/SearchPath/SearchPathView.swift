@@ -26,7 +26,7 @@ final class SearchPathView: UIView {
         
     private let titleContainer = UIView()
     private let textFieldContainer = UIView()
-//    private let searchInfoContainer = UIView()
+    private let searchInfoContainer = UIView()
     
     let closeButton: UIButton = {
         let button = UIButton(type: .close)
@@ -88,8 +88,12 @@ final class SearchPathView: UIView {
         return button
     }()
     
+    // 검색 결과를 표시할 테이블 뷰
     let searchResultTableView: UITableView = {
         let tableView = UITableView()
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tableView.separatorColor = UIColor.cf(.grayScale(.gray500))
+        
         return tableView
     }()
 
@@ -104,7 +108,7 @@ final class SearchPathView: UIView {
     
     private func setup() {
         backgroundColor = .cf(.grayScale(.white))
-        searchResultTableView.register(cellType: SearchResultCell.self) // 재사용 셀 등록
+        searchResultTableView.register(cellType: SearchResultCell.self) // 테이블 뷰 재사용 셀 등록
         
         rootView.flex.define {
             // titleContainer
@@ -143,17 +147,22 @@ final class SearchPathView: UIView {
             }
             .padding(8, 16, 20)
             
-            // searchListContainer
+            // searchInfoContainer
             $0.addItem().define {
-//                $0.addItem(searchInfoContainer)
-                $0.addItem(searchResultTableView)
-                    .border(1, .red)
-                    .grow(1)
-                $0.addItem(searchButton)
-                    .backgroundColor(.cf(.primaryScale(.primary(.medium))))
-                    .minHeight(56)
-                    .cornerRadius(6)
-                    .marginHorizontal(16)
+                $0.addItem(searchInfoContainer).define {
+                    // 검색 결과 상단 구분선
+                    $0.addItem()
+                        .width(100%).height(.cfStroke(.xsmall))
+                        .backgroundColor(UIColor.cf(.grayScale(.gray500)))
+                    $0.addItem(searchResultTableView)
+                        .grow(1)
+                    $0.addItem(searchButton)
+                        .backgroundColor(.cf(.primaryScale(.primary(.medium))))
+                        .minHeight(56)
+                        .cornerRadius(6)
+                        .marginHorizontal(16)
+                }
+                .grow(1)
             }
             .grow(1)
         }
