@@ -54,6 +54,7 @@ final class SearchPathViewController: UIViewController {
         let searchedPointSelected = mainView.searchResultTableView.rx.itemSelected
         let startPointResetButtonTap = mainView.resetStartPointButton.rx.tap
         let destinationPointResetButtonTap = mainView.resetDestinationPointButton.rx.tap
+        let searchButtonTap = mainView.searchButton.rx.tap
         
         let output = vm.transform(
             input: MainViewModel.Input(
@@ -63,7 +64,8 @@ final class SearchPathViewController: UIViewController {
                 destinationPointTextFieldChange: destinationPointTextFieldChange,
                 searchedPointSelect: searchedPointSelected,
                 startPointResetButtonTap: startPointResetButtonTap,
-                destinationPointResetButtonTap: destinationPointResetButtonTap
+                destinationPointResetButtonTap: destinationPointResetButtonTap,
+                searchButtonTap: searchButtonTap
             )
         )
         // 출발지 검색 텍스트필드

@@ -66,7 +66,8 @@ final class MainViewController: UIViewController {
             destinationPointTextFieldChange: nil,
             searchedPointSelect: nil,
             startPointResetButtonTap: nil,
-            destinationPointResetButtonTap: nil
+            destinationPointResetButtonTap: nil,
+            searchButtonTap: nil
         )
 
         _ = mainViewModel.transform(input: input)

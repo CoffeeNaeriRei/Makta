@@ -27,7 +27,7 @@ final class MakchaInfoUseCase {
     
     let makchaSectionModel = PublishSubject<(startTimeStr: String, makchaCellData: [MakchaCellData])>() // 컬렉션뷰 바인딩을 위한 SectionModel에 전달할 데이터
     let startPoint = PublishSubject<EndPoint>() // 출발지 정보
-    let destinationPoint: BehaviorSubject<EndPoint> // 도착지 정보
+    let destinationPoint = PublishSubject<EndPoint>() // 도착지 정보
     let searchedStartPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 출발지 주소들
     let searchedDestinationPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 도착지 주소들
     
@@ -35,13 +35,18 @@ final class MakchaInfoUseCase {
     private var timerDisposable: Disposable? // 타이머 구독을 제어하기 위한 Disposable
     
     private var isStartPointSearch: Bool = true // 출발지/도착지 중 어느 곳에 대한 검색인지 여부를 체크
+    private var startPointValue = EndPoint.mockStartPoint
+    private var destinationPointValue = EndPoint.mockDestinationPoint
     
     init(_ transPathRepository: TransPathRepositoryProtocol, _ endPointRepository: EndPointRepositoryProtocol) {
         self.transPathRepository = transPathRepository
         self.endPointRepository = endPointRepository
         
+        // 기본 도착지로 초기화 세팅
         let defaultDestination = EndPoint.loadFromUserDefaults(key: .defaultDestination) ?? EndPoint.mockDestinationPoint
-        destinationPoint = BehaviorSubject(value: defaultDestination)
+        defaultDestination.saveAsUserDefaults(key: .tempDestination)
+        destinationPointValue = defaultDestination
+        destinationPoint.onNext(destinationPointValue)
         
         subscribeTimer()
         subscribeMakchaSectionModel()
@@ -53,11 +58,6 @@ final class MakchaInfoUseCase {
         endPointRepository.getSearchedAddresses(searchKeyword: searchKeyword)
             .withUnretained(self)
             .subscribe(onNext: { `self`, searchedAddressArr in
-//                print()
-//                _ = searchedAddressArr.map {
-//                    print($0.name)
-//                }
-//                print()
                 if isStartPoint {
                     self.isStartPointSearch = true
                     self.searchedStartPoints.onNext(searchedAddressArr)
@@ -74,11 +74,13 @@ final class MakchaInfoUseCase {
         if isStartPointSearch {
             // 출발지 업데이트
             guard let selectedEndPoint = try? searchedStartPoints.value()[idx] else { return }
-            startPoint.onNext(selectedEndPoint)
+            startPointValue = selectedEndPoint
+            startPoint.onNext(startPointValue)
         } else {
             // 도착지 업데이트
             guard let selectedEndPoint = try? searchedDestinationPoints.value()[idx] else { return }
-            destinationPoint.onNext(selectedEndPoint)
+            destinationPointValue = selectedEndPoint
+            destinationPoint.onNext(destinationPointValue)
             selectedEndPoint.saveAsUserDefaults(key: .tempDestination)
             
         }
@@ -94,7 +96,8 @@ final class MakchaInfoUseCase {
         endPointRepository.getCurrentLocation()
             .withUnretained(self)
             .subscribe(onNext: { `self`, currentLocation in
-                self.startPoint.onNext(currentLocation)
+                self.startPointValue = currentLocation
+                self.startPoint.onNext(self.startPointValue)
                 self.searchedStartPoints.onNext([])
             })
             .disposed(by: disposeBag)
@@ -111,7 +114,8 @@ final class MakchaInfoUseCase {
     func resetDestinationPoint() {
         guard let defaultDestination = EndPoint.loadFromUserDefaults(key: .defaultDestination) else { return }
         defaultDestination.saveAsUserDefaults(key: .tempDestination)
-        destinationPoint.onNext(defaultDestination)
+        destinationPointValue = defaultDestination
+        destinationPoint.onNext(destinationPointValue)
         searchedDestinationPoints.onNext([])
         // TODO: - 검색 시트가 닫혀있다면 막차경로도 새로 불러오기
     }
@@ -122,30 +126,26 @@ final class MakchaInfoUseCase {
         endPointRepository.getCurrentLocation()
             .withUnretained(self)
             .subscribe(onNext: { `self`, currentLocation in
-                self.startPoint.onNext(currentLocation)
-                // TODO: - endPoint에도 이벤트 전달해야 함 (UserDefaults값 활용하기)
+                self.startPointValue = currentLocation
+                self.startPoint.onNext(self.startPointValue)
                 
-                if let destinationLonX = try? self.destinationPoint.value().lonX,
-                   let destinationLatY = try? self.destinationPoint.value().latY {
-                    let currentLocationCoordinate = (currentLocation.lonX, currentLocation.latY)
-                    let destinationLocationCoordinate = (destinationLonX, destinationLatY)
-                    
-                    self.loadMakchaPath(start: currentLocationCoordinate, end: destinationLocationCoordinate)
-                }
+                let currentLocationCoordinate = (self.startPointValue.lonX, self.startPointValue.latY)
+                let destinationLocationCoordinate = (self.destinationPointValue.lonX, self.destinationPointValue.latY)
+                self.loadMakchaPath(start: currentLocationCoordinate, destination: destinationLocationCoordinate)
             })
             .disposed(by: disposeBag)
     }
     
-//    // MARK: - 검색한 위치 기반으로 막차 경로 불러오기
-//    func loadMakchaPathWithSearchedLocation() {
-//        let start = startPoint.value.coordinate
-//        let end = destinationPoint.value.coordinate
-//        loadMakchaPath(start: start, end: end)
-//    }
+    // MARK: - 검색한 위치 기반으로 막차 경로 불러오기
+    func loadMakchaPathWithSearchedLocation() {
+        let startCoord = (startPointValue.lonX, startPointValue.latY)
+        let destinationCoord = (destinationPointValue.lonX, destinationPointValue.latY)
+        loadMakchaPath(start: startCoord, destination: destinationCoord)
+    }
     
     // MARK: - 막차 경로 검색
-    func loadMakchaPath(start: XYCoordinate, end: XYCoordinate) {
-        transPathRepository.getAllMakchaTransPath(start: start, end: end)
+    func loadMakchaPath(start: XYCoordinate, destination: XYCoordinate) {
+        transPathRepository.getAllMakchaTransPath(start: start, destination: destination)
             .withUnretained(self)
             .subscribe {
                 // 실시간 도착정보 불러오기

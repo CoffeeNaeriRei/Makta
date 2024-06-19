@@ -38,7 +38,7 @@ final class MainViewModel: ViewModelType {
         let searchedPointSelect: ControlEvent<IndexPath>? // 출발지/도착지 검색 결과 목록 중 하나를 선택
         let startPointResetButtonTap: ControlEvent<Void>? // 출발지 리셋버튼 탭
         let destinationPointResetButtonTap: ControlEvent<Void>? // 도착지 리셋버튼 탭
-//        let searchButtonTap = PublishRelay<Void>() // 검색 버튼 탭
+        let searchButtonTap: ControlEvent<Void>? // 검색 버튼 탭
     }
     
     struct Output {
@@ -123,6 +123,13 @@ final class MainViewModel: ViewModelType {
             .withUnretained(self)
             .subscribe(onNext: { `self`, _ in
                 self.makchaInfoUseCase.resetDestinationPoint()
+            })
+            .disposed(by: disposeBag)
+        
+        input.searchButtonTap?
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, _ in
+                self.makchaInfoUseCase.loadMakchaPathWithSearchedLocation()
             })
             .disposed(by: disposeBag)
         
