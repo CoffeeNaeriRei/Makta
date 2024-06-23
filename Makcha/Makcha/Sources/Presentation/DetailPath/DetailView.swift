@@ -13,7 +13,7 @@ import MakchaDesignSystem
 import FlexLayout
 import PinLayout
 
-protocol DetailViewDelegate {
+protocol DetailViewDelegate: AnyObject {
     func didSubPathViewHeightChange()
 }
 
@@ -57,6 +57,17 @@ final class DetailView: UIView {
     
     private let centerContentsTopContainer = UIView()
     private let nextArrivalTransportTimeContainer = UIView()
+    
+    private let startPointLabel = UILabelFactory.build(
+        attributedText: .pretendard("출발지", scale: .headline),
+        textAlignment: .left,
+        textColor: .cf(.grayScale(.gray900))
+    )
+    private let endPointLabel = UILabelFactory.build(
+        attributedText: .pretendard("도착지", scale: .headline),
+        textAlignment: .left,
+        textColor: .cf(.grayScale(.gray900))
+    )
     
     init() {
         super.init(frame: .zero)
@@ -121,21 +132,30 @@ final class DetailView: UIView {
                     $0.addItem(titleLabel)
                 }
                 .padding(16, 24, 12)
+                // startLabel
+                $0.addItem().direction(.row).define {
+                    $0.addItem().width(24).height(24).backgroundColor(.blue)
+                    $0.addItem(startPointLabel)
+                }.marginLeft(32)
                 // SubPathContainer
-                $0.addItem(subPathContainer).define {
-                    $0.addItem()
+                $0.addItem(subPathContainer)
+                // endLabel
+                $0.addItem().direction(.row).define {
+                    $0.addItem().width(24).height(24).backgroundColor(.blue)
+                    $0.addItem(endPointLabel)
                 }
+                .marginLeft(32)
+                .marginBottom(32)
             }
-            .backgroundColor(.cf(.grayScale(.gray100)).withAlphaComponent(0.28))
-            
         }
+        .backgroundColor(.cf(.grayScale(.gray100)).withAlphaComponent(0.28))
         .grow(1)
-        .border(1, .blue)
+//        .border(1, .blue)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        scrollView.pin.all(pin.safeArea)
+        scrollView.pin.top(pin.safeArea.top).horizontally().bottom()
         scrollView.flex.layout()
         scrollView.contentSize = contentView.frame.size
     }
@@ -148,7 +168,15 @@ extension DetailView: DetailViewDelegate {
         scrollView.contentSize = contentView.frame.size
     }
     
-    func configure(data: MakchaCellData) {
+    func configure(data: MakchaCellData, path: (String, String)) {
+        print(path)
+        
+        startPointLabel.attributedText = .pretendard(path.0, scale: .headline)
+        startPointLabel.flex.markDirty()
+        
+        endPointLabel.attributedText = .pretendard(path.1, scale: .headline)
+        endPointLabel.flex.markDirty()
+        
         subPathContainer.flex.define {
             $0.addItem()
             for subPath in data.makchaPath.subPath {
@@ -172,7 +200,7 @@ struct DetailView_Preview: PreviewProvider {
             let makchaPath = MakchaInfo.mockMakchaInfo.makchaPaths.last!
             let rtat: RealtimeArrivalTuple = (ArrivalStatus.arriveSoon, ArrivalStatus.arriveSoon)
             let view = DetailView()
-            view.configure(data: (makchaPath, (rtat)))
+            view.configure(data: (makchaPath, (rtat)), path:("", ""))
             return view
         }
     }

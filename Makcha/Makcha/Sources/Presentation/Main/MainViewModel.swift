@@ -21,6 +21,9 @@ final class MainViewModel: ViewModelType {
     // 임시로 MainCollectionView의 DataSource를 채우기 위한 프로퍼티
     // 추후 명칭 변경 필요.
     var tempSections = BehaviorRelay(value: [SectionOfMainCard]())
+    // MARK: 다른 VC에 전달하기 위한 값
+    var startPointName = BehaviorRelay(value: "")
+    var endPointName = BehaviorRelay(value: "")
     
     init(_ makchaInfoUseCase: MakchaInfoUseCase) {
         self.makchaInfoUseCase = makchaInfoUseCase
@@ -80,6 +83,20 @@ final class MainViewModel: ViewModelType {
             .map { "\($0.name) "}
             .asDriver(onErrorJustReturn: "도착지를 설정해주세요.")
         
+        startLocation.asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: {
+                $0.0.startPointName.accept($0.1)
+            })
+            .disposed(by: disposeBag)
+        
+        destinationLocation.asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: {
+                $0.0.endPointName.accept($0.1)
+            })
+            .disposed(by: disposeBag)
+
         return Output(
             startLocation: startLocation,
             destinationLocation: destinationLocation
@@ -98,7 +115,7 @@ extension MainViewModel: MainCollectionViewDelegate {
         let (sectionIndex, modelIndex) = (indexPath.section, indexPath.row)
         let cellData = tempSections.value[sectionIndex].items[modelIndex]
         
-        goToDetails(with: cellData)
+        goToDetails(with: cellData, path: (startPointName.value, endPointName.value))
     }
 }
 
@@ -118,7 +135,7 @@ extension MainViewModel: MainNavigation {
         navigation?.showSheet(height, with: vm)
     }
     
-    func goToDetails(with data: MakchaCellData) {
-        navigation?.goToDetails(with: data)
+    func goToDetails(with data: MakchaCellData, path: (String, String)) {
+        navigation?.goToDetails(with: data, path: path)
     }
 }

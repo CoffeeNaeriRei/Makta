@@ -26,9 +26,9 @@ final class DetailSubPathView: UIView {
         textAlignment: .right,
         textColor: .cf(.grayScale(.gray700))
     )
-
+    
     private let expanbaleContainer = {
-       let view = DottedLineView()
+        let view = DottedLineView()
         view.position = .top
         view.backgroundColor = .cf(.grayScale(.gray50))
         view.lineColor = .cf(.grayScale(.gray200))
@@ -40,30 +40,30 @@ final class DetailSubPathView: UIView {
     
     private let expandableHeaderContainer = {
         let view = DottedLineView()
-         view.position = .bottom
-         view.backgroundColor = .clear
-         view.lineColor = .cf(.grayScale(.gray200))
-         view.lineWidth = 1
-         view.lineDashPattern = []
-         
-         return view
+        view.position = .bottom
+        view.backgroundColor = .clear
+        view.lineColor = .cf(.grayScale(.gray200))
+        view.lineWidth = 1
+        view.lineDashPattern = []
+        
+        return view
     }()
     
     private let expandableBodyContainer = {
         let view = DottedLineView()
-         view.position = .bottom
-         view.backgroundColor = .clear
-         view.lineColor = .cf(.grayScale(.gray200))
-         view.lineWidth = 1
-         
-         return view
+        view.position = .bottom
+        view.backgroundColor = .clear
+        view.lineColor = .cf(.grayScale(.gray200))
+        view.lineWidth = 1
+        
+        return view
     }()
     
     private let decorationContainer = UIView()
     
     private let distanceView = UIView()
     private let toggleButon = {
-       let button = UIButton()
+        let button = UIButton()
         
         button.setTitle("확장", for: .normal)
         button.setTitleColor(.black, for: .normal)
@@ -81,7 +81,7 @@ final class DetailSubPathView: UIView {
         setup()
         layout()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -109,7 +109,7 @@ final class DetailSubPathView: UIView {
         guard let subPath = subPath else { return }
         let subPathType = subPath.subPathType
         let timeRatio = CGFloat(subPath.time) / totalTime
-        let uiDistance = max(timeRatio * UIScreen.main.bounds.width * 0.75, timeLabel.intrinsicContentSize.height + 8)
+        let uiDistance = max(timeRatio * UIScreen.main.bounds.width * 0.5, timeLabel.intrinsicContentSize.height + 8)
         calcedDistance = uiDistance
         switch subPathType {
         case .walk:
@@ -119,7 +119,7 @@ final class DetailSubPathView: UIView {
         case .subway:
             layoutSubPathTypeSubway(distance: uiDistance)
         }
-
+        
         expanbaleContainer.flex.height(24)
         expanbaleContainer.subviews.last?.isHidden = true
         expanbaleContainer.flex.markDirty()
@@ -176,7 +176,7 @@ extension DetailSubPathView {
     
     private func layoutSubPathTypeBus(distance: CGFloat) {
         guard let subPath = subPath, let transportColor = subPath.lane?.first?.busRouteType?.busUIColor,
-        let stations = subPath.stations else { return }
+              let stations = subPath.stations else { return }
         
         let subPathType = subPath.subPathType
         timeLabel.attributedText = .pretendard("\(subPath.time)분", scale: .caption)
@@ -205,7 +205,7 @@ extension DetailSubPathView {
             textColor: .cf(.grayScale(.gray500))
         )
         wayLabel.flex.padding(2, 4)
-
+        
         let arrivalTimeLabel = UILabelFactory.build(
             text: arrivalTime,
             textScale: .caption,
@@ -302,9 +302,9 @@ extension DetailSubPathView {
                                 .minHeight(56)
                             }
                         }
-                }
-                .width(UIScreen.main.bounds.width - 64).minHeight(24)
-                .top(arrivalTimeLabel.intrinsicContentSize.height + 6).left(32)
+                    }
+                    .width(UIScreen.main.bounds.width - 64).minHeight(24)
+                    .top(arrivalTimeLabel.intrinsicContentSize.height + 6).left(32)
                 
             }
             .marginLeft(32)
@@ -383,7 +383,7 @@ extension DetailSubPathView {
             textAlignment: .left,
             textColor: .cf(.grayScale(.gray900))
         )
-
+        
         contentView.flex.define {
             $0.addItem().direction(.row).gap(8).alignItems(.start).define {
                 $0.addItem(startImageView)
@@ -456,9 +456,9 @@ extension DetailSubPathView {
                                 .minHeight(56)
                             }
                         }
-                }
-                .width(UIScreen.main.bounds.width - 64).minHeight(24)
-                .top(arrivalTimeLabel.intrinsicContentSize.height + 6).left(32)
+                    }
+                    .width(UIScreen.main.bounds.width - 64).minHeight(24)
+                    .top(arrivalTimeLabel.intrinsicContentSize.height + 6).left(32)
                 
             }
             .marginLeft(32)
@@ -481,9 +481,9 @@ extension DetailSubPathView {
             weight: .regular,
             scale: .default
         )
-
+        
         let (tintColor, bgColor, borderColor) = pathIconColor(type)
-
+        
         let icon = UIImage(
             systemName: type.iconName,
             withConfiguration: symbolConfig
@@ -531,7 +531,7 @@ extension DetailSubPathView {
             expandableHeaderContainer.lineDashPattern = []
             expandableHeaderContainer.lineWidth = 1
             distanceView.flex.height(calcedDistance)
-
+            
             timeLabel.flex.top(calcedDistance! / 2 - timeLabel.intrinsicContentSize.height / 2)
         } else {
             let expandableHeight = expandableBodyContainer.bounds.height + 44
