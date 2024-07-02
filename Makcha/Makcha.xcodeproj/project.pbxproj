@@ -26,6 +26,7 @@
 		20C053D32C11F9E700DB78C8 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */; };
 		20C053D52C14A40000DB78C8 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C053D42C14A40000DB78C8 /* DetailView.swift */; };
 		20C053D82C1576CA00DB78C8 /* DottedLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C053D72C1576CA00DB78C8 /* DottedLineView.swift */; };
+		20CFB2692C2826AE004CFC04 /* Flex+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CFB2682C2826AE004CFC04 /* Flex+Extension.swift */; };
 		20E277222C0198DF0071F6CA /* MainCollectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */; };
 		20E277242C02E4340071F6CA /* Rx+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E277232C02E4340071F6CA /* Rx+Extension.swift */; };
 		20EB5D1C2C17500F0028287C /* DetailSubPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EB5D1B2C17500F0028287C /* DetailSubPathView.swift */; };
@@ -102,6 +103,7 @@
 		20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		20C053D42C14A40000DB78C8 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		20C053D72C1576CA00DB78C8 /* DottedLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DottedLineView.swift; sourceTree = "<group>"; };
+		20CFB2682C2826AE004CFC04 /* Flex+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flex+Extension.swift"; sourceTree = "<group>"; };
 		20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionHeaderCell.swift; sourceTree = "<group>"; };
 		20E277232C02E4340071F6CA /* Rx+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+Extension.swift"; sourceTree = "<group>"; };
 		20EB5D1B2C17500F0028287C /* DetailSubPathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSubPathView.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				20C053D72C1576CA00DB78C8 /* DottedLineView.swift */,
+				20CFB2682C2826AE004CFC04 /* Flex+Extension.swift */,
 			);
 			path = "UIView+Extension";
 			sourceTree = "<group>";
@@ -675,6 +678,7 @@
 				204A39DC2C0BF88E00C2F403 /* BaseCoordinator.swift in Sources */,
 				205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */,
 				B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */,
+				20CFB2692C2826AE004CFC04 /* Flex+Extension.swift in Sources */,
 				B8D48C112BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift in Sources */,
 				20EB5D1C2C17500F0028287C /* DetailSubPathView.swift in Sources */,
 				B83FBDD12C12D6D7004805ED /* KakaoPlaceSearchResultDTO.swift in Sources */,

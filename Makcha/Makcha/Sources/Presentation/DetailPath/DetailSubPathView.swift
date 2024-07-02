@@ -65,8 +65,7 @@ final class DetailSubPathView: UIView {
     private let toggleButon = {
         let button = UIButton()
         
-        button.setTitle("확장", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setImage(UIImage(systemName: "chevron.down")?.withTintColor(.cf(.grayScale(.gray700)), renderingMode: .alwaysOriginal), for: .normal)
         button.flex.minHeight(24).minWidth(40)
         
         return button
@@ -176,8 +175,7 @@ extension DetailSubPathView {
     
     private func layoutSubPathTypeBus(distance: CGFloat) {
         guard let subPath = subPath, let transportColor = subPath.lane?.first?.busRouteType?.busUIColor,
-              let stations = subPath.stations else { return }
-        
+              let stations = subPath.stations?.dropFirst().dropLast() else { return }
         let subPathType = subPath.subPathType
         timeLabel.attributedText = .pretendard("\(subPath.time)분", scale: .caption)
         timeLabel.textAlignment = .right
@@ -227,7 +225,13 @@ extension DetailSubPathView {
         nextArrivalTimeLabel.flex.padding(2, 4)
         
         let startStationLabel = UILabelFactory.build(
-            attributedText: .pretendard("\(subPath.startName ?? "시작")역", scale: .headline),
+            attributedText: .pretendard("\(subPath.startName ?? "시작")", scale: .headline),
+            textAlignment: .left,
+            textColor: .cf(.grayScale(.gray900))
+        )
+        
+        let endStationLabel = UILabelFactory.build(
+            attributedText: .pretendard("\(subPath.endName ?? "끝")", scale: .headline),
             textAlignment: .left,
             textColor: .cf(.grayScale(.gray900))
         )
@@ -277,7 +281,6 @@ extension DetailSubPathView {
                                 .marginLeft(12)
                             $0.addItem(toggleButon)
                                 .width(24).height(24)
-                                .border(1, .green)
                         }
                         .grow(1)
                         // DropDown Body
@@ -297,9 +300,9 @@ extension DetailSubPathView {
                                         .left(-24)
                                     $0.addItem(stationLabel)
                                         .left(-8)
-                                        .margin(12, 20, 8)
+                                        .margin(4, 20, 4)
                                 }
-                                .minHeight(56)
+                                .minHeight(28)
                             }
                         }
                     }
@@ -308,15 +311,18 @@ extension DetailSubPathView {
                 
             }
             .marginLeft(32)
-            $0.addItem(endImageView)
-                .width(24).height(24)
-                .cornerRadius(12)
-                .marginLeft(32)
+            $0.addItem().direction(.row).gap(8).define {
+                $0.addItem(endImageView)
+                    .width(24).height(24)
+                    .cornerRadius(12)
+                    .marginLeft(32)
+                $0.addItem(endStationLabel)
+            }
         }
     }
     
     private func layoutSubPathTypeSubway(distance: CGFloat) {
-        guard let subPath = subPath, let transportColor = subPath.lane?.first?.subwayCode?.subWayUIColor, let stations = subPath.stations else { return }
+        guard let subPath = subPath, let transportColor = subPath.lane?.first?.subwayCode?.subWayUIColor, let stations = subPath.stations?.dropFirst().dropLast() else { return }
         let subPathType = subPath.subPathType
         timeLabel.attributedText = .pretendard("\(subPath.time)분", scale: .caption)
         timeLabel.textAlignment = .right
@@ -384,6 +390,12 @@ extension DetailSubPathView {
             textColor: .cf(.grayScale(.gray900))
         )
         
+        let endStationLabel = UILabelFactory.build(
+            attributedText: .pretendard("\(subPath.endName ?? "끝")역", scale: .headline),
+            textAlignment: .left,
+            textColor: .cf(.grayScale(.gray900))
+        )
+        
         contentView.flex.define {
             $0.addItem().direction(.row).gap(8).alignItems(.start).define {
                 $0.addItem(startImageView)
@@ -431,7 +443,6 @@ extension DetailSubPathView {
                                 .marginLeft(12)
                             $0.addItem(toggleButon)
                                 .width(24).height(24)
-                                .border(1, .green)
                         }
                         .grow(1)
                         // DropDown Body
@@ -451,9 +462,9 @@ extension DetailSubPathView {
                                         .left(-24)
                                     $0.addItem(stationLabel)
                                         .left(-8)
-                                        .margin(12, 20, 8)
+                                        .margin(4, 20, 4)
                                 }
-                                .minHeight(56)
+                                .minHeight(28)
                             }
                         }
                     }
@@ -462,10 +473,13 @@ extension DetailSubPathView {
                 
             }
             .marginLeft(32)
-            $0.addItem(endImageView)
-                .width(24).height(24)
-                .cornerRadius(12)
-                .marginLeft(32)
+            $0.addItem().direction(.row).gap(8).define {
+                $0.addItem(endImageView)
+                    .width(24).height(24)
+                    .cornerRadius(12)
+                    .marginLeft(32)
+                $0.addItem(endStationLabel)
+            }
         }
     }
 }
@@ -525,6 +539,15 @@ extension DetailSubPathView {
 
 extension DetailSubPathView {
     private func toggleExpandable() {
+        let toggleImage = UIImage(
+            systemName: isExpadnable
+            ? "chevron.down"
+            : "chevron.up")?
+            .withTintColor(
+                .cf(.grayScale(.gray700)),
+                renderingMode: .alwaysOriginal
+            )
+        
         if isExpadnable {
             expanbaleContainer.flex.height(24)
             expanbaleContainer.lineDashPattern = []
@@ -542,8 +565,9 @@ extension DetailSubPathView {
             
             timeLabel.flex.top(expandableHeight / 2 - timeLabel.intrinsicContentSize.height / 2)
         }
-        
         isExpadnable.toggle()
+        toggleButon.setImage(toggleImage, for: .normal)
+        toggleButon.flex.markDirty()
         distanceView.flex.markDirty()
         expandableBodyContainer.isHidden.toggle()
         expanbaleContainer.flex.markDirty()

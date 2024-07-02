@@ -81,6 +81,7 @@ final class MainViewModel: ViewModelType {
         
         let destinationLocation = makchaInfoUseCase.destinationPoint
             .map { "\($0.name) "}
+        
             .asDriver(onErrorJustReturn: "도착지를 설정해주세요.")
         
         startLocation.asObservable()

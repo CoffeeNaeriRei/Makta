@@ -134,7 +134,7 @@ final class DetailView: UIView {
                 .padding(16, 24, 12)
                 // startLabel
                 $0.addItem().direction(.row).define {
-                    $0.addItem().width(24).height(24).backgroundColor(.blue)
+                    $0.addItem()
                     $0.addItem(startPointLabel)
                 }.marginLeft(32)
                 // SubPathContainer
