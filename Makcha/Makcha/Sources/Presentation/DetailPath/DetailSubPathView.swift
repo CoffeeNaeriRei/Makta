@@ -108,7 +108,7 @@ final class DetailSubPathView: UIView {
         guard let subPath = subPath else { return }
         let subPathType = subPath.subPathType
         let timeRatio = CGFloat(subPath.time) / totalTime
-        let uiDistance = max(timeRatio * UIScreen.main.bounds.width * 0.5, timeLabel.intrinsicContentSize.height + 8)
+        let uiDistance = max(max(timeRatio * UIScreen.main.bounds.width * 0.5, timeLabel.intrinsicContentSize.height + 8), 48)
         calcedDistance = uiDistance
         switch subPathType {
         case .walk:
@@ -259,7 +259,6 @@ extension DetailSubPathView {
                     }
                     .top(startImageView.intrinsicContentSize.height + 6)
                 }
-                
             }
             $0.addItem().define {
                 // Decorations

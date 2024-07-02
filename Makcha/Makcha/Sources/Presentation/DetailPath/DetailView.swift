@@ -125,23 +125,54 @@ final class DetailView: UIView {
             detailContainer.lineWidth = 1
             detailContainer.position = .top
             
-            $0.addItem().gap(8).define {
+            $0.addItem().gap(2).define {
                 let titleLabel = UILabelFactory.build(text: "경로 정보", textAlignment: .left)
+                let startImageView = UIImageView()
+                let endImageView = UIImageView()
+                
+                let symbolConfig = UIImage.SymbolConfiguration(
+                    pointSize: 14,
+                    weight: .regular,
+                    scale: .default
+                )
+                
+                let startIcon = UIImage(
+                    systemName: "location.fill",
+                    withConfiguration: symbolConfig
+                )?.withTintColor(.cf(.grayScale(.gray300)), renderingMode: .alwaysOriginal)
+                
+                startImageView.image = startIcon
+                startImageView.contentMode = .center
+                startImageView.flex
+                    .backgroundColor(.cf(.grayScale(.gray50)))
+                    .border(1, .cf(.grayScale(.gray100)))
+                
+                let endIcon = UIImage(
+                    systemName: "house.fill",
+                    withConfiguration: symbolConfig
+                )?.withTintColor(.cf(.grayScale(.gray300)), renderingMode: .alwaysOriginal)
+                
+                endImageView.image = endIcon
+                endImageView.contentMode = .center
+                endImageView.flex
+                    .backgroundColor(.cf(.grayScale(.gray50)))
+                    .border(1, .cf(.grayScale(.gray100)))
+                
                 // headerContainer
                 $0.addItem(detailContainer).define {
                     $0.addItem(titleLabel)
                 }
                 .padding(16, 24, 12)
                 // startLabel
-                $0.addItem().direction(.row).define {
-                    $0.addItem()
+                $0.addItem().direction(.row).gap(8).define {
+                    $0.addItem(startImageView).width(24).height(24).cornerRadius(12)
                     $0.addItem(startPointLabel)
                 }.marginLeft(32)
                 // SubPathContainer
                 $0.addItem(subPathContainer)
                 // endLabel
-                $0.addItem().direction(.row).define {
-                    $0.addItem().width(24).height(24).backgroundColor(.blue)
+                $0.addItem().direction(.row).gap(8).define {
+                    $0.addItem(endImageView).width(24).height(24).cornerRadius(12)
                     $0.addItem(endPointLabel)
                 }
                 .marginLeft(32)
