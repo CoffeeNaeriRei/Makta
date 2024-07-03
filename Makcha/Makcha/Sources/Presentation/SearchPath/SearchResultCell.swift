@@ -30,8 +30,6 @@ final class SearchResultCell: UITableViewCell, Reusable {
         textColor: UIColor.cf(.grayScale(.gray500))
     )
     
-    private let resultScrollView = UIScrollView()
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -81,7 +79,9 @@ extension SearchResultCell {
     func configure(with data: EndPoint) {
         pointName.text = data.name
         pointAddress.text = data.roadAddressName ?? data.addressName
-//        setNeedsLayout()
+        pointName.flex.markDirty()
+        pointAddress.flex.markDirty()
+        setNeedsLayout()
     }
 }
 
