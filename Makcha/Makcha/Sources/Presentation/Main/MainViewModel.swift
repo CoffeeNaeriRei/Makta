@@ -97,7 +97,7 @@ final class MainViewModel: ViewModelType {
         input.destinationPointTextFieldChange?
             .distinctUntilChanged()
             .withUnretained(self)
-            .debounce(.seconds(3), scheduler: MainScheduler.instance)
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: { `self`, inputText in
                 if inputText != "" {
                     self.makchaInfoUseCase.searchWithAddressText(isStartPoint: false, searchKeyword: inputText)

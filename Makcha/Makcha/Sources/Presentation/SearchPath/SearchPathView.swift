@@ -40,6 +40,7 @@ final class SearchPathView: UIView {
         let button = UIButton()
         button.setTitle("검색", for: .normal)
         button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        button.tintColor = .white // TODO: - 색 변경
         button.semanticContentAttribute = .forceRightToLeft
         
         return button
@@ -73,7 +74,6 @@ final class SearchPathView: UIView {
     
     let resetStartPointButton: UIButton = {
         let button = UIButton()
-//        button.setTitle("출", for: .normal)
         button.setBackgroundImage(UIImage(systemName: "arrow.counterclockwise"), for: .normal)
         button.tintColor = UIColor.cf(.grayScale(.black))
         
@@ -82,7 +82,6 @@ final class SearchPathView: UIView {
     
     let resetDestinationPointButton: UIButton = {
         let button = UIButton()
-//        button.setTitle("도", for: .normal)
         button.setBackgroundImage(UIImage(systemName: "arrow.counterclockwise"), for: .normal)
         button.tintColor = UIColor.cf(.grayScale(.black))
         
@@ -204,10 +203,21 @@ extension SearchPathView {
         titleLabel.text = detent.title
         closeButton.isHidden = detent == .large ? false : true
         setNeedsLayout()
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
-            self.searchButton.flex.backgroundColor(detent == .large ? .cf(.primaryScale(.primary(.medium))) : .clear)
-            self.searchButton.flex.markDirty()
-            self.searchButton.layoutIfNeeded()
+        
+        let isLargeDetent = (detent == .large)
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
+            // 시트를 올리는 경우, isHidden을 먼저 풀어줘야 함
+            if isLargeDetent {
+                self.searchResultScrollView.isHidden = false
+            }
+            self.searchResultScrollView.flex.view?.alpha = isLargeDetent ? 1.0 : 0.0
+            self.searchResultScrollView.flex.markDirty()
+            self.searchResultScrollView.layoutIfNeeded()
+        }) { _ in
+            // 시트를 닫는 경우, 애니메이션 종료 후 isHidden 처리
+            if !isLargeDetent {
+                self.searchResultScrollView.flex.view?.isHidden = true
+            }
         }
     }
 }
