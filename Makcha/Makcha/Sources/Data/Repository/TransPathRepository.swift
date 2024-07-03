@@ -212,7 +212,7 @@ extension TransPathRepository {
                 idx: subPathIdx,
                 subPathType: subPathType,
                 distance: subPathArr[subPathIdx].distance,
-                time: subPathArr[subPathIdx].sectionTime,
+                time: (subPathArr[subPathIdx].sectionTime == 0) ? 1 : subPathArr[subPathIdx].sectionTime, // 소요시간이 0분으로 오는 데이터는 1분으로
                 stationCount: subPathArr[subPathIdx].stationCount,
                 lane: laneInfoArr.isEmpty ? nil : laneInfoArr,
                 startName: subPathArr[subPathIdx].startName,
