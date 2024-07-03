@@ -128,6 +128,7 @@ final class MakchaInfoUseCase {
             .subscribe(onNext: { `self`, currentLocation in
                 self.startPointValue = currentLocation
                 self.startPoint.onNext(self.startPointValue)
+                self.destinationPoint.onNext(self.destinationPointValue)
                 
                 let currentLocationCoordinate = (self.startPointValue.lonX, self.startPointValue.latY)
                 let destinationLocationCoordinate = (self.destinationPointValue.lonX, self.destinationPointValue.latY)
@@ -210,7 +211,6 @@ final class MakchaInfoUseCase {
     }
     
     // MARK: - 타이머 시작
-    // TODO: - 새 타이머가 시작될 때 외에도 동작 중인 타이머를 종료시킬 시점이 더 필요한지 생각해보기
     private func startTimer() {
         print("타이머 시작")
         timerDisposable?.dispose() // 기존 타이머 종료
