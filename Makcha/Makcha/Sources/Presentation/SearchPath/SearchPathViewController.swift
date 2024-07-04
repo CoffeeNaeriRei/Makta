@@ -19,11 +19,11 @@ final class SearchPathViewController: UIViewController {
     }
     // swiftlint: enable force_cast
     
-    private let vm: MainViewModel
+    private let vm: SearchPathViewModel
     private let disposeBag = DisposeBag()
 
-    init(vm: MainViewModel) {
-        self.vm = vm
+    init(_ searchPathViewModel: SearchPathViewModel) {
+        self.vm = searchPathViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -57,9 +57,7 @@ final class SearchPathViewController: UIViewController {
         let searchButtonTap = mainView.searchButton.rx.tap
         
         let output = vm.transform(
-            input: MainViewModel.Input(
-                settingButtonTap: nil,
-                starButtonTap: nil,
+            input: SearchPathViewModel.Input(
                 startPointTextFieldChange: startPointTextFieldChange,
                 destinationPointTextFieldChange: destinationPointTextFieldChange,
                 searchedPointSelect: searchedPointSelected,
@@ -117,7 +115,7 @@ struct SearchPathViewController_Previews: PreviewProvider {
             let locationService = LocationService()
             
             return SearchPathViewController(
-                vm: MainViewModel(
+                SearchPathViewModel(
                     MakchaInfoUseCase(
                         TransPathRepository(apiService),
                         EndPointRepository(locationService, apiService)

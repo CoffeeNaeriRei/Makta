@@ -12,7 +12,7 @@ import UIKit
 protocol MainNavigation: AnyObject {
     func goToSettings()
     func goToRemark()
-    func showSheet(_ height: CGFloat, with vm: MainViewModel)
+    func showSheet(_ height: CGFloat, with vm: SearchPathViewModel)
     func goToDetails(with data: MakchaCellData)
 }
 
@@ -23,15 +23,16 @@ final class MainCoordinator: BaseCoordinator {
         
         let apiService = APIService()
         let locationService = LocationService()
-        
-        let vm = MainViewModel(
-            MakchaInfoUseCase(
-                TransPathRepository(apiService),
-                EndPointRepository(locationService, apiService)
-            )
+        let makchaInfoUseCase = MakchaInfoUseCase(
+            TransPathRepository(apiService),
+            EndPointRepository(locationService, apiService)
         )
-        vm.navigation = self
-        let vc = MainViewController(vm)
+        
+        let mainVM = MainViewModel(makchaInfoUseCase)
+        let searchPathVM = SearchPathViewModel(makchaInfoUseCase)
+        
+        mainVM.navigation = self
+        let vc = MainViewController(mainVM, searchPathVM)
         navigationController.pushViewController(vc, animated: true)
     }
 }
@@ -49,7 +50,7 @@ extension MainCoordinator: MainNavigation {
         navigationController.pushViewController(RemarkViewController(), animated: true)
     }
     
-    func showSheet(_ height: CGFloat, with vm: MainViewModel) {
+    func showSheet(_ height: CGFloat, with vm: SearchPathViewModel) {
         let searchPathSheet = SearchPathViewController(vm: vm)
         
         let customDent: UISheetPresentationController.Detent = .custom(identifier: .init("initDent")) { _ in

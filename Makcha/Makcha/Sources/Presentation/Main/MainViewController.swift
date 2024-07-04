@@ -20,7 +20,8 @@ final class MainViewController: UIViewController {
     }
     // swiftlint: enable force_cast
     
-    private let mainViewModel: MainViewModel
+    private let mainVM: MainViewModel
+    private let searchPathVM: SearchPathViewModel
     private let disposeBag = DisposeBag()
     
     private var dataSource: RxCollectionViewSectionedReloadDataSource<SectionOfMainCard>?
@@ -28,8 +29,9 @@ final class MainViewController: UIViewController {
     private let leftUIBarButtonItem = UIBarButtonItem()
     private let rightUIBarButtonItem = UIBarButtonItem()
 
-    init(_ mainViewModel: MainViewModel) {
-        self.mainViewModel = mainViewModel
+    init(_ mainViewModel: MainViewModel, _ searchPathViewModel: SearchPathViewModel) {
+        self.mainVM = mainViewModel
+        self.searchPathVM = searchPathViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -61,16 +63,10 @@ final class MainViewController: UIViewController {
     private func bind() {
         let input = MainViewModel.Input(
             settingButtonTap: leftUIBarButtonItem.rx.tap,
-            starButtonTap: rightUIBarButtonItem.rx.tap,
-            startPointTextFieldChange: nil,
-            destinationPointTextFieldChange: nil,
-            searchedPointSelect: nil,
-            startPointResetButtonTap: nil,
-            destinationPointResetButtonTap: nil,
-            searchButtonTap: nil
+            starButtonTap: rightUIBarButtonItem.rx.tap
         )
 
-        _ = mainViewModel.transform(input: input)
+        _ = mainVM.transform(input: input)
 
         bindCollectionView()
         input.viewDidLoadEvent.accept(()) // 바인딩이 끝난 뒤에 viewDldLoad 이벤트 1회 발생
@@ -95,20 +91,20 @@ extension MainViewController: MainCollectionViewDelegate {
                     header.resetButton.rx.tap
                         .withUnretained(self)
                         .subscribe { vc, _ in
-                            vc.mainViewModel.resetToCurrentLocationTap()
+                            vc.mainVM.resetToCurrentLocationTap()
                         }
                         .disposed(by: header.disposeBag)
                 }
             }
             .disposed(by: disposeBag)
 
-        mainViewModel.tempSections
+        mainVM.tempSections
             .bind(to: mainView.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
     
     func goToDetails(_ indexPath: IndexPath) {
-        mainViewModel.goToDetails(indexPath)
+        mainVM.goToDetails(indexPath)
     }
 }
 
@@ -132,7 +128,7 @@ extension MainViewController {
     }
     
     private func setupSheet() {
-        mainViewModel.showSheet(185 - self.mainView.safeAreaInsets.bottom, with: mainViewModel)
+        mainVM.showSheet(185 - self.mainView.safeAreaInsets.bottom, with: searchPathVM)
     }
 }
 
@@ -142,15 +138,15 @@ struct MainViewController_Previews: PreviewProvider {
         ViewControllerPreview {
             let apiService = APIService()
             let locationService = LocationService()
+            let makchaInfoUseCase = MakchaInfoUseCase(
+                TransPathRepository(apiService),
+                EndPointRepository(locationService, apiService)
+            )
             
             return UINavigationController(
                 rootViewController: MainViewController(
-                    MainViewModel(
-                        MakchaInfoUseCase(
-                            TransPathRepository(apiService),
-                            EndPointRepository(locationService, apiService)
-                        )
-                    )
+                    MainViewModel(makchaInfoUseCase),
+                    SearchPathViewModel(makchaInfoUseCase)
                 )
             )
         }
