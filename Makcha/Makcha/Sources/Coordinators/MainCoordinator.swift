@@ -51,7 +51,7 @@ extension MainCoordinator: MainNavigation {
     }
     
     func showSheet(_ height: CGFloat, with vm: SearchPathViewModel) {
-        let searchPathSheet = SearchPathViewController(vm: vm)
+        let searchPathSheet = SearchPathViewController(vm)
         
         let customDent: UISheetPresentationController.Detent = .custom(identifier: .init("initDent")) { _ in
             height

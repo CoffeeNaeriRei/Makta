@@ -19,6 +19,8 @@ final class SearchPathViewController: UIViewController {
     }
     // swiftlint: enable force_cast
     
+    private let isSheetOpened = BehaviorRelay(value: false)
+    
     private let vm: SearchPathViewModel
     private let disposeBag = DisposeBag()
 
@@ -63,7 +65,8 @@ final class SearchPathViewController: UIViewController {
                 searchedPointSelect: searchedPointSelected,
                 startPointResetButtonTap: startPointResetButtonTap,
                 destinationPointResetButtonTap: destinationPointResetButtonTap,
-                searchButtonTap: searchButtonTap
+                searchButtonTap: searchButtonTap,
+                isSheetOpened: isSheetOpened
             )
         )
         // 출발지 검색 텍스트필드

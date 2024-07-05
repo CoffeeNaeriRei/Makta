@@ -38,6 +38,8 @@ final class MakchaInfoUseCase {
     private var startPointValue = EndPoint.mockStartPoint
     private var destinationPointValue = EndPoint.mockDestinationPoint
     
+    private var isSheetOpened = false // 검색 시트가 열려 있는지 여부를 체크하는 값
+    
     init(_ transPathRepository: TransPathRepositoryProtocol, _ endPointRepository: EndPointRepositoryProtocol) {
         self.transPathRepository = transPathRepository
         self.endPointRepository = endPointRepository
@@ -99,9 +101,12 @@ final class MakchaInfoUseCase {
                 self.startPointValue = currentLocation
                 self.startPoint.onNext(self.startPointValue)
                 self.searchedStartPoints.onNext([])
+                // 검색 시트가 닫혀 있다면 막차 경로도 다시 검색
+                if !self.isSheetOpened {
+                    self.loadMakchaPathWithSearchedLocation()
+                }
             })
             .disposed(by: disposeBag)
-        // TODO: - 검색 시트가 닫혀있다면 막차경로도 새로 불러오기
     }
     
     // MARK: - 도착지 리셋
@@ -117,7 +122,10 @@ final class MakchaInfoUseCase {
         destinationPointValue = defaultDestination
         destinationPoint.onNext(destinationPointValue)
         searchedDestinationPoints.onNext([])
-        // TODO: - 검색 시트가 닫혀있다면 막차경로도 새로 불러오기
+        // 검색 시트가 닫혀 있다면 막차 경로도 다시 검색
+        if !self.isSheetOpened {
+            self.loadMakchaPathWithSearchedLocation()
+        }
     }
     
     // MARK: - 현재 위치 기반으로 막차 경로 불러오기
@@ -155,6 +163,11 @@ final class MakchaInfoUseCase {
                 $0.makchaInfo.onNext($1)
             }
             .disposed(by: disposeBag)
+    }
+    
+    /// 검색 시트 열림 여부를 갱신하는 메서드
+    func updateIsSheetOpened(_ isOpened: Bool) {
+        isSheetOpened = isOpened
     }
     
     // MARK: - MakchaPath 배열을 받아와서 각 경로별 실시간 도착정보를 만들어주는 메서드

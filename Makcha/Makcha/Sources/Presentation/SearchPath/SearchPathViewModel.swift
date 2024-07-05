@@ -25,6 +25,7 @@ final class SearchPathViewModel: ViewModelType {
         let startPointResetButtonTap: ControlEvent<Void> // 출발지 리셋버튼 탭
         let destinationPointResetButtonTap: ControlEvent<Void> // 도착지 리셋버튼 탭
         let searchButtonTap: ControlEvent<Void> // 검색 버튼 탭
+        let isSheetOpened: BehaviorRelay<Bool> // 검색 시트를 열었는지 여부
     }
     
     struct Output {
@@ -83,6 +84,13 @@ final class SearchPathViewModel: ViewModelType {
             .withUnretained(self)
             .subscribe(onNext: { `self`, _ in
                 self.makchaInfoUseCase.loadMakchaPathWithSearchedLocation()
+            })
+            .disposed(by: disposeBag)
+        
+        input.isSheetOpened
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, isOpened in
+                self.makchaInfoUseCase.updateIsSheetOpened(isOpened)
             })
             .disposed(by: disposeBag)
         
