@@ -260,16 +260,22 @@ extension MakchaInfoUseCase {
             .disposed(by: disposeBag)
     }
     
-    // makchaSectionModel 구독 (실제 컬렉션뷰로 넘겨줄 데이터를 만들어주는 스트림)
+    /**
+     ### [ makchaSectionModel 구독 (실제 컬렉션뷰로 넘겨줄 데이터를 만들어주는 스트림) ]
+     makchaInfo와 realtimeArrivals가 동시에 갱신되는 것이 아니기 때문에 한쪽의 개수가 달라지는 순간 인덱스가 맞지 않음.
+     그래서 각각의 배열의 길이가 같을 때 이벤트를 전달
+     */
     private func subscribeMakchaSectionModel() {
         Observable.combineLatest(makchaInfo, realtimeArrivals)
             .subscribe(onNext: { [weak self] makchaInfo, realtimeArrivals in
                 var updatedMakchaCell = [MakchaCellData]()
-                for makchaIdx in 0..<realtimeArrivals.count {
-                    let cellData: MakchaCellData = (makchaInfo.makchaPaths[makchaIdx], realtimeArrivals[makchaIdx])
-                    updatedMakchaCell.append(cellData)
+                if makchaInfo.makchaPaths.count == realtimeArrivals.count {
+                    for makchaIdx in 0..<realtimeArrivals.count {
+                        let cellData: MakchaCellData = (makchaInfo.makchaPaths[makchaIdx], realtimeArrivals[makchaIdx])
+                        updatedMakchaCell.append(cellData)
+                    }
+                    self?.makchaSectionModel.onNext((makchaInfo.startTimeStr, updatedMakchaCell))
                 }
-                self?.makchaSectionModel.onNext((makchaInfo.startTimeStr, updatedMakchaCell))
             })
             .disposed(by: disposeBag)
     }
