@@ -185,7 +185,7 @@ extension DetailSubPathView {
         let distanceBgColor = transportColor.withAlphaComponent(0.22)
         
         let headerTitleLabel = UILabelFactory.build(
-            attributedText: .pretendard("\(stations.count)개 역 이동", scale: .caption),
+            attributedText: .pretendard("\(stations.count + 1)개 정거장 이동", scale: .caption),
             textAlignment: .left,
             textColor: .cf(.grayScale(.gray700))
         )
@@ -278,8 +278,10 @@ extension DetailSubPathView {
                         $0.addItem(expandableHeaderContainer).direction(.row).justifyContent(.spaceBetween).define {
                             $0.addItem(headerTitleLabel)
                                 .marginLeft(12)
-                            $0.addItem(toggleButon)
-                                .width(24).height(24)
+                            if !stations.isEmpty {
+                                $0.addItem(toggleButon)
+                                    .width(24).height(24)
+                            }
                         }
                         .grow(1)
                         // DropDown Body
@@ -325,13 +327,12 @@ extension DetailSubPathView {
         let subPathType = subPath.subPathType
         timeLabel.attributedText = .pretendard("\(subPath.time)분", scale: .caption)
         timeLabel.textAlignment = .right
-        
         let startImageView = pathIconImageView(subPathType, transportColor)
         let endImageView = pathIconImageView(subPathType, transportColor)
         let distanceBgColor = transportColor.withAlphaComponent(0.22)
         
         let headerTitleLabel = UILabelFactory.build(
-            attributedText: .pretendard("\(stations.count)개 역 이동", scale: .caption),
+            attributedText: .pretendard("\(stations.count + 1)개 역 이동", scale: .caption),
             textAlignment: .left,
             textColor: .cf(.grayScale(.gray700))
         )
@@ -440,8 +441,10 @@ extension DetailSubPathView {
                         $0.addItem(expandableHeaderContainer).direction(.row).justifyContent(.spaceBetween).define {
                             $0.addItem(headerTitleLabel)
                                 .marginLeft(12)
-                            $0.addItem(toggleButon)
-                                .width(24).height(24)
+                            if !stations.isEmpty {
+                                $0.addItem(toggleButon)
+                                    .width(24).height(24)
+                            }
                         }
                         .grow(1)
                         // DropDown Body
