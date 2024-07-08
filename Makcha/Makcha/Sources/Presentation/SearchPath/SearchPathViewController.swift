@@ -88,6 +88,15 @@ final class SearchPathViewController: UIViewController {
                 return cell
             }
             .disposed(by: disposeBag)
+        // 검색 버튼 클릭 시 이벤트
+        output.searchButtonPressed
+            .drive(onNext: { [weak self] in
+                guard let `self` = self else { return }
+                // 시트 내리기
+                navigation?.pullDownSheet()
+                updateToCustomSheet()
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -96,13 +105,25 @@ extension SearchPathViewController: UISheetPresentationControllerDelegate {
         if let detentIdentifier = sheetPresentationController.selectedDetentIdentifier {
             switch detentIdentifier {
             case UISheetPresentationController.Detent.Identifier(rawValue: "initDent"):
-                mainView.configure(.custom)
+                updateToCustomSheet()
             case .large:
-                mainView.configure(.large)
+                updateToLargeSheet()
             default:
                 return
             }
         }
+    }
+    
+    /// Sheet의 detent가 .custom일 때의 업데이트 처리
+    private func updateToCustomSheet() {
+        mainView.configure(.custom)
+        isSheetOpened.accept(false)
+    }
+    
+    /// Sheet의 detent가 .large일 때의 업데이트 처리
+    private func updateToLargeSheet() {
+        mainView.configure(.large)
+        isSheetOpened.accept(true)
     }
 }
 
@@ -118,14 +139,13 @@ struct SearchPathViewController_Previews: PreviewProvider {
         ViewControllerPreview {
             let apiService = APIService()
             let locationService = LocationService()
+            let makchaInfoUseCase = MakchaInfoUseCase(
+                TransPathRepository(apiService),
+                EndPointRepository(locationService, apiService)
+            )
             
             return SearchPathViewController(
-                SearchPathViewModel(
-                    MakchaInfoUseCase(
-                        TransPathRepository(apiService),
-                        EndPointRepository(locationService, apiService)
-                    )
-                )
+                SearchPathViewModel(makchaInfoUseCase)
             )
         }
     }
