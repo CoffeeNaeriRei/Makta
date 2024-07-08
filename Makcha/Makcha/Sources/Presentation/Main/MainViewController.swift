@@ -21,7 +21,6 @@ final class MainViewController: UIViewController {
     // swiftlint: enable force_cast
     
     private let mainVM: MainViewModel
-    private let searchPathVM: SearchPathViewModel
     private let disposeBag = DisposeBag()
     
     private var dataSource: RxCollectionViewSectionedReloadDataSource<SectionOfMainCard>?
@@ -29,9 +28,8 @@ final class MainViewController: UIViewController {
     private let leftUIBarButtonItem = UIBarButtonItem()
     private let rightUIBarButtonItem = UIBarButtonItem()
 
-    init(_ mainViewModel: MainViewModel, _ searchPathViewModel: SearchPathViewModel) {
+    init(_ mainViewModel: MainViewModel) {
         self.mainVM = mainViewModel
-        self.searchPathVM = searchPathViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -128,7 +126,7 @@ extension MainViewController {
     }
     
     private func setupSheet() {
-        mainVM.showSheet(185 - self.mainView.safeAreaInsets.bottom, with: searchPathVM)
+        mainVM.showSheet(185 - self.mainView.safeAreaInsets.bottom)
     }
 }
 
@@ -145,8 +143,7 @@ struct MainViewController_Previews: PreviewProvider {
             
             return UINavigationController(
                 rootViewController: MainViewController(
-                    MainViewModel(makchaInfoUseCase),
-                    SearchPathViewModel(makchaInfoUseCase)
+                    MainViewModel(makchaInfoUseCase)
                 )
             )
         }

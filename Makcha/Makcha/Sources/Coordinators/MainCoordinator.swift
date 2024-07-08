@@ -12,11 +12,15 @@ import UIKit
 protocol MainNavigation: AnyObject {
     func goToSettings()
     func goToRemark()
-    func showSheet(_ height: CGFloat, with vm: SearchPathViewModel)
+    func showSheet(_ height: CGFloat)
+    func pullDownSheet()
     func goToDetails(with data: MakchaCellData)
 }
 
 final class MainCoordinator: BaseCoordinator {
+    // pullDownSheet를 위한 참조
+    var searchPathViewController: SearchPathViewController?
+    
     // MARK: Navigation 처리
     override func start() {
         super.start()
@@ -31,9 +35,12 @@ final class MainCoordinator: BaseCoordinator {
         let mainVM = MainViewModel(makchaInfoUseCase)
         let searchPathVM = SearchPathViewModel(makchaInfoUseCase)
         
+        self.searchPathViewController = SearchPathViewController(searchPathVM)
+        self.searchPathViewController?.navigation = self
+        
         mainVM.navigation = self
-        let vc = MainViewController(mainVM, searchPathVM)
-        navigationController.pushViewController(vc, animated: true)
+        let mainViewController = MainViewController(mainVM)
+        navigationController.pushViewController(mainViewController, animated: true)
     }
 }
 
@@ -50,8 +57,8 @@ extension MainCoordinator: MainNavigation {
         navigationController.pushViewController(RemarkViewController(), animated: true)
     }
     
-    func showSheet(_ height: CGFloat, with vm: SearchPathViewModel) {
-        let searchPathSheet = SearchPathViewController(vm)
+    func showSheet(_ height: CGFloat) {
+        guard let searchPathSheet = self.searchPathViewController else { return }
         
         let customDent: UISheetPresentationController.Detent = .custom(identifier: .init("initDent")) { _ in
             height
@@ -67,6 +74,14 @@ extension MainCoordinator: MainNavigation {
             sheet.delegate = searchPathSheet
         }
         navigationController.present(searchPathSheet, animated: true)
+    }
+    
+    /// SearchPathView 시트를 "initDent" 크기의 Dent로 내려준다.
+    func pullDownSheet() {
+        guard let sheet = searchPathViewController?.sheetPresentationController else { return }
+        sheet.animateChanges {
+            sheet.selectedDetentIdentifier = UISheetPresentationController.Detent.Identifier("initDent")
+        }
     }
     
     func goToDetails(with data: MakchaCellData) {

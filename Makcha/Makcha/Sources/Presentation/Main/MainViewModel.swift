@@ -102,9 +102,11 @@ extension MainViewModel: MainNavigation {
         navigation?.goToRemark()
     }
     
-    func showSheet(_ height: CGFloat, with vm: SearchPathViewModel) {
-        navigation?.showSheet(height, with: vm)
+    func showSheet(_ height: CGFloat) {
+        navigation?.showSheet(height)
     }
+    
+    func pullDownSheet() {}
     
     func goToDetails(with data: MakchaCellData) {
         navigation?.goToDetails(with: data)

@@ -21,11 +21,13 @@ final class SearchPathViewController: UIViewController {
     
     private let isSheetOpened = BehaviorRelay(value: false)
     
-    private let vm: SearchPathViewModel
+    private let searchPathVM: SearchPathViewModel
     private let disposeBag = DisposeBag()
+    
+    weak var navigation: MainNavigation?
 
     init(_ searchPathViewModel: SearchPathViewModel) {
-        self.vm = searchPathViewModel
+        self.searchPathVM = searchPathViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -58,7 +60,7 @@ final class SearchPathViewController: UIViewController {
         let destinationPointResetButtonTap = mainView.resetDestinationPointButton.rx.tap
         let searchButtonTap = mainView.searchButton.rx.tap
         
-        let output = vm.transform(
+        let output = searchPathVM.transform(
             input: SearchPathViewModel.Input(
                 startPointTextFieldChange: startPointTextFieldChange,
                 destinationPointTextFieldChange: destinationPointTextFieldChange,
