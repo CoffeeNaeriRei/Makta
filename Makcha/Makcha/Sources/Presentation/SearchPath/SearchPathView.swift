@@ -10,8 +10,9 @@ import SwiftUI
 import UIKit
 
 import MakchaDesignSystem
-import PinLayout
 import FlexLayout
+import PinLayout
+import Reusable
 
 final class SearchPathView: UIView {
     private let rootView = UIView()
@@ -26,6 +27,7 @@ final class SearchPathView: UIView {
     private let titleContainer = UIView()
     private let textFieldContainer = UIView()
     private let searchInfoContainer = UIView()
+    private let searchResultScrollView = UIScrollView()
     
     let closeButton: UIButton = {
         let button = UIButton(type: .close)
@@ -37,11 +39,14 @@ final class SearchPathView: UIView {
     let searchButton: UIButton = {
         let button = UIButton()
         button.setTitle("검색", for: .normal)
+        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        button.tintColor = .white // TODO: - 색 변경
+        button.semanticContentAttribute = .forceRightToLeft
         
         return button
     }()
     
-    let startLocationLabel = {
+    let startPointLabel = {
         let label = UILabel()
         label.attributedText = .pretendard("test", scale: .title)
         label.textColor = UIColor.cf(.colorScale(.blue(.mediumLight)))
@@ -49,7 +54,7 @@ final class SearchPathView: UIView {
         return label
     }()
     
-    let startLocationTextField: UITextField = {
+    let startPointTextField: UITextField = {
         let textField = CustomUITextField()
         textField.font = .pretendard(.regular, size: 14)
         textField.placeholder = "출발지를 입력해주세요."
@@ -58,7 +63,7 @@ final class SearchPathView: UIView {
         return textField
     }()
     
-    let endLocationTextField: UITextField = {
+    let destinationPointTextField: UITextField = {
         let textField = CustomUITextField()
         textField.font = .pretendard(.regular, size: 14)
         textField.placeholder = "도착지를 입력해주세요."
@@ -67,18 +72,29 @@ final class SearchPathView: UIView {
         return textField
     }()
     
-    let resetStartLocationButton: UIButton = {
+    let resetStartPointButton: UIButton = {
         let button = UIButton()
-        button.setTitle("출", for: .normal)
+        button.setBackgroundImage(UIImage(systemName: "arrow.counterclockwise"), for: .normal)
+        button.tintColor = UIColor.cf(.grayScale(.black))
         
         return button
     }()
     
-    let resetEndLocationButton: UIButton = {
+    let resetDestinationPointButton: UIButton = {
         let button = UIButton()
-        button.setTitle("도", for: .normal)
+        button.setBackgroundImage(UIImage(systemName: "arrow.counterclockwise"), for: .normal)
+        button.tintColor = UIColor.cf(.grayScale(.black))
         
         return button
+    }()
+    
+    // 검색 결과를 표시할 테이블 뷰
+    let searchResultTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tableView.separatorColor = UIColor.cf(.grayScale(.gray500))
+        
+        return tableView
     }()
 
     init() {
@@ -92,6 +108,7 @@ final class SearchPathView: UIView {
     
     private func setup() {
         backgroundColor = .cf(.grayScale(.white))
+        searchResultTableView.register(cellType: SearchResultCell.self) // 테이블 뷰 재사용 셀 등록
         
         rootView.flex.define {
             // titleContainer
@@ -100,17 +117,18 @@ final class SearchPathView: UIView {
                 $0.addItem(closeButton)
             }
             .padding(14, 16, 12)
+            
             // textFieldContainer
             $0.addItem(textFieldContainer).gap(8).define {
-                for idx in 0...1 {
+                for idx in 0..<2 {
                     let label = UILabelFactory.build(
                         text: idx == 0 ? "출발지" : "도착지",
                         textScale: .caption,
                         textColor: .cf(.grayScale(.gray500))
                     )
                     
-                    let textField = idx == 0 ? startLocationTextField : endLocationTextField
-                    let resetButton = idx == 0 ? resetStartLocationButton : resetEndLocationButton
+                    let textField = idx == 0 ? startPointTextField : destinationPointTextField
+                    let resetButton = idx == 0 ? resetStartPointButton : resetDestinationPointButton
                     
                     $0.addItem().gap(8).direction(.row).alignItems(.center).define {
                         $0.addItem().direction(.row).gap(8).define {
@@ -122,22 +140,32 @@ final class SearchPathView: UIView {
                         }
                         .grow(1)
                         $0.addItem(resetButton)
-                            .width(24).height(24)
-                            .border(1, .red)
+//                            .width(24).height(24)
+//                            .border(1, .red)
                     }
                 }
             }
             .padding(8, 16, 20)
-            // searchListContainer
+            
+            // searchInfoContainer
             $0.addItem().define {
-                $0.addItem(searchInfoContainer)
-                    .border(1, .red)
+                $0.addItem(searchResultScrollView).direction(.column).define {
+                    $0.addItem(searchInfoContainer).define {
+                        // 검색 결과 상단 구분선
+                        $0.addItem()
+                            .width(100%).height(.cfStroke(.xsmall))
+                            .backgroundColor(UIColor.cf(.grayScale(.gray500)))
+                        $0.addItem(searchResultTableView)
+                            .grow(1)
+                        $0.addItem(searchButton)
+                            .backgroundColor(.cf(.primaryScale(.primary(.medium))))
+                            .minHeight(56)
+                            .cornerRadius(6)
+                            .marginHorizontal(16)
+                    }
                     .grow(1)
-                $0.addItem(searchButton)
-                    .backgroundColor(.cf(.primaryScale(.primary(.medium))))
-                    .minHeight(56)
-                    .cornerRadius(6)
-                    .marginHorizontal(16)
+                }
+                .grow(1)
             }
             .grow(1)
         }
@@ -175,10 +203,21 @@ extension SearchPathView {
         titleLabel.text = detent.title
         closeButton.isHidden = detent == .large ? false : true
         setNeedsLayout()
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
-            self.searchButton.flex.backgroundColor(detent == .large ? .cf(.primaryScale(.primary(.medium))) : .clear)
-            self.searchButton.flex.markDirty()
-            self.searchButton.layoutIfNeeded()
+        
+        let isLargeDetent = (detent == .large)
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
+            // 시트를 올리는 경우, isHidden을 먼저 풀어줘야 함
+            if isLargeDetent {
+                self.searchResultScrollView.isHidden = false
+            }
+            self.searchResultScrollView.flex.view?.alpha = isLargeDetent ? 1.0 : 0.0
+            self.searchResultScrollView.flex.markDirty()
+            self.searchResultScrollView.layoutIfNeeded()
+        }) { _ in
+            // 시트를 닫는 경우, 애니메이션 종료 후 isHidden 처리
+            if !isLargeDetent {
+                self.searchResultScrollView.flex.view?.isHidden = true
+            }
         }
     }
 }

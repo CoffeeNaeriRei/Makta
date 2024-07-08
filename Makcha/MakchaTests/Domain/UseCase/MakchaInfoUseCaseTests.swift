@@ -106,8 +106,8 @@ final class MakchaInfoUseCaseTests: XCTestCase {
         mockTransPathRepository.isMakchaInfo = true
         sut = MakchaInfoUseCase(mockTransPathRepository, mockEndPointRepository)
         let makchaInfoObserver = scheduler.createObserver(MakchaInfo.self)
-        let mockStart = EndPoint.mockStartPoint.coordinate
-        let mockEnd = EndPoint.mockDestinationPoint.coordinate
+        let mockStart = (EndPoint.mockStartPoint.lonX, EndPoint.mockStartPoint.latY)
+        let mockEnd = (EndPoint.mockDestinationPoint.lonX, EndPoint.mockDestinationPoint.latY)
         let expectedMakchaInfo = MakchaInfo.mockMakchaInfo // 결과로 예상되는 makchaInfo 값
 
         sut.makchaInfo

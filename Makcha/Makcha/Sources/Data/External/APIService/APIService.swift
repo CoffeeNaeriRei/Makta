@@ -13,7 +13,7 @@ import Foundation
 protocol APIServiceInterface {
     func fetchTransPathData(
         start: XYCoordinate,
-        end: XYCoordinate,
+        destination: XYCoordinate,
         completion: @escaping (Result<TransPathDTO, APIServiceError>) -> Void
     )
     func fetchSeoulRealtimeSubwayArrival(
@@ -41,10 +41,10 @@ struct APIService: APIServiceInterface {
     // 대중교통 환승경로 API 요청
     func fetchTransPathData(
         start: XYCoordinate,
-        end: XYCoordinate,
+        destination: XYCoordinate,
         completion: @escaping (Result<TransPathDTO, APIServiceError>) -> Void
     ) {
-        guard let transPathURL = makeTransPathURL(start: start, end: end),
+        guard let transPathURL = makeTransPathURL(start: start, destination: destination),
               let url = URL(string: transPathURL) else {
             completion(.failure(APIServiceError.invalidURL))
             return
@@ -185,7 +185,7 @@ extension APIService {
     // [대중교통 환승경로 API] 요청 URL 생성
     func makeTransPathURL(
         start: XYCoordinate,
-        end: XYCoordinate,
+        destination: XYCoordinate,
         resultSortType: ResultOrderType = .recommendPath, // 경로검색결과 정렬방식 - 0:추천경로|1:타입별정렬
         searchType: SearchType = .inCity, // 도시간|도시내 이동 선택 - 0:도시내
         searchPathType: SearchPathType = .all // 도시 내 경로수단 - 0:모두|1:지하철|2:버스
@@ -197,7 +197,7 @@ extension APIService {
         transPathURL += "apiKey=\(apiKey)"
         transPathURL += "&output=json"
         transPathURL += "&SX=\(start.lonX)&SY=\(start.latY)"
-        transPathURL += "&EX=\(end.lonX)&EY=\(end.latY)"
+        transPathURL += "&EX=\(destination.lonX)&EY=\(destination.latY)"
         transPathURL += "&OPT=\(resultSortType.rawValue)"
         transPathURL += "&SearchType=\(searchType.rawValue)"
         transPathURL += "&SearchPathType=\(searchPathType.rawValue)"

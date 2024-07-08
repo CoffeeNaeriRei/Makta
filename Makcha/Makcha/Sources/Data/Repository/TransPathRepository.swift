@@ -22,10 +22,10 @@ final class TransPathRepository: TransPathRepositoryProtocol {
     // 대중교통 환승경로 정보를 받아와서 Domain 계층의 UseCase에 전달
     func getAllMakchaTransPath(
         start: XYCoordinate,
-        end: XYCoordinate
+        destination: XYCoordinate
     ) -> Observable<MakchaInfo> {
         return Observable.create { emitter in
-            self.apiService.fetchTransPathData(start: start, end: end) { result in
+            self.apiService.fetchTransPathData(start: start, destination: destination) { result in
                 switch result {
                 case .success(let transPathDTO):
                     print("[APIService] - ✅ fetchTransPathData() 호출 성공!!")
@@ -212,7 +212,7 @@ extension TransPathRepository {
                 idx: subPathIdx,
                 subPathType: subPathType,
                 distance: subPathArr[subPathIdx].distance,
-                time: subPathArr[subPathIdx].sectionTime,
+                time: (subPathArr[subPathIdx].sectionTime == 0) ? 1 : subPathArr[subPathIdx].sectionTime, // 소요시간이 0분으로 오는 데이터는 1분으로
                 stationCount: subPathArr[subPathIdx].stationCount,
                 lane: laneInfoArr.isEmpty ? nil : laneInfoArr,
                 startName: subPathArr[subPathIdx].startName,

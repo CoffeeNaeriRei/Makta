@@ -27,14 +27,25 @@ final class MainViewModel: ViewModelType {
     }
     
     struct Input {
+        // MainView 관련 인풋
         let viewDidLoadEvent = PublishRelay<Void>() // 화면 최초 로딩 이벤트 (현재 위치 기반 경로 불러오기)
         let settingButtonTap: ControlEvent<Void>? // [설정] 버튼 탭
         let starButtonTap: ControlEvent<Void>? // [즐겨찾기] 버튼 탭
+        
+        // SearchPathView 관련 인풋
+        let startPointTextFieldChange: ControlProperty<String>? // 출발지 텍스트필드 입력 변화 감지
+        let destinationPointTextFieldChange: ControlProperty<String>? // 도착지 텍스트필드 입력 변화
+        let searchedPointSelect: ControlEvent<IndexPath>? // 출발지/도착지 검색 결과 목록 중 하나를 선택
+        let startPointResetButtonTap: ControlEvent<Void>? // 출발지 리셋버튼 탭
+        let destinationPointResetButtonTap: ControlEvent<Void>? // 도착지 리셋버튼 탭
+        let searchButtonTap: ControlEvent<Void>? // 검색 버튼 탭
     }
     
     struct Output {
-        let startLocation: Driver<String> // 출발지
-        let destinationLocation: Driver<String> // 도착지
+        let startPointLabel: Driver<String> // 출발지
+        let destinationPointLabel: Driver<String> // 도착지
+        let startPointSearchedResult: Observable<[EndPoint]> // 출발지 검색 결과 리스트
+        let destinationPointSearchedResult: Observable<[EndPoint]> // 도착지 검색 결과 리스트
     }
     
     func transform(input: Input) -> Output {
@@ -71,18 +82,74 @@ final class MainViewModel: ViewModelType {
                 $0.tempSections.accept([.init(model: $1.startTimeStr, items: $1.makchaCellData)])
             })
             .disposed(by: disposeBag)
- 
-        let startLocation = makchaInfoUseCase.startPoint
-            .map { "\($0.name)" }
-            .asDriver(onErrorJustReturn: "출발지를 설정해주세요.")
         
-        let destinationLocation = makchaInfoUseCase.destinationPoint
-            .map { "\($0.name) "}
-            .asDriver(onErrorJustReturn: "도착지를 설정해주세요.")
+        input.startPointTextFieldChange?
+            .distinctUntilChanged()
+            .withUnretained(self)
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { `self`, inputText in
+                if inputText != "" {
+                    self.makchaInfoUseCase.searchWithAddressText(isStartPoint: true, searchKeyword: inputText)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        input.destinationPointTextFieldChange?
+            .distinctUntilChanged()
+            .withUnretained(self)
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { `self`, inputText in
+                if inputText != "" {
+                    self.makchaInfoUseCase.searchWithAddressText(isStartPoint: false, searchKeyword: inputText)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        input.searchedPointSelect?
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, event in
+                self.makchaInfoUseCase.updatePointToSearchedAddress(idx: event.row)
+            })
+            .disposed(by: disposeBag)
+        
+        input.startPointResetButtonTap?
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, _ in
+                self.makchaInfoUseCase.resetStartPoint()
+            })
+            .disposed(by: disposeBag)
+        
+        input.destinationPointResetButtonTap?
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, _ in
+                self.makchaInfoUseCase.resetDestinationPoint()
+            })
+            .disposed(by: disposeBag)
+        
+        input.searchButtonTap?
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, _ in
+                self.makchaInfoUseCase.loadMakchaPathWithSearchedLocation()
+            })
+            .disposed(by: disposeBag)
+        
+        // output
+        let startPointLabel = makchaInfoUseCase.startPoint
+            .map { $0.name ?? $0.roadAddressName ?? $0.addressName }
+            .asDriver(onErrorJustReturn: "")
+        
+        let destinationPointLabel = makchaInfoUseCase.destinationPoint
+            .map { $0.name ?? $0.roadAddressName ?? $0.addressName }
+            .asDriver(onErrorJustReturn: "")
+        
+        let startPointSearchedResult = makchaInfoUseCase.searchedStartPoints
+        let destinationPointSearchedResult = makchaInfoUseCase.searchedDestinationPoints
         
         return Output(
-            startLocation: startLocation,
-            destinationLocation: destinationLocation
+            startPointLabel: startPointLabel,
+            destinationPointLabel: destinationPointLabel,
+            startPointSearchedResult: startPointSearchedResult,
+            destinationPointSearchedResult: destinationPointSearchedResult
         )
     }
     
