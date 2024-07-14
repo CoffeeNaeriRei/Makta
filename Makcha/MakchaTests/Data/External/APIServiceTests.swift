@@ -23,8 +23,8 @@ final class APIServiceTests: XCTestCase {
     
     func test_fetchTransPathData가_정상적으로_API를_호출하는지_확인() {
         // Given
-        let start = EndPoint.mockStartPoint.coordinate
-        let end = EndPoint.mockDestinationPoint.coordinate
+        let start = (EndPoint.mockStartPoint.lonX, EndPoint.mockStartPoint.latY)
+        let end = (EndPoint.mockDestinationPoint.lonX, EndPoint.mockDestinationPoint.latY)
         var isSuccess: Bool = false
         let completionExpectation = expectation(description: "fetchTransPathData completion expectation")
         
@@ -121,7 +121,7 @@ final class APIServiceTests: XCTestCase {
     
     func test_fetchKakaoReverseGeocodingResult가_정상적으로_API를_호출하는지_확인() {
         // Given
-        let mockCoordinate: XYCoordinate = (EndPoint.mockStartPoint.coordinate.lonX, EndPoint.mockStartPoint.coordinate.latY)
+        let mockCoordinate: XYCoordinate = (EndPoint.mockStartPoint.lonX, EndPoint.mockStartPoint.latY)
         var isSuccess: Bool = false
         var resultDTO: KakaoReverseGeocodingResultDTO?
         let completionExpectation = expectation(description: "fetchKakaoReverseGeocodingResult completion expectation")

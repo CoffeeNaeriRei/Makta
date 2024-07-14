@@ -51,7 +51,8 @@ final class EndPointRepository: EndPointRepositoryProtocol {
                         let endPoint = EndPoint(
                             addressName: addressInfo.address.addressName,
                             roadAddressName: addressInfo.roadAddress?.addressName,
-                            coordinate: (lon, lat)
+                            lonX: lon,
+                            latY: lat
                         )
                         emitter.onNext(endPoint)
                         emitter.onCompleted()
@@ -78,7 +79,8 @@ final class EndPointRepository: EndPointRepositoryProtocol {
                             name: kakaoPlace.placeName,
                             addressName: kakaoPlace.addressName,
                             roadAddressName: kakaoPlace.roadAddressName,
-                            coordinate: (kakaoPlace.x, kakaoPlace.y)
+                            lonX: kakaoPlace.x,
+                            latY: kakaoPlace.y
                         )
                         searchedAddressArr.append(searchedAddress)
                     }

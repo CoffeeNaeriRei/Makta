@@ -49,6 +49,7 @@
 		B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86233472BEA9B2D003959FB /* EndPoint.swift */; };
 		B862334B2BEC99AB003959FB /* MakchaInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862334A2BEC99AB003959FB /* MakchaInfoUseCase.swift */; };
 		B862334F2BECD93F003959FB /* MakchaInfoUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862334E2BECD93F003959FB /* MakchaInfoUseCaseTests.swift */; };
+		B89494AF2C218C00003068D5 /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89494AE2C218C00003068D5 /* SearchResultCell.swift */; };
 		B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F762BE7613800A13B58 /* AppDelegate.swift */; };
 		B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F782BE7613800A13B58 /* SceneDelegate.swift */; };
 		B89E7F802BE7613900A13B58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B89E7F7F2BE7613900A13B58 /* Assets.xcassets */; };
@@ -126,6 +127,7 @@
 		B86233472BEA9B2D003959FB /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		B862334A2BEC99AB003959FB /* MakchaInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaInfoUseCase.swift; sourceTree = "<group>"; };
 		B862334E2BECD93F003959FB /* MakchaInfoUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaInfoUseCaseTests.swift; sourceTree = "<group>"; };
+		B89494AE2C218C00003068D5 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		B89E7F732BE7613800A13B58 /* Makcha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Makcha.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B89E7F762BE7613800A13B58 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B89E7F782BE7613800A13B58 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -451,6 +453,7 @@
 			children = (
 				205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */,
 				204A39DF2C0C1A4C00C2F403 /* SearchPathView.swift */,
+				B89494AE2C218C00003068D5 /* SearchResultCell.swift */,
 			);
 			path = SearchPath;
 			sourceTree = "<group>";
@@ -678,7 +681,7 @@
 				204A39DC2C0BF88E00C2F403 /* BaseCoordinator.swift in Sources */,
 				205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */,
 				B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */,
-				20CFB2692C2826AE004CFC04 /* Flex+Extension.swift in Sources */,
+				B89494AF2C218C00003068D5 /* SearchResultCell.swift in Sources */,
 				B8D48C112BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift in Sources */,
 				20EB5D1C2C17500F0028287C /* DetailSubPathView.swift in Sources */,
 				B83FBDD12C12D6D7004805ED /* KakaoPlaceSearchResultDTO.swift in Sources */,

@@ -49,12 +49,41 @@ final class SearchPathViewController: UIViewController {
         mainView.configure(.custom)
     }
     private func bind() {
-        let output = vm.transform(input: MainViewModel.Input(settingButtonTap: nil, starButtonTap: nil))
-        output.startLocation
-            .drive(mainView.startLocationTextField.rx.text)
+        let startPointTextFieldChange = mainView.startPointTextField.rx.text.orEmpty
+        let destinationPointTextFieldChange = mainView.destinationPointTextField.rx.text.orEmpty
+        let searchedPointSelected = mainView.searchResultTableView.rx.itemSelected
+        let startPointResetButtonTap = mainView.resetStartPointButton.rx.tap
+        let destinationPointResetButtonTap = mainView.resetDestinationPointButton.rx.tap
+        let searchButtonTap = mainView.searchButton.rx.tap
+        
+        let output = vm.transform(
+            input: MainViewModel.Input(
+                settingButtonTap: nil,
+                starButtonTap: nil,
+                startPointTextFieldChange: startPointTextFieldChange,
+                destinationPointTextFieldChange: destinationPointTextFieldChange,
+                searchedPointSelect: searchedPointSelected,
+                startPointResetButtonTap: startPointResetButtonTap,
+                destinationPointResetButtonTap: destinationPointResetButtonTap,
+                searchButtonTap: searchButtonTap
+            )
+        )
+        // 출발지 검색 텍스트필드
+        output.startPointLabel
+            .drive(mainView.startPointTextField.rx.text)
             .disposed(by: disposeBag)
-        output.destinationLocation
-            .drive(mainView.endLocationTextField.rx.text)
+        // 도착지 검색 텍스트필드
+        output.destinationPointLabel
+            .drive(mainView.destinationPointTextField.rx.text)
+            .disposed(by: disposeBag)
+        // 검색 결과 바인딩
+        /// merge()를 사용하여 파라미터 항목들이 각각 이벤트를 방출할 때마다 가장 최근 것으로 방출
+        Observable.merge(output.startPointSearchedResult, output.destinationPointSearchedResult)
+            .bind(to: mainView.searchResultTableView.rx.items) { tableView, row, item in
+                let cell = tableView.dequeueReusableCell(for: IndexPath(row: row, section: 0)) as SearchResultCell
+                cell.configure(with: item)
+                return cell
+            }
             .disposed(by: disposeBag)
     }
 }

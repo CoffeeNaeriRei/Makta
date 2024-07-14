@@ -114,4 +114,17 @@ final class UtilsTest: XCTestCase {
         // Then
         XCTAssertEqual(result, expectedResult)
     }
+    
+    func test_EndPoint타입_UserDefaults_저장테스트() {
+        // Given
+        let mock = EndPoint.mockDestinationPoint
+        let result: EndPoint
+        
+        // When
+        mock.saveAsUserDefaults(key: .defaultDestination)
+        result = EndPoint.loadFromUserDefaults(key: .defaultDestination)!
+        
+        // Then
+        XCTAssertEqual(mock, result)
+    }
 }
