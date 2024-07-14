@@ -73,23 +73,23 @@ enum SubwayCode: Int {
     var subwayColor: Color {
         switch self {
         case .수도권1호선:
-            Color.cf(.colorScale(.limeGreen(.brightest)))
+            Color.transport(.subway(.metropolitanRailway(.line1)))
         case .수도권2호선:
-            Color.cf(.colorScale(.limeGreen(.lightest)))
+            Color.transport(.subway(.metropolitanRailway(.line2)))
         case .수도권3호선:
-            Color.cf(.colorScale(.limeGreen(.lighter)))
+            Color.transport(.subway(.metropolitanRailway(.line3)))
         case .수도권4호선:
-            Color.cf(.colorScale(.limeGreen(.light)))
+            Color.transport(.subway(.metropolitanRailway(.line4)))
         case .수도권5호선:
-            Color.cf(.colorScale(.limeGreen(.mediumLight)))
+            Color.transport(.subway(.metropolitanRailway(.line5)))
         case .수도권6호선:
-            Color.cf(.colorScale(.limeGreen(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.line6)))
         case .수도권7호선:
-            Color.cf(.colorScale(.limeGreen(.mediumDark)))
+            Color.transport(.subway(.metropolitanRailway(.line7)))
         case .수도권8호선:
-            Color.cf(.colorScale(.limeGreen(.dark)))
+            Color.transport(.subway(.metropolitanRailway(.line8)))
         case .수도권9호선:
-            Color.cf(.colorScale(.limeGreen(.darker)))
+            Color.transport(.subway(.metropolitanRailway(.line9)))
         case .GTX:
             Color.cf(.colorScale(.yellow(.medium)))
         case .공항철도:

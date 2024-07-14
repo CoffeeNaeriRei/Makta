@@ -148,19 +148,19 @@ final class MainViewModel: ViewModelType {
         let startPointSearchedResult = makchaInfoUseCase.searchedStartPoints
         let destinationPointSearchedResult = makchaInfoUseCase.searchedDestinationPoints
         
-        startLocation.asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: {
-                $0.0.startPointName.accept($0.1)
-            })
-            .disposed(by: disposeBag)
-        
-        destinationLocation.asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: {
-                $0.0.endPointName.accept($0.1)
-            })
-            .disposed(by: disposeBag)
+//        startLocation.asObservable()
+//            .withUnretained(self)
+//            .subscribe(onNext: {
+//                $0.0.startPointName.accept($0.1)
+//            })
+//            .disposed(by: disposeBag)
+//        
+//        destinationLocation.asObservable()
+//            .withUnretained(self)
+//            .subscribe(onNext: {
+//                $0.0.endPointName.accept($0.1)
+//            })
+//            .disposed(by: disposeBag)
 
         return Output(
             startPointLabel: startPointLabel,
