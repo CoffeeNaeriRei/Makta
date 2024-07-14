@@ -12,6 +12,7 @@ import CoreLocation
 protocol LocationManagerInterface {
     var authorizationStatus: CLAuthorizationStatus { get }
     var locationManagerDelegate: LocationManagerDelegate? { get set }
+    var desiredAccuracy: CLLocationAccuracy { get set }
     func requestWhenInUseAuthorization()
     func requestLocation()
 }

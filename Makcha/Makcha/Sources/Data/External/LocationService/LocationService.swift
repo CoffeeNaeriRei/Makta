@@ -24,6 +24,7 @@ final class LocationService: NSObject, LocationServiceInterface {
         self.locationManager = locationManager
         super.init()
         self.locationManager.locationManagerDelegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
     }
     
     // 현재 위치를 불러오기
