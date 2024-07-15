@@ -14,7 +14,7 @@ protocol MainNavigation: AnyObject {
     func goToRemark()
     func showSheet(_ height: CGFloat)
     func pullDownSheet()
-    func goToDetails(with data: MakchaCellData)
+    func goToDetails(with data: MakchaCellData, path: (String, String))
 }
 
 final class MainCoordinator: BaseCoordinator {
@@ -84,8 +84,9 @@ extension MainCoordinator: MainNavigation {
         }
     }
     
-    func goToDetails(with data: MakchaCellData) {
+    func goToDetails(with data: MakchaCellData, path: (String, String)) {
+        let vc = DetailViewController(data: data, path: path)å
         navigationController.dismiss(animated: true)
-        navigationController.pushViewController(DetailViewController(data: data), animated: true)
+        navigationController.pushViewController(vc, animated: true)
     }
 }

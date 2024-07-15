@@ -51,7 +51,7 @@ struct MakchaSubPath: Equatable {
     let stations: [PassStation]? // 거치는 정거장(역)들
     
     // 지하철🚇일 경우에만
-    let way: String? // 방면 정보 ex) "종로3가"
+    let way: String? // 방면 정보 ex) "종로3가 방면"
     let wayCode: Int? // 방면 정보 코드 (1:상행, 2:하행)
     
     // 버스🚌일 경우에만

@@ -15,10 +15,15 @@ final class DetailViewController: UIViewController {
     }
     // swiftlint: enable force_cast
     
-    let data: MakchaCellData
+    private let rightUIBarButtonItem = UIBarButtonItem()
     
-    init(data: MakchaCellData) {
+    private let data: MakchaCellData
+    private var path: (String, String)
+    
+    init(data: MakchaCellData, path: (String, String)) {
         self.data = data
+        self.path = path
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,12 +33,31 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mainView.configure(data: data)
+        setup()
+        #if DEBUG
         print(data.arrival.first.arrivalMessage)
         print(data.arrival.second.arrivalMessage)
+        #endif
     }
     
     override func loadView() {
         view = DetailView()
+    }
+    
+    private func setup() {
+        mainView.configure(data: data, path: path)
+        setupNavigationItems()
+    }
+}
+
+extension DetailViewController {
+    private func setupNavigationItems() {
+        let title = "경로 상세정보"
+        
+        rightUIBarButtonItem.title = "새로고침"
+        rightUIBarButtonItem.image = .init(systemName: "gobackward")
+        
+        navigationItem.title = title
+        navigationItem.rightBarButtonItem = rightUIBarButtonItem
     }
 }

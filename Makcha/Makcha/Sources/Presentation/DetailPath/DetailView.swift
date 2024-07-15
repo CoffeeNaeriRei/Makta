@@ -13,7 +13,7 @@ import MakchaDesignSystem
 import FlexLayout
 import PinLayout
 
-protocol DetailViewDelegate {
+protocol DetailViewDelegate: AnyObject {
     func didSubPathViewHeightChange()
 }
 
@@ -57,6 +57,17 @@ final class DetailView: UIView {
     
     private let centerContentsTopContainer = UIView()
     private let nextArrivalTransportTimeContainer = UIView()
+    
+    private let startPointLabel = UILabelFactory.build(
+        attributedText: .pretendard("출발지", scale: .headline),
+        textAlignment: .left,
+        textColor: .cf(.grayScale(.gray900))
+    )
+    private let endPointLabel = UILabelFactory.build(
+        attributedText: .pretendard("도착지", scale: .headline),
+        textAlignment: .left,
+        textColor: .cf(.grayScale(.gray900))
+    )
     
     init() {
         super.init(frame: .zero)
@@ -114,28 +125,68 @@ final class DetailView: UIView {
             detailContainer.lineWidth = 1
             detailContainer.position = .top
             
-            $0.addItem().gap(8).define {
+            $0.addItem().gap(2).define {
                 let titleLabel = UILabelFactory.build(text: "경로 정보", textAlignment: .left)
+                let startImageView = UIImageView()
+                let endImageView = UIImageView()
+                
+                let symbolConfig = UIImage.SymbolConfiguration(
+                    pointSize: 14,
+                    weight: .regular,
+                    scale: .default
+                )
+                
+                let startIcon = UIImage(
+                    systemName: "location.fill",
+                    withConfiguration: symbolConfig
+                )?.withTintColor(.cf(.grayScale(.gray300)), renderingMode: .alwaysOriginal)
+                
+                startImageView.image = startIcon
+                startImageView.contentMode = .center
+                startImageView.flex
+                    .backgroundColor(.cf(.grayScale(.gray50)))
+                    .border(1, .cf(.grayScale(.gray100)))
+                
+                let endIcon = UIImage(
+                    systemName: "house.fill",
+                    withConfiguration: symbolConfig
+                )?.withTintColor(.cf(.grayScale(.gray300)), renderingMode: .alwaysOriginal)
+                
+                endImageView.image = endIcon
+                endImageView.contentMode = .center
+                endImageView.flex
+                    .backgroundColor(.cf(.grayScale(.gray50)))
+                    .border(1, .cf(.grayScale(.gray100)))
+                
                 // headerContainer
                 $0.addItem(detailContainer).define {
                     $0.addItem(titleLabel)
                 }
                 .padding(16, 24, 12)
+                // startLabel
+                $0.addItem().direction(.row).gap(8).define {
+                    $0.addItem(startImageView).width(24).height(24).cornerRadius(12)
+                    $0.addItem(startPointLabel)
+                }.marginLeft(32)
                 // SubPathContainer
-                $0.addItem(subPathContainer).define {
-                    $0.addItem()
+                $0.addItem(subPathContainer)
+                // endLabel
+                $0.addItem().direction(.row).gap(8).define {
+                    $0.addItem(endImageView).width(24).height(24).cornerRadius(12)
+                    $0.addItem(endPointLabel)
                 }
+                .marginLeft(32)
+                .marginBottom(32)
             }
-            .backgroundColor(.cf(.grayScale(.gray100)).withAlphaComponent(0.28))
-            
         }
+        .backgroundColor(.cf(.grayScale(.gray100)).withAlphaComponent(0.28))
         .grow(1)
-        .border(1, .blue)
+//        .border(1, .blue)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        scrollView.pin.all(pin.safeArea)
+        scrollView.pin.top(pin.safeArea.top).horizontally().bottom()
         scrollView.flex.layout()
         scrollView.contentSize = contentView.frame.size
     }
@@ -148,7 +199,15 @@ extension DetailView: DetailViewDelegate {
         scrollView.contentSize = contentView.frame.size
     }
     
-    func configure(data: MakchaCellData) {
+    func configure(data: MakchaCellData, path: (String, String)) {
+        print(path)
+        
+        startPointLabel.attributedText = .pretendard(path.0, scale: .headline)
+        startPointLabel.flex.markDirty()
+        
+        endPointLabel.attributedText = .pretendard(path.1, scale: .headline)
+        endPointLabel.flex.markDirty()
+        
         subPathContainer.flex.define {
             $0.addItem()
             for subPath in data.makchaPath.subPath {
@@ -172,7 +231,7 @@ struct DetailView_Preview: PreviewProvider {
             let makchaPath = MakchaInfo.mockMakchaInfo.makchaPaths.last!
             let rtat: RealtimeArrivalTuple = (ArrivalStatus.arriveSoon, ArrivalStatus.arriveSoon)
             let view = DetailView()
-            view.configure(data: (makchaPath, (rtat)))
+            view.configure(data: (makchaPath, (rtat)), path:("", ""))
             return view
         }
     }
