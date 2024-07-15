@@ -123,14 +123,9 @@ extension MainViewModel: MainNavigation {
         navigation?.showSheet(height)
     }
     
-<<<<<<< HEAD
     func pullDownSheet() {}
     
-    func goToDetails(with data: MakchaCellData) {
-        navigation?.goToDetails(with: data)
-=======
     func goToDetails(with data: MakchaCellData, path: (String, String)) {
         navigation?.goToDetails(with: data, path: path)
->>>>>>> develop
     }
 }

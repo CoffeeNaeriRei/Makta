@@ -85,7 +85,7 @@ extension MainCoordinator: MainNavigation {
     }
     
     func goToDetails(with data: MakchaCellData, path: (String, String)) {
-        let vc = DetailViewController(data: data, path: path)å
+        let vc = DetailViewController(data: data, path: path)
         navigationController.dismiss(animated: true)
         navigationController.pushViewController(vc, animated: true)
     }
