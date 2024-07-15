@@ -70,7 +70,7 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
         textColor: .cf(.grayScale(.black))
     )
     
-    // MARK: 다음 도착 예정인 교통수단이 정거장에 도착하기 까지 남은 시간을 표시하는 라벨
+    // MARK: 다음 도착 예정인 교통수단이 정거장에 도착하기 까지 남은 시간을 표시하s는 라벨
     private let nextArrivalTransportTimeLabel = UILabelFactory.build(
         text: "다음 도착 NN분 예정",
         textColor: .cf(.grayScale(.gray500))

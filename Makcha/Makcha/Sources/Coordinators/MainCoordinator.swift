@@ -13,7 +13,7 @@ protocol MainNavigation: AnyObject {
     func goToSettings()
     func goToRemark()
     func showSheet(_ height: CGFloat, with vm: MainViewModel)
-    func goToDetails(with data: MakchaCellData)
+    func goToDetails(with data: MakchaCellData, path: (String, String))
 }
 
 final class MainCoordinator: BaseCoordinator {
@@ -68,8 +68,10 @@ extension MainCoordinator: MainNavigation {
         navigationController.present(searchPathSheet, animated: true)
     }
     
-    func goToDetails(with data: MakchaCellData) {
+    func goToDetails(with data: MakchaCellData, path: (String, String)) {
+        let vc = DetailViewController(data: data, path: path)
+        
         navigationController.dismiss(animated: true)
-        navigationController.pushViewController(DetailViewController(data: data), animated: true)
+        navigationController.pushViewController(vc, animated: true)
     }
 }
