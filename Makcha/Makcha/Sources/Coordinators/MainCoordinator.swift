@@ -12,27 +12,35 @@ import UIKit
 protocol MainNavigation: AnyObject {
     func goToSettings()
     func goToRemark()
-    func showSheet(_ height: CGFloat, with vm: MainViewModel)
+    func showSheet(_ height: CGFloat)
+    func pullDownSheet()
     func goToDetails(with data: MakchaCellData, path: (String, String))
 }
 
 final class MainCoordinator: BaseCoordinator {
+    // pullDownSheet를 위한 참조
+    var searchPathViewController: SearchPathViewController?
+    
     // MARK: Navigation 처리
     override func start() {
         super.start()
         
         let apiService = APIService()
         let locationService = LocationService()
-        
-        let vm = MainViewModel(
-            MakchaInfoUseCase(
-                TransPathRepository(apiService),
-                EndPointRepository(locationService, apiService)
-            )
+        let makchaInfoUseCase = MakchaInfoUseCase(
+            TransPathRepository(apiService),
+            EndPointRepository(locationService, apiService)
         )
-        vm.navigation = self
-        let vc = MainViewController(vm)
-        navigationController.pushViewController(vc, animated: true)
+        
+        let mainVM = MainViewModel(makchaInfoUseCase)
+        let searchPathVM = SearchPathViewModel(makchaInfoUseCase)
+        
+        self.searchPathViewController = SearchPathViewController(searchPathVM)
+        self.searchPathViewController?.navigation = self
+        
+        mainVM.navigation = self
+        let mainViewController = MainViewController(mainVM)
+        navigationController.pushViewController(mainViewController, animated: true)
     }
 }
 
@@ -49,8 +57,8 @@ extension MainCoordinator: MainNavigation {
         navigationController.pushViewController(RemarkViewController(), animated: true)
     }
     
-    func showSheet(_ height: CGFloat, with vm: MainViewModel) {
-        let searchPathSheet = SearchPathViewController(vm: vm)
+    func showSheet(_ height: CGFloat) {
+        guard let searchPathSheet = self.searchPathViewController else { return }
         
         let customDent: UISheetPresentationController.Detent = .custom(identifier: .init("initDent")) { _ in
             height
@@ -68,9 +76,16 @@ extension MainCoordinator: MainNavigation {
         navigationController.present(searchPathSheet, animated: true)
     }
     
+    /// SearchPathView 시트를 "initDent" 크기의 Dent로 내려준다.
+    func pullDownSheet() {
+        guard let sheet = searchPathViewController?.sheetPresentationController else { return }
+        sheet.animateChanges {
+            sheet.selectedDetentIdentifier = UISheetPresentationController.Detent.Identifier("initDent")
+        }
+    }
+    
     func goToDetails(with data: MakchaCellData, path: (String, String)) {
         let vc = DetailViewController(data: data, path: path)
-        
         navigationController.dismiss(animated: true)
         navigationController.pushViewController(vc, animated: true)
     }

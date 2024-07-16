@@ -79,6 +79,7 @@ final class DottedLineView: UIView {
     }
 }
 
+#if DEBUG
 struct DottedLineView_Preview: PreviewProvider {
     static var previews: some View {
         ViewPreview {
@@ -88,3 +89,4 @@ struct DottedLineView_Preview: PreviewProvider {
         }
     }
 }
+#endif

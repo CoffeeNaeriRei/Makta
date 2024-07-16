@@ -49,6 +49,7 @@
 		B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86233472BEA9B2D003959FB /* EndPoint.swift */; };
 		B862334B2BEC99AB003959FB /* MakchaInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862334A2BEC99AB003959FB /* MakchaInfoUseCase.swift */; };
 		B862334F2BECD93F003959FB /* MakchaInfoUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862334E2BECD93F003959FB /* MakchaInfoUseCaseTests.swift */; };
+		B8745C5E2C36EBDD00B63EAB /* SearchPathViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8745C5D2C36EBDD00B63EAB /* SearchPathViewModel.swift */; };
 		B89494AF2C218C00003068D5 /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89494AE2C218C00003068D5 /* SearchResultCell.swift */; };
 		B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F762BE7613800A13B58 /* AppDelegate.swift */; };
 		B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F782BE7613800A13B58 /* SceneDelegate.swift */; };
@@ -65,6 +66,7 @@
 		B89E7FB02BE773D100A13B58 /* TransPathDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7FAF2BE773D100A13B58 /* TransPathDTO.swift */; };
 		B89E7FB22BE7742600A13B58 /* LocationManagerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7FB12BE7742600A13B58 /* LocationManagerInterface.swift */; };
 		B89E7FB42BE7743600A13B58 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7FB32BE7743600A13B58 /* LocationService.swift */; };
+		B8B1C9852C3C26F000F11E15 /* Print.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B1C9842C3C26F000F11E15 /* Print.swift */; };
 		B8C31E9D2BEE18890049B47C /* EndPointRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31E9C2BEE18890049B47C /* EndPointRepositoryProtocol.swift */; };
 		B8C31E9F2BEE18C80049B47C /* EndPointRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31E9E2BEE18C80049B47C /* EndPointRepository.swift */; };
 		B8C31EA12BEE1A2A0049B47C /* EndPointRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31EA02BEE1A2A0049B47C /* EndPointRepositoryTests.swift */; };
@@ -127,6 +129,7 @@
 		B86233472BEA9B2D003959FB /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		B862334A2BEC99AB003959FB /* MakchaInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaInfoUseCase.swift; sourceTree = "<group>"; };
 		B862334E2BECD93F003959FB /* MakchaInfoUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaInfoUseCaseTests.swift; sourceTree = "<group>"; };
+		B8745C5D2C36EBDD00B63EAB /* SearchPathViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPathViewModel.swift; sourceTree = "<group>"; };
 		B89494AE2C218C00003068D5 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		B89E7F732BE7613800A13B58 /* Makcha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Makcha.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B89E7F762BE7613800A13B58 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -140,6 +143,7 @@
 		B89E7FAF2BE773D100A13B58 /* TransPathDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransPathDTO.swift; sourceTree = "<group>"; };
 		B89E7FB12BE7742600A13B58 /* LocationManagerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerInterface.swift; sourceTree = "<group>"; };
 		B89E7FB32BE7743600A13B58 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		B8B1C9842C3C26F000F11E15 /* Print.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Print.swift; sourceTree = "<group>"; };
 		B8C31E9C2BEE18890049B47C /* EndPointRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointRepositoryProtocol.swift; sourceTree = "<group>"; };
 		B8C31E9E2BEE18C80049B47C /* EndPointRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointRepository.swift; sourceTree = "<group>"; };
 		B8C31EA02BEE1A2A0049B47C /* EndPointRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointRepositoryTests.swift; sourceTree = "<group>"; };
@@ -453,6 +457,7 @@
 			children = (
 				205075D42BF55F3A00BAC30E /* SearchPathViewController.swift */,
 				204A39DF2C0C1A4C00C2F403 /* SearchPathView.swift */,
+				B8745C5D2C36EBDD00B63EAB /* SearchPathViewModel.swift */,
 				B89494AE2C218C00003068D5 /* SearchResultCell.swift */,
 			);
 			path = SearchPath;
@@ -469,6 +474,7 @@
 				B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */,
 				20E277232C02E4340071F6CA /* Rx+Extension.swift */,
 				20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */,
+				B8B1C9842C3C26F000F11E15 /* Print.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -675,6 +681,7 @@
 				206B51052BFA348600FC6F76 /* MainCollectionView.swift in Sources */,
 				B8C31EA32BEF41220049B47C /* Date+Extension.swift in Sources */,
 				B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */,
+				B8745C5E2C36EBDD00B63EAB /* SearchPathViewModel.swift in Sources */,
 				B83FBDD32C1375A3004805ED /* KakaoReverseGeocodingResultDTO.swift in Sources */,
 				B89E7FAE2BE773B700A13B58 /* APIService.swift in Sources */,
 				B89E7F8C2BE765D200A13B58 /* TestView.swift in Sources */,
@@ -695,6 +702,7 @@
 				20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */,
 				B8D48C172BF2164200DA2EB6 /* String+Extension.swift in Sources */,
 				B81BDE502BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift in Sources */,
+				B8B1C9852C3C26F000F11E15 /* Print.swift in Sources */,
 				B89E7FB22BE7742600A13B58 /* LocationManagerInterface.swift in Sources */,
 				B862333A2BEA04D9003959FB /* APIServiceType.swift in Sources */,
 				205075D82BF9A15E00BAC30E /* SettingsViewController.swift in Sources */,
@@ -888,6 +896,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -972,7 +981,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.coffeenaerirei.Makcha;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Makcha_App_Single_Project_Distribution;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Makcha_App_Single_Project_Distribution_On_Device;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

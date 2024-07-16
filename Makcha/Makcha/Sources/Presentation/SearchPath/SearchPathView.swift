@@ -157,13 +157,13 @@ final class SearchPathView: UIView {
                             .backgroundColor(UIColor.cf(.grayScale(.gray500)))
                         $0.addItem(searchResultTableView)
                             .grow(1)
-                        $0.addItem(searchButton)
-                            .backgroundColor(.cf(.primaryScale(.primary(.medium))))
-                            .minHeight(56)
-                            .cornerRadius(6)
-                            .marginHorizontal(16)
                     }
                     .grow(1)
+                    $0.addItem(searchButton)
+                        .backgroundColor(.cf(.primaryScale(.primary(.medium))))
+                        .minHeight(56)
+                        .cornerRadius(6)
+                        .marginHorizontal(16)
                 }
                 .grow(1)
             }
