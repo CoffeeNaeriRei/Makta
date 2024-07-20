@@ -22,8 +22,8 @@ final class MainViewModel: ViewModelType {
     // 추후 명칭 변경 필요.
     var tempSections = BehaviorRelay(value: [SectionOfMainCard]())
     // MARK: 다른 VC에 전달하기 위한 값
-    var startPointName = BehaviorRelay(value: "")
-    var endPointName = BehaviorRelay(value: "")
+    var startPointName = ""
+    var destinationPointName = ""
     
     init(_ makchaInfoUseCase: MakchaInfoUseCase) {
         self.makchaInfoUseCase = makchaInfoUseCase
@@ -74,19 +74,19 @@ final class MainViewModel: ViewModelType {
             })
             .disposed(by: disposeBag)
         
-//        startLocation.asObservable()
-//            .withUnretained(self)
-//            .subscribe(onNext: {
-//                $0.0.startPointName.accept($0.1)
-//            })
-//            .disposed(by: disposeBag)
-//        
-//        destinationLocation.asObservable()
-//            .withUnretained(self)
-//            .subscribe(onNext: {
-//                $0.0.endPointName.accept($0.1)
-//            })
-//            .disposed(by: disposeBag)
+        makchaInfoUseCase.startPoint.asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, startPoint in
+                self.startPointName = startPoint.name ?? startPoint.roadAddressName ?? startPoint.addressName
+            })
+            .disposed(by: disposeBag)
+        
+        makchaInfoUseCase.destinationPoint.asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, destinationPoint in
+                self.destinationPointName = destinationPoint.name ?? destinationPoint.roadAddressName ?? destinationPoint.addressName
+            })
+            .disposed(by: disposeBag)
 
         return Output()
     }
@@ -103,7 +103,7 @@ extension MainViewModel: MainCollectionViewDelegate {
         let (sectionIndex, modelIndex) = (indexPath.section, indexPath.row)
         let cellData = tempSections.value[sectionIndex].items[modelIndex]
         
-        goToDetails(with: cellData, path: (startPointName.value, endPointName.value))
+        goToDetails(with: cellData, path: (startPointName, destinationPointName))
     }
 }
 
