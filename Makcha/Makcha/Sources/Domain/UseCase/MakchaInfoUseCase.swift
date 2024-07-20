@@ -218,7 +218,7 @@ final class MakchaInfoUseCase {
             .withUnretained(self)
             .subscribe(onNext: { _, arrivals in
                 self.realtimeArrivals.onNext(arrivals)
-//                self.startTimer()
+                self.startTimer()
             })
             .disposed(by: disposeBag)
     }
