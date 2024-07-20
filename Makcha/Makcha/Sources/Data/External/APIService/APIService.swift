@@ -70,7 +70,7 @@ struct APIService: APIServiceInterface {
         stationName: String,
         completion: @escaping (Result<SeoulRealtimeSubwayDTO, APIServiceError>) -> Void
     ) {
-        guard let seoulRealtimeSubwayURL = makeSeoulRealtimeSubwayURL(stationName: stationName),
+        guard let seoulRealtimeSubwayURL = makeSeoulRealtimeSubwayURL(stationName: stationName)?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
               let url = URL(string: seoulRealtimeSubwayURL) else {
             completion(.failure(APIServiceError.invalidURL))
             return
@@ -123,7 +123,7 @@ struct APIService: APIServiceInterface {
         completion: @escaping (Result<KakaoPlaceSearchResultDTO, APIServiceError>) -> Void
     ) {
         guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_LOCAL_API") as? String,
-              let kakaoPlaceSearchURL = makeKakaoPlaceSearchURL(keyword: placeKeyword),
+              let kakaoPlaceSearchURL = makeKakaoPlaceSearchURL(keyword: placeKeyword)?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
               let url = URL(string: kakaoPlaceSearchURL) else {
             completion(.failure(APIServiceError.invalidURL))
             return
