@@ -24,7 +24,6 @@ final class DetailViewController: UIViewController {
     // TODO: - data, path 정보도 바인딩으로 처리하기
     private let data: MakchaCellData
     private var path: (String, String)
-    private let totalDurationTimeStr = PublishRelay<String>()
     private let firstArrivalMessage = PublishRelay<String>()
     private let secondArrivalMessage = PublishRelay<String>()
     
@@ -66,14 +65,9 @@ final class DetailViewController: UIViewController {
         makchaInfoUseCase?.makchaSectionModel
             .withUnretained(self)
             .subscribe(onNext: { `self`, makchaSectionModel in
-                self.totalDurationTimeStr.accept(makchaSectionModel.makchaCellData[self.idx].makchaPath.totalTime.convertToHourMinuteString)
                 self.firstArrivalMessage.accept(makchaSectionModel.makchaCellData[self.idx].arrival.first.arrivalMessageFirst)
                 self.secondArrivalMessage.accept(makchaSectionModel.makchaCellData[self.idx].arrival.second.arrivalMessageSecond)
             })
-            .disposed(by: disposeBag)
-        
-        totalDurationTimeStr.asDriver(onErrorJustReturn: "정보 없음")
-            .drive(mainView.durationTimeLabel.rx.text)
             .disposed(by: disposeBag)
         
         firstArrivalMessage.asDriver(onErrorJustReturn: "도착 정보 없음")

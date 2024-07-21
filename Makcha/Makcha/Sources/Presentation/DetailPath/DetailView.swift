@@ -200,7 +200,9 @@ extension DetailView: DetailViewDelegate {
     }
     
     func configure(data: MakchaCellData, path: (String, String)) {
-        print(path)
+        
+        // 막차 경로의 전체 소요시간을 그려줌
+        layoutTotalDurationTimeLabel(totalTime: data.makchaPath.totalTime)
         
         startPointLabel.attributedText = .pretendard(path.0, scale: .headline)
         startPointLabel.flex.markDirty()
@@ -221,6 +223,37 @@ extension DetailView: DetailViewDelegate {
             $0.addItem()
         }
         subPathContainer.flex.markDirty()
+    }
+}
+
+extension DetailView {
+    //TODO: - MainCollectionCell에 있는 layoutCenterContentsTopContainer와 거의 유사하기 때문에 메서드 하나로 정리 필요
+    private func layoutTotalDurationTimeLabel(totalTime: Int) {
+        // totalTime String 변환 ex) 72 -> 1시간12분
+        let totalTimeDescription = totalTime.calcTotalTimeDescription()
+        // 숫자와 시간/분 스타일 다르게 적용
+        let totalTimeText = NSMutableAttributedString.pretendard(totalTimeDescription.text, scale: .title)
+        let customAttr: [NSAttributedString.Key: Any] = [
+            .font : UIFont.pretendard(.medium, size: 12),
+            .foregroundColor: UIColor.cf(.grayScale(.gray600))
+        ]
+        if let hourIdx = totalTimeDescription.idx.first, let hourIdx = hourIdx {
+            let range: NSRange = .init(location: hourIdx, length: 2)
+            totalTimeText.addAttributes(customAttr, range: range)
+        }
+        
+        if let minuteIdx = totalTimeDescription.idx.last, let minuteIdx = minuteIdx {
+            if let hourIdx = totalTimeDescription.idx.first, let hourIdx = hourIdx {
+                let range: NSRange = .init(location: hourIdx + 2 + minuteIdx, length: 1)
+                totalTimeText.addAttributes(customAttr, range: range)
+            } else {
+                let range: NSRange = .init(location: minuteIdx, length: 1)
+                totalTimeText.addAttributes(customAttr, range: range)
+            }
+        }
+        // 텍스트에 스타일 적용
+        durationTimeLabel.attributedText = totalTimeText
+        durationTimeLabel.flex.markDirty()
     }
 }
 
