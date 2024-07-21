@@ -13,8 +13,9 @@ import RxSwift
 
 // MARK: - 막차 정보 관련 유즈케이스
 
-// 컬렉션뷰의 셀에 전달할 데이터 타입 (막차경로, 해당경로의실시간도착정보)
+// 컬렉션뷰의 셀로 전달하기 위한 데이터 타입 (막차경로, 해당경로의실시간도착정보)
 typealias MakchaCellData = (makchaPath: MakchaPath, arrival: RealtimeArrivalTuple)
+typealias MakchaCardSectionModel = (startTimeStr: String, makchaCellData: [MakchaCellData])
 
 final class MakchaInfoUseCase {
     private let transPathRepository: TransPathRepositoryProtocol
@@ -25,7 +26,7 @@ final class MakchaInfoUseCase {
     let realtimeArrivals = PublishSubject<[RealtimeArrivalTuple]>() // 막차 경로 별 실시간 도착 정보
     private let timerEvent = PublishRelay<Void>() // 실시간 도착 정보 타이머 이벤트
     
-    let makchaSectionModel = PublishSubject<(startTimeStr: String, makchaCellData: [MakchaCellData])>() // 컬렉션뷰 바인딩을 위한 SectionModel에 전달할 데이터
+    let makchaSectionModel = PublishSubject<MakchaCardSectionModel>() // 컬렉션뷰 바인딩을 위한 SectionModel에 전달할 데이터
     let startPoint = PublishSubject<EndPoint>() // 출발지 정보
     let destinationPoint = PublishSubject<EndPoint>() // 도착지 정보
     let searchedStartPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 출발지 주소들

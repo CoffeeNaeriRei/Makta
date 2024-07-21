@@ -70,7 +70,9 @@ final class MainViewModel: ViewModelType {
         makchaInfoUseCase.makchaSectionModel
             .withUnretained(self)
             .subscribe(onNext: {
-                $0.tempSections.accept([.init(model: $1.startTimeStr, items: $1.makchaCellData)])
+                // 가장 빠른 5개까지의 데이터만 전달
+                // TODO: - 펼치기 같은 기능 추가
+                $0.tempSections.accept([.init(model: $1.startTimeStr, items: Array($1.makchaCellData.prefix(5)))])
             })
             .disposed(by: disposeBag)
         
