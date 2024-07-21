@@ -105,7 +105,7 @@ extension MainViewModel: MainCollectionViewDelegate {
         let (sectionIndex, modelIndex) = (indexPath.section, indexPath.row)
         let cellData = tempSections.value[sectionIndex].items[modelIndex]
         
-        goToDetails(with: cellData, path: (startPointName, destinationPointName))
+        goToDetails(modelIndex, with: cellData, path: (startPointName, destinationPointName))
     }
 }
 
@@ -127,7 +127,7 @@ extension MainViewModel: MainNavigation {
     
     func pullDownSheet() {}
     
-    func goToDetails(with data: MakchaCellData, path: (String, String)) {
-        navigation?.goToDetails(with: data, path: path)
+    func goToDetails(_ makchaIdx: Int, with data: MakchaCellData, path: (String, String)) {
+        navigation?.goToDetails(makchaIdx, with: data, path: path)
     }
 }

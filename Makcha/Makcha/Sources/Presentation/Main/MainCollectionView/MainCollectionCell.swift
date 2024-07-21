@@ -217,9 +217,9 @@ extension MainCollectionCell {
             firstSubPath: data.makchaPath.subPath.filter { $0.subPathType != .walk }.first
         )
         // 타이머 도착 예정 시간 업데이트
-        currentArrivalTransportTimeLabel.text = data.arrival.first.arrivalMessage
+        currentArrivalTransportTimeLabel.text = data.arrival.first.arrivalMessageFirst
         currentArrivalTransportTimeLabel.flex.markDirty()
-        nextArrivalTransportTimeLabel.text = data.arrival.second.arrivalMessage
+        nextArrivalTransportTimeLabel.text = data.arrival.second.arrivalMessageSecond
         nextArrivalTransportTimeLabel.flex.markDirty()
         // 경로 업데이트
         layoutPathContentContainer(subPaths: data.makchaPath.subPath)

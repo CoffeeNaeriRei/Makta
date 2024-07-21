@@ -8,6 +8,9 @@
 import Foundation
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class DetailViewController: UIViewController {
     // swiftlint: disable force_cast
     private var mainView: DetailView {
@@ -17,10 +20,19 @@ final class DetailViewController: UIViewController {
     
     private let rightUIBarButtonItem = UIBarButtonItem()
     
+    private let idx: Int // 막차 정보 인덱스
+    // TODO: - data, path 정보도 바인딩으로 처리하기
     private let data: MakchaCellData
     private var path: (String, String)
+    private let totalDurationTimeStr = PublishRelay<String>()
+    private let firstArrivalMessage = PublishRelay<String>()
+    private let secondArrivalMessage = PublishRelay<String>()
     
-    init(data: MakchaCellData, path: (String, String)) {
+    weak var makchaInfoUseCase: MakchaInfoUseCase?
+    private let disposeBag = DisposeBag()
+    
+    init(makchaIdx: Int, data: MakchaCellData, path: (String, String)) {
+        self.idx = makchaIdx
         self.data = data
         self.path = path
         
@@ -35,9 +47,10 @@ final class DetailViewController: UIViewController {
         super.viewDidLoad()
         setup()
         #if DEBUG
-        print(data.arrival.first.arrivalMessage)
-        print(data.arrival.second.arrivalMessage)
+        print(data.arrival.first.arrivalMessageFirst)
+        print(data.arrival.second.arrivalMessageSecond)
         #endif
+        bind()
     }
     
     override func loadView() {
@@ -47,6 +60,29 @@ final class DetailViewController: UIViewController {
     private func setup() {
         mainView.configure(data: data, path: path)
         setupNavigationItems()
+    }
+    
+    private func bind() {
+        makchaInfoUseCase?.makchaSectionModel
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, makchaSectionModel in
+                self.totalDurationTimeStr.accept(makchaSectionModel.makchaCellData[self.idx].makchaPath.totalTime.convertToHourMinuteString)
+                self.firstArrivalMessage.accept(makchaSectionModel.makchaCellData[self.idx].arrival.first.arrivalMessageFirst)
+                self.secondArrivalMessage.accept(makchaSectionModel.makchaCellData[self.idx].arrival.second.arrivalMessageSecond)
+            })
+            .disposed(by: disposeBag)
+        
+        totalDurationTimeStr.asDriver(onErrorJustReturn: "정보 없음")
+            .drive(mainView.durationTimeLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        firstArrivalMessage.asDriver(onErrorJustReturn: "도착 정보 없음")
+            .drive(mainView.currentArrivalTransportTimeLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        secondArrivalMessage.asDriver(onErrorJustReturn: "다음 도착 정보 없음")
+            .drive(mainView.nextArrivalTransportTimeLabel.rx.text)
+            .disposed(by: disposeBag)
     }
 }
 

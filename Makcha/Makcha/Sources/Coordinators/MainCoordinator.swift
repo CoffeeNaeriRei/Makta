@@ -14,10 +14,12 @@ protocol MainNavigation: AnyObject {
     func goToRemark()
     func showSheet(_ height: CGFloat)
     func pullDownSheet()
-    func goToDetails(with data: MakchaCellData, path: (String, String))
+    func goToDetails(_ makchaIdx: Int, with data: MakchaCellData, path: (String, String))
 }
 
 final class MainCoordinator: BaseCoordinator {
+    // DetailView를 위한 참조
+    var makchaInfoUseCase: MakchaInfoUseCase?
     // pullDownSheet를 위한 참조
     var searchPathViewController: SearchPathViewController?
     
@@ -31,6 +33,7 @@ final class MainCoordinator: BaseCoordinator {
             TransPathRepository(apiService),
             EndPointRepository(locationService, apiService)
         )
+        self.makchaInfoUseCase = makchaInfoUseCase
         
         let mainVM = MainViewModel(makchaInfoUseCase)
         let searchPathVM = SearchPathViewModel(makchaInfoUseCase)
@@ -84,8 +87,9 @@ extension MainCoordinator: MainNavigation {
         }
     }
     
-    func goToDetails(with data: MakchaCellData, path: (String, String)) {
-        let vc = DetailViewController(data: data, path: path)
+    func goToDetails(_ makchaIdx: Int, with data: MakchaCellData, path: (String, String)) {
+        let vc = DetailViewController(makchaIdx: makchaIdx, data: data, path: path)
+        vc.makchaInfoUseCase = makchaInfoUseCase
         navigationController.dismiss(animated: true)
         navigationController.pushViewController(vc, animated: true)
     }

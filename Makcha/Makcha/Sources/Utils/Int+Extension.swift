@@ -27,4 +27,13 @@ extension Int {
         
         return result
     }
+    
+    // Int 단위의 분 값을 0시간0분 형식의 String으로 변환하는 프로퍼티
+    // TODO: - AttributedText로 수정 필요
+    var convertToHourMinuteString: String {
+        guard self >= 0 else { return "정보 없음" }
+        var hourStr = String(self / 60)
+        var minuteStr = String(self % 60)
+        return "\(hourStr)시간 \(minuteStr)분"
+    }
 }

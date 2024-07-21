@@ -32,21 +32,21 @@ final class DetailView: UIView {
         textColor: .cf(.grayScale(.gray600))
     )
     
-    private let durationTimeLabel = UILabelFactory.build(
-        attributedText: .pretendard("NN:NN", scale: .title),
+    let durationTimeLabel = UILabelFactory.build(
+        attributedText: .pretendard("불러오는 중...", scale: .title), // NN:NN
         textAlignment: .left,
         textColor: .cf(.grayScale(.gray800))
     )
     
     // MARK: 현재 도착 예정인 교통수단이 정거장에 도착하기 까지 남은 시간을 표시하는 라벨
-    private let currentArrivalTransportTimeLabel = UILabelFactory.build(
-        attributedText: .pretendard("NN분\n NN초", scale: .display),
+    let currentArrivalTransportTimeLabel = UILabelFactory.build(
+        attributedText: .pretendard("불러오는 중...", scale: .display), // NN분 NN초
         textColor: .cf(.grayScale(.black))
     )
     
     // MARK: 다음 도착 예정인 교통수단이 정거장에 도착하기 까지 남은 시간을 표시하는 라벨
-    private let nextArrivalTransportTimeLabel = UILabelFactory.build(
-        text: "다음 도착 NN분 예정",
+    let nextArrivalTransportTimeLabel = UILabelFactory.build(
+        text: "불러오는 중...", // 다음 도착 NN분 예정
         textColor: .cf(.grayScale(.gray500))
     )
     
