@@ -93,6 +93,7 @@ final class SearchPathView: UIView {
         let tableView = UITableView()
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.separatorColor = UIColor.cf(.grayScale(.gray500))
+        tableView.backgroundColor = .cf(.grayScale(.white))
         
         return tableView
     }()
@@ -140,32 +141,28 @@ final class SearchPathView: UIView {
                         }
                         .grow(1)
                         $0.addItem(resetButton)
-//                            .width(24).height(24)
-//                            .border(1, .red)
                     }
                 }
             }
             .padding(8, 16, 20)
             
             // searchInfoContainer
-            $0.addItem().define {
+            $0.addItem(searchInfoContainer).define {
                 $0.addItem(searchResultScrollView).direction(.column).define {
-                    $0.addItem(searchInfoContainer).define {
-                        // 검색 결과 상단 구분선
-                        $0.addItem()
-                            .width(100%).height(.cfStroke(.xsmall))
-                            .backgroundColor(UIColor.cf(.grayScale(.gray500)))
-                        $0.addItem(searchResultTableView)
-                            .grow(1)
-                    }
-                    .grow(1)
-                    $0.addItem(searchButton)
-                        .backgroundColor(.cf(.primaryScale(.primary(.medium))))
-                        .minHeight(56)
-                        .cornerRadius(6)
-                        .marginHorizontal(16)
+                    // 검색 결과 상단 구분선
+                    $0.addItem()
+                        .width(100%).height(.cfStroke(.xsmall))
+                        .backgroundColor(UIColor.cf(.grayScale(.gray500)))
+                    $0.addItem(searchResultTableView)
+                        .grow(1)
                 }
                 .grow(1)
+                
+                $0.addItem(searchButton)
+                    .backgroundColor(.cf(.primaryScale(.primary(.medium))))
+                    .minHeight(56)
+                    .cornerRadius(6)
+                    .marginHorizontal(16)
             }
             .grow(1)
         }
@@ -176,6 +173,10 @@ final class SearchPathView: UIView {
     private func layout() {
         rootView.pin.all(pin.safeArea)
         rootView.flex.layout()
+        
+        //TODO: - 테이블뷰 높이 고정(다른 방식 생각해보기)
+        let height = rootView.frame.height - titleContainer.frame.height - textFieldContainer.frame.height - searchButton.frame.height - safeAreaInsets.bottom
+        searchResultTableView.flex.height(height)
     }
     
     override func layoutSubviews() {
@@ -202,21 +203,20 @@ extension SearchPathView {
     func configure(_ detent: SearchPathView.Detent) {
         titleLabel.text = detent.title
         closeButton.isHidden = detent == .large ? false : true
-        setNeedsLayout()
         
         let isLargeDetent = (detent == .large)
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
             // 시트를 올리는 경우, isHidden을 먼저 풀어줘야 함
             if isLargeDetent {
-                self.searchResultScrollView.isHidden = false
+                self.searchInfoContainer.isHidden = false
             }
-            self.searchResultScrollView.flex.view?.alpha = isLargeDetent ? 1.0 : 0.0
-            self.searchResultScrollView.flex.markDirty()
-            self.searchResultScrollView.layoutIfNeeded()
+            self.searchInfoContainer.flex.view?.alpha = isLargeDetent ? 1.0 : 0.0
+            self.searchInfoContainer.flex.markDirty()
+            self.layoutIfNeeded()
         }) { _ in
             // 시트를 닫는 경우, 애니메이션 종료 후 isHidden 처리
             if !isLargeDetent {
-                self.searchResultScrollView.flex.view?.isHidden = true
+                self.searchInfoContainer.flex.view?.isHidden = true
             }
         }
     }

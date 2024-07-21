@@ -54,6 +54,7 @@ final class SearchResultCell: UITableViewCell, Reusable {
     }
     
     private func layout() {
+        contentView.backgroundColor = .cf(.grayScale(.white))
         contentView.flex.layout(mode: .adjustHeight)
     }
     

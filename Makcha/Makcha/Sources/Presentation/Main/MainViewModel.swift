@@ -22,8 +22,8 @@ final class MainViewModel: ViewModelType {
     // 추후 명칭 변경 필요.
     var tempSections = BehaviorRelay(value: [SectionOfMainCard]())
     // MARK: 다른 VC에 전달하기 위한 값
-    var startPointName = BehaviorRelay(value: "")
-    var endPointName = BehaviorRelay(value: "")
+    var startPointName = ""
+    var destinationPointName = ""
     
     init(_ makchaInfoUseCase: MakchaInfoUseCase) {
         self.makchaInfoUseCase = makchaInfoUseCase
@@ -70,23 +70,25 @@ final class MainViewModel: ViewModelType {
         makchaInfoUseCase.makchaSectionModel
             .withUnretained(self)
             .subscribe(onNext: {
-                $0.tempSections.accept([.init(model: $1.startTimeStr, items: $1.makchaCellData)])
+                // 가장 빠른 5개까지의 데이터만 전달
+                // TODO: - 펼치기 같은 기능 추가
+                $0.tempSections.accept([.init(model: $1.startTimeStr, items: Array($1.makchaCellData.prefix(5)))])
             })
             .disposed(by: disposeBag)
         
-//        startLocation.asObservable()
-//            .withUnretained(self)
-//            .subscribe(onNext: {
-//                $0.0.startPointName.accept($0.1)
-//            })
-//            .disposed(by: disposeBag)
-//        
-//        destinationLocation.asObservable()
-//            .withUnretained(self)
-//            .subscribe(onNext: {
-//                $0.0.endPointName.accept($0.1)
-//            })
-//            .disposed(by: disposeBag)
+        makchaInfoUseCase.startPoint.asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, startPoint in
+                self.startPointName = startPoint.name ?? startPoint.roadAddressName ?? startPoint.addressName
+            })
+            .disposed(by: disposeBag)
+        
+        makchaInfoUseCase.destinationPoint.asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, destinationPoint in
+                self.destinationPointName = destinationPoint.name ?? destinationPoint.roadAddressName ?? destinationPoint.addressName
+            })
+            .disposed(by: disposeBag)
 
         return Output()
     }
@@ -103,7 +105,7 @@ extension MainViewModel: MainCollectionViewDelegate {
         let (sectionIndex, modelIndex) = (indexPath.section, indexPath.row)
         let cellData = tempSections.value[sectionIndex].items[modelIndex]
         
-        goToDetails(with: cellData, path: (startPointName.value, endPointName.value))
+        goToDetails(modelIndex, with: cellData, path: (startPointName, destinationPointName))
     }
 }
 
@@ -125,7 +127,7 @@ extension MainViewModel: MainNavigation {
     
     func pullDownSheet() {}
     
-    func goToDetails(with data: MakchaCellData, path: (String, String)) {
-        navigation?.goToDetails(with: data, path: path)
+    func goToDetails(_ makchaIdx: Int, with data: MakchaCellData, path: (String, String)) {
+        navigation?.goToDetails(makchaIdx, with: data, path: path)
     }
 }

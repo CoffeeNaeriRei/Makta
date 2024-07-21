@@ -71,19 +71,15 @@ final class TransPathRepository: TransPathRepositoryProtocol {
                 switch result {
                 case .success(let seoulRealtimeSubwayDTO):
                     print("[APIService] - ✅ fetchSeoulRealtimeSubwayArrival() 호출 성공!!")
-                    // 호선+상하행에 맞게 필터링해서 1번째 도착과 2번째 도착 지하철 정보 받기
+                    // 호선+상하행 정보가 일치하는 데이터만 필터링
                     let arrivals = seoulRealtimeSubwayDTO.realtimeArrivalList
-                    let firstArr = self.filteringSeoulArrivalSubway(from: arrivals, subwayLine: subwayLineCode, wayCode: wayCode, isFirst: true)
-                    let secondArr = self.filteringSeoulArrivalSubway(from: arrivals, subwayLine: subwayLineCode, wayCode: wayCode, isFirst: false)
+                    let filteredArrivals = self.filteringSeoulArrivalSubway(from: arrivals, subwayLine: subwayLineCode, wayCode: wayCode)
                     
+                    // 실제 도착까지 남은 시간 구해서 도착정보 데이터 생성
                     // TODO: - 지하철 도착 메세지 등 정보도 확인해서 적절한 ArrivalStatus로 반환할 수 있도록 수정하기
-                    // 1번째 도착정보 구해서 반영
-                    let firstArrivalTime = self.extractRealRemainingFromArrivals(from: firstArr, currentTime: currentTime)
-                    realtimeArrival.first = .coming(remainingSecond: firstArrivalTime)
-                    
-                    // 2번째 도착정보 구해서 반영
-                    let secondArrivalTime = self.extractRealRemainingFromArrivals(from: secondArr, currentTime: currentTime)
-                    realtimeArrival.second = .coming(remainingSecond: secondArrivalTime)
+                    let realRemainingTimes = self.extractRealRemainingFromArrivals(from: filteredArrivals, currentTime: currentTime)
+                    realtimeArrival.first = .coming(remainingSecond: realRemainingTimes[0])
+                    realtimeArrival.second = .coming(remainingSecond: realRemainingTimes[1])
                     
                     emitter.onNext(realtimeArrival)
                     emitter.onCompleted()
@@ -294,52 +290,42 @@ extension TransPathRepository {
     func filteringSeoulArrivalSubway(
         from arrivals: [SeoulRealtimeSubwayArrival],
         subwayLine: String,
-        wayCode: String,
-        isFirst: Bool // 1번째/2번째 도착 열차
+        wayCode: String
     ) -> [SeoulRealtimeSubwayArrival] {
-        let filteredArrival = arrivals.filter {
-            // 각각의 도착정보에 대해서
+        let filteredArival = arrivals.filter {
+            // 각각의 도착정보에 대해서 호선+방면이 일치하는 정보들만 필터링
             guard let arrivalWayCode = $0.ordkey[0] else { return false } // 방면코드(상하행코드)
-            guard let subwayOrder = $0.ordkey[1] else { return false } // 열차순서(1,2)
-            // 호선+방면+열차순서 로 필터링
-            if ($0.subwayId == subwayLine) && (wayCode == arrivalWayCode) {
-                if isFirst {
-                    return subwayOrder == "1" // 1번째 열차
-                } else {
-                    return subwayOrder == "2" // 2번째 열차
-                }
-            } else {
-                return false
-            }
+            return ($0.subwayId == subwayLine) && (wayCode == arrivalWayCode)
         }
-        return filteredArrival
+        return filteredArival
     }
     
-    // 도착 정보가 담겨있는 배열에서 가장 유효한 데이터(실제 도착까지 남은 시간(초))를 골라서 반환
-    func extractRealRemainingFromArrivals(from arrivalArr: [SeoulRealtimeSubwayArrival], currentTime: Date) -> Int {
-        if arrivalArr.count == 1 {
-            guard let arrival = arrivalArr.last else { return -1 }
-            // 실제 도착까지 남은 시간
-            let realRemainingTime = getRealRemainingTimeFromSeoulSubway(arrival: arrival, currentTime: currentTime)
-            return realRemainingTime
-            
-        } else if arrivalArr.count > 1 {
-            // 실제 도착까지 남은 시간이 0 이상인 값 중 가장 작은 값을 사용 (가장 금방 도착하는 값)
-            let realRamainingTime = arrivalArr.map {
-                return getRealRemainingTimeFromSeoulSubway(arrival: $0, currentTime: currentTime)
-            }.filter { $0 >= 0 }.min()
-            if let realRamainingTime = realRamainingTime {
-                return realRamainingTime
-            } else {
-                return -1
-            }
-            
-        } else {
-            return -1
+    /**
+     도착 정보 배열에서 1번째, 2번째 지하철 도착까지 남은 시간을 반환
+     - 실제 도착까지 남은 시간이 0 이상인 값 중 가장 작은(가장 금방 도착하는) 값 2개를 사용
+     */
+    func extractRealRemainingFromArrivals(from arrivalArr: [SeoulRealtimeSubwayArrival], currentTime: Date) -> [Int] {
+        // 유효한 도착 정보만 필터링 후 오름차순 정렬
+        var realRemainingTimes = arrivalArr.map {
+            let remainingTimes = getRealRemainingTimeFromSeoulSubway(arrival: $0, currentTime: currentTime)
+            return remainingTimes
+        }.filter { $0 >= 0 }.sorted(by: <)
+        
+        // 유효한 도착 정보가 없거나 1개인 경우는 -1로 채워줌
+        if realRemainingTimes.count == 0 {
+            realRemainingTimes.append(-1)
+            realRemainingTimes.append(-1)
+        } else if realRemainingTimes.count == 1 {
+            realRemainingTimes.append(-1)
         }
+        return realRemainingTimes
     }
     
-    // 서울시 실시간 지하철 도착정보와 현재 시간을 비교해서 실제 도착까지 남은 시간을 초 단위 Int 값으로 반환
+    /**
+     서울시 지하철 도착정보로부터 실제 도착까지 남은 시간을 구해서 초 단위 값(Int)으로 반환
+     - 데이터 생성 시간값을 활용해 실제 도착시간을 구해준다.
+     - 실제 도착시간을 현재 시간과 비교하여 실제 도착까지 남은 시간을 구해줌
+     */
     func getRealRemainingTimeFromSeoulSubway(arrival: SeoulRealtimeSubwayArrival, currentTime: Date) -> Int {
         if let generateTime = arrival.recptnDt.toDate(),
            let remainingTime = Int(arrival.barvlDt) {

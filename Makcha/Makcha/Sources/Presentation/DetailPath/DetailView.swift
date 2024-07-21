@@ -32,21 +32,21 @@ final class DetailView: UIView {
         textColor: .cf(.grayScale(.gray600))
     )
     
-    private let durationTimeLabel = UILabelFactory.build(
-        attributedText: .pretendard("NN:NN", scale: .title),
+    let durationTimeLabel = UILabelFactory.build(
+        attributedText: .pretendard("불러오는 중...", scale: .title), // NN:NN
         textAlignment: .left,
         textColor: .cf(.grayScale(.gray800))
     )
     
     // MARK: 현재 도착 예정인 교통수단이 정거장에 도착하기 까지 남은 시간을 표시하는 라벨
-    private let currentArrivalTransportTimeLabel = UILabelFactory.build(
-        attributedText: .pretendard("NN분\n NN초", scale: .display),
+    let currentArrivalTransportTimeLabel = UILabelFactory.build(
+        attributedText: .pretendard("불러오는 중...", scale: .display), // NN분 NN초
         textColor: .cf(.grayScale(.black))
     )
     
     // MARK: 다음 도착 예정인 교통수단이 정거장에 도착하기 까지 남은 시간을 표시하는 라벨
-    private let nextArrivalTransportTimeLabel = UILabelFactory.build(
-        text: "다음 도착 NN분 예정",
+    let nextArrivalTransportTimeLabel = UILabelFactory.build(
+        text: "불러오는 중...", // 다음 도착 NN분 예정
         textColor: .cf(.grayScale(.gray500))
     )
     
@@ -200,7 +200,9 @@ extension DetailView: DetailViewDelegate {
     }
     
     func configure(data: MakchaCellData, path: (String, String)) {
-        print(path)
+        
+        // 막차 경로의 전체 소요시간을 그려줌
+        layoutTotalDurationTimeLabel(totalTime: data.makchaPath.totalTime)
         
         startPointLabel.attributedText = .pretendard(path.0, scale: .headline)
         startPointLabel.flex.markDirty()
@@ -221,6 +223,37 @@ extension DetailView: DetailViewDelegate {
             $0.addItem()
         }
         subPathContainer.flex.markDirty()
+    }
+}
+
+extension DetailView {
+    //TODO: - MainCollectionCell에 있는 layoutCenterContentsTopContainer와 거의 유사하기 때문에 메서드 하나로 정리 필요
+    private func layoutTotalDurationTimeLabel(totalTime: Int) {
+        // totalTime String 변환 ex) 72 -> 1시간12분
+        let totalTimeDescription = totalTime.calcTotalTimeDescription()
+        // 숫자와 시간/분 스타일 다르게 적용
+        let totalTimeText = NSMutableAttributedString.pretendard(totalTimeDescription.text, scale: .title)
+        let customAttr: [NSAttributedString.Key: Any] = [
+            .font : UIFont.pretendard(.medium, size: 12),
+            .foregroundColor: UIColor.cf(.grayScale(.gray600))
+        ]
+        if let hourIdx = totalTimeDescription.idx.first, let hourIdx = hourIdx {
+            let range: NSRange = .init(location: hourIdx, length: 2)
+            totalTimeText.addAttributes(customAttr, range: range)
+        }
+        
+        if let minuteIdx = totalTimeDescription.idx.last, let minuteIdx = minuteIdx {
+            if let hourIdx = totalTimeDescription.idx.first, let hourIdx = hourIdx {
+                let range: NSRange = .init(location: hourIdx + 2 + minuteIdx, length: 1)
+                totalTimeText.addAttributes(customAttr, range: range)
+            } else {
+                let range: NSRange = .init(location: minuteIdx, length: 1)
+                totalTimeText.addAttributes(customAttr, range: range)
+            }
+        }
+        // 텍스트에 스타일 적용
+        durationTimeLabel.attributedText = totalTimeText
+        durationTimeLabel.flex.markDirty()
     }
 }
 

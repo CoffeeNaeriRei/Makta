@@ -20,7 +20,7 @@ enum ArrivalStatus: Comparable {
     case unknown // 알 수 없음
     
     // MARK: - 각각의 Arrivalstatus case에 따라 화면에 표시할 String 반환
-    var arrivalMessage: String {
+    var arrivalMessageFirst: String {
         switch self {
         case .arriveSoon:
             return "곧 도착"
@@ -31,7 +31,27 @@ enum ArrivalStatus: Comparable {
         case .finished:
             return "운행 종료"
         case .unknown:
-            return "불러오지 못함"
+            return "도착 정보 없음"
+        }
+    }
+    
+    var arrivalMessageSecond: String {
+        switch self {
+        case .arriveSoon:
+            return "곧 도착"
+        case .coming(remainingSecond: let remainingSecond):
+            let minute = remainingSecond / 60
+            if minute == 0 {
+                return "다음 도착 1분 예정"
+            } else {
+                return "다음 도착 \(minute)분 예정"
+            }
+        case .waiting:
+            return "출발 대기"
+        case .finished:
+            return "운행 종료"
+        case .unknown:
+            return "다음 도착 정보 없음"
         }
     }
     
