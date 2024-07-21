@@ -217,31 +217,14 @@ extension MainCollectionCell {
             firstSubPath: data.makchaPath.subPath.filter { $0.subPathType != .walk }.first
         )
         // 타이머 도착 예정 시간 업데이트
-        currentArrivalTransportTimeLabel.text = data.arrival.first.arrivalMessage
+        currentArrivalTransportTimeLabel.text = data.arrival.first.arrivalMessageFirst
         currentArrivalTransportTimeLabel.flex.markDirty()
-        nextArrivalTransportTimeLabel.text = data.arrival.second.arrivalMessage
+        nextArrivalTransportTimeLabel.text = data.arrival.second.arrivalMessageSecond
         nextArrivalTransportTimeLabel.flex.markDirty()
         // 경로 업데이트
         layoutPathContentContainer(subPaths: data.makchaPath.subPath)
         // 레이아웃 갱신
         setNeedsLayout()
-    }
-    
-    // MARK: 시간 분을 쪼개서 그리기 편하게 하기 위한 메서드 추후 분리될 수 있음
-    private func calcTotalTimeDescription(_ totalTime: Int) -> (text: String, idx: [Int?]) {
-        let hour = totalTime / 60
-        let minute = totalTime - hour * 60
-        
-        let hourDescription = hour > 0 ? "\(hour)시간" : ""
-        let minuteDescription = minute > 0 ? "\(minute)분" : ""
-        
-        let hourIdx = hourDescription.isEmpty ? nil : hourDescription.count - 2
-        let minuteIdx = minuteDescription.isEmpty ? nil : minuteDescription.count - 1
-        
-        return (
-            hourDescription + minuteDescription,
-            [hourIdx, minuteIdx]
-        )
     }
     
     // MARK: 들어오는 경로 데이터에 따라 다르게 뷰를 그리기 위한 메서드
@@ -299,7 +282,7 @@ extension MainCollectionCell {
     
     private func layoutCenterContentsTopContainer(totalTime: Int, firstSubPath: MakchaSubPath?) {
         // totalTime String 변환 ex) 72 -> 1시간12분
-        let totalTimeDescription = calcTotalTimeDescription(totalTime)
+        let totalTimeDescription = totalTime.calcTotalTimeDescription()
         // 숫자와 시간/분 스타일 다르게 적용
         let totalTimeText = NSMutableAttributedString.pretendard(totalTimeDescription.text, scale: .title)
         let customAttr: [NSAttributedString.Key: Any] = [
