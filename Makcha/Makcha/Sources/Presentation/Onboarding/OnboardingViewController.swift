@@ -17,8 +17,14 @@ import RxSwift
  */
 
 final class OnboardingViewController: UIViewController {
+    // swiftlint: disable force_cast
+    private var mainView: OnboardingView {
+        view as! OnboardingView
+    }
+    // swiftlint: enable force_cast
     
     private let vm: OnboardingViewModel
+    private let disposeBag = DisposeBag()
     
     init(_ vm: OnboardingViewModel) {
         self.vm = vm
@@ -31,8 +37,36 @@ final class OnboardingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Onboarding 시작!")
-        view.backgroundColor = .gray
+        setup()
+        bind()
+    }
+    
+    override func loadView() {
+        view = OnboardingView()
+    }
+    
+    private func setup() {
+        navigationItem.title = "도착지 설정"
+    }
+    
+    private func bind() {
+        let textFieldChange = mainView.textField.rx.text.orEmpty
+        let selected = mainView.searchResultTableView.rx.itemSelected
+        let startButtonTap = mainView.startButton.rx.tap
+        let skipButtonTap = mainView.skipButton.rx.tap
+        
+        let output = vm.transform(
+            input: .init(
+                textFieldChange: textFieldChange,
+                searchedPointSelect: selected,
+                startButtonTap: startButtonTap,
+                skipButtonTap: skipButtonTap
+            )
+        )
+        
+        output.textFieldLabel
+            .drive(mainView.textField.rx.text)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -45,7 +79,7 @@ struct OnboardingViewController_Previews: PreviewProvider {
             let onbardingUseCase = OnboardingUseCase(
                 TransPathRepository(apiService),
                 EndPointRepository(locationService, apiService)
-        )
+            )
             return UINavigationController(
                 rootViewController: OnboardingViewController(
                     OnboardingViewModel(onbardingUseCase)
