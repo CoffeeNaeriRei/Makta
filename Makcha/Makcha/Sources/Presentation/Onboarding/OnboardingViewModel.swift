@@ -57,6 +57,7 @@ final class OnboardingViewModel: ViewModelType {
             .withUnretained(self)
             .subscribe { vm, _ in
                 print("start Button Tap")
+                vm.onboardingUseCase.saveDefaultDestinationPoint()
                 vm.goToMain(isSkip: false)
             }
             .disposed(by: disposeBag)

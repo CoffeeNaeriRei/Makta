@@ -15,6 +15,7 @@ final class OnboardingUseCase {
     
     let startPoint = PublishSubject<EndPoint>()
     let destinationPoint = PublishSubject<EndPoint>()
+    let _destinationPoint: EndPoint = .mockDestinationPoint
     let searchedDestinationPoints = BehaviorSubject<[EndPoint]>(value: [])
     
     private let disposeBag = DisposeBag()
@@ -41,5 +42,13 @@ extension OnboardingUseCase {
         destinationPointValue = selectedEndPoint
         destinationPoint.onNext(destinationPointValue)
         selectedEndPoint.saveAsUserDefaults(key: .tempDestination)
+    }
+    
+    func saveDefaultDestinationPoint() {
+        let temp = EndPoint.loadFromUserDefaults(key: .tempDestination)
+        if let temp = temp {
+            temp.saveAsUserDefaults(key: .defaultDestination)
+            print("저장 ㅇㅇ")
+        }
     }
 }

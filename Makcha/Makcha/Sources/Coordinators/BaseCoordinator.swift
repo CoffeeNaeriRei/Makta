@@ -56,7 +56,6 @@ final class AppCoordinator: BaseCoordinator {
         } else {
             goToOnboarding()
         }
-        
     }
     
     deinit {
