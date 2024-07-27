@@ -33,27 +33,57 @@ final class OnboardingViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
+        // input Change
+        input.textFieldChange
+            .distinctUntilChanged()
+            .withUnretained(self)
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe { vm, text in
+                if !text.isEmpty {
+                    vm.onboardingUseCase.searchWithAddressText(searchKeyword: text)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // collectionView Select
+        input.searchedPointSelect
+            .withUnretained(self)
+            .subscribe { vm, collection in
+                vm.onboardingUseCase.updatePointToSearchedAddress(idx: collection.row)
+            }
+            .disposed(by: disposeBag)
+        
         input.startButtonTap
             .withUnretained(self)
             .subscribe { vm, _ in
                 print("start Button Tap")
+                vm.goToMain(isSkip: false)
             }
             .disposed(by: disposeBag)
         
         input.skipButtonTap
             .withUnretained(self)
             .subscribe { vm, _ in
-                print("skip Button Tap")
+                print("Skip Button Tap")
+                vm.goToMain(isSkip: true)
             }
             .disposed(by: disposeBag)
-        
-        
-        let label: Driver<String> = .empty()
-        let searchedResult: Observable<[EndPoint]> = .empty()
+         
+        let label = onboardingUseCase.destinationPoint
+            .map { $0.roadAddressName ?? $0.addressName}
+            .asDriver(onErrorJustReturn: "")
+            
+        let searchedResult = onboardingUseCase.searchedDestinationPoints
         
         return Output(
             textFieldLabel: label,
             searchedResult: searchedResult
         )
+    }
+}
+
+extension OnboardingViewModel: OnboardingNavigation {
+    func goToMain(isSkip: Bool) {
+        navigation?.goToMain(isSkip: isSkip)
     }
 }

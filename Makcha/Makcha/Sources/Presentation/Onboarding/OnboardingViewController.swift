@@ -67,6 +67,22 @@ final class OnboardingViewController: UIViewController {
         output.textFieldLabel
             .drive(mainView.textField.rx.text)
             .disposed(by: disposeBag)
+        
+        output.searchedResult
+            .bind(to: mainView.searchResultTableView.rx.items) { tableView, row, item in
+                let idx: IndexPath = .init(row: row, section: 0)
+                let cell = tableView.dequeueReusableCell(for: idx) as SearchResultCell
+                cell.configure(with: item)
+                
+                return cell
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+extension OnboardingViewController {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }
 

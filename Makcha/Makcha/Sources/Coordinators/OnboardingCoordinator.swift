@@ -29,8 +29,16 @@ final class OnboardingCoordinator: BaseCoordinator {
 
 extension OnboardingCoordinator: OnboardingNavigation {
     func goToMain(isSkip: Bool) {
-        var isSkippedOnboarding = isSkip
-        navigationController.dismiss(animated: true)
-        print("이동 ㅇㅇ")
+        if isSkip {
+            let key = DestinationKey.defaultDestination.rawValue
+            UserDefaults.standard.setValue("", forKey: key)
+        }
+        UserDefaults.standard.setValue(true, forKey: .isSkipOnboarding)
+        
+        removeAll()
+        let coordinator = MainCoordinator(navigationController)
+        addChild(coordinator)
+        coordinator.parentCoordinator = self
+        coordinator.start()
     }
 }

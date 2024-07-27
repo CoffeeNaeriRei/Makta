@@ -23,9 +23,10 @@ final class OnboardingView: UIView {
         text: "경로 탐색 시 사용할 위치 정보를 선택해주세요.",
         textScale: .body
     )
-
+    
     let textField: UITextField = {
         let textField = CustomUITextField()
+        textField.setBorder()
         textField.font = .pretendard(.regular, size: 14)
         textField.placeholder = "도착지를 입력해주세요."
         textField.clearButtonMode = .whileEditing
@@ -83,6 +84,8 @@ final class OnboardingView: UIView {
                 }
                 $0.addItem(textField)
                     .minHeight(36)
+                    .cornerRadius(4)
+                
             }
             .padding(16)
             $0.addItem().height(1).backgroundColor(.cf(.grayScale(.gray200)))
@@ -97,7 +100,7 @@ final class OnboardingView: UIView {
                 $0.addItem(skipButton)
                     .minHeight(56)
             }
-            .padding(16)
+            .padding(16, 16, 0, 16)
         }
         addSubview(rootView)
     }

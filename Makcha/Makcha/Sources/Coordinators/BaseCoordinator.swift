@@ -47,8 +47,7 @@ class BaseCoordinator: Coordinator {
 }
 
 final class AppCoordinator: BaseCoordinator {
-    /// Onboarding을 건너뛰었는지 알 수 있는 Flag 변수, 생성 시점에 받을 수 있게 변경하자
-    private var isSkippedOnboarding = false
+    private var isSkippedOnboarding = UserDefaults.standard.bool(forKey: .isSkipOnboarding)
     
     override func start() {
         super.start()
