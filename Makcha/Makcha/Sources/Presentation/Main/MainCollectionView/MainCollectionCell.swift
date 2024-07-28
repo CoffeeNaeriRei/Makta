@@ -31,7 +31,7 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
         attributedText: .pretendard("NN:NN", scale: .title),
         textColor: .cf(.grayScale(.gray800))
     )
-
+    
     // 자세히 보기 버튼: 생성 버튼과정이 길어서, 추후 Factory 패턴으로 코드 분리할 예정
     let navigationToDetailsButton: UIButton = {
         let button = UIButton()
@@ -149,11 +149,10 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
                     endPoint: .init(x: 0, y: 0)
                 )
                 
-                $0.addItem(pathScrollView).direction(.row).define {
-                    $0.addItem(pathsContentView)
-                }
-                .minHeight(pathContentsHeight)
-                .marginBottom(12)
+                $0.addItem(pathsContentView)
+                    .alignSelf(.center)
+                    .minHeight(pathContentsHeight)
+                    .marginBottom(12)
                 $0.addItem(leftGradientView)
                     .position(.absolute)
                     .width(24).height(pathContentsHeight)
@@ -230,15 +229,27 @@ extension MainCollectionCell {
     // MARK: 들어오는 경로 데이터에 따라 다르게 뷰를 그리기 위한 메서드
     private func layoutPathInfo(with subPaths:[MakchaSubPath]) -> UIView {
         let rootView = UIView()
+        
         // 1. 경로의 전체 길이를 구한다.
         let totalDistance = subPaths.map { CGFloat($0.distance) }.reduce(0) { $0 + $1 }
+        let maxWidth = UIScreen.main.bounds.width - 48
         
+        // 2. 경로를 UI길이로 환산하자.
+        var uiDistances = subPaths.map {
+            max(CGFloat($0.distance) / totalDistance *  maxWidth - 24, 24)}
+        let totalUiDistance = uiDistances.reduce(0) {$0 + $1 }
+
+        // 3. 경로 조정
+        if totalUiDistance > maxWidth {
+            if let maxValue = uiDistances.max(), let idx = uiDistances.firstIndex(of: maxValue) {
+                uiDistances[idx] -= totalUiDistance - maxWidth
+            }
+        }
+
         rootView.flex.direction(.row).define {
             for subPath in subPaths {
                 let isLastPath = subPath.idx == subPaths.count - 1
-                // 2. (패스 길이 / 전체 길이 == 패스비율) * (스크린 사이즈 * 1.25) or 24(최소 아이콘 사이즈 길이 보장)
-                // 패스 길이 비율에 따라 뷰를 그린다. -> 전체적인 뷰의 비율 보장
-                let distanceForUI = max(CGFloat(subPath.distance) / totalDistance * UIScreen.main.bounds.width * 1.25, 24)
+                let distanceForUI = uiDistances[subPath.idx]
                 let subPathType = subPath.subPathType
                 
                 let symbolConfig = UIImage.SymbolConfiguration(
@@ -264,7 +275,6 @@ extension MainCollectionCell {
                     layoutPathInfoSubway($0, params: ((isLastPath, distanceForUI, icon), subwayType, subPath))
                 }
             }
-            
         }
         .minHeight(66)
         .marginBottom(12)
@@ -312,7 +322,7 @@ extension MainCollectionCell {
         // 컨테이너 뷰 새로 그리기
         centerContentsTopContainer.flex.direction(.row).define {
             if firstSubPath?.subPathType == .bus,
-                let busInfo = firstSubPath?.lane?.first,
+               let busInfo = firstSubPath?.lane?.first,
                let busColor = busInfo.busRouteType?.busUIColor {
                 
                 let busNoLabel = UILabelFactory.build(
@@ -340,7 +350,6 @@ extension MainCollectionCell {
         pathsContentView.flex.direction(.row).define {
             $0.addItem(layoutPathInfo(with: subPaths))
         }
-        .paddingHorizontal(24)
         pathsContentView.flex.markDirty()
     }
 }
@@ -397,55 +406,55 @@ extension MainCollectionCell {
         
         flex.addItem().direction(.row).alignItems(.end).define {
             $0.addItem()
-                .width(distance).height(10)
+                .width(distance - 12).height(10)
                 .backgroundColor(distanceBgColor)
                 .cornerRadius(5)
                 .marginBottom(7)
                 .marginLeft(12)
                 .marginRight(0)
             $0.addItem().position(.absolute).define {
-                let textContainerView = UIView()
-                let arrivalStationContainer = UIView()
-                let arriveTimeLabel = UILabelFactory.build(
-                    attributedText: .pretendard(time, scale: .caption),
-                    textColor: .cf(.grayScale(.gray600))
-                )
-                let arrivalStationLabel = UILabelFactory.build(
-                    attributedText: .pretendard(stationName, scale: .body),
-                    textColor: .cf(.grayScale(.gray800))
-                )
-                arrivalStationLabel.lineBreakMode = .byTruncatingTail
-                arrivalStationLabel.numberOfLines = 1
-                
-                var textContainerWidth: CGFloat = .zero
-                
-                $0.addItem(textContainerView).position(.absolute).define {
-                    $0.addItem(arriveTimeLabel).width(100%)
-                    $0.addItem(arrivalStationContainer).direction(.row).define {
-                        $0.addItem(arrivalStationLabel).maxWidth(80)
-                        
-                        guard let lane = subPath.lane else { return }
-                        // 동일한 노선의 버스 리스트
-                        for lan in lane {
-                            let transportLabel = UILabelFactory.build(
-                                attributedText: .pretendard(lan.name, scale: .caption2),
-                                textColor: bgColor
-                            )
-                            $0.addItem(transportLabel)
-                                .border(1, bgColor)
-                                .padding(.cfRadius(.xxxsmall))
-                                .cornerRadius(.cfRadius(.xxxsmall))
-                                .marginLeft(4)
-                        }
-                    }
-                    
-                    // label 길이에 따라 레이아웃 변경
-                    textContainerWidth = arrivalStationLabel.intrinsicContentSize.width
-                    textContainerWidth = min(textContainerWidth, 80)
-
-                    $0.width(textContainerWidth)
-                }
-                .left(-(textContainerWidth / 2) + 12).bottom(24)
+                //                let textContainerView = UIView()
+                //                let arrivalStationContainer = UIView()
+                //                let arriveTimeLabel = UILabelFactory.build(
+                //                    attributedText: .pretendard(time, scale: .caption),
+                //                    textColor: .cf(.grayScale(.gray600))
+                //                )
+                //                let arrivalStationLabel = UILabelFactory.build(
+                //                    attributedText: .pretendard(stationName, scale: .body),
+                //                    textColor: .cf(.grayScale(.gray800))
+                //                )
+                //                arrivalStationLabel.lineBreakMode = .byTruncatingTail
+                //                arrivalStationLabel.numberOfLines = 1
+                //
+                //                var textContainerWidth: CGFloat = .zero
+                //
+                //                $0.addItem(textContainerView).position(.absolute).define {
+                //                    $0.addItem(arriveTimeLabel).width(100%)
+                //                    $0.addItem(arrivalStationContainer).direction(.row).define {
+                //                        $0.addItem(arrivalStationLabel).maxWidth(80)
+                //
+                //                        guard let lane = subPath.lane else { return }
+                //                        // 동일한 노선의 버스 리스트
+                //                        for lan in lane {
+                //                            let transportLabel = UILabelFactory.build(
+                //                                attributedText: .pretendard(lan.name, scale: .caption2),
+                //                                textColor: bgColor
+                //                            )
+                //                            $0.addItem(transportLabel)
+                //                                .border(1, bgColor)
+                //                                .padding(.cfRadius(.xxxsmall))
+                //                                .cornerRadius(.cfRadius(.xxxsmall))
+                //                                .marginLeft(4)
+                //                        }
+                //                    }
+                //
+                //                    // label 길이에 따라 레이아웃 변경
+                //                    textContainerWidth = arrivalStationLabel.intrinsicContentSize.width
+                //                    textContainerWidth = min(textContainerWidth, 80)
+                //
+                //                    $0.width(textContainerWidth)
+                //                }
+                //                .left(-(textContainerWidth / 2) + 12).bottom(24)
                 
                 // IconContainer
                 $0.addItem().define {
@@ -470,7 +479,7 @@ extension MainCollectionCell {
         
         flex.addItem().direction(.row).alignItems(.end).define {
             $0.addItem()
-                .width(distance).height(10)
+                .width(distance - 12).height(10)
                 .backgroundColor(distanceBgColor)
                 .cornerRadius(5)
                 .margin(0, 12, 7, 0)
@@ -478,31 +487,31 @@ extension MainCollectionCell {
                 let imageView = UIImageView(image: icon?.withTintColor(iconTintColor, renderingMode:  .alwaysOriginal))
                 imageView.contentMode = .center
                 
-                let textContainerView = UIView()
-                let arrivalStationContainer = UIView()
-                let arrivalStationLabel = UILabelFactory.build(
-                    text: stationName,
-                    textColor: .cf(.grayScale(.gray800))
-                )
-                let arriveTimeLabel = UILabelFactory.build(
-                    text: time,
-                    textScale: .caption,
-                    textColor: .cf(.grayScale(.gray600))
-                )
+                //                let textContainerView = UIView()
+                //                let arrivalStationContainer = UIView()
+                //                let arrivalStationLabel = UILabelFactory.build(
+                //                    text: stationName,
+                //                    textColor: .cf(.grayScale(.gray800))
+                //                )
+                //                let arriveTimeLabel = UILabelFactory.build(
+                //                    text: time,
+                //                    textScale: .caption,
+                //                    textColor: .cf(.grayScale(.gray600))
+                //                )
                 // TextContainer
-                var textContainerWidth: CGFloat = .zero
+                //                var textContainerWidth: CGFloat = .zero
                 
-                $0.addItem(textContainerView).position(.absolute).define {
-                    $0.addItem(arriveTimeLabel).width(100%)
-                    $0.addItem(arrivalStationContainer).define {
-                        $0.addItem(arrivalStationLabel).width(100%)
-                    }
-                    .width(100%)
-                    
-                    // label 길이에 따라 레이아웃 변경
-                    textContainerWidth = arrivalStationLabel.intrinsicContentSize.width
-                }
-                .left(-(textContainerWidth / 2) + 12).bottom(24)
+                //                $0.addItem(textContainerView).position(.absolute).define {
+                //                    $0.addItem(arriveTimeLabel).width(100%)
+                //                    $0.addItem(arrivalStationContainer).define {
+                //                        $0.addItem(arrivalStationLabel).width(100%)
+                //                    }
+                //                    .width(100%)
+                //
+                //                    // label 길이에 따라 레이아웃 변경
+                //                    textContainerWidth = arrivalStationLabel.intrinsicContentSize.width
+                //                }
+                //                .left(-(textContainerWidth / 2) + 12).bottom(24)
                 // IconContainer
                 $0.addItem().define {
                     $0.addItem(imageView)
