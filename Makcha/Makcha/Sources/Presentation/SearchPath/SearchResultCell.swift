@@ -12,9 +12,8 @@ import UIKit
 import MakchaDesignSystem
 import FlexLayout
 import PinLayout
-import Reusable
 
-final class SearchResultCell: UITableViewCell, Reusable {
+final class SearchResultCell: UITableViewCell {
     private let resultContentView = UIView()
     
     private let pointName = UILabelFactory.build(
