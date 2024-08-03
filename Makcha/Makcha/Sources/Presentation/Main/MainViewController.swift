@@ -122,17 +122,17 @@ extension MainViewController {
         let _title = "막차정보"
         let _leftBarButtonImage = UIImage(systemName: "gearshape")?
             .withTintColor(.cf(.grayScale(.gray700)), renderingMode: .alwaysOriginal)
-        let _rightBarButtonImage = UIImage(systemName: "star")?
-            .withTintColor(.cf(.grayScale(.gray700)), renderingMode: .alwaysOriginal)
+//        let _rightBarButtonImage = UIImage(systemName: "star")?
+//            .withTintColor(.cf(.grayScale(.gray700)), renderingMode: .alwaysOriginal)
         
         leftUIBarButtonItem.title = "Link to Setting"
         leftUIBarButtonItem.image = _leftBarButtonImage
-        rightUIBarButtonItem.title = "Link to Remark"
-        rightUIBarButtonItem.image = _rightBarButtonImage
+//        rightUIBarButtonItem.title = "Link to Remark"
+//        rightUIBarButtonItem.image = _rightBarButtonImage
         
         navigationItem.title = _title
         navigationItem.leftBarButtonItem = leftUIBarButtonItem
-        navigationItem.rightBarButtonItem = rightUIBarButtonItem
+//        navigationItem.rightBarButtonItem = rightUIBarButtonItem
     }
     
     private func setupSheet() {
