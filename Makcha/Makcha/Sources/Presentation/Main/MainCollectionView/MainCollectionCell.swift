@@ -17,6 +17,8 @@ import Reusable
 import RxSwift
 
 final class MainCollectionCell: UICollectionViewCell, Reusable {
+    var cellHeight = 240.0
+    
     private let pathTypelabel = UILabelFactory.build(
         attributedText: .pretendard("경로 종류", scale: .body, weight: .semiBold),
         textColor: .cf(.colorScale(.blue(.mediumLight)))
@@ -208,6 +210,8 @@ private final class ContentView: UIView {
 extension MainCollectionCell {
     // MARK: 패치 된 데이터를 활용해 뷰 레이아웃을 설정하기 위한 인터페이스 메서드
     func configure(with data: MakchaCellData) {
+        // 경로 별 height 계산
+        calcSubPathsHeight(with: data.makchaPath.subPath)
         // 상단 시간정보 업데이트
         layoutTopContentsContainer(data.makchaPath.arrivalTime.endPointTimeString)
         // 도착 예정 시간 레이아웃 업데이트
@@ -223,7 +227,22 @@ extension MainCollectionCell {
         // 경로 업데이트
         layoutPathContentContainer(subPaths: data.makchaPath.subPath)
         // 레이아웃 갱신
+        layoutHeight()
         setNeedsLayout()
+    }
+
+    func layoutHeight() {
+        contentView.flex.height(cellHeight)
+    }
+    
+    private func calcSubPathsHeight(with data: [MakchaSubPath]) {
+        let CONTAINER_PADDING = 8.0
+        var defaultHeight = 240.0
+
+        defaultHeight += CONTAINER_PADDING
+        defaultHeight += data.map { $0.subPathType == .bus ? 36.0 + 8.0 : 20.0 + 28.0 }.reduce(0) { $0 + $1 } - 28.0
+
+        cellHeight = defaultHeight
     }
     
     // MARK: 들어오는 경로 데이터에 따라 다르게 뷰를 그리기 위한 메서드
