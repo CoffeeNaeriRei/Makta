@@ -16,7 +16,7 @@ import PinLayout
 import Reusable
 import RxSwift
 
-final class MainCollectionCell: UICollectionViewCell, Reusable {
+final class MainCollectionCell: UICollectionViewCell {
     private let MIN_HEIGHT = 200.0
     var cellHeight = 200.0
     
