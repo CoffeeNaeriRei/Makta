@@ -37,7 +37,7 @@ final class MainCollectionView: UICollectionView {
         
         // 생성 시 `UICollectionViewFlowLayout` 일 경우 기본 레이아웃 설정
         let collectionViewLayout = collectionViewLayout as? UICollectionViewFlowLayout
-        collectionViewLayout?.minimumLineSpacing = 4
+        collectionViewLayout?.minimumLineSpacing = 0
         collectionViewLayout?.minimumInteritemSpacing = 0
         collectionViewLayout?.sectionHeadersPinToVisibleBounds = true
         

@@ -17,7 +17,8 @@ import Reusable
 import RxSwift
 
 final class MainCollectionCell: UICollectionViewCell, Reusable {
-    var cellHeight = 240.0
+    private let MIN_HEIGHT = 200.0
+    var cellHeight = 200.0
     
     private let pathTypelabel = UILabelFactory.build(
         attributedText: .pretendard("경로 종류", scale: .body, weight: .semiBold),
@@ -87,6 +88,7 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
     private let pathsContentView = ContentView()
     private let centerContentsTopContainer = UIView()
     private let nextArrivalTransportTimeContainer = UIView()
+    private let subPathInfoContainer = UIView()
     
     var disposeBag = DisposeBag()
     
@@ -141,7 +143,6 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
                 }
                 .position(.absolute).bottom(0)
                 .width(100%)
-                .border(1, .red)
                 /// BottomLine
                 $0.addItem()
                     .width(100%).height(.cfStroke(.xsmall))
@@ -149,8 +150,8 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
             }
             .minHeight(200)
             // 서브패스 인포
-            $0.addItem()
-                .backgroundColor(.green)
+            $0.addItem(subPathInfoContainer)
+                .backgroundColor(.cf(.grayScale(.gray100)))
                 .grow(1)
         }
         .backgroundColor(.cf(.grayScale(.white)))
@@ -219,12 +220,96 @@ extension MainCollectionCell {
     
     private func calcSubPathsHeight(with data: [MakchaSubPath]) {
         let CONTAINER_PADDING = 8.0
-        var defaultHeight = 200.0
 
-        defaultHeight += CONTAINER_PADDING
-        defaultHeight += data.map { $0.subPathType == .bus ? 36.0 + 8.0 : 20.0 + 28.0 }.reduce(0) { $0 + $1 } - 28.0
+        let subPaths = data.filter { $0.subPathType != .walk }
 
+        var defaultHeight = MIN_HEIGHT
+        
+        defaultHeight += CONTAINER_PADDING * 2
+        defaultHeight += subPaths.map { _ in 36.0 }.reduce(0) { $0 + $1 }
+        defaultHeight += subPaths.count < 2 ? .zero : Double((subPaths.count - 1)) * CONTAINER_PADDING
+        if subPaths.last?.subPathType == .subway {
+            defaultHeight -= 16.0
+        }
         cellHeight = defaultHeight
+        // 컨테이너 내 모든 자식 뷰 제거
+        subPathInfoContainer.subviews.forEach { $0.removeFromSuperview() }
+        
+        subPathInfoContainer.flex.gap(CONTAINER_PADDING).define {
+            for subPath in subPaths {
+                let type = subPath.subPathType
+                let imageView = UIImageView()
+                
+                let symbolConfig = UIImage.SymbolConfiguration(
+                    pointSize: 10,
+                    weight: .regular,
+                    scale: .default
+                )
+
+                switch type {
+                case .walk:
+                    break
+                case .bus:
+                    let icon = UIImage(systemName: type.iconName)?.withConfiguration(symbolConfig)
+                    imageView.image = icon?.withTintColor(.cf(.grayScale(.white)), renderingMode: .alwaysOriginal)
+                    imageView.contentMode = .center
+                    
+                    guard let busType = subPath.lane?.first?.busRouteType else { return }
+                    
+                    $0.addItem().direction(.row).define {
+                        // imageContainer
+                        $0.addItem(imageView)
+                            .width(20).height(20)
+                            .cornerRadius(10)
+                            .border(1, .cf(.grayScale(.white)))
+                            .backgroundColor(busType.busUIColor)
+                        // textContainer
+                        $0.addItem().gap(2).define {
+                            let label = UILabelFactory.build(text: subPath.startName ?? "", textAlignment: .left)
+                            $0.addItem(label)
+                            $0.addItem().direction(.row).gap(8).define {
+                                if let lane = subPath.lane {
+                                    for lan in lane {
+                                        let label = UILabelFactory.build(text: lan.name, textScale: .caption, textColor: busType.busUIColor)
+                                        
+                                        $0.addItem(label)
+                                            .border(1, busType.busUIColor)
+                                            .cornerRadius(2)
+                                            .paddingHorizontal(4)
+                                    }
+                                }
+                            }
+                        }
+                        .marginTop(2).marginLeft(8)
+                    }
+                    .minHeight(36)
+                case .subway:
+                    let icon = UIImage(systemName: type.iconName)?.withConfiguration(symbolConfig)
+                    imageView.image = icon?.withTintColor(.cf(.grayScale(.white)), renderingMode: .alwaysOriginal)
+                    imageView.contentMode = .center
+                    
+                    guard let subwayType = subPath.lane?.first?.subwayCode else { return }
+                    
+                    $0.addItem().direction(.row).define {
+                        // imageContainer
+                        $0.addItem(imageView)
+                            .width(20).height(20)
+                            .cornerRadius(10)
+                            .border(1, .white)
+                            .backgroundColor(subwayType.subWayUIColor)
+                        // textContainer
+                        $0.addItem().define {
+                            let label = UILabelFactory.build(text: subPath.startName ?? "", textAlignment: .left)
+                            
+                            $0.addItem(label)
+                        }
+                        .marginTop(2).marginLeft(8)
+                    }
+                    .minHeight(36)
+                }
+            }
+        }
+        .padding(CONTAINER_PADDING)
     }
     
     // MARK: 들어오는 경로 데이터에 따라 다르게 뷰를 그리기 위한 메서드
