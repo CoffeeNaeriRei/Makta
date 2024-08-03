@@ -35,6 +35,10 @@ final class SearchPathViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("SearchPathViewController Deinit")
+    }
+    
     override func loadView() {
         view = SearchPathView()
     }
@@ -43,10 +47,6 @@ final class SearchPathViewController: UIViewController {
         super.viewDidLoad()
         setup()
         bind()
-    }
-
-    deinit {
-        print("SearchPathViewController Deinit")
     }
     
     private func setup() {
