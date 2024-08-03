@@ -72,11 +72,12 @@ final class MainViewController: UIViewController {
 }
 
 // MARK: 메인 뷰 내 컬렉션 뷰 설정 관련
-extension MainViewController: MainCollectionViewDelegate {
+extension MainViewController: MainCollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     private func setupCollectionView() {
         let collectionView = mainView.collectionView as? MainCollectionView
         dataSource = collectionView?.rxDataSource
         collectionView?.mainCollectionViewDelegate = self
+        collectionView?.delegate = self
     }
     
     private func bindCollectionView() {
@@ -103,6 +104,15 @@ extension MainViewController: MainCollectionViewDelegate {
     
     func goToDetails(_ indexPath: IndexPath) {
         mainVM.goToDetails(indexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.bounds.width
+        let model = mainVM.tempSections.value[indexPath.section].items[indexPath.row]
+        let cell = MainCollectionCell(frame: .zero)
+        cell.configure(with: model)
+
+        return CGSize(width: width, height: cell.cellHeight)
     }
 }
 

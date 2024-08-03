@@ -102,76 +102,58 @@ final class MainCollectionCell: UICollectionViewCell, Reusable {
     private func setup() {
         contentView.flex.define {
             /// TopContents
-            $0.addItem().direction(.row).alignItems(.start).define {
-                $0.addItem().justifyContent(.spaceBetween).define {
-                    $0.addItem()
-                        .direction(.row).alignItems(.center)
-                        .gap(.cfSpacing(.xsmall)).define {
-                            $0.addItem().define {
-                                $0.addItem(pathTypelabel)
+            $0.addItem().define {
+                $0.addItem().direction(.row).alignItems(.start).define {
+                    $0.addItem().justifyContent(.spaceBetween).define {
+                        $0.addItem()
+                            .direction(.row).alignItems(.center)
+                            .gap(.cfSpacing(.xsmall)).define {
+                                $0.addItem().define {
+                                    $0.addItem(pathTypelabel)
+                                }
+                                $0.addItem(estimatedTimeOfArrivalLabel)
                             }
-                            $0.addItem(estimatedTimeOfArrivalLabel)
-                        }
-                    $0.addItem(durationTimeLabel)
+                        $0.addItem(durationTimeLabel)
+                    }
+                    .grow(1)
+                    .paddingTop(.cfSpacing(.xlarge))
+                    .paddingLeft(.cfSpacing(.xxxlarge))
+                    $0.addItem(navigationToDetailsButton)
+                        .marginTop(5)
                 }
                 .grow(1)
-                .paddingTop(.cfSpacing(.xlarge))
-                .paddingLeft(.cfSpacing(.xxxlarge))
-                $0.addItem(navigationToDetailsButton)
-                    .marginTop(5)
-            }
-            .grow(1)
-            /// CenterContents
-            $0.addItem().alignItems(.center).alignSelf(.center).define {
-                $0.addItem(centerContentsTopContainer).define {
-                    $0.addItem(centerContentsTopLabel)
+                /// CenterContents
+                $0.addItem().alignItems(.center).alignSelf(.center).define {
+                    $0.addItem(centerContentsTopContainer).define {
+                        $0.addItem(centerContentsTopLabel)
+                    }
+                    $0.addItem(currentArrivalTransportTimeLabel)
+                    $0.addItem(nextArrivalTransportTimeContainer).define {
+                        $0.addItem(nextArrivalTransportTimeLabel)
+                    }
                 }
-                $0.addItem(currentArrivalTransportTimeLabel)
-                $0.addItem(nextArrivalTransportTimeContainer).define {
-                    $0.addItem(nextArrivalTransportTimeLabel)
+                .position(.absolute).top(64)
+                /// BottomContents
+                $0.addItem().define {
+                    $0.addItem(pathsContentView)
+                        .alignSelf(.center)
+                        .marginBottom(12)
                 }
+                .position(.absolute).bottom(0)
+                .width(100%)
+                .border(1, .red)
+                /// BottomLine
+                $0.addItem()
+                    .width(100%).height(.cfStroke(.xsmall))
+                    .backgroundColor(.cf(.grayScale(.gray200)))
             }
-            .position(.absolute).top(64)
-            /// BottomContents
-            $0.addItem().define {
-                let pathContentsHeight: CGFloat = 66
-                let startColor = UIColor.cf(.grayScale(.white))
-                let endColor = UIColor.cf(.grayScale(.white)).withAlphaComponent(0)
-                let leftGradientView = GradientView()
-                leftGradientView.setGradientColors([startColor, endColor])
-                leftGradientView.setGradientDirection(
-                    startPoint: .init(x: 0, y: 0),
-                    endPoint: .init(x: 1, y: 0)
-                )
-                
-                let rightGradientView = GradientView()
-                rightGradientView.setGradientColors([startColor, endColor])
-                rightGradientView.setGradientDirection(
-                    startPoint: .init(x: 1, y: 0),
-                    endPoint: .init(x: 0, y: 0)
-                )
-                
-                $0.addItem(pathsContentView)
-                    .alignSelf(.center)
-                    .minHeight(pathContentsHeight)
-                    .marginBottom(12)
-                $0.addItem(leftGradientView)
-                    .position(.absolute)
-                    .width(24).height(pathContentsHeight)
-                $0.addItem(rightGradientView)
-                    .position(.absolute)
-                    .width(24).height(pathContentsHeight)
-                    .right(0)
-            }
-            .width(100%)
-            .position(.absolute).bottom(0)
-            /// BottomLine
+            .minHeight(200)
+            // 서브패스 인포
             $0.addItem()
-                .width(100%).height(.cfStroke(.xsmall))
-                .backgroundColor(.cf(.grayScale(.gray200)))
+                .backgroundColor(.green)
+                .grow(1)
         }
         .backgroundColor(.cf(.grayScale(.white)))
-        .height(240)
     }
     
     private func layout() {
@@ -237,7 +219,7 @@ extension MainCollectionCell {
     
     private func calcSubPathsHeight(with data: [MakchaSubPath]) {
         let CONTAINER_PADDING = 8.0
-        var defaultHeight = 240.0
+        var defaultHeight = 200.0
 
         defaultHeight += CONTAINER_PADDING
         defaultHeight += data.map { $0.subPathType == .bus ? 36.0 + 8.0 : 20.0 + 28.0 }.reduce(0) { $0 + $1 } - 28.0
@@ -295,7 +277,7 @@ extension MainCollectionCell {
                 }
             }
         }
-        .minHeight(66)
+        .minHeight(36)
         .marginBottom(12)
         
         return rootView
