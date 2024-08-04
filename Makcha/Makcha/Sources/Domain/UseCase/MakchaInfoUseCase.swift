@@ -31,6 +31,8 @@ final class MakchaInfoUseCase {
     let searchedStartPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 출발지 주소들
     let searchedDestinationPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 도착지 주소들
     
+    private var makchaPathNumToLoad = 5 // 화면에 보여줄 막차 경로 개수
+    
     private let disposeBag = DisposeBag()
     private var timerDisposable: Disposable? // 타이머 구독을 제어하기 위한 Disposable
     
@@ -161,6 +163,7 @@ final class MakchaInfoUseCase {
                 $0.makeRealtimeArrivalTimes(currentTime: $1.startTime, makchaPaths: $1.makchaPaths)
                 // 새로운 MakchaInfo로 값을 업데이트
                 $0.makchaInfo.onNext($1)
+                $0.makchaPathNumToLoad = 5 // 화면에 보여줄 막차 경로 개수 5개로 리셋
             }
             .disposed(by: disposeBag)
     }
@@ -238,6 +241,15 @@ final class MakchaInfoUseCase {
         
         timerDisposable?.disposed(by: disposeBag)
     }
+    
+    /// 화면에 표시할 막차 경로 개수 조절 (최대 15개)
+    func updateMakchaPathNumToLoad() {
+        if makchaPathNumToLoad < 15 {
+            makchaPathNumToLoad += 5
+        } else {
+            makchaPathNumToLoad = 15
+        }
+    }
 }
 
 // MARK: - init() 시점에서의 구독
@@ -270,7 +282,8 @@ extension MakchaInfoUseCase {
             .subscribe(onNext: { [weak self] makchaInfo, realtimeArrivals in
                 var updatedMakchaCell = [MakchaCellData]()
                 if makchaInfo.makchaPaths.count == realtimeArrivals.count {
-                    for makchaIdx in 0..<realtimeArrivals.count {
+                    // 화면에 보여줄 막차 경로의 개수만큼만 넘겨준다.
+                    for makchaIdx in 0..<(self?.makchaPathNumToLoad ?? 5) {
                         let realtimeArrival = realtimeArrivals[makchaIdx]
                         
                         // makchaPath의 첫번째 대중교통 SubPath에 ~행/~방면 정보를 반영

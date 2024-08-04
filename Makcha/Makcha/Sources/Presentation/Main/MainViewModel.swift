@@ -32,7 +32,8 @@ final class MainViewModel: ViewModelType {
     struct Input {
         let viewDidLoadEvent = PublishRelay<Void>() // 화면 최초 로딩 이벤트 (현재 위치 기반 경로 불러오기)
         let settingButtonTap: ControlEvent<Void> // [설정] 버튼 탭
-        let starButtonTap: ControlEvent<Void> // [즐겨찾기] 버튼 탭
+//        let starButtonTap: ControlEvent<Void> // [즐겨찾기] 버튼 탭
+        let loadButtonTap: ControlEvent<Void> // 막차 경로 더 불러오기
     }
     
     struct Output {
@@ -51,28 +52,31 @@ final class MainViewModel: ViewModelType {
         input.settingButtonTap
             .withUnretained(self)
             .subscribe { vm, _ in
-                print("뷰모델에서 세팅 버튼 클릭 이벤트 바인딩")
                 // navigation으로 직접 호출
                 vm.navigation?.goToSettings()
             }
             .disposed(by: disposeBag)
         
-        input.starButtonTap
+//        input.starButtonTap
+//            .withUnretained(self)
+//            .subscribe { vm, _ in
+//                // 프로토콜을 통한 메서드로 호출
+//                vm.goToRemark()
+//            }
+//            .disposed(by: disposeBag)
+        
+        input.loadButtonTap
             .withUnretained(self)
-            .subscribe { vm, _ in
-                print("뷰모델에서 스타 버튼 클릭 이벤트 바인딩")
-                // 프로토콜을 통한 메서드로 호출
-                vm.goToRemark()
-            }
+            .subscribe(onNext: { `self`, _ in
+                self.makchaInfoUseCase.updateMakchaPathNumToLoad()
+            })
             .disposed(by: disposeBag)
 
         // MARK: makchaSectionModel 데이터 처리
         makchaInfoUseCase.makchaSectionOfMainCard
             .withUnretained(self)
             .subscribe(onNext: {
-                let fastFiveMakchaPath = Array($1.items.prefix(5)) // 가장 빠른 5개까지의 데이터만 전달
-                // TODO: - 펼치기 같은 기능 추가
-                $0.tempSections.accept([.init(model: $1.model, items: fastFiveMakchaPath)])
+                $0.tempSections.accept([.init(model: $1.model, items: $1.items)])
             })
             .disposed(by: disposeBag)
         

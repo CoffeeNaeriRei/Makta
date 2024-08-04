@@ -61,7 +61,8 @@ final class MainViewController: UIViewController {
     private func bind() {
         let input = MainViewModel.Input(
             settingButtonTap: leftUIBarButtonItem.rx.tap,
-            starButtonTap: rightUIBarButtonItem.rx.tap
+//            starButtonTap: rightUIBarButtonItem.rx.tap,
+            loadButtonTap: rightUIBarButtonItem.rx.tap
         )
 
         _ = mainVM.transform(input: input)
@@ -129,10 +130,11 @@ extension MainViewController {
         leftUIBarButtonItem.image = _leftBarButtonImage
 //        rightUIBarButtonItem.title = "Link to Remark"
 //        rightUIBarButtonItem.image = _rightBarButtonImage
+        rightUIBarButtonItem.title = "경로 더보기"
         
         navigationItem.title = _title
         navigationItem.leftBarButtonItem = leftUIBarButtonItem
-//        navigationItem.rightBarButtonItem = rightUIBarButtonItem
+        navigationItem.rightBarButtonItem = rightUIBarButtonItem
     }
     
     private func setupSheet() {
