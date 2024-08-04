@@ -15,6 +15,11 @@
 		205075D82BF9A15E00BAC30E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075D72BF9A15E00BAC30E /* SettingsViewController.swift */; };
 		205075DB2BF9A41200BAC30E /* RemarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205075DA2BF9A41200BAC30E /* RemarkViewController.swift */; };
 		205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D20F62BE912B100A7BD98 /* Preview+Extension.swift */; };
+		206571542C4E849D0077FE1B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206571532C4E849D0077FE1B /* OnboardingViewController.swift */; };
+		206571562C4E85380077FE1B /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206571552C4E85380077FE1B /* OnboardingViewModel.swift */; };
+		206571582C4E87200077FE1B /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206571572C4E87200077FE1B /* OnboardingCoordinator.swift */; };
+		2065715A2C4E8ABF0077FE1B /* OnboardingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206571592C4E8ABF0077FE1B /* OnboardingUseCase.swift */; };
+		2065715C2C4FE23E0077FE1B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2065715B2C4FE23E0077FE1B /* OnboardingView.swift */; };
 		20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20674F942BF0894D004E8566 /* MainViewModel.swift */; };
 		206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */ = {isa = PBXBuildFile; productRef = 206AA6052BE7A95B0057FA40 /* makcha-design-system */; };
 		206B51052BFA348600FC6F76 /* MainCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206B51042BFA348600FC6F76 /* MainCollectionView.swift */; };
@@ -26,7 +31,6 @@
 		20C053D32C11F9E700DB78C8 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */; };
 		20C053D52C14A40000DB78C8 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C053D42C14A40000DB78C8 /* DetailView.swift */; };
 		20C053D82C1576CA00DB78C8 /* DottedLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C053D72C1576CA00DB78C8 /* DottedLineView.swift */; };
-		20CFB2692C2826AE004CFC04 /* Flex+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CFB2682C2826AE004CFC04 /* Flex+Extension.swift */; };
 		20E277222C0198DF0071F6CA /* MainCollectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */; };
 		20E277242C02E4340071F6CA /* Rx+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E277232C02E4340071F6CA /* Rx+Extension.swift */; };
 		20EB5D1C2C17500F0028287C /* DetailSubPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EB5D1B2C17500F0028287C /* DetailSubPathView.swift */; };
@@ -99,6 +103,11 @@
 		205075D72BF9A15E00BAC30E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		205075DA2BF9A41200BAC30E /* RemarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemarkViewController.swift; sourceTree = "<group>"; };
 		205D20F62BE912B100A7BD98 /* Preview+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Preview+Extension.swift"; sourceTree = "<group>"; };
+		206571532C4E849D0077FE1B /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		206571552C4E85380077FE1B /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		206571572C4E87200077FE1B /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
+		206571592C4E8ABF0077FE1B /* OnboardingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingUseCase.swift; sourceTree = "<group>"; };
+		2065715B2C4FE23E0077FE1B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		20674F942BF0894D004E8566 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		206B51042BFA348600FC6F76 /* MainCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionView.swift; sourceTree = "<group>"; };
 		206B51062BFA349200FC6F76 /* MainCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionCell.swift; sourceTree = "<group>"; };
@@ -191,6 +200,7 @@
 			children = (
 				204A39DB2C0BF88E00C2F403 /* BaseCoordinator.swift */,
 				204A39DD2C0BFA6C00C2F403 /* MainCoordinator.swift */,
+				206571572C4E87200077FE1B /* OnboardingCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -210,6 +220,16 @@
 				205075DA2BF9A41200BAC30E /* RemarkViewController.swift */,
 			);
 			path = Remark;
+			sourceTree = "<group>";
+		};
+		206571522C4E84840077FE1B /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				206571532C4E849D0077FE1B /* OnboardingViewController.swift */,
+				206571552C4E85380077FE1B /* OnboardingViewModel.swift */,
+				2065715B2C4FE23E0077FE1B /* OnboardingView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		206B51032BFA33EC00FC6F76 /* MainCollectionView */ = {
@@ -409,6 +429,7 @@
 			isa = PBXGroup;
 			children = (
 				B862334A2BEC99AB003959FB /* MakchaInfoUseCase.swift */,
+				206571592C4E8ABF0077FE1B /* OnboardingUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -425,6 +446,7 @@
 		B89E7F992BE7700700A13B58 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				206571522C4E84840077FE1B /* Onboarding */,
 				205075D92BF9A40400BAC30E /* Remark */,
 				205075D62BF9A14800BAC30E /* Settings */,
 				B89E7F8A2BE765D200A13B58 /* TestView.swift */,
@@ -674,6 +696,7 @@
 				20C053D82C1576CA00DB78C8 /* DottedLineView.swift in Sources */,
 				B8C31E9F2BEE18C80049B47C /* EndPointRepository.swift in Sources */,
 				B89E7F8D2BE765D200A13B58 /* TestViewController.swift in Sources */,
+				206571582C4E87200077FE1B /* OnboardingCoordinator.swift in Sources */,
 				B81D56AA2C5D4E7E006A248D /* UITableViewCell+Extension.swift in Sources */,
 				B86233382BEA035F003959FB /* TransPathRepository.swift in Sources */,
 				B89E7FB02BE773D100A13B58 /* TransPathDTO.swift in Sources */,
@@ -691,6 +714,7 @@
 				B8745C5E2C36EBDD00B63EAB /* SearchPathViewModel.swift in Sources */,
 				B83FBDD32C1375A3004805ED /* KakaoReverseGeocodingResultDTO.swift in Sources */,
 				B89E7FAE2BE773B700A13B58 /* APIService.swift in Sources */,
+				206571562C4E85380077FE1B /* OnboardingViewModel.swift in Sources */,
 				B89E7F8C2BE765D200A13B58 /* TestView.swift in Sources */,
 				204A39DC2C0BF88E00C2F403 /* BaseCoordinator.swift in Sources */,
 				205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */,
@@ -709,8 +733,11 @@
 				20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */,
 				B8D48C172BF2164200DA2EB6 /* String+Extension.swift in Sources */,
 				B81BDE502BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift in Sources */,
+				206571542C4E849D0077FE1B /* OnboardingViewController.swift in Sources */,
 				B8B1C9852C3C26F000F11E15 /* Print.swift in Sources */,
 				B89E7FB22BE7742600A13B58 /* LocationManagerInterface.swift in Sources */,
+				2065715A2C4E8ABF0077FE1B /* OnboardingUseCase.swift in Sources */,
+				2065715C2C4FE23E0077FE1B /* OnboardingView.swift in Sources */,
 				B81D56A82C5D4133006A248D /* SettingsView.swift in Sources */,
 				B862333A2BEA04D9003959FB /* APIServiceType.swift in Sources */,
 				205075D82BF9A15E00BAC30E /* SettingsViewController.swift in Sources */,

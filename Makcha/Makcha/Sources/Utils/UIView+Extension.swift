@@ -86,9 +86,15 @@ struct UILabelFactory {
 
 import RxSwift
 import RxCocoa
+
+
 final class CustomUITextField: UITextField {
     var textPadding = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 6)
-
+    // 보더 스타일 구분 임시
+    var isBordered = false
+    var borderColor = UIColor.cf(.grayScale(.gray400))
+    var width = 1.0
+    
     private let disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
@@ -149,11 +155,28 @@ final class CustomUITextField: UITextField {
     }
     
     private func unfocus() {
-        layer.borderColor = UIColor.clear.cgColor
-        layer.borderWidth = .zero
+        if isBordered {
+            layer.borderColor = borderColor.cgColor
+            layer.borderWidth = width
+        } else {
+            layer.borderColor = UIColor.clear.cgColor
+            layer.borderWidth = .zero
+        }
 //        layer.shadowColor = UIColor.clear.cgColor
 //        self.layer.shadowOffset = CGSize.zero
 //        self.layer.shadowOpacity = 0.0
 //        self.layer.shadowRadius = 0.0
+    }
+}
+
+extension CustomUITextField {
+    func setBorder(color: UIColor = .cf(.grayScale(.gray400)), width: CGFloat = 1.0) {
+        isBordered = true
+        
+        self.borderColor = color
+        self.width = width
+        
+        layer.borderColor = color.cgColor
+        layer.borderWidth = width
     }
 }
