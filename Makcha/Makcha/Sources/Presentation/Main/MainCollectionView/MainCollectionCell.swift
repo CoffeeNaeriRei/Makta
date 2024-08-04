@@ -13,7 +13,6 @@ import UIKit
 import MakchaDesignSystem
 import FlexLayout
 import PinLayout
-import Reusable
 import RxSwift
 
 final class MainCollectionCell: UICollectionViewCell {
