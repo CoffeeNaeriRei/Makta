@@ -339,7 +339,7 @@ extension DetailSubPathView {
         
         // MARK: ~행 과 ~ 방면을 구분해서 알 수 있는지?
         let way = "\(subPath.way ?? "")행"
-        let detailWay = "\(subPath.way ?? "")역 방면"
+        let detailWay = "\(subPath.nextSt ?? "")역 방면"
         // 도착시간 계산
         // 다음 도착시간?
         let arrivalTime = "NN분 NN초"

@@ -46,8 +46,8 @@ final class DetailViewController: UIViewController {
         super.viewDidLoad()
         setup()
         #if DEBUG
-        print(data.arrival.first.arrivalMessageFirst)
-        print(data.arrival.second.arrivalMessageSecond)
+        print(data.arrival.first.status.arrivalMessageFirst)
+        print(data.arrival.second.status.arrivalMessageSecond)
         #endif
         bind()
     }
@@ -65,8 +65,8 @@ final class DetailViewController: UIViewController {
         makchaInfoUseCase?.makchaSectionModel
             .withUnretained(self)
             .subscribe(onNext: { `self`, makchaSectionModel in
-                self.firstArrivalMessage.accept(makchaSectionModel.makchaCellData[self.idx].arrival.first.arrivalMessageFirst)
-                self.secondArrivalMessage.accept(makchaSectionModel.makchaCellData[self.idx].arrival.second.arrivalMessageSecond)
+                self.firstArrivalMessage.accept(makchaSectionModel.makchaCellData[self.idx].arrival.first.status.arrivalMessageFirst)
+                self.secondArrivalMessage.accept(makchaSectionModel.makchaCellData[self.idx].arrival.second.status.arrivalMessageSecond)
             })
             .disposed(by: disposeBag)
         

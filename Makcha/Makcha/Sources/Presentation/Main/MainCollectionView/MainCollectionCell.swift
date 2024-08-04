@@ -217,9 +217,9 @@ extension MainCollectionCell {
             firstSubPath: data.makchaPath.subPath.filter { $0.subPathType != .walk }.first
         )
         // 타이머 도착 예정 시간 업데이트
-        currentArrivalTransportTimeLabel.text = data.arrival.first.arrivalMessageFirst
+        currentArrivalTransportTimeLabel.text = data.arrival.first.status.arrivalMessageFirst
         currentArrivalTransportTimeLabel.flex.markDirty()
-        nextArrivalTransportTimeLabel.text = data.arrival.second.arrivalMessageSecond
+        nextArrivalTransportTimeLabel.text = data.arrival.second.status.arrivalMessageSecond
         nextArrivalTransportTimeLabel.flex.markDirty()
         // 경로 업데이트
         layoutPathContentContainer(subPaths: data.makchaPath.subPath)
@@ -520,7 +520,7 @@ extension MainCollectionCell {
 struct MainCollectionCell_Preview: PreviewProvider {
     static var previews: some View {
         let cell = MainCollectionCell()
-        let data: MakchaCellData = (MakchaInfo.mockMakchaInfo.makchaPaths.last!, (ArrivalStatus.arriveSoon, ArrivalStatus.arriveSoon))
+        let data: MakchaCellData = (MakchaInfo.mockMakchaInfo.makchaPaths.last!, (RealtimeArrivalInfo(status: .arriveSoon), RealtimeArrivalInfo(status: .arriveSoon)))
         ViewPreview {
             cell.configure(with: data)
             return cell

@@ -181,7 +181,6 @@ final class DetailView: UIView {
         }
         .backgroundColor(.cf(.grayScale(.gray100)).withAlphaComponent(0.28))
         .grow(1)
-//        .border(1, .blue)
     }
     
     override func layoutSubviews() {
@@ -262,7 +261,10 @@ struct DetailView_Preview: PreviewProvider {
     static var previews: some View {
         ViewPreview {
             let makchaPath = MakchaInfo.mockMakchaInfo.makchaPaths.last!
-            let rtat: RealtimeArrivalTuple = (ArrivalStatus.arriveSoon, ArrivalStatus.arriveSoon)
+            let rtat: RealtimeArrivalTuple = (
+                RealtimeArrivalInfo(status: .arriveSoon, way: nil, nextSt: nil),
+                RealtimeArrivalInfo(status: .arriveSoon, way: nil, nextSt: nil)
+            )
             let view = DetailView()
             view.configure(data: (makchaPath, (rtat)), path:("", ""))
             return view

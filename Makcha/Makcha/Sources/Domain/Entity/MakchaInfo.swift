@@ -27,6 +27,25 @@ struct MakchaPath: Equatable {
     let arrivalTime: Date // 도착시간
     let totalTime: Int // 총 소요시간 (단위: 분)
     let subPath: [MakchaSubPath] // 세부경로들
+    
+    /// ~행/~방면 정보가 반영된 MakchaPath를 새로 리턴
+    func assignWayAndNextStToFirstSubPath(way: String?, nextSt: String?) -> Self {
+        if var firstSubPath = subPath.first {
+            firstSubPath.way = way
+            firstSubPath.nextSt = nextSt
+            
+            let newSubPath = [firstSubPath] + Array(subPath.dropFirst())
+            return MakchaPath(
+                fastest: fastest,
+                makchaPathType: makchaPathType,
+                arrivalTime: arrivalTime,
+                totalTime: totalTime,
+                subPath: newSubPath
+            )
+        } else {
+            return self
+        }
+    }
 }
 
 enum MakchaPathType: String {
@@ -51,8 +70,9 @@ struct MakchaSubPath: Equatable {
     let stations: [PassStation]? // 거치는 정거장(역)들
     
     // 지하철🚇일 경우에만
-    let way: String? // 방면 정보 ex) "종로3가 방면"
-    let wayCode: Int? // 방면 정보 코드 (1:상행, 2:하행)
+    var way: String? // ~행 정보 ex) "신내행"
+    let wayCode: Int? // 상행/하행 정보 코드 (1:상행, 2:하행)
+    var nextSt: String? // 방면(다음역) 정보 ex) "구산 방면"
     
     // 버스🚌일 경우에만
     let startArsID: String? // 출발 정류장 고유번호(arsID)
@@ -70,6 +90,7 @@ struct MakchaSubPath: Equatable {
         stations: [PassStation]? = nil,
         way: String? = nil,
         wayCode: Int? = nil,
+        nextSt: String? = nil,
         startArsID: String? = nil
     ) {
         self.idx = idx
@@ -84,6 +105,7 @@ struct MakchaSubPath: Equatable {
         self.stations = stations
         self.way = way
         self.wayCode = wayCode
+        self.nextSt = nextSt
         self.startArsID = startArsID
     }
 }

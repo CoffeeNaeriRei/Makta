@@ -250,10 +250,10 @@ extension MakchaInfoUseCase {
             .withUnretained(self)
             .withLatestFrom(realtimeArrivals)
             .map { prevRealtimeArrivals in
-                prevRealtimeArrivals.map { arrival in
+                prevRealtimeArrivals.map { arrivalTuple in
                     (
-                        first: arrival.first.decreaseTimeFromArrivalStatus(),
-                        second: arrival.second.decreaseTimeFromArrivalStatus()
+                        arrivalTuple.first.decreaseRemainingTime(),
+                        arrivalTuple.second.decreaseRemainingTime()
                     )
                 }
             }
@@ -272,7 +272,17 @@ extension MakchaInfoUseCase {
                 var updatedMakchaCell = [MakchaCellData]()
                 if makchaInfo.makchaPaths.count == realtimeArrivals.count {
                     for makchaIdx in 0..<realtimeArrivals.count {
-                        let cellData: MakchaCellData = (makchaInfo.makchaPaths[makchaIdx], realtimeArrivals[makchaIdx])
+                        let realtimeArrival = realtimeArrivals[makchaIdx]
+                        
+                        // makchaPath의 첫번째 SubPath에 ~행/~방면 정보를 반영
+                        let wayOfFirstSubPath = realtimeArrival.first.way
+                        let nextStOfFirstSubPath = realtimeArrival.first.nextSt
+                        let makchaPath = makchaInfo.makchaPaths[makchaIdx].assignWayAndNextStToFirstSubPath(
+                            way: wayOfFirstSubPath,
+                            nextSt: nextStOfFirstSubPath
+                        )
+                        
+                        let cellData: MakchaCellData = (makchaPath, realtimeArrival)
                         updatedMakchaCell.append(cellData)
                     }
                     self?.makchaSectionModel.onNext((makchaInfo.startTimeStr, updatedMakchaCell))
