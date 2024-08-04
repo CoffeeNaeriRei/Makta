@@ -28,13 +28,12 @@ struct MakchaPath: Equatable {
     let totalTime: Int // 총 소요시간 (단위: 분)
     let subPath: [MakchaSubPath] // 세부경로들
     
-    /// ~행/~방면 정보가 반영된 MakchaPath를 새로 리턴
+    /// 1번째 대중교통 세부경로에 ~행/~방면 정보를 반영한 MakchaPath를 새로 리턴
     func assignWayAndNextStToFirstSubPath(way: String?, nextSt: String?) -> Self {
-        if var firstSubPath = subPath.first {
-            firstSubPath.way = way
-            firstSubPath.nextSt = nextSt
-            
-            let newSubPath = [firstSubPath] + Array(subPath.dropFirst())
+        if subPath.count > 1 {
+            var newSubPath = subPath
+            newSubPath[1].way = way
+            newSubPath[1].nextSt = nextSt
             return MakchaPath(
                 fastest: fastest,
                 makchaPathType: makchaPathType,

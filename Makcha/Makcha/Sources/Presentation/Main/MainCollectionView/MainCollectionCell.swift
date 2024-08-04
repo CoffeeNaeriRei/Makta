@@ -209,6 +209,10 @@ private final class ContentView: UIView {
 extension MainCollectionCell {
     // MARK: 패치 된 데이터를 활용해 뷰 레이아웃을 설정하기 위한 인터페이스 메서드
     func configure(with data: MakchaCellData) {
+        let pathType = data.makchaPath.makchaPathType.rawValue
+        pathTypelabel.text = data.makchaPath.fastest ? "\(pathType)(가장 빠른 경로)" : pathType
+        pathTypelabel.flex.markDirty()
+        
         // 상단 시간정보 업데이트
         layoutTopContentsContainer(data.makchaPath.arrivalTime.endPointTimeString)
         // 도착 예정 시간 레이아웃 업데이트
@@ -276,7 +280,7 @@ extension MainCollectionCell {
 // MARK: 하위 뷰 작성하는 코드가 길어져서 분리
 extension MainCollectionCell {
     private func layoutTopContentsContainer(_ text: String) {
-        estimatedTimeOfArrivalLabel.text = text
+        estimatedTimeOfArrivalLabel.text = "\(text) 도착"
         estimatedTimeOfArrivalLabel.flex.markDirty()
     }
     

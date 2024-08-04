@@ -21,9 +21,15 @@ final class DetailViewController: UIViewController {
     private let rightUIBarButtonItem = UIBarButtonItem()
     
     private let idx: Int // 막차 정보 인덱스
-    // TODO: - data, path 정보도 바인딩으로 처리하기
     private let data: MakchaCellData
     private var path: (String, String)
+    // TODO: - data, path 정보도 바인딩으로 처리하기
+//    private let makchaCellData = PublishRelay<MakchaCellData>()
+//    private let makchaEndPoints = PublishRelay<(String, String)>()
+    
+    private let makchaPath = PublishRelay<MakchaPath>()
+    private let realtimeArrival = PublishRelay<RealtimeArrivalTuple>()
+    
     private let firstArrivalMessage = PublishRelay<String>()
     private let secondArrivalMessage = PublishRelay<String>()
     
@@ -62,12 +68,23 @@ final class DetailViewController: UIViewController {
     }
     
     private func bind() {
-        makchaInfoUseCase?.makchaSectionModel
+        makchaInfoUseCase?.makchaSectionOfMainCard
             .withUnretained(self)
-            .subscribe(onNext: { `self`, makchaSectionModel in
-                self.firstArrivalMessage.accept(makchaSectionModel.makchaCellData[self.idx].arrival.first.status.arrivalMessageFirst)
-                self.secondArrivalMessage.accept(makchaSectionModel.makchaCellData[self.idx].arrival.second.status.arrivalMessageSecond)
+            .subscribe(onNext: { `self`, sectionOfMainCard in
+//                self.makchaCellData.accept(sectionOfMainCard.items[self.idx])
+                self.makchaPath.accept(sectionOfMainCard.items[self.idx].makchaPath)
+                self.realtimeArrival.accept(sectionOfMainCard.items[self.idx].arrival)
             })
+            .disposed(by: disposeBag)
+        
+        realtimeArrival
+            .map { $0.first.status.arrivalMessageFirst }
+            .bind(to: firstArrivalMessage)
+            .disposed(by: disposeBag)
+        
+        realtimeArrival
+            .map { $0.second.status.arrivalMessageFirst }
+            .bind(to: secondArrivalMessage)
             .disposed(by: disposeBag)
         
         firstArrivalMessage.asDriver(onErrorJustReturn: "도착 정보 없음")

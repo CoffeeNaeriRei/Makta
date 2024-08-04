@@ -67,12 +67,12 @@ final class MainViewModel: ViewModelType {
             .disposed(by: disposeBag)
 
         // MARK: makchaSectionModel 데이터 처리
-        makchaInfoUseCase.makchaSectionModel
+        makchaInfoUseCase.makchaSectionOfMainCard
             .withUnretained(self)
             .subscribe(onNext: {
-                // 가장 빠른 5개까지의 데이터만 전달
+                let fastFiveMakchaPath = Array($1.items.prefix(5)) // 가장 빠른 5개까지의 데이터만 전달
                 // TODO: - 펼치기 같은 기능 추가
-                $0.tempSections.accept([.init(model: $1.startTimeStr, items: Array($1.makchaCellData.prefix(5)))])
+                $0.tempSections.accept([.init(model: $1.model, items: fastFiveMakchaPath)])
             })
             .disposed(by: disposeBag)
         

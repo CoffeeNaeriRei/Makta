@@ -15,7 +15,6 @@ import RxSwift
 
 // 컬렉션뷰의 셀로 전달하기 위한 데이터 타입 (막차경로, 해당경로의실시간도착정보)
 typealias MakchaCellData = (makchaPath: MakchaPath, arrival: RealtimeArrivalTuple)
-typealias MakchaCardSectionModel = (startTimeStr: String, makchaCellData: [MakchaCellData])
 
 final class MakchaInfoUseCase {
     private let transPathRepository: TransPathRepositoryProtocol
@@ -26,7 +25,7 @@ final class MakchaInfoUseCase {
     let realtimeArrivals = PublishSubject<[RealtimeArrivalTuple]>() // 막차 경로 별 실시간 도착 정보
     private let timerEvent = PublishRelay<Void>() // 실시간 도착 정보 타이머 이벤트
     
-    let makchaSectionModel = PublishSubject<MakchaCardSectionModel>() // 컬렉션뷰 바인딩을 위한 SectionModel에 전달할 데이터
+    let makchaSectionOfMainCard = PublishSubject<SectionOfMainCard>() // 컬렉션뷰 바인딩을 위한 SectionModel에 전달할 데이터
     let startPoint = PublishSubject<EndPoint>() // 출발지 정보
     let destinationPoint = PublishSubject<EndPoint>() // 도착지 정보
     let searchedStartPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 출발지 주소들
@@ -274,7 +273,7 @@ extension MakchaInfoUseCase {
                     for makchaIdx in 0..<realtimeArrivals.count {
                         let realtimeArrival = realtimeArrivals[makchaIdx]
                         
-                        // makchaPath의 첫번째 SubPath에 ~행/~방면 정보를 반영
+                        // makchaPath의 첫번째 대중교통 SubPath에 ~행/~방면 정보를 반영
                         let wayOfFirstSubPath = realtimeArrival.first.way
                         let nextStOfFirstSubPath = realtimeArrival.first.nextSt
                         let makchaPath = makchaInfo.makchaPaths[makchaIdx].assignWayAndNextStToFirstSubPath(
@@ -285,7 +284,12 @@ extension MakchaInfoUseCase {
                         let cellData: MakchaCellData = (makchaPath, realtimeArrival)
                         updatedMakchaCell.append(cellData)
                     }
-                    self?.makchaSectionModel.onNext((makchaInfo.startTimeStr, updatedMakchaCell))
+                    self?.makchaSectionOfMainCard.onNext(
+                        SectionOfMainCard(
+                            model: makchaInfo.startTimeStr,
+                            items: updatedMakchaCell
+                        )
+                    )
                 }
             })
             .disposed(by: disposeBag)
