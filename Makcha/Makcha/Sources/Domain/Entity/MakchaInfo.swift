@@ -32,7 +32,9 @@ struct MakchaPath: Equatable {
     func assignWayAndNextStToFirstSubPath(way: String?, nextSt: String?) -> Self {
         if subPath.count > 1 {
             var newSubPath = subPath
-            newSubPath[1].way = way
+            if let way = way { // way가 nil이 아닐 때만 반영
+                newSubPath[1].way = way
+            }
             newSubPath[1].nextSt = nextSt
             return MakchaPath(
                 fastest: fastest,
