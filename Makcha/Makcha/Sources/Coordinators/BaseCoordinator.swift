@@ -26,7 +26,7 @@ class BaseCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController
-    
+
     init(_ vc: UINavigationController) {
         self.navigationController = vc
     }
@@ -47,9 +47,15 @@ class BaseCoordinator: Coordinator {
 }
 
 final class AppCoordinator: BaseCoordinator {
+    private var isSkippedOnboarding = UserDefaults.standard.bool(forKey: .isSkipOnboarding)
+    
     override func start() {
         super.start()
-        goToMain()
+        if isSkippedOnboarding {
+            goToMain()
+        } else {
+            goToOnboarding()
+        }
     }
     
     deinit {
@@ -61,6 +67,14 @@ extension AppCoordinator: AppNavigation {
     func goToMain() {
         removeAll()
         let coordinator = MainCoordinator(navigationController)
+        addChild(coordinator)
+        coordinator.parentCoordinator = self
+        coordinator.start()
+    }
+    
+    func goToOnboarding() {
+        removeAll()
+        let coordinator = OnboardingCoordinator(navigationController)
         addChild(coordinator)
         coordinator.parentCoordinator = self
         coordinator.start()

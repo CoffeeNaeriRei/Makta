@@ -8,6 +8,8 @@
 import Foundation
 
 extension String {
+    static let isSkipOnboarding = "isSkipOnboarding"
+    
     subscript(idx: Int) -> String? {
         guard (0..<count).contains(idx) else {
             return nil

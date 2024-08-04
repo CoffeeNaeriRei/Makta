@@ -15,7 +15,7 @@ import FlexLayout
 import Reusable
 import RxSwift
 
-final class MainCollectionHeaderCell: UICollectionViewCell, Reusable {
+final class MainCollectionHeaderCell: UICollectionViewCell {
     private let startTimeLabel: UILabel = {
         let label = UILabel()
         let text = NSMutableAttributedString.pretendard("출발 시간 출발", scale: .headline)
