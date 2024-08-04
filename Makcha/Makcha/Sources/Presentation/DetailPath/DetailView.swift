@@ -111,10 +111,13 @@ final class DetailView: UIView {
                         $0.addItem(centerContentsTopLabel)
                     }
                     $0.addItem(currentArrivalTransportTimeLabel)
-                    $0.addItem(nextArrivalTransportTimeContainer).define {
+                        .width(100%)
+                    $0.addItem(nextArrivalTransportTimeContainer).define { // TODO: - 이 컨테이너는 없어도 될 것 같음
                         $0.addItem(nextArrivalTransportTimeLabel)
                     }
+                    .width(100%)
                 }
+                .width(100%)
                 .position(.absolute).top(64)
             }
             .backgroundColor(.cf(.grayScale(.white)))
