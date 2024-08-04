@@ -199,6 +199,12 @@ extension DetailView: DetailViewDelegate {
     }
     
     func configure(data: MakchaCellData, path: (String, String)) {
+        let pathType = data.makchaPath.makchaPathType.rawValue
+        pathTypelabel.text = data.makchaPath.fastest ? "\(pathType)(가장 빠른 경로)" : pathType
+        pathTypelabel.flex.markDirty()
+        
+        estimatedTimeOfArrivalLabel.text = "\(data.makchaPath.arrivalTime.endPointTimeString) 도착"
+        estimatedTimeOfArrivalLabel.flex.markDirty()
         
         // 막차 경로의 전체 소요시간을 그려줌
         layoutTotalDurationTimeLabel(totalTime: data.makchaPath.totalTime)
