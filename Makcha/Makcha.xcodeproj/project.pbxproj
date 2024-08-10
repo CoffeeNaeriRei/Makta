@@ -37,7 +37,7 @@
 		B81BDE502BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */; };
 		B81BDE522BFF9A8700CFDC7A /* ArrivalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81BDE512BFF9A8700CFDC7A /* ArrivalType.swift */; };
 		B81D56A82C5D4133006A248D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81D56A72C5D4133006A248D /* SettingsView.swift */; };
-		B81D56AA2C5D4E7E006A248D /* UITableViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81D56A92C5D4E7E006A248D /* UITableViewCell+Extension.swift */; };
+		B81D56AA2C5D4E7E006A248D /* UICell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81D56A92C5D4E7E006A248D /* UICell+Extension.swift */; };
 		B82953D22BF5DDBB00EABD57 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */; };
 		B83FBDD12C12D6D7004805ED /* KakaoPlaceSearchResultDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83FBDD02C12D6D7004805ED /* KakaoPlaceSearchResultDTO.swift */; };
 		B83FBDD32C1375A3004805ED /* KakaoReverseGeocodingResultDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83FBDD22C1375A3004805ED /* KakaoReverseGeocodingResultDTO.swift */; };
@@ -124,7 +124,7 @@
 		B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeoulRealtimeBusStationDTO.swift; sourceTree = "<group>"; };
 		B81BDE512BFF9A8700CFDC7A /* ArrivalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalType.swift; sourceTree = "<group>"; };
 		B81D56A72C5D4133006A248D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		B81D56A92C5D4E7E006A248D /* UITableViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extension.swift"; sourceTree = "<group>"; };
+		B81D56A92C5D4E7E006A248D /* UICell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICell+Extension.swift"; sourceTree = "<group>"; };
 		B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B83FBDD02C12D6D7004805ED /* KakaoPlaceSearchResultDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoPlaceSearchResultDTO.swift; sourceTree = "<group>"; };
 		B83FBDD22C1375A3004805ED /* KakaoReverseGeocodingResultDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoReverseGeocodingResultDTO.swift; sourceTree = "<group>"; };
@@ -502,7 +502,7 @@
 				20E277232C02E4340071F6CA /* Rx+Extension.swift */,
 				20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */,
 				B8B1C9842C3C26F000F11E15 /* Print.swift */,
-				B81D56A92C5D4E7E006A248D /* UITableViewCell+Extension.swift */,
+				B81D56A92C5D4E7E006A248D /* UICell+Extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -697,7 +697,7 @@
 				B8C31E9F2BEE18C80049B47C /* EndPointRepository.swift in Sources */,
 				B89E7F8D2BE765D200A13B58 /* TestViewController.swift in Sources */,
 				206571582C4E87200077FE1B /* OnboardingCoordinator.swift in Sources */,
-				B81D56AA2C5D4E7E006A248D /* UITableViewCell+Extension.swift in Sources */,
+				B81D56AA2C5D4E7E006A248D /* UICell+Extension.swift in Sources */,
 				B86233382BEA035F003959FB /* TransPathRepository.swift in Sources */,
 				B89E7FB02BE773D100A13B58 /* TransPathDTO.swift in Sources */,
 				206B51072BFA349200FC6F76 /* MainCollectionCell.swift in Sources */,

@@ -15,7 +15,6 @@ import RxSwift
 
 // 컬렉션뷰의 셀로 전달하기 위한 데이터 타입 (막차경로, 해당경로의실시간도착정보)
 typealias MakchaCellData = (makchaPath: MakchaPath, arrival: RealtimeArrivalTuple)
-typealias MakchaCardSectionModel = (startTimeStr: String, makchaCellData: [MakchaCellData])
 
 final class MakchaInfoUseCase {
     private let transPathRepository: TransPathRepositoryProtocol
@@ -26,11 +25,13 @@ final class MakchaInfoUseCase {
     let realtimeArrivals = PublishSubject<[RealtimeArrivalTuple]>() // 막차 경로 별 실시간 도착 정보
     private let timerEvent = PublishRelay<Void>() // 실시간 도착 정보 타이머 이벤트
     
-    let makchaSectionModel = PublishSubject<MakchaCardSectionModel>() // 컬렉션뷰 바인딩을 위한 SectionModel에 전달할 데이터
+    let makchaSectionOfMainCard = PublishSubject<SectionOfMainCard>() // 컬렉션뷰 바인딩을 위한 SectionModel에 전달할 데이터
     let startPoint = PublishSubject<EndPoint>() // 출발지 정보
     let destinationPoint = PublishSubject<EndPoint>() // 도착지 정보
     let searchedStartPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 출발지 주소들
     let searchedDestinationPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 도착지 주소들
+    
+    private var makchaPathNumToLoad = 5 // 화면에 보여줄 막차 경로 개수
     
     private let disposeBag = DisposeBag()
     private var timerDisposable: Disposable? // 타이머 구독을 제어하기 위한 Disposable
@@ -162,6 +163,7 @@ final class MakchaInfoUseCase {
                 $0.makeRealtimeArrivalTimes(currentTime: $1.startTime, makchaPaths: $1.makchaPaths)
                 // 새로운 MakchaInfo로 값을 업데이트
                 $0.makchaInfo.onNext($1)
+                $0.makchaPathNumToLoad = 5 // 화면에 보여줄 막차 경로 개수 5개로 리셋
             }
             .disposed(by: disposeBag)
     }
@@ -239,6 +241,15 @@ final class MakchaInfoUseCase {
         
         timerDisposable?.disposed(by: disposeBag)
     }
+    
+    /// 화면에 표시할 막차 경로 개수 조절 (최대 15개)
+    func updateMakchaPathNumToLoad() {
+        if makchaPathNumToLoad < 15 {
+            makchaPathNumToLoad += 5
+        } else {
+            makchaPathNumToLoad = 15
+        }
+    }
 }
 
 // MARK: - init() 시점에서의 구독
@@ -250,10 +261,10 @@ extension MakchaInfoUseCase {
             .withUnretained(self)
             .withLatestFrom(realtimeArrivals)
             .map { prevRealtimeArrivals in
-                prevRealtimeArrivals.map { arrival in
+                prevRealtimeArrivals.map { arrivalTuple in
                     (
-                        first: arrival.first.decreaseTimeFromArrivalStatus(),
-                        second: arrival.second.decreaseTimeFromArrivalStatus()
+                        arrivalTuple.first.decreaseRemainingTime(),
+                        arrivalTuple.second.decreaseRemainingTime()
                     )
                 }
             }
@@ -271,11 +282,27 @@ extension MakchaInfoUseCase {
             .subscribe(onNext: { [weak self] makchaInfo, realtimeArrivals in
                 var updatedMakchaCell = [MakchaCellData]()
                 if makchaInfo.makchaPaths.count == realtimeArrivals.count {
-                    for makchaIdx in 0..<realtimeArrivals.count {
-                        let cellData: MakchaCellData = (makchaInfo.makchaPaths[makchaIdx], realtimeArrivals[makchaIdx])
+                    // 화면에 보여줄 막차 경로의 개수만큼만 넘겨준다.
+                    for makchaIdx in 0..<(self?.makchaPathNumToLoad ?? 5) {
+                        let realtimeArrival = realtimeArrivals[makchaIdx]
+                        
+                        // makchaPath의 첫번째 대중교통 SubPath에 ~행/~방면 정보를 반영
+                        let wayOfFirstSubPath = realtimeArrival.first.way
+                        let nextStOfFirstSubPath = realtimeArrival.first.nextSt
+                        let makchaPath = makchaInfo.makchaPaths[makchaIdx].assignWayAndNextStToFirstSubPath(
+                            way: wayOfFirstSubPath,
+                            nextSt: nextStOfFirstSubPath
+                        )
+                        
+                        let cellData: MakchaCellData = (makchaPath, realtimeArrival)
                         updatedMakchaCell.append(cellData)
                     }
-                    self?.makchaSectionModel.onNext((makchaInfo.startTimeStr, updatedMakchaCell))
+                    self?.makchaSectionOfMainCard.onNext(
+                        SectionOfMainCard(
+                            model: makchaInfo.startTimeStr,
+                            items: updatedMakchaCell
+                        )
+                    )
                 }
             })
             .disposed(by: disposeBag)

@@ -111,10 +111,13 @@ final class DetailView: UIView {
                         $0.addItem(centerContentsTopLabel)
                     }
                     $0.addItem(currentArrivalTransportTimeLabel)
-                    $0.addItem(nextArrivalTransportTimeContainer).define {
+                        .width(100%)
+                    $0.addItem(nextArrivalTransportTimeContainer).define { // TODO: - 이 컨테이너는 없어도 될 것 같음
                         $0.addItem(nextArrivalTransportTimeLabel)
                     }
+                    .width(100%)
                 }
+                .width(100%)
                 .position(.absolute).top(64)
             }
             .backgroundColor(.cf(.grayScale(.white)))
@@ -181,7 +184,6 @@ final class DetailView: UIView {
         }
         .backgroundColor(.cf(.grayScale(.gray100)).withAlphaComponent(0.28))
         .grow(1)
-//        .border(1, .blue)
     }
     
     override func layoutSubviews() {
@@ -200,6 +202,12 @@ extension DetailView: DetailViewDelegate {
     }
     
     func configure(data: MakchaCellData, path: (String, String)) {
+        let pathType = data.makchaPath.makchaPathType.rawValue
+        pathTypelabel.text = data.makchaPath.fastest ? "\(pathType)(가장 빠른 경로)" : pathType
+        pathTypelabel.flex.markDirty()
+        
+        estimatedTimeOfArrivalLabel.text = "\(data.makchaPath.arrivalTime.endPointTimeString) 도착"
+        estimatedTimeOfArrivalLabel.flex.markDirty()
         
         // 막차 경로의 전체 소요시간을 그려줌
         layoutTotalDurationTimeLabel(totalTime: data.makchaPath.totalTime)
@@ -262,7 +270,10 @@ struct DetailView_Preview: PreviewProvider {
     static var previews: some View {
         ViewPreview {
             let makchaPath = MakchaInfo.mockMakchaInfo.makchaPaths.last!
-            let rtat: RealtimeArrivalTuple = (ArrivalStatus.arriveSoon, ArrivalStatus.arriveSoon)
+            let rtat: RealtimeArrivalTuple = (
+                RealtimeArrivalInfo(status: .arriveSoon, way: nil, nextSt: nil),
+                RealtimeArrivalInfo(status: .arriveSoon, way: nil, nextSt: nil)
+            )
             let view = DetailView()
             view.configure(data: (makchaPath, (rtat)), path:("", ""))
             return view

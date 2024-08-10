@@ -71,4 +71,18 @@ extension String {
         
         return (minutes * 60) + seconds
     }
+    
+    /// ~행/~방면 형식의 String에서 행/방면 문자를 제외한 역 이름만 반환
+    func getNameFromWayAndNextSt() -> String {
+        guard let regex = try? NSRegularExpression(pattern: #"(?<name>[\w가-힣]+)(행|방면)"#, options: []) else { return self }
+        let range = NSRange(location: 0, length: self.count)
+        
+        if let match = regex.firstMatch(in: self, options: [], range: range) {
+            if let nameRange = Range(match.range(withName: "name"), in: self) {
+                let name = String(self[nameRange])
+                return name
+            }
+        }
+        return self
+    }
 }
