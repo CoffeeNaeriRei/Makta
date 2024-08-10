@@ -42,13 +42,30 @@ final class SettingsViewController: UIViewController {
     
     private func bind() {
         // 테이블뷰 바인딩
+        mainView.settingsTableView.delegate = self
         menus.bind(to: mainView.settingsTableView.rx.items) { tableView, row, item in
             let cell = tableView.dequeueReusableCell(for: IndexPath(row: row, section: 0)) as UITableViewCell
             cell.textLabel?.text = item
             cell.accessoryType = .disclosureIndicator
+            
             return cell
         }
         .disposed(by: disposeBag)
+    }
+}
+
+extension SettingsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            let apiService = APIService()
+            let locationService = LocationService()
+            let onbardingUseCase = OnboardingUseCase(
+                TransPathRepository(apiService),
+                EndPointRepository(locationService, apiService)
+            )
+            
+            navigationController?.pushViewController(OnboardingViewController(OnboardingViewModel(onbardingUseCase), type: .enterToSettings), animated: true)
+        }
     }
 }
 
@@ -56,7 +73,7 @@ final class SettingsViewController: UIViewController {
 struct SettingsViewController_Previews: PreviewProvider {
     static var previews: some View {
         ViewControllerPreview {
-            return SettingsViewController()
+            UINavigationController(rootViewController: SettingsViewController())
         }
     }
 }

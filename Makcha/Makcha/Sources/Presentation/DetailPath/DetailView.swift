@@ -111,11 +111,15 @@ final class DetailView: UIView {
                         $0.addItem(centerContentsTopLabel)
                     }
                     $0.addItem(currentArrivalTransportTimeLabel)
+                        .width(100%)
                     $0.addItem(nextArrivalTransportTimeContainer).define {
                         $0.addItem(nextArrivalTransportTimeLabel)
+                            .width(100%)
                     }
+                    .width(100%)
                 }
                 .position(.absolute).top(64)
+                .width(100%)
             }
             .backgroundColor(.cf(.grayScale(.white)))
             .height(160)

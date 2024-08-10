@@ -483,10 +483,7 @@ extension MainCollectionCell {
         let bgColor = busType.busUIColor
         let distanceBgColor = UIColor(busType.busColor.opacity(0.6))
         let iconTintColor = UIColor.cf(.grayScale(.white))
-        
-        let stationName = subPath.stations?.first?.name ?? "Undefined"
-        let time = "+\(subPath.time)분"
-        
+
         let imageView = UIImageView(image: icon?.withTintColor(iconTintColor, renderingMode:  .alwaysOriginal))
         imageView.contentMode = .center
         
@@ -499,50 +496,6 @@ extension MainCollectionCell {
                 .marginLeft(12)
                 .marginRight(0)
             $0.addItem().position(.absolute).define {
-                //                let textContainerView = UIView()
-                //                let arrivalStationContainer = UIView()
-                //                let arriveTimeLabel = UILabelFactory.build(
-                //                    attributedText: .pretendard(time, scale: .caption),
-                //                    textColor: .cf(.grayScale(.gray600))
-                //                )
-                //                let arrivalStationLabel = UILabelFactory.build(
-                //                    attributedText: .pretendard(stationName, scale: .body),
-                //                    textColor: .cf(.grayScale(.gray800))
-                //                )
-                //                arrivalStationLabel.lineBreakMode = .byTruncatingTail
-                //                arrivalStationLabel.numberOfLines = 1
-                //
-                //                var textContainerWidth: CGFloat = .zero
-                //
-                //                $0.addItem(textContainerView).position(.absolute).define {
-                //                    $0.addItem(arriveTimeLabel).width(100%)
-                //                    $0.addItem(arrivalStationContainer).direction(.row).define {
-                //                        $0.addItem(arrivalStationLabel).maxWidth(80)
-                //
-                //                        guard let lane = subPath.lane else { return }
-                //                        // 동일한 노선의 버스 리스트
-                //                        for lan in lane {
-                //                            let transportLabel = UILabelFactory.build(
-                //                                attributedText: .pretendard(lan.name, scale: .caption2),
-                //                                textColor: bgColor
-                //                            )
-                //                            $0.addItem(transportLabel)
-                //                                .border(1, bgColor)
-                //                                .padding(.cfRadius(.xxxsmall))
-                //                                .cornerRadius(.cfRadius(.xxxsmall))
-                //                                .marginLeft(4)
-                //                        }
-                //                    }
-                //
-                //                    // label 길이에 따라 레이아웃 변경
-                //                    textContainerWidth = arrivalStationLabel.intrinsicContentSize.width
-                //                    textContainerWidth = min(textContainerWidth, 80)
-                //
-                //                    $0.width(textContainerWidth)
-                //                }
-                //                .left(-(textContainerWidth / 2) + 12).bottom(24)
-                
-                // IconContainer
                 $0.addItem().define {
                     $0.addItem(imageView)
                         .width(24).height(24)
@@ -560,8 +513,6 @@ extension MainCollectionCell {
         let bgColor = subwayType.subWayUIColor
         let distanceBgColor = UIColor(subwayType.subwayColor.opacity(0.6))
         let iconTintColor = UIColor.cf(.grayScale(.white))
-        let stationName = "\(subPath.stations?.first?.name ?? "undefined")역"
-        let time = "+\(subPath.time)분"
         
         flex.addItem().direction(.row).alignItems(.end).define {
             $0.addItem()
@@ -572,33 +523,6 @@ extension MainCollectionCell {
             $0.addItem().position(.absolute).define {
                 let imageView = UIImageView(image: icon?.withTintColor(iconTintColor, renderingMode:  .alwaysOriginal))
                 imageView.contentMode = .center
-                
-                //                let textContainerView = UIView()
-                //                let arrivalStationContainer = UIView()
-                //                let arrivalStationLabel = UILabelFactory.build(
-                //                    text: stationName,
-                //                    textColor: .cf(.grayScale(.gray800))
-                //                )
-                //                let arriveTimeLabel = UILabelFactory.build(
-                //                    text: time,
-                //                    textScale: .caption,
-                //                    textColor: .cf(.grayScale(.gray600))
-                //                )
-                // TextContainer
-                //                var textContainerWidth: CGFloat = .zero
-                
-                //                $0.addItem(textContainerView).position(.absolute).define {
-                //                    $0.addItem(arriveTimeLabel).width(100%)
-                //                    $0.addItem(arrivalStationContainer).define {
-                //                        $0.addItem(arrivalStationLabel).width(100%)
-                //                    }
-                //                    .width(100%)
-                //
-                //                    // label 길이에 따라 레이아웃 변경
-                //                    textContainerWidth = arrivalStationLabel.intrinsicContentSize.width
-                //                }
-                //                .left(-(textContainerWidth / 2) + 12).bottom(24)
-                // IconContainer
                 $0.addItem().define {
                     $0.addItem(imageView)
                         .width(24).height(24)

@@ -13,7 +13,8 @@ import PinLayout
 
 final class OnboardingView: UIView {
     private let rootView = UIView()
-    
+    var type: OnboardingType = .enterFirst
+
     // HeaderViews
     private let titleLabel = UILabelFactory.build(
         text: "기본 도착지 설정",
@@ -62,8 +63,9 @@ final class OnboardingView: UIView {
         return button
     }()
     
-    init() {
+    init(_ type: OnboardingType = .enterFirst) {
         super.init(frame: .zero)
+        self.type = type
         setup()
     }
     
@@ -97,8 +99,10 @@ final class OnboardingView: UIView {
                     .minHeight(56)
                     .backgroundColor(.cf(.primaryScale(.primary(.medium))))
                     .cornerRadius(6)
-                $0.addItem(skipButton)
-                    .minHeight(56)
+                if type == .enterFirst {
+                    $0.addItem(skipButton)
+                        .minHeight(56)
+                }
             }
             .padding(16, 16, 0, 16)
         }
