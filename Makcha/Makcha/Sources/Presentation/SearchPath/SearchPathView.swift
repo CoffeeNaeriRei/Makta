@@ -12,7 +12,6 @@ import UIKit
 import MakchaDesignSystem
 import FlexLayout
 import PinLayout
-import Reusable
 
 final class SearchPathView: UIView {
     private let rootView = UIView()

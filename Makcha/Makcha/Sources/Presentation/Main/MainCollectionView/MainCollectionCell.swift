@@ -13,7 +13,6 @@ import UIKit
 import MakchaDesignSystem
 import FlexLayout
 import PinLayout
-import Reusable
 import RxSwift
 
 final class MainCollectionCell: UICollectionViewCell {
@@ -193,6 +192,10 @@ private final class ContentView: UIView {
 extension MainCollectionCell {
     // MARK: 패치 된 데이터를 활용해 뷰 레이아웃을 설정하기 위한 인터페이스 메서드
     func configure(with data: MakchaCellData) {
+        let pathType = data.makchaPath.makchaPathType.rawValue
+        pathTypelabel.text = data.makchaPath.fastest ? "\(pathType)(가장 빠른 경로)" : pathType
+        pathTypelabel.flex.markDirty()
+        
         // 경로 별 height 계산
         calcSubPathsHeight(with: data.makchaPath.subPath)
         // 상단 시간정보 업데이트
@@ -203,9 +206,9 @@ extension MainCollectionCell {
             firstSubPath: data.makchaPath.subPath.filter { $0.subPathType != .walk }.first
         )
         // 타이머 도착 예정 시간 업데이트
-        currentArrivalTransportTimeLabel.text = data.arrival.first.arrivalMessageFirst
+        currentArrivalTransportTimeLabel.text = data.arrival.first.status.arrivalMessageFirst
         currentArrivalTransportTimeLabel.flex.markDirty()
-        nextArrivalTransportTimeLabel.text = data.arrival.second.arrivalMessageSecond
+        nextArrivalTransportTimeLabel.text = data.arrival.second.status.arrivalMessageSecond
         nextArrivalTransportTimeLabel.flex.markDirty()
         // 경로 업데이트
         layoutPathContentContainer(subPaths: data.makchaPath.subPath)
@@ -372,7 +375,7 @@ extension MainCollectionCell {
 // MARK: 하위 뷰 작성하는 코드가 길어져서 분리
 extension MainCollectionCell {
     private func layoutTopContentsContainer(_ text: String) {
-        estimatedTimeOfArrivalLabel.text = text
+        estimatedTimeOfArrivalLabel.text = "\(text) 도착"
         estimatedTimeOfArrivalLabel.flex.markDirty()
     }
     
@@ -539,7 +542,7 @@ extension MainCollectionCell {
 struct MainCollectionCell_Preview: PreviewProvider {
     static var previews: some View {
         let cell = MainCollectionCell()
-        let data: MakchaCellData = (MakchaInfo.mockMakchaInfo.makchaPaths.last!, (ArrivalStatus.arriveSoon, ArrivalStatus.arriveSoon))
+        let data: MakchaCellData = (MakchaInfo.mockMakchaInfo.makchaPaths.last!, (RealtimeArrivalInfo(status: .arriveSoon), RealtimeArrivalInfo(status: .arriveSoon)))
         ViewPreview {
             cell.configure(with: data)
             return cell
