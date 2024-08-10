@@ -79,7 +79,7 @@ final class DetailView: UIView {
     }
     
     private func setup() {
-        backgroundColor = .cf(.grayScale(.white))
+        backgroundColor = .background
         addSubview(scrollView)
         scrollView.addSubview(contentView)
         scrollView.contentInsetAdjustmentBehavior = .never
@@ -122,11 +122,11 @@ final class DetailView: UIView {
                 .position(.absolute).top(64)
                 .width(100%)
             }
-            .backgroundColor(.cf(.grayScale(.white)))
+            .backgroundColor(.background)
             .height(160)
             /// 상세 경로 정보
             let detailContainer = DottedLineView()
-            detailContainer.lineColor = .cf(.grayScale(.gray200))
+            detailContainer.lineColor = .cf(.grayScale(.gray400))
             detailContainer.lineWidth = 1
             detailContainer.position = .top
             
@@ -144,24 +144,24 @@ final class DetailView: UIView {
                 let startIcon = UIImage(
                     systemName: "location.fill",
                     withConfiguration: symbolConfig
-                )?.withTintColor(.cf(.grayScale(.gray300)), renderingMode: .alwaysOriginal)
+                )?.withTintColor(.cf(.grayScale(.gray600)), renderingMode: .alwaysOriginal)
                 
                 startImageView.image = startIcon
                 startImageView.contentMode = .center
                 startImageView.flex
-                    .backgroundColor(.cf(.grayScale(.gray50)))
-                    .border(1, .cf(.grayScale(.gray100)))
+                    .backgroundColor(.cf(.grayScale(.gray200)))
+                    .border(1, .cf(.grayScale(.gray200)))
                 
                 let endIcon = UIImage(
                     systemName: "house.fill",
                     withConfiguration: symbolConfig
-                )?.withTintColor(.cf(.grayScale(.gray300)), renderingMode: .alwaysOriginal)
+                )?.withTintColor(.cf(.grayScale(.gray600)), renderingMode: .alwaysOriginal)
                 
                 endImageView.image = endIcon
                 endImageView.contentMode = .center
                 endImageView.flex
-                    .backgroundColor(.cf(.grayScale(.gray50)))
-                    .border(1, .cf(.grayScale(.gray100)))
+                    .backgroundColor(.cf(.grayScale(.gray200)))
+                    .border(1, .cf(.grayScale(.gray200)))
                 
                 // headerContainer
                 $0.addItem(detailContainer).define {
@@ -184,7 +184,7 @@ final class DetailView: UIView {
                 .marginBottom(32)
             }
         }
-        .backgroundColor(.cf(.grayScale(.gray100)).withAlphaComponent(0.28))
+        .backgroundColor(.subpathContainer)
         .grow(1)
     }
     

@@ -33,8 +33,7 @@ final class SettingsView: UIView {
     }
     
     private func setup() {
-//        backgroundColor = .cf(.grayScale(.white))
-        backgroundColor = .cf(.grayScale(.gray100))
+        backgroundColor = .background
         settingsTableView.register(cellType: UITableViewCell.self)
         
         rootView.flex.define {

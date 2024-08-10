@@ -37,8 +37,8 @@ final class MainCollectionView: UICollectionView {
         
         // 생성 시 `UICollectionViewFlowLayout` 일 경우 기본 레이아웃 설정
         let collectionViewLayout = collectionViewLayout as? UICollectionViewFlowLayout
-        collectionViewLayout?.minimumLineSpacing = 0
-        collectionViewLayout?.minimumInteritemSpacing = 0
+        collectionViewLayout?.minimumLineSpacing = 8
+        collectionViewLayout?.minimumInteritemSpacing = 8
         collectionViewLayout?.sectionHeadersPinToVisibleBounds = true
         
         // 2. DataSource 설정
@@ -52,7 +52,7 @@ final class MainCollectionView: UICollectionView {
     
     // CollectionView 초기 설정 Cell 등록
     private func setup() {
-        backgroundColor = UIColor.cf(.grayScale(.gray100))
+        backgroundColor = UIColor.cf(.grayScale(.gray300))
         
         register(cellType: MainCollectionCell.self)
         register(

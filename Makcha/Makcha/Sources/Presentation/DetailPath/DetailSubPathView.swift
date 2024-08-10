@@ -30,8 +30,8 @@ final class DetailSubPathView: UIView {
     private let expanbaleContainer = {
         let view = DottedLineView()
         view.position = .top
-        view.backgroundColor = .cf(.grayScale(.gray50))
-        view.lineColor = .cf(.grayScale(.gray200))
+        view.backgroundColor = .background
+        view.lineColor = .cf(.grayScale(.gray300))
         view.lineWidth = 1
         view.lineDashPattern = []
         
@@ -42,7 +42,7 @@ final class DetailSubPathView: UIView {
         let view = DottedLineView()
         view.position = .bottom
         view.backgroundColor = .clear
-        view.lineColor = .cf(.grayScale(.gray200))
+        view.lineColor = .cf(.grayScale(.gray300))
         view.lineWidth = 1
         view.lineDashPattern = []
         
@@ -53,7 +53,7 @@ final class DetailSubPathView: UIView {
         let view = DottedLineView()
         view.position = .bottom
         view.backgroundColor = .clear
-        view.lineColor = .cf(.grayScale(.gray200))
+        view.lineColor = .cf(.grayScale(.gray300))
         view.lineWidth = 1
         
         return view
@@ -162,8 +162,8 @@ extension DetailSubPathView {
                     .width(37)
                 $0.addItem(distanceView)
                     .backgroundColor(distanceBgColor)
-                    .width(4).height(distance)
-                    .marginLeft(12 - 2)
+                    .width(6).height(distance)
+                    .marginLeft(12 - 3)
             }
             .marginLeft(32)
             $0.addItem(imageView)
@@ -200,19 +200,19 @@ extension DetailSubPathView {
         let wayLabel = UILabelFactory.build(
             text: way,
             textScale: .caption2,
-            textColor: .cf(.grayScale(.gray500))
+            textColor: .cf(.grayScale(.gray600))
         )
         wayLabel.flex.padding(2, 4)
         
         let arrivalTimeLabel = UILabelFactory.build(
             text: arrivalTime,
             textScale: .caption,
-            textColor: .cf(.grayScale(.gray500))
+            textColor: .cf(.grayScale(.gray600))
         )
         let nextArrivalTimeLabel = UILabelFactory.build(
             text: nextArrivalTime,
             textScale: .caption,
-            textColor: .cf(.grayScale(.gray500))
+            textColor: .cf(.grayScale(.gray600))
         )
         
         let dividerLabel2 = UILabelFactory.build(
@@ -269,8 +269,8 @@ extension DetailSubPathView {
                     .width(37)
                 $0.addItem(distanceView)
                     .backgroundColor(distanceBgColor)
-                    .width(4).height(distance)
-                    .marginLeft(12 - 2)
+                    .width(6).height(distance)
+                    .marginLeft(12 - 3)
                 // DropDownContainer
                 $0.addItem(expanbaleContainer)
                     .position(.absolute).define {
@@ -294,11 +294,11 @@ extension DetailSubPathView {
                                 )
                                 $0.addItem().direction(.row).alignItems(.center).define {
                                     $0.addItem()
-                                        .width(8).height(8)
-                                        .cornerRadius(4)
+                                        .width(10).height(10)
+                                        .cornerRadius(5)
                                         .backgroundColor(.white)
                                         .border(1, transportColor)
-                                        .left(-24)
+                                        .left(-25)
                                     $0.addItem(stationLabel)
                                         .left(-8)
                                         .margin(4, 20, 4)
@@ -348,12 +348,12 @@ extension DetailSubPathView {
         let wayLabel = UILabelFactory.build(
             text: way,
             textScale: .caption2,
-            textColor: .cf(.grayScale(.gray500))
+            textColor: .cf(.grayScale(.gray600))
         )
         let detailWayLabel = UILabelFactory.build(
             text: detailWay,
             textScale: .caption2,
-            textColor: .cf(.grayScale(.gray500))
+            textColor: .cf(.grayScale(.gray600))
         )
         
         let dividerLabel = UILabelFactory.build(
@@ -367,12 +367,12 @@ extension DetailSubPathView {
         let arrivalTimeLabel = UILabelFactory.build(
             text: arrivalTime,
             textScale: .caption,
-            textColor: .cf(.grayScale(.gray500))
+            textColor: .cf(.grayScale(.gray600))
         )
         let nextArrivalTimeLabel = UILabelFactory.build(
             text: nextArrivalTime,
             textScale: .caption,
-            textColor: .cf(.grayScale(.gray500))
+            textColor: .cf(.grayScale(.gray600))
         )
         
         let dividerLabel2 = UILabelFactory.build(
@@ -432,8 +432,8 @@ extension DetailSubPathView {
                     .width(37)
                 $0.addItem(distanceView)
                     .backgroundColor(distanceBgColor)
-                    .width(4).height(distance)
-                    .marginLeft(12 - 2)
+                    .width(6).height(distance)
+                    .marginLeft(12 - 3)
                 // DropDownContainer
                 $0.addItem(expanbaleContainer)
                     .position(.absolute).define {
@@ -457,11 +457,11 @@ extension DetailSubPathView {
                                 )
                                 $0.addItem().direction(.row).alignItems(.center).define {
                                     $0.addItem()
-                                        .width(8).height(8)
-                                        .cornerRadius(4)
+                                        .width(10).height(10)
+                                        .cornerRadius(5)
                                         .backgroundColor(.white)
                                         .border(1, transportColor)
-                                        .left(-24)
+                                        .left(-25)
                                     $0.addItem(stationLabel)
                                         .left(-8)
                                         .margin(4, 20, 4)
@@ -519,9 +519,9 @@ extension DetailSubPathView {
         switch subPathType {
         case .walk:
             (
-                UIColor.cf(.grayScale(.gray300)),
-                UIColor.cf(.grayScale(.gray50)),
-                UIColor.cf(.grayScale(.gray100))
+                UIColor.cf(.grayScale(.gray600)),
+                UIColor.cf(.grayScale(.gray200)),
+                UIColor.cf(.grayScale(.gray200))
             )
         case .bus:
             (

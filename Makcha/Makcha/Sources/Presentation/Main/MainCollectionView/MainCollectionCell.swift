@@ -144,16 +144,17 @@ final class MainCollectionCell: UICollectionViewCell {
                 .width(100%)
                 /// BottomLine
                 $0.addItem()
-                    .width(100%).height(.cfStroke(.xsmall))
-                    .backgroundColor(.cf(.grayScale(.gray200)))
+                    .height(.cfStroke(.xsmall))
+                    .backgroundColor(.cf(.grayScale(.gray400)))
+                    .margin(0, 16)
             }
             .minHeight(200)
             // 서브패스 인포
             $0.addItem(subPathInfoContainer)
-                .backgroundColor(.cf(.grayScale(.gray100)))
+                .backgroundColor(.subpathContainer)
                 .grow(1)
         }
-        .backgroundColor(.cf(.grayScale(.white)))
+        .backgroundColor(.background)
     }
     
     private func layout() {
@@ -226,20 +227,26 @@ extension MainCollectionCell {
 
         let subPaths = data.filter { $0.subPathType != .walk }
 
-        var defaultHeight = MIN_HEIGHT
+        var defaultHeight: CGFloat = MIN_HEIGHT
         
+        // 1. 컨테이너 패딩을 더한다.
         defaultHeight += CONTAINER_PADDING * 2
+        // 2. 서브 패스의 전체 높이를 더한다.
         defaultHeight += subPaths.map { _ in 36.0 }.reduce(0) { $0 + $1 }
+        // 3. 서브 패스 사이의 패딩 값을 더한다.
         defaultHeight += subPaths.count < 2 ? .zero : Double((subPaths.count - 1)) * CONTAINER_PADDING
-        if subPaths.last?.subPathType == .subway {
-            defaultHeight -= 16.0
+
+        if subPaths.last?.subPathType == .bus {
+            defaultHeight += CONTAINER_PADDING * 2
         }
+        defaultHeight += .cfStroke(.xsmall) * 2
         cellHeight = defaultHeight
         // 컨테이너 내 모든 자식 뷰 제거
         subPathInfoContainer.subviews.forEach { $0.removeFromSuperview() }
         
         subPathInfoContainer.flex.gap(CONTAINER_PADDING).define {
-            for subPath in subPaths {
+            $0.addItem().marginTop(CONTAINER_PADDING)
+            for (idx, subPath) in subPaths.enumerated() {
                 let type = subPath.subPathType
                 let imageView = UIImageView()
                 
@@ -286,6 +293,7 @@ extension MainCollectionCell {
                         .marginTop(2).marginLeft(8)
                     }
                     .minHeight(36)
+                    .padding(0, CONTAINER_PADDING + 16)
                 case .subway:
                     let icon = UIImage(systemName: type.iconName)?.withConfiguration(symbolConfig)
                     imageView.image = icon?.withTintColor(.cf(.grayScale(.white)), renderingMode: .alwaysOriginal)
@@ -308,11 +316,16 @@ extension MainCollectionCell {
                         }
                         .marginTop(2).marginLeft(8)
                     }
-                    .minHeight(36)
+                    .minHeight(idx == subPaths.count - 1 ? 20 : 36)
+                    .padding(0, CONTAINER_PADDING + 16)
                 }
             }
+            $0.addItem().marginBottom(CONTAINER_PADDING)
+//            $0.addItem()
+//                .height(.cfStroke(.xsmall))
+//                .backgroundColor(.cf(.grayScale(.gray500)))
+            
         }
-        .padding(CONTAINER_PADDING)
     }
     
     // MARK: 들어오는 경로 데이터에 따라 다르게 뷰를 그리기 위한 메서드
@@ -452,10 +465,10 @@ extension MainCollectionCell {
     private func layoutPathInfoWalk(_ flex: Flex, params: LayoutPathInfoCommonParameter) {
         let (isLastPath, distance, icon) = (params)
         
-        let bgColor = UIColor.cf(.grayScale(.gray500))
-        let iconTintColor = UIColor.cf(.grayScale(.gray300))
-        let iconBgColor = UIColor.cf(.grayScale(.gray50))
-        let iconBorderColor = UIColor.cf(.grayScale(.white))
+        let bgColor = UIColor.cf(.grayScale(.gray200))
+        let iconTintColor = UIColor.cf(.grayScale(.gray600))
+        let iconBgColor = UIColor.cf(.grayScale(.gray200))
+        let iconBorderColor = UIColor.cf(.grayScale(.gray200))
         
         let imageView = UIImageView(image: icon?.withTintColor(iconTintColor, renderingMode:  .alwaysOriginal))
         imageView.contentMode = .center

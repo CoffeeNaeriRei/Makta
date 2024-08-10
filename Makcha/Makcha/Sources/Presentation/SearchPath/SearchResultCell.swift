@@ -53,7 +53,7 @@ final class SearchResultCell: UITableViewCell {
     }
     
     private func layout() {
-        contentView.backgroundColor = .cf(.grayScale(.white))
+        backgroundColor = .background
         contentView.flex.layout(mode: .adjustHeight)
     }
     
