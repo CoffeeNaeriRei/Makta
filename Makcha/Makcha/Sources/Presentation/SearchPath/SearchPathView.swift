@@ -108,8 +108,9 @@ final class SearchPathView: UIView {
     }
     
     private func setup() {
-        searchResultTableView.register(cellType: SearchResultCell.self) // 테이블 뷰 재사용 셀 등록
+        backgroundColor = .background
         
+        searchResultTableView.register(cellType: SearchResultCell.self) // 테이블 뷰 재사용 셀 등록
         rootView.flex.define {
             // titleContainer
             $0.addItem(titleContainer).direction(.row).justifyContent(.spaceBetween).define {
@@ -117,7 +118,6 @@ final class SearchPathView: UIView {
                 $0.addItem(closeButton)
             }
             .padding(14, 16, 12)
-            .backgroundColor(.cf(.grayScale(.white)))
             // textFieldContainer
             $0.addItem(textFieldContainer).gap(8).define {
                 for idx in 0..<2 {
@@ -144,15 +144,14 @@ final class SearchPathView: UIView {
                 }
             }
             .padding(8, 16, 20)
-            .backgroundColor(.cf(.grayScale(.white)))
             
             // searchInfoContainer
             $0.addItem(searchInfoContainer).define {
                 $0.addItem(searchResultScrollView).direction(.column).define {
 //                    // 검색 결과 상단 구분선
-//                    $0.addItem()
-//                        .width(100%).height(.cfStroke(.xsmall))
-//                        .backgroundColor(UIColor.cf(.grayScale(.gray500)))
+                    $0.addItem()
+                        .width(100%).height(.cfStroke(.xsmall))
+                        .backgroundColor(UIColor.cf(.grayScale(.gray500)))
                     $0.addItem(searchResultTableView)
                         .grow(1)
                 }
@@ -215,7 +214,7 @@ extension SearchPathView {
                 self.backgroundColor = .background
                 self.searchButton.flex.marginBottom(self.safeAreaInsets.bottom + 16).markDirty()
             }
-            self.backgroundColor = .cf(.grayScale(.white))
+            self.backgroundColor = .background
             
             self.searchButton.flex.view?.alpha = isLargeDetent ? 1.0 : 0.0
             self.searchInfoContainer.flex.markDirty()

@@ -62,10 +62,18 @@ final class DetailSubPathView: UIView {
     private let decorationContainer = UIView()
     
     private let distanceView = UIView()
+    private let toggleDecoration = {
+       let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "chevron.down")?.withTintColor(.cf(.grayScale(.gray700)), renderingMode: .alwaysOriginal)
+        imageView.contentMode = .center
+        imageView.flex.width(40)
+
+        return imageView
+    }()
     private let toggleButon = {
         let button = UIButton()
         
-        button.setImage(UIImage(systemName: "chevron.down")?.withTintColor(.cf(.grayScale(.gray700)), renderingMode: .alwaysOriginal), for: .normal)
+//        button.setImage(UIImage(systemName: "chevron.down")?.withTintColor(.cf(.grayScale(.gray700)), renderingMode: .alwaysOriginal), for: .normal)
         button.flex.minHeight(24).minWidth(40)
         
         return button
@@ -96,7 +104,6 @@ final class DetailSubPathView: UIView {
         rootView.flex.define {
             $0.addItem(contentView)
         }
-        
         toggleButon.addAction(.init(handler: { _ in
             self.toggleExpandable()
         }), for: .touchUpInside)
@@ -278,11 +285,14 @@ extension DetailSubPathView {
                         $0.addItem(expandableHeaderContainer).direction(.row).justifyContent(.spaceBetween).define {
                             $0.addItem(headerTitleLabel)
                                 .marginLeft(12)
+                            $0.addItem(toggleDecoration)
                             if !stations.isEmpty {
                                 $0.addItem(toggleButon)
-                                    .width(24).height(24)
+                                    .position(.absolute)
+                                    .width(100%).height(24)
                             }
                         }
+                        .minHeight(24)
                         .grow(1)
                         // DropDown Body
                         $0.addItem(expandableBodyContainer).define {
@@ -441,11 +451,14 @@ extension DetailSubPathView {
                         $0.addItem(expandableHeaderContainer).direction(.row).justifyContent(.spaceBetween).define {
                             $0.addItem(headerTitleLabel)
                                 .marginLeft(12)
+                            $0.addItem(toggleDecoration)
                             if !stations.isEmpty {
                                 $0.addItem(toggleButon)
-                                    .width(24).height(24)
+                                    .position(.absolute)
+                                    .width(100%).height(24)
                             }
                         }
+                        .height(24)
                         .grow(1)
                         // DropDown Body
                         $0.addItem(expandableBodyContainer).define {
@@ -568,8 +581,7 @@ extension DetailSubPathView {
             timeLabel.flex.top(expandableHeight / 2 - timeLabel.intrinsicContentSize.height / 2)
         }
         isExpadnable.toggle()
-        toggleButon.setImage(toggleImage, for: .normal)
-        toggleButon.flex.markDirty()
+        toggleDecoration.image = toggleImage
         distanceView.flex.markDirty()
         expandableBodyContainer.isHidden.toggle()
         expanbaleContainer.flex.markDirty()

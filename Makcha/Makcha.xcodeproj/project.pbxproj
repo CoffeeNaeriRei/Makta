@@ -21,7 +21,6 @@
 		2065715A2C4E8ABF0077FE1B /* OnboardingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206571592C4E8ABF0077FE1B /* OnboardingUseCase.swift */; };
 		2065715C2C4FE23E0077FE1B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2065715B2C4FE23E0077FE1B /* OnboardingView.swift */; };
 		20674F952BF0894D004E8566 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20674F942BF0894D004E8566 /* MainViewModel.swift */; };
-		2067A2232C6768220059C065 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2067A2222C6768220059C065 /* UIColor+Extension.swift */; };
 		206AA6062BE7A95B0057FA40 /* makcha-design-system in Frameworks */ = {isa = PBXBuildFile; productRef = 206AA6052BE7A95B0057FA40 /* makcha-design-system */; };
 		206B51052BFA348600FC6F76 /* MainCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206B51042BFA348600FC6F76 /* MainCollectionView.swift */; };
 		206B51072BFA349200FC6F76 /* MainCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206B51062BFA349200FC6F76 /* MainCollectionCell.swift */; };
@@ -110,7 +109,6 @@
 		206571592C4E8ABF0077FE1B /* OnboardingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingUseCase.swift; sourceTree = "<group>"; };
 		2065715B2C4FE23E0077FE1B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		20674F942BF0894D004E8566 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		2067A2222C6768220059C065 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		206B51042BFA348600FC6F76 /* MainCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionView.swift; sourceTree = "<group>"; };
 		206B51062BFA349200FC6F76 /* MainCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionCell.swift; sourceTree = "<group>"; };
 		2090BB362BEFAADC00501E2D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -251,7 +249,6 @@
 				20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */,
 				20C053D72C1576CA00DB78C8 /* DottedLineView.swift */,
 				20CFB2682C2826AE004CFC04 /* Flex+Extension.swift */,
-				2067A2222C6768220059C065 /* UIColor+Extension.swift */,
 			);
 			path = "UIView+Extension";
 			sourceTree = "<group>";
@@ -715,7 +712,6 @@
 				B8C31EA32BEF41220049B47C /* Date+Extension.swift in Sources */,
 				B86233482BEA9B2D003959FB /* EndPoint.swift in Sources */,
 				B8745C5E2C36EBDD00B63EAB /* SearchPathViewModel.swift in Sources */,
-				2067A2232C6768220059C065 /* UIColor+Extension.swift in Sources */,
 				B83FBDD32C1375A3004805ED /* KakaoReverseGeocodingResultDTO.swift in Sources */,
 				B89E7FAE2BE773B700A13B58 /* APIService.swift in Sources */,
 				206571562C4E85380077FE1B /* OnboardingViewModel.swift in Sources */,

@@ -72,10 +72,10 @@ final class MainCollectionCell: UICollectionViewCell {
         textColor: .cf(.grayScale(.black))
     )
     
-    // MARK: 다음 도착 예정인 교통수단이 정거장에 도착하기 까지 남은 시간을 표시하s는 라벨
+    // MARK: 다음 도착 예정인 교통수단이 정거장에 도착하기 까지 남은 시간을 표시하는 라벨
     private let nextArrivalTransportTimeLabel = UILabelFactory.build(
         text: "다음 도착 NN분 예정",
-        textColor: .cf(.grayScale(.gray500))
+        textColor: .cf(.grayScale(.gray600))
     )
     
     private let centerContentsTopLabel = UILabelFactory.build(
@@ -154,10 +154,12 @@ final class MainCollectionCell: UICollectionViewCell {
             .minHeight(200)
             // 서브패스 인포
             $0.addItem(subPathInfoContainer)
-                .backgroundColor(.subpathContainer)
                 .grow(1)
         }
         .backgroundColor(.background)
+        .cornerRadius(12)
+        .width(100%)
+        .maxWidth(UIScreen.main.bounds.width - 32)
     }
     
     private func layout() {
@@ -253,6 +255,10 @@ extension MainCollectionCell {
         
         subPathInfoContainer.flex.gap(CONTAINER_PADDING).define {
             $0.addItem().position(.absolute)
+                .width(100%).height(100%)
+                .backgroundColor(.subpathContainer)
+                .cornerRadius(12)
+            $0.addItem().position(.absolute)
                 .width(2).height(pathLineHeight)
                 .top(CONTAINER_PADDING).left(CONTAINER_PADDING * 4 + 1)
                 .backgroundColor(.cf(.grayScale(.gray500)))
@@ -345,7 +351,7 @@ extension MainCollectionCell {
         
         // 1. 경로의 전체 길이를 구한다.
         let totalDistance = subPaths.map { CGFloat($0.distance) }.reduce(0) { $0 + $1 }
-        let maxWidth = UIScreen.main.bounds.width - 48
+        let maxWidth = UIScreen.main.bounds.width - 48 - 32
         
         // 2. 경로를 UI길이로 환산하자.
         var uiDistances = subPaths.map {

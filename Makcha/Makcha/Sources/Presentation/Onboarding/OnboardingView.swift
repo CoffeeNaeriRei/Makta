@@ -76,7 +76,7 @@ final class OnboardingView: UIView {
     }
     
     private func setup() {
-        backgroundColor = .cf(.grayScale(.white))
+        backgroundColor = .background
         searchResultTableView.register(cellType: SearchResultCell.self)
         
         rootView.flex.define {
@@ -92,7 +92,6 @@ final class OnboardingView: UIView {
                 
             }
             .padding(16)
-            .backgroundColor(.cf(.grayScale(.white)))
             $0.addItem().height(1).backgroundColor(.cf(.grayScale(.gray400)))
             /// searchField
             $0.addItem(searchResultTableView)

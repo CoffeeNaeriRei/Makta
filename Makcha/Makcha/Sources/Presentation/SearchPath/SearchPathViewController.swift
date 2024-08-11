@@ -50,6 +50,7 @@ final class SearchPathViewController: UIViewController {
     }
     
     private func setup() {
+        mainView.searchResultTableView.delegate = self
         mainView.configure(.custom)
     }
     private func bind() {
@@ -131,6 +132,12 @@ extension SearchPathViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
+}
+
+extension SearchPathViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+          view.endEditing(true)
+      }
 }
 
 #if DEBUG

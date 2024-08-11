@@ -53,7 +53,7 @@ final class DetailView: UIView {
     let nextArrivalTransportTimeLabel = {
        let label = UILabelFactory.build(
             text: "불러오는 중...", // 다음 도착 NN분 예정
-            textColor: .cf(.grayScale(.gray500))
+            textColor: .cf(.grayScale(.gray600))
         )
         
         label.attributedText = .repet("불러오는 중...", size: 14)
@@ -123,6 +123,7 @@ final class DetailView: UIView {
                     }
                     $0.addItem(currentArrivalTransportTimeLabel)
                         .width(100%)
+                        .marginTop(12)
                     $0.addItem(nextArrivalTransportTimeLabel)
                         .width(100%)
                         .marginTop(4)

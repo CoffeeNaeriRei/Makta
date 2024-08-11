@@ -64,7 +64,8 @@ final class DetailViewController: UIViewController {
     
     private func setup() {
         mainView.configure(data: data, path: path)
-        setupNavigationItems()
+//        TODO: 새로고침 기능 구현
+//        setupNavigationItems()
     }
     
     private func bind() {
