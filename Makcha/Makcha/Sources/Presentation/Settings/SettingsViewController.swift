@@ -43,7 +43,6 @@ final class SettingsViewController: UIViewController {
     
     private func bind() {
         // 테이블뷰 바인딩
-        mainView.settingsTableView.delegate = self
         menus.bind(to: mainView.settingsTableView.rx.items) { tableView, row, item in
             let cell = tableView.dequeueReusableCell(for: IndexPath(row: row, section: 0)) as UITableViewCell
             cell.textLabel?.text = item
@@ -59,8 +58,7 @@ final class SettingsViewController: UIViewController {
             .subscribe(onNext: { `self`, indexPath in
                 switch indexPath.row {
                 case 0:
-                    // TODO: - OnboardingViewController로 이동
-                    print("OnboardingViewController로 이동")
+                    self.moveToDestinationEdit()
                 case 1:
                     self.showSettingsAppOpenAlert()
                 case 2:
@@ -71,6 +69,18 @@ final class SettingsViewController: UIViewController {
                 self.mainView.settingsTableView.deselectRow(at: indexPath, animated: true)
             })
             .disposed(by: disposeBag)
+    }
+    
+    /// 도착지 설정 화면으로 이동
+    //TODO: - 객체 생성 안하는 방식으로 수정하기 + 코디네이터로 이동 + Onboarding 말고 뷰컨트롤러 따로 만들기
+    private func moveToDestinationEdit() {
+        let apiService = APIService()
+        let locationService = LocationService()
+        let onboardingUseCase = OnboardingUseCase(
+            TransPathRepository(apiService),
+            EndPointRepository(locationService, apiService)
+        )
+        navigationController?.pushViewController(OnboardingViewController(OnboardingViewModel(onboardingUseCase)), animated: true)
     }
     
     /// 이메일 문의 화면 띄우기
@@ -125,21 +135,6 @@ extension SettingsViewController: MFMailComposeViewControllerDelegate {
         error: Error?
     ) {
         controller.dismiss(animated: true)
-    }
-}
-
-extension SettingsViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            let apiService = APIService()
-            let locationService = LocationService()
-            let onbardingUseCase = OnboardingUseCase(
-                TransPathRepository(apiService),
-                EndPointRepository(locationService, apiService)
-            )
-            
-            navigationController?.pushViewController(OnboardingViewController(OnboardingViewModel(onbardingUseCase), type: .enterToSettings), animated: true)
-        }
     }
 }
 
