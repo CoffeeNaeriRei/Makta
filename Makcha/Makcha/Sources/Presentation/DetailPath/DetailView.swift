@@ -39,16 +39,27 @@ final class DetailView: UIView {
     )
     
     // MARK: 현재 도착 예정인 교통수단이 정거장에 도착하기 까지 남은 시간을 표시하는 라벨
-    let currentArrivalTransportTimeLabel = UILabelFactory.build(
-        attributedText: .pretendard("불러오는 중...", scale: .display), // NN분 NN초
-        textColor: .cf(.grayScale(.black))
-    )
+    let currentArrivalTransportTimeLabel = {
+        let label = UILabelFactory.build(
+            attributedText: .pretendard("불러오는 중...", scale: .display), // NN분 NN초
+            textColor: .cf(.grayScale(.black)))
+        
+        label.attributedText = .repet("불러오는 중...", size: 36, alt: .bold)
+        
+        return label
+    }()
     
     // MARK: 다음 도착 예정인 교통수단이 정거장에 도착하기 까지 남은 시간을 표시하는 라벨
-    let nextArrivalTransportTimeLabel = UILabelFactory.build(
-        text: "불러오는 중...", // 다음 도착 NN분 예정
-        textColor: .cf(.grayScale(.gray500))
-    )
+    let nextArrivalTransportTimeLabel = {
+       let label = UILabelFactory.build(
+            text: "불러오는 중...", // 다음 도착 NN분 예정
+            textColor: .cf(.grayScale(.gray500))
+        )
+        
+        label.attributedText = .repet("불러오는 중...", size: 14)
+        
+        return label
+    }()
     
     private let centerContentsTopLabel = UILabelFactory.build(
         attributedText: .pretendard("도착 예정", scale: .caption),
@@ -112,10 +123,9 @@ final class DetailView: UIView {
                     }
                     $0.addItem(currentArrivalTransportTimeLabel)
                         .width(100%)
-                    $0.addItem(nextArrivalTransportTimeContainer).define { // TODO: - 이 컨테이너는 없어도 될 것 같음
-                        $0.addItem(nextArrivalTransportTimeLabel)
-                            .width(100%)
-                    }
+                    $0.addItem(nextArrivalTransportTimeLabel)
+                        .width(100%)
+                        .marginTop(4)
                     .width(100%)
                 }
                 .width(100%)
@@ -242,7 +252,7 @@ extension DetailView {
         // totalTime String 변환 ex) 72 -> 1시간12분
         let totalTimeDescription = totalTime.calcTotalTimeDescription()
         // 숫자와 시간/분 스타일 다르게 적용
-        let totalTimeText = NSMutableAttributedString.pretendard(totalTimeDescription.text, scale: .title)
+        let totalTimeText = NSMutableAttributedString.repet(totalTimeDescription.text, size: 24)
         let customAttr: [NSAttributedString.Key: Any] = [
             .font : UIFont.pretendard(.medium, size: 12),
             .foregroundColor: UIColor.cf(.grayScale(.gray600))

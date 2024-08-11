@@ -128,10 +128,13 @@ final class MainCollectionCell: UICollectionViewCell {
                     $0.addItem(centerContentsTopContainer).define {
                         $0.addItem(centerContentsTopLabel)
                     }
+                    
                     $0.addItem(currentArrivalTransportTimeLabel)
+                        .marginTop(12)
                     $0.addItem(nextArrivalTransportTimeContainer).define {
                         $0.addItem(nextArrivalTransportTimeLabel)
                     }
+                    .marginTop(4)
                 }
                 .position(.absolute).top(64)
                 /// BottomContents
@@ -207,9 +210,11 @@ extension MainCollectionCell {
             firstSubPath: data.makchaPath.subPath.filter { $0.subPathType != .walk }.first
         )
         // 타이머 도착 예정 시간 업데이트
-        currentArrivalTransportTimeLabel.text = data.arrival.first.status.arrivalMessageFirst
+//        currentArrivalTransportTimeLabel.text = data.arrival.first.status.arrivalMessageFirst
+        currentArrivalTransportTimeLabel.attributedText = .repet(data.arrival.first.status.arrivalMessageFirst, size: 36, alt: .bold)
         currentArrivalTransportTimeLabel.flex.markDirty()
-        nextArrivalTransportTimeLabel.text = data.arrival.second.status.arrivalMessageSecond
+//        nextArrivalTransportTimeLabel.text = data.arrival.second.status.arrivalMessageSecond
+        nextArrivalTransportTimeLabel.attributedText = .repet(data.arrival.second.status.arrivalMessageSecond, size: 14)
         nextArrivalTransportTimeLabel.flex.markDirty()
         // 경로 업데이트
         layoutPathContentContainer(subPaths: data.makchaPath.subPath)
@@ -228,7 +233,7 @@ extension MainCollectionCell {
         let subPaths = data.filter { $0.subPathType != .walk }
 
         var defaultHeight: CGFloat = MIN_HEIGHT
-        
+        var pathLineHeight: CGFloat = 0
         // 1. 컨테이너 패딩을 더한다.
         defaultHeight += CONTAINER_PADDING * 2
         // 2. 서브 패스의 전체 높이를 더한다.
@@ -236,6 +241,8 @@ extension MainCollectionCell {
         // 3. 서브 패스 사이의 패딩 값을 더한다.
         defaultHeight += subPaths.count < 2 ? .zero : Double((subPaths.count - 1)) * CONTAINER_PADDING
 
+        pathLineHeight = defaultHeight - MIN_HEIGHT - CONTAINER_PADDING * 2
+        
         if subPaths.last?.subPathType == .bus {
             defaultHeight += CONTAINER_PADDING * 2
         }
@@ -245,6 +252,10 @@ extension MainCollectionCell {
         subPathInfoContainer.subviews.forEach { $0.removeFromSuperview() }
         
         subPathInfoContainer.flex.gap(CONTAINER_PADDING).define {
+            $0.addItem().position(.absolute)
+                .width(2).height(pathLineHeight)
+                .top(CONTAINER_PADDING).left(CONTAINER_PADDING * 4 + 1)
+                .backgroundColor(.cf(.grayScale(.gray500)))
             $0.addItem().marginTop(CONTAINER_PADDING)
             for (idx, subPath) in subPaths.enumerated() {
                 let type = subPath.subPathType
@@ -396,7 +407,7 @@ extension MainCollectionCell {
         // totalTime String 변환 ex) 72 -> 1시간12분
         let totalTimeDescription = totalTime.calcTotalTimeDescription()
         // 숫자와 시간/분 스타일 다르게 적용
-        let totalTimeText = NSMutableAttributedString.pretendard(totalTimeDescription.text, scale: .title)
+        let totalTimeText = NSMutableAttributedString.repet(totalTimeDescription.text, size: 24)
         let customAttr: [NSAttributedString.Key: Any] = [
             .font : UIFont.pretendard(.medium, size: 12),
             .foregroundColor: UIColor.cf(.grayScale(.gray600))
@@ -417,6 +428,7 @@ extension MainCollectionCell {
         }
         // 텍스트에 스타일 적용
         durationTimeLabel.attributedText = totalTimeText
+        durationTimeLabel.textAlignment = .left
         durationTimeLabel.flex.markDirty()
         
         // 컨테이너 내 모든 자식 뷰 제거

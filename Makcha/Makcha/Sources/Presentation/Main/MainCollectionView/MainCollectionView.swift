@@ -52,7 +52,7 @@ final class MainCollectionView: UICollectionView {
     
     // CollectionView 초기 설정 Cell 등록
     private func setup() {
-        backgroundColor = UIColor.cf(.grayScale(.gray300))
+        backgroundColor = .mainCollection
         
         register(cellType: MainCollectionCell.self)
         register(

@@ -40,7 +40,7 @@ final class SearchPathView: UIView {
         button.setTitle("검색", for: .normal)
         button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         button.setTitleColor(.cf(.grayScale(.white)), for: .normal)
-        button.tintColor = .cf(.grayScale(.white)) // TODO: - 색 변경
+        button.tintColor = .cf(.grayScale(.white))
         button.semanticContentAttribute = .forceRightToLeft
         
         return button

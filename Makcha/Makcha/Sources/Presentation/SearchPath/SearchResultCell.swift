@@ -26,7 +26,7 @@ final class SearchResultCell: UITableViewCell {
         text: "주소",
         textScale: .caption2,
         textAlignment: .left,
-        textColor: UIColor.cf(.grayScale(.gray500))
+        textColor: UIColor.cf(.grayScale(.gray600))
     )
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
