@@ -71,8 +71,6 @@ final class SettingsViewController: UIViewController {
                 self.mainView.settingsTableView.deselectRow(at: indexPath, animated: true)
             })
             .disposed(by: disposeBag)
-        
-        
     }
     
     /// 이메일 문의 화면 띄우기
@@ -87,7 +85,7 @@ final class SettingsViewController: UIViewController {
             
             self.present(composeVC, animated: true)
         } else {
-            // TODO: - 메일을 보낼 수 없습니다 에러 표시
+            cannotOpenMailAppAlert()
         }
     }
     
@@ -100,13 +98,21 @@ final class SettingsViewController: UIViewController {
     
     /// [설정] 앱 열기 안내 알럿
     private func showSettingsAppOpenAlert() {
-        let alert = UIAlertController(title: "[⚙️설정] 앱으로 이동", message: "위치 권한의 수정은 [설정] 앱에서만 가능합니다.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "⚙️ [설정] 앱으로 이동", message: "위치 권한의 수정은 [설정] 앱에서만 가능합니다.", preferredStyle: .alert)
         let move = UIAlertAction(title: "이동하기", style: .default) { _ in
             self.openSettingsApp()
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(move)
         alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    /// [Main] 앱 오픈 불가 알럿
+    private func cannotOpenMailAppAlert() {
+        let alert = UIAlertController(title: "✉️ [Mail] 앱을 열지 못했습니다.", message: "[Mail] 앱 연동 상태를 확인해주세요.\n다른 메일 사용 시 rei1998@naver.com로 메일 부탁드립니다.", preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "확인", style: .cancel)
+        alert.addAction(confirm)
         self.present(alert, animated: true, completion: nil)
     }
 }
