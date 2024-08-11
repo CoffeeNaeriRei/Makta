@@ -278,7 +278,7 @@ extension MainCollectionCell {
                     break
                 case .bus:
                     let icon = UIImage(systemName: type.iconName)?.withConfiguration(symbolConfig)
-                    imageView.image = icon?.withTintColor(.cf(.grayScale(.white)), renderingMode: .alwaysOriginal)
+                    imageView.image = icon?.withTintColor(.cf(.utils(.AlwaysWhite)), renderingMode: .alwaysOriginal)
                     imageView.contentMode = .center
                     
                     guard let busType = subPath.lane?.first?.busRouteType else { return }
@@ -313,7 +313,7 @@ extension MainCollectionCell {
                     .padding(0, CONTAINER_PADDING + 16)
                 case .subway:
                     let icon = UIImage(systemName: type.iconName)?.withConfiguration(symbolConfig)
-                    imageView.image = icon?.withTintColor(.cf(.grayScale(.white)), renderingMode: .alwaysOriginal)
+                    imageView.image = icon?.withTintColor(.cf(.utils(.AlwaysWhite)), renderingMode: .alwaysOriginal)
                     imageView.contentMode = .center
                     
                     guard let subwayType = subPath.lane?.first?.subwayCode else { return }
@@ -323,7 +323,7 @@ extension MainCollectionCell {
                         $0.addItem(imageView)
                             .width(20).height(20)
                             .cornerRadius(10)
-                            .border(1, .white)
+                            .border(1, .cf(.grayScale(.white)))
                             .backgroundColor(subwayType.subWayUIColor)
                         // textContainer
                         $0.addItem().define {
@@ -516,7 +516,7 @@ extension MainCollectionCell {
         
         let bgColor = busType.busUIColor
         let distanceBgColor = UIColor(busType.busColor.opacity(0.6))
-        let iconTintColor = UIColor.cf(.grayScale(.white))
+        let iconTintColor = UIColor.cf(.utils(.AlwaysWhite))
 
         let imageView = UIImageView(image: icon?.withTintColor(iconTintColor, renderingMode:  .alwaysOriginal))
         imageView.contentMode = .center
@@ -546,7 +546,7 @@ extension MainCollectionCell {
         
         let bgColor = subwayType.subWayUIColor
         let distanceBgColor = UIColor(subwayType.subwayColor.opacity(0.6))
-        let iconTintColor = UIColor.cf(.grayScale(.white))
+        let iconTintColor = UIColor.cf(.utils(.AlwaysWhite))
         
         flex.addItem().direction(.row).alignItems(.end).define {
             $0.addItem()

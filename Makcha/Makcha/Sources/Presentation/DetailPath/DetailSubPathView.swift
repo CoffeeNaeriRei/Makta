@@ -538,13 +538,13 @@ extension DetailSubPathView {
             )
         case .bus:
             (
-                UIColor.cf(.grayScale(.white)),
+                UIColor.cf(.utils(.AlwaysWhite)),
                 UIColor.cf(.grayScale(.gray50)),
                 UIColor.cf(.grayScale(.white))
             )
         case .subway:
             (
-                UIColor.cf(.grayScale(.white)),
+                UIColor.cf(.utils(.AlwaysWhite)),
                 UIColor.cf(.grayScale(.gray50)),
                 UIColor.cf(.grayScale(.white))
             )
