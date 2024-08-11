@@ -16,18 +16,25 @@ import RxSwift
  맨 처음임 ㅇㅇ
  */
 
+enum OnboardingType {
+    case enterFirst
+    case enterToSettings
+}
+
 final class OnboardingViewController: UIViewController {
     // swiftlint: disable force_cast
     private var mainView: OnboardingView {
         view as! OnboardingView
     }
     // swiftlint: enable force_cast
+    private let type: OnboardingType
     
     private let vm: OnboardingViewModel
     private let disposeBag = DisposeBag()
     
-    init(_ vm: OnboardingViewModel) {
+    init(_ vm: OnboardingViewModel, type: OnboardingType = .enterFirst) {
         self.vm = vm
+        self.type = type
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -42,7 +49,7 @@ final class OnboardingViewController: UIViewController {
     }
     
     override func loadView() {
-        view = OnboardingView()
+        view = OnboardingView(type == .enterFirst ? .enterFirst : .enterToSettings)
     }
     
     private func setup() {

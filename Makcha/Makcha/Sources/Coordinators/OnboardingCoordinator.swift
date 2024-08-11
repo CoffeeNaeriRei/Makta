@@ -34,7 +34,6 @@ extension OnboardingCoordinator: OnboardingNavigation {
             UserDefaults.standard.setValue("", forKey: key)
         }
         UserDefaults.standard.setValue(true, forKey: .isSkipOnboarding)
-        
         removeAll()
         let coordinator = MainCoordinator(navigationController)
         addChild(coordinator)

@@ -91,37 +91,37 @@ enum SubwayCode: Int {
         case .수도권9호선:
             Color.transport(.subway(.metropolitanRailway(.line9)))
         case .GTX:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.gtxA)))
         case .공항철도:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.공항철도)))
         case .자기부상철도:
             Color.cf(.colorScale(.yellow(.medium)))
         case .경의중앙선:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.경의중앙선)))
         case .에버라인:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.용인에버라인)))
         case .경춘선:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.경춘선)))
         case .신분당선:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.신분당선)))
         case .의정부경전철:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.의정부경전철)))
         case .경강선:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.경강선)))
         case .우이신설선:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.우이신설선)))
         case .서해선:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.서해선)))
         case .김포골드라인:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.김포골드라인)))
         case .수인분당선:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.수인분당선)))
         case .신림선:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.신림선)))
         case .인천1호선:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.인천1호선)))
         case .인천2호선:
-            Color.cf(.colorScale(.yellow(.medium)))
+            Color.transport(.subway(.metropolitanRailway(.인천2호선)))
         }
     }
     
@@ -170,27 +170,27 @@ enum BusRouteType: Int {
     var busColor: Color {
         switch self {
         case .일반:
-            Color.cf(.colorScale(.darkRed(.brightest)))
+            Color.transport(.bus(.gyeonggiBusType(.일반)))
         case .좌석:
-            Color.cf(.colorScale(.darkRed(.lightest)))
+            Color.transport(.bus(.gyeonggiBusType(.좌석)))
         case .마을버스:
-            Color.cf(.colorScale(.darkRed(.lighter)))
+            Color.transport(.bus(.gyeonggiBusType(.마을)))
         case .직행좌석:
-            Color.cf(.colorScale(.darkRed(.light)))
+            Color.transport(.bus(.gyeonggiBusType(.직행좌석)))
         case .공항버스:
-            Color.cf(.colorScale(.darkRed(.mediumLight)))
+            Color.transport(.bus(.seoulBusType(.공항)))
         case .간선급행:
-            Color.cf(.colorScale(.darkRed(.medium)))
+            Color.transport(.bus(.seoulBusType(.간선)))
         case .외곽:
             Color.cf(.colorScale(.darkRed(.mediumDark)))
         case .간선:
-            Color.cf(.colorScale(.darkRed(.dark)))
+            Color.transport(.bus(.seoulBusType(.간선)))
         case .지선:
-            Color.cf(.colorScale(.darkRed(.darker)))
+            Color.transport(.bus(.seoulBusType(.지선)))
         case .순환:
-            Color.cf(.colorScale(.darkRed(.lighter)))
+            Color.transport(.bus(.seoulBusType(.순환)))
         case .광역:
-            Color.cf(.colorScale(.blue(.light)))
+            Color.transport(.bus(.seoulBusType(.광역)))
         case .급행:
             Color.cf(.colorScale(.blue(.mediumLight)))
         case .광관버스:

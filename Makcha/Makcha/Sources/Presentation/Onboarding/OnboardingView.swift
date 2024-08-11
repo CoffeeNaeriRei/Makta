@@ -13,7 +13,8 @@ import PinLayout
 
 final class OnboardingView: UIView {
     private let rootView = UIView()
-    
+    var type: OnboardingType = .enterFirst
+
     // HeaderViews
     private let titleLabel = UILabelFactory.build(
         text: "기본 도착지 설정",
@@ -45,10 +46,12 @@ final class OnboardingView: UIView {
     }()
     
     // FooterViews
+    let footerContainer = UIView()
+    
     let startButton: UIButton = {
         let button = UIButton()
         button.setTitle("시작하기", for: .normal)
-        button.tintColor = .white
+        button.tintColor = .cf(.grayScale(.white))
         
         return button
     }()
@@ -62,8 +65,9 @@ final class OnboardingView: UIView {
         return button
     }()
     
-    init() {
+    init(_ type: OnboardingType = .enterFirst) {
         super.init(frame: .zero)
+        self.type = type
         setup()
     }
     
@@ -72,7 +76,7 @@ final class OnboardingView: UIView {
     }
     
     private func setup() {
-        backgroundColor = .cf(.grayScale(.white))
+        backgroundColor = .background
         searchResultTableView.register(cellType: SearchResultCell.self)
         
         rootView.flex.define {
@@ -88,26 +92,34 @@ final class OnboardingView: UIView {
                 
             }
             .padding(16)
-            $0.addItem().height(1).backgroundColor(.cf(.grayScale(.gray200)))
+            $0.addItem().height(1).backgroundColor(.cf(.grayScale(.gray400)))
             /// searchField
-            $0.addItem(searchResultTableView).grow(1)
+            $0.addItem(searchResultTableView)
+                .backgroundColor(.background)
+                .grow(1)
             /// footer
-            $0.addItem().gap(16).define {
+            $0.addItem(footerContainer).gap(16).define {
                 $0.addItem(startButton)
                     .minHeight(56)
-                    .backgroundColor(.cf(.primaryScale(.primary(.medium))))
-                    .cornerRadius(6)
-                $0.addItem(skipButton)
-                    .minHeight(56)
+                    .backgroundColor(.test)
+                    .cornerRadius(28)
+                if type == .enterFirst {
+                    $0.addItem(skipButton)
+                        .minHeight(56)
+                }
             }
             .padding(16, 16, 0, 16)
+            .backgroundColor(.background)
         }
         addSubview(rootView)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        rootView.pin.all(pin.safeArea)
+        rootView.pin.top(pin.safeArea.top).horizontally(pin.safeArea.left).bottom()
+        footerContainer.flex
+            .paddingBottom(safeAreaInsets.bottom + 16)
+            .markDirty()
         rootView.flex.layout()
     }
 }

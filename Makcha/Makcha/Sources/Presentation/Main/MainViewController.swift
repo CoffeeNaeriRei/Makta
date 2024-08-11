@@ -53,7 +53,7 @@ final class MainViewController: UIViewController {
     }
     
     private func setup() {
-        view.backgroundColor = .cf(.grayScale(.white))
+        view.backgroundColor = .background
         setupNavigationItems()
         setupCollectionView()
     }
