@@ -57,12 +57,22 @@ final class SettingsViewController: UIViewController {
         mainView.settingsTableView.rx.itemSelected
             .withUnretained(self)
             .subscribe(onNext: { `self`, indexPath in
-                if indexPath.row == 2 {
+                switch indexPath.row {
+                case 0:
+                    // TODO: - OnboardingViewController로 이동
+                    print("OnboardingViewController로 이동")
+                case 1:
+                    self.showSettingsAppOpenAlert()
+                case 2:
                     self.showEmailInquiryView()
+                default:
+                    break
                 }
-                
+                self.mainView.settingsTableView.deselectRow(at: indexPath, animated: true)
             })
             .disposed(by: disposeBag)
+        
+        
     }
     
     /// 이메일 문의 화면 띄우기
@@ -73,12 +83,31 @@ final class SettingsViewController: UIViewController {
             
             composeVC.setToRecipients(["rei1998@naver.com"])
             composeVC.setSubject("[막타] 앱 관련 문의 메일")
-            composeVC.setMessageBody("문의하실 내용을 마음껏 작성해주세요:)\n피드백은 적극적으로 반영하겠습니다!", isHTML: false)
+            composeVC.setMessageBody("문의하실 내용을 마음껏 작성해주세요 !\n피드백은 적극적으로 반영하겠습니다:)", isHTML: false)
             
             self.present(composeVC, animated: true)
         } else {
             // TODO: - 메일을 보낼 수 없습니다 에러 표시
         }
+    }
+    
+    /// [설정] 앱 열기
+    private func openSettingsApp() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    /// [설정] 앱 열기 안내 알럿
+    private func showSettingsAppOpenAlert() {
+        let alert = UIAlertController(title: "[⚙️설정] 앱으로 이동", message: "위치 권한의 수정은 [설정] 앱에서만 가능합니다.", preferredStyle: .alert)
+        let move = UIAlertAction(title: "이동하기", style: .default) { _ in
+            self.openSettingsApp()
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(move)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
