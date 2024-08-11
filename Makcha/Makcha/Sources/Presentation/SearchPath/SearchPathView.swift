@@ -39,7 +39,8 @@ final class SearchPathView: UIView {
         let button = UIButton()
         button.setTitle("검색", for: .normal)
         button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-        button.tintColor = .white // TODO: - 색 변경
+        button.setTitleColor(.cf(.grayScale(.white)), for: .normal)
+        button.tintColor = .cf(.grayScale(.white))
         button.semanticContentAttribute = .forceRightToLeft
         
         return button
@@ -92,7 +93,7 @@ final class SearchPathView: UIView {
         let tableView = UITableView()
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.separatorColor = UIColor.cf(.grayScale(.gray500))
-        tableView.backgroundColor = .cf(.grayScale(.white))
+        tableView.backgroundColor = .background
         
         return tableView
     }()
@@ -107,9 +108,9 @@ final class SearchPathView: UIView {
     }
     
     private func setup() {
-        backgroundColor = .cf(.grayScale(.white))
-        searchResultTableView.register(cellType: SearchResultCell.self) // 테이블 뷰 재사용 셀 등록
+        backgroundColor = .background
         
+        searchResultTableView.register(cellType: SearchResultCell.self) // 테이블 뷰 재사용 셀 등록
         rootView.flex.define {
             // titleContainer
             $0.addItem(titleContainer).direction(.row).justifyContent(.spaceBetween).define {
@@ -117,7 +118,6 @@ final class SearchPathView: UIView {
                 $0.addItem(closeButton)
             }
             .padding(14, 16, 12)
-            
             // textFieldContainer
             $0.addItem(textFieldContainer).gap(8).define {
                 for idx in 0..<2 {
@@ -148,7 +148,7 @@ final class SearchPathView: UIView {
             // searchInfoContainer
             $0.addItem(searchInfoContainer).define {
                 $0.addItem(searchResultScrollView).direction(.column).define {
-                    // 검색 결과 상단 구분선
+//                    // 검색 결과 상단 구분선
                     $0.addItem()
                         .width(100%).height(.cfStroke(.xsmall))
                         .backgroundColor(UIColor.cf(.grayScale(.gray500)))
@@ -158,19 +158,22 @@ final class SearchPathView: UIView {
                 .grow(1)
                 
                 $0.addItem(searchButton)
-                    .backgroundColor(.cf(.primaryScale(.primary(.medium))))
+                    .backgroundColor(.test)
+//                    .backgroundColor(.cf(.primaryScale(.primary(.medium))))
                     .minHeight(56)
-                    .cornerRadius(6)
+                    .cornerRadius(28)
                     .marginHorizontal(16)
+
             }
             .grow(1)
+            .backgroundColor(.background)
         }
         
         addSubview(rootView)
     }
     
     private func layout() {
-        rootView.pin.all(pin.safeArea)
+        rootView.pin.all()
         rootView.flex.layout()
         
         //TODO: - 테이블뷰 높이 고정(다른 방식 생각해보기)
@@ -208,8 +211,12 @@ extension SearchPathView {
             // 시트를 올리는 경우, isHidden을 먼저 풀어줘야 함
             if isLargeDetent {
                 self.searchInfoContainer.isHidden = false
+                self.backgroundColor = .background
+                self.searchButton.flex.marginBottom(self.safeAreaInsets.bottom + 16).markDirty()
             }
-            self.searchInfoContainer.flex.view?.alpha = isLargeDetent ? 1.0 : 0.0
+            self.backgroundColor = .background
+            
+            self.searchButton.flex.view?.alpha = isLargeDetent ? 1.0 : 0.0
             self.searchInfoContainer.flex.markDirty()
             self.layoutIfNeeded()
         }) { _ in

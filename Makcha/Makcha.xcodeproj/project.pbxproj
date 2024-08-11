@@ -245,6 +245,8 @@
 		20C053D62C1576B300DB78C8 /* UIView+Extension */ = {
 			isa = PBXGroup;
 			children = (
+				B81D56A92C5D4E7E006A248D /* UICell+Extension.swift */,
+				20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */,
 				20C053D72C1576CA00DB78C8 /* DottedLineView.swift */,
 				20CFB2682C2826AE004CFC04 /* Flex+Extension.swift */,
 			);
@@ -500,9 +502,7 @@
 				B8D48C162BF2164200DA2EB6 /* String+Extension.swift */,
 				B82953D12BF5DDBB00EABD57 /* Int+Extension.swift */,
 				20E277232C02E4340071F6CA /* Rx+Extension.swift */,
-				20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */,
 				B8B1C9842C3C26F000F11E15 /* Print.swift */,
-				B81D56A92C5D4E7E006A248D /* UICell+Extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
