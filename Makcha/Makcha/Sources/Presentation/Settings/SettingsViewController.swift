@@ -80,7 +80,7 @@ final class SettingsViewController: UIViewController {
             TransPathRepository(apiService),
             EndPointRepository(locationService, apiService)
         )
-        navigationController?.pushViewController(OnboardingViewController(OnboardingViewModel(onboardingUseCase)), animated: true)
+        navigationController?.pushViewController(OnboardingViewController(OnboardingViewModel(onboardingUseCase), type: .enterToSettings), animated: true)
     }
     
     /// 이메일 문의 화면 띄우기

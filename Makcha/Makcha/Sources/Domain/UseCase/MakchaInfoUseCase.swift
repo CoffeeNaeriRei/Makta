@@ -32,6 +32,7 @@ final class MakchaInfoUseCase {
     let searchedDestinationPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 도착지 주소들
     
     private var makchaPathNumToLoad = 5 // 화면에 보여줄 막차 경로 개수
+    private var makchaPathCount = 0 // 불러온 막차 정보 개수
     
     private let disposeBag = DisposeBag()
     private var timerDisposable: Disposable? // 타이머 구독을 제어하기 위한 Disposable
@@ -222,6 +223,7 @@ final class MakchaInfoUseCase {
             .subscribe(onNext: { _, arrivals in
                 self.realtimeArrivals.onNext(arrivals)
                 self.startTimer()
+                self.makchaPathCount = arrivals.count
             })
             .disposed(by: disposeBag)
     }
@@ -244,10 +246,9 @@ final class MakchaInfoUseCase {
     
     /// 화면에 표시할 막차 경로 개수 조절 (최대 15개)
     func updateMakchaPathNumToLoad() {
-        if makchaPathNumToLoad < 15 {
-            makchaPathNumToLoad += 5
-        } else {
-            makchaPathNumToLoad = 15
+        makchaPathNumToLoad += 5
+        if makchaPathNumToLoad > makchaPathCount {
+            makchaPathNumToLoad = makchaPathCount
         }
     }
 }
