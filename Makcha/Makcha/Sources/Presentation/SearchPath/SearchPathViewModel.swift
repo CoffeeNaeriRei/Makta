@@ -41,7 +41,7 @@ final class SearchPathViewModel: ViewModelType {
         input.startPointTextFieldChange
             .distinctUntilChanged()
             .withUnretained(self)
-            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
             .subscribe(onNext: { `self`, inputText in
                 if inputText != "" {
                     self.makchaInfoUseCase.searchWithAddressText(isStartPoint: true, searchKeyword: inputText)
@@ -52,7 +52,7 @@ final class SearchPathViewModel: ViewModelType {
         input.destinationPointTextFieldChange
             .distinctUntilChanged()
             .withUnretained(self)
-            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
             .subscribe(onNext: { `self`, inputText in
                 if inputText != "" {
                     self.makchaInfoUseCase.searchWithAddressText(isStartPoint: false, searchKeyword: inputText)
