@@ -37,7 +37,7 @@ final class OnboardingViewModel: ViewModelType {
         input.textFieldChange
             .distinctUntilChanged()
             .withUnretained(self)
-            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
             .subscribe { vm, text in
                 if !text.isEmpty {
                     vm.onboardingUseCase.searchWithAddressText(searchKeyword: text)
