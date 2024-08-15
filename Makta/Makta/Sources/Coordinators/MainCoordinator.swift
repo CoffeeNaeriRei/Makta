@@ -18,8 +18,6 @@ protocol MainNavigation: AnyObject {
 }
 
 final class MainCoordinator: BaseCoordinator {
-    // DetailView를 위한 참조
-    var makchaInfoUseCase: MakchaInfoUseCase?
     // pullDownSheet를 위한 참조
     var searchPathViewController: SearchPathViewController?
     
@@ -27,14 +25,9 @@ final class MainCoordinator: BaseCoordinator {
     override func start() {
         super.start()
         
-        let apiService = APIService()
-        let locationService = LocationService()
-        let makchaInfoUseCase = MakchaInfoUseCase(
-            TransPathRepository(apiService),
-            EndPointRepository(locationService, apiService)
-        )
-        self.makchaInfoUseCase = makchaInfoUseCase
+        guard let appCoordinator = parentCoordinator as? AppCoordinator else { return }
         
+        let makchaInfoUseCase = appCoordinator.makchaInfoUseCase
         let mainVM = MainViewModel(makchaInfoUseCase)
         let searchPathVM = SearchPathViewModel(makchaInfoUseCase)
         
@@ -88,8 +81,10 @@ extension MainCoordinator: MainNavigation {
     }
     
     func goToDetails(_ makchaIdx: Int, with data: MakchaCellData, path: (String, String)) {
+        guard let appCoordinator = parentCoordinator as? AppCoordinator else { return }
+        
         let vc = DetailViewController(makchaIdx: makchaIdx, data: data, path: path)
-        vc.makchaInfoUseCase = makchaInfoUseCase
+        vc.makchaInfoUseCase = appCoordinator.makchaInfoUseCase
         navigationController.dismiss(animated: true)
         navigationController.pushViewController(vc, animated: true)
     }

@@ -13,17 +13,17 @@ protocol OnboardingNavigation: AnyObject {
 }
 
 final class OnboardingCoordinator: BaseCoordinator {
-    private let apiService = APIService()
-    private let locationService = LocationService()
-    
     override func start() {
         super.start()
-        let useCase = OnboardingUseCase(TransPathRepository(apiService), EndPointRepository(locationService, apiService))
-        let vm = OnboardingViewModel(useCase)
         
-        vm.navigation = self
-        let vc = OnboardingViewController(vm)
-        navigationController.pushViewController(vc, animated: true)
+        guard let appCoordinator = parentCoordinator as? AppCoordinator else { return }
+        
+        let makchaInfoUseCase = appCoordinator.makchaInfoUseCase
+        let onboardingVM = OnboardingViewModel(makchaInfoUseCase)
+        onboardingVM.navigation = self
+        
+        let onboardingVC = OnboardingViewController(onboardingVM)
+        navigationController.pushViewController(onboardingVC, animated: true)
     }
 }
 
@@ -35,9 +35,9 @@ extension OnboardingCoordinator: OnboardingNavigation {
         }
         UserDefaults.standard.setValue(true, forKey: .isSkipOnboarding)
         removeAll()
-        let coordinator = MainCoordinator(navigationController)
-        addChild(coordinator)
-        coordinator.parentCoordinator = self
-        coordinator.start()
+        let mainCoordinator = MainCoordinator(navigationController)
+        addChild(mainCoordinator)
+        mainCoordinator.parentCoordinator = parentCoordinator
+        mainCoordinator.start()
     }
 }
