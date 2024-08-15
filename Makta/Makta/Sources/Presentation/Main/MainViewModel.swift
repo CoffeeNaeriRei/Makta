@@ -30,7 +30,7 @@ final class MainViewModel: ViewModelType {
     }
     
     struct Input {
-        let viewDidLoadEvent = PublishRelay<Void>() // 화면 최초 로딩 이벤트 (현재 위치 기반 경로 불러오기)
+        let viewDidAppearEvent: Observable<Void> // viewDidAppear 이벤트
         let settingButtonTap: ControlEvent<Void> // [설정] 버튼 탭
 //        let starButtonTap: ControlEvent<Void> // [즐겨찾기] 버튼 탭
         let loadButtonTap: ControlEvent<Void> // 막차 경로 더 불러오기
@@ -42,9 +42,10 @@ final class MainViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         // input
-        input.viewDidLoadEvent
+        input.viewDidAppearEvent
             .withUnretained(self)
             .subscribe { vm, _ in
+                // 화면 전환 시 막차 정보를 새로 불러옴(갱신)
                 vm.makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
             }
             .disposed(by: disposeBag)
