@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B89E7F722BE7613800A13B58"
-               BuildableName = "Makcha.app"
-               BlueprintName = "Makcha"
-               ReferencedContainer = "container:Makcha.xcodeproj">
+               BuildableName = "Makta.app"
+               BlueprintName = "Makta"
+               ReferencedContainer = "container:Makta.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B89E7F722BE7613800A13B58"
-            BuildableName = "Makcha.app"
-            BlueprintName = "Makcha"
-            ReferencedContainer = "container:Makcha.xcodeproj">
+            BuildableName = "Makta.app"
+            BlueprintName = "Makta"
+            ReferencedContainer = "container:Makta.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B89E7F722BE7613800A13B58"
-            BuildableName = "Makcha.app"
-            BlueprintName = "Makcha"
-            ReferencedContainer = "container:Makcha.xcodeproj">
+            BuildableName = "Makta.app"
+            BlueprintName = "Makta"
+            ReferencedContainer = "container:Makta.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -19,9 +19,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B86232D52BE7A761003959FB"
-               BuildableName = "MakchaTests.xctest"
-               BlueprintName = "MakchaTests"
-               ReferencedContainer = "container:Makcha.xcodeproj">
+               BuildableName = "MaktaTests.xctest"
+               BlueprintName = "MaktaTests"
+               ReferencedContainer = "container:Makta.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
