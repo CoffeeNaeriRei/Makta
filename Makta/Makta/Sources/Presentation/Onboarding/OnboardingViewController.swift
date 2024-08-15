@@ -99,13 +99,13 @@ struct OnboardingViewController_Previews: PreviewProvider {
         ViewControllerPreview {
             let apiService = APIService()
             let locationService = LocationService()
-            let onbardingUseCase = OnboardingUseCase(
+            let makchaInfoUseCase = MakchaInfoUseCase(
                 TransPathRepository(apiService),
                 EndPointRepository(locationService, apiService)
             )
             return UINavigationController(
                 rootViewController: OnboardingViewController(
-                    OnboardingViewModel(onbardingUseCase)
+                    OnboardingViewModel(makchaInfoUseCase)
                 )
             )
             

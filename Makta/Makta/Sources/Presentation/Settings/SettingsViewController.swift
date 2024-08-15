@@ -76,11 +76,11 @@ final class SettingsViewController: UIViewController {
     private func moveToDestinationEdit() {
         let apiService = APIService()
         let locationService = LocationService()
-        let onboardingUseCase = OnboardingUseCase(
+        let makchaInfoUseCase = MakchaInfoUseCase(
             TransPathRepository(apiService),
             EndPointRepository(locationService, apiService)
         )
-        navigationController?.pushViewController(OnboardingViewController(OnboardingViewModel(onboardingUseCase), type: .enterToSettings), animated: true)
+        navigationController?.pushViewController(OnboardingViewController(OnboardingViewModel(makchaInfoUseCase), type: .enterToSettings), animated: true)
     }
     
     /// 이메일 문의 화면 띄우기

@@ -12,12 +12,12 @@ import RxRelay
 import RxCocoa
 
 final class OnboardingViewModel: ViewModelType {
-    private let onboardingUseCase: OnboardingUseCase
+    private let makchaInfoUseCase: MakchaInfoUseCase
     private let disposeBag = DisposeBag()
     weak var navigation: OnboardingNavigation?
     
-    init(_ onboardingUseCase: OnboardingUseCase) {
-        self.onboardingUseCase = onboardingUseCase
+    init(_ makchaInfoUseCase: MakchaInfoUseCase) {
+        self.makchaInfoUseCase = makchaInfoUseCase
     }
     
     struct Input {
@@ -40,7 +40,7 @@ final class OnboardingViewModel: ViewModelType {
             .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
             .subscribe { vm, text in
                 if !text.isEmpty {
-                    vm.onboardingUseCase.searchWithAddressText(searchKeyword: text)
+                    vm.makchaInfoUseCase.searchWithAddressText(isStartPoint: false, searchKeyword: text)
                 }
             }
             .disposed(by: disposeBag)
@@ -49,7 +49,7 @@ final class OnboardingViewModel: ViewModelType {
         input.searchedPointSelect
             .withUnretained(self)
             .subscribe { vm, collection in
-                vm.onboardingUseCase.updatePointToSearchedAddress(idx: collection.row)
+                vm.makchaInfoUseCase.updatePointToSearchedAddress(idx: collection.row)
             }
             .disposed(by: disposeBag)
         
@@ -57,7 +57,7 @@ final class OnboardingViewModel: ViewModelType {
             .withUnretained(self)
             .subscribe { vm, _ in
                 print("start Button Tap")
-                vm.onboardingUseCase.saveDefaultDestinationPoint()
+                vm.makchaInfoUseCase.saveDefaultDestinationPoint()
                 vm.goToMain(isSkip: false)
             }
             .disposed(by: disposeBag)
@@ -69,12 +69,12 @@ final class OnboardingViewModel: ViewModelType {
                 vm.goToMain(isSkip: true)
             }
             .disposed(by: disposeBag)
-         
-        let label = onboardingUseCase.destinationPoint
-            .map { $0.roadAddressName ?? $0.addressName}
+        
+        let label = makchaInfoUseCase.destinationPoint
+            .map { $0.roadAddressName ?? $0.addressName }
             .asDriver(onErrorJustReturn: "")
             
-        let searchedResult = onboardingUseCase.searchedDestinationPoints
+        let searchedResult = makchaInfoUseCase.searchedDestinationPoints
         
         return Output(
             textFieldLabel: label,

@@ -176,6 +176,17 @@ final class MakchaInfoUseCase {
         isSheetOpened = isOpened
     }
     
+    /**
+     검색한 주소를 기본 도착지로 저장하는 메서드
+     - 온보딩 & 설정에서 사용
+     */
+    func saveDefaultDestinationPoint() {
+        if let tempDest = EndPoint.loadFromUserDefaults(key: .tempDestination) {
+            tempDest.saveAsUserDefaults(key: .defaultDestination)
+            print("저장 ㅇㅇ")
+        }
+    }
+    
     // MARK: - MakchaPath 배열을 받아와서 각 경로별 실시간 도착정보를 만들어주는 메서드
     private func makeRealtimeArrivalTimes(currentTime: Date, makchaPaths: [MakchaPath]) {
         var realtimeArrivalObservables: [Observable<RealtimeArrivalTuple>] = []
