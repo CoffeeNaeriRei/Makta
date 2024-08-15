@@ -417,7 +417,7 @@ extension DetailSubPathView {
                         $0.addItem(startStationLabel)
                         $0.addItem().direction(.row).gap(2).define {
                             $0.addItem(wayLabel)
-                            if nextSt != "-- 방면" {
+                            if nextSt != "-- 방면" { // 방면 정보가 있을 때만 화면에 표시
                                 $0.addItem(dividerLabel)
                                 $0.addItem(nextStLabel)
                             }
