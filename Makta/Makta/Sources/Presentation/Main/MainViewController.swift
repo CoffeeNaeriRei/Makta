@@ -60,7 +60,7 @@ final class MainViewController: UIViewController {
     
     private func bind() {
         let input = MainViewModel.Input(
-            viewDidAppearEvent: self.rx.sentMessage(#selector(self.viewDidAppear)).map({ _ in Void() }),
+            viewDidAppearEvent: self.rx.methodInvoked(#selector(self.viewDidAppear)).map({ _ in Void() }),
             settingButtonTap: leftUIBarButtonItem.rx.tap,
 //            starButtonTap: rightUIBarButtonItem.rx.tap,
             loadButtonTap: rightUIBarButtonItem.rx.tap
