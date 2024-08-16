@@ -25,6 +25,7 @@ final class OnboardingViewModel: ViewModelType {
     }
     
     struct Input {
+        let viewDidLoaded = PublishRelay<Void>()
         let textFieldChange: ControlProperty<String> // 텍스트필드 입력 변화
         let searchedPointSelect: ControlEvent<IndexPath> // 검색 결과 목록 중 하나 선택
         let startButtonTap: ControlEvent<Void> // 시작하기 버튼 탭
@@ -38,6 +39,14 @@ final class OnboardingViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         // input Change
+        input.viewDidLoaded
+            .withUnretained(self)
+            .subscribe(onNext: { vm, _ in
+                vm.makchaInfoUseCase.searchedStartPoints.onNext([])
+                vm.makchaInfoUseCase.searchedDestinationPoints.onNext([])
+            })
+            .disposed(by: disposeBag)
+        
         input.textFieldChange
             .distinctUntilChanged()
             .withUnretained(self)

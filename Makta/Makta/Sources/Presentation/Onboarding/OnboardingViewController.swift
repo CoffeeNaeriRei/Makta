@@ -62,14 +62,14 @@ final class OnboardingViewController: UIViewController {
         let startButtonTap = mainView.startButton.rx.tap
         let skipButtonTap = mainView.skipButton.rx.tap
         
-        let output = vm.transform(
-            input: .init(
-                textFieldChange: textFieldChange,
-                searchedPointSelect: selected,
-                startButtonTap: startButtonTap,
-                skipButtonTap: skipButtonTap
-            )
+        let input = OnboardingViewModel.Input(
+            textFieldChange: textFieldChange,
+            searchedPointSelect: selected,
+            startButtonTap: startButtonTap,
+            skipButtonTap: skipButtonTap
         )
+        
+        let output = vm.transform(input: input)
         
         output.textFieldLabel
             .drive(mainView.textField.rx.text)
@@ -84,6 +84,8 @@ final class OnboardingViewController: UIViewController {
                 return cell
             }
             .disposed(by: disposeBag)
+        
+        input.viewDidLoaded.accept(())
     }
 }
 
