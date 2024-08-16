@@ -56,6 +56,7 @@
 		B862334B2BEC99AB003959FB /* MakchaInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862334A2BEC99AB003959FB /* MakchaInfoUseCase.swift */; };
 		B862334F2BECD93F003959FB /* MakchaInfoUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862334E2BECD93F003959FB /* MakchaInfoUseCaseTests.swift */; };
 		B8745C5E2C36EBDD00B63EAB /* SearchPathViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8745C5D2C36EBDD00B63EAB /* SearchPathViewModel.swift */; };
+		B890C2D92C6F2F6C00FE0A3F /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B890C2D82C6F2F6C00FE0A3F /* SettingsCoordinator.swift */; };
 		B89494AF2C218C00003068D5 /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89494AE2C218C00003068D5 /* SearchResultCell.swift */; };
 		B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F762BE7613800A13B58 /* AppDelegate.swift */; };
 		B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F782BE7613800A13B58 /* SceneDelegate.swift */; };
@@ -141,6 +142,7 @@
 		B862334A2BEC99AB003959FB /* MakchaInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaInfoUseCase.swift; sourceTree = "<group>"; };
 		B862334E2BECD93F003959FB /* MakchaInfoUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaInfoUseCaseTests.swift; sourceTree = "<group>"; };
 		B8745C5D2C36EBDD00B63EAB /* SearchPathViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPathViewModel.swift; sourceTree = "<group>"; };
+		B890C2D82C6F2F6C00FE0A3F /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		B89494AE2C218C00003068D5 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		B89E7F732BE7613800A13B58 /* Makta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Makta.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B89E7F762BE7613800A13B58 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				204A39DB2C0BF88E00C2F403 /* BaseCoordinator.swift */,
 				204A39DD2C0BFA6C00C2F403 /* MainCoordinator.swift */,
 				206571572C4E87200077FE1B /* OnboardingCoordinator.swift */,
+				B890C2D82C6F2F6C00FE0A3F /* SettingsCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -712,6 +715,7 @@
 				205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */,
 				B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */,
 				B89494AF2C218C00003068D5 /* SearchResultCell.swift in Sources */,
+				B890C2D92C6F2F6C00FE0A3F /* SettingsCoordinator.swift in Sources */,
 				B8D48C112BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift in Sources */,
 				20EB5D1C2C17500F0028287C /* DetailSubPathView.swift in Sources */,
 				B83FBDD12C12D6D7004805ED /* KakaoPlaceSearchResultDTO.swift in Sources */,

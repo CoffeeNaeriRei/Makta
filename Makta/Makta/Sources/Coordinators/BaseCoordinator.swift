@@ -22,7 +22,7 @@ protocol Coordinator: AnyObject {
 }
 
 // MARK: - 기본 코디네이터 구현
-class BaseCoordinator: Coordinator {
+class BaseCoordinator: NSObject, Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController

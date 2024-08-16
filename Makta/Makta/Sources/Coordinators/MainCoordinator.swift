@@ -42,13 +42,17 @@ final class MainCoordinator: BaseCoordinator {
 
 extension MainCoordinator: MainNavigation {
     func goToSettings() {
-        print("MainCoordinator에서 세팅 네비게이션 호출")
-        navigationController.dismiss(animated: true)
-        navigationController.pushViewController(SettingsViewController(), animated: true)
+        guard let appCoordinator = parentCoordinator as? AppCoordinator else { return }
+        navigationController.dismiss(animated: true) // 검색 시트 dismiss
+        let makchaInfoUseCase = appCoordinator.makchaInfoUseCase
+        
+        let settingsCoord = SettingsCoordinator(navigationController, makchaInfoUseCase: makchaInfoUseCase)
+        addChild(settingsCoord)
+        settingsCoord.parentCoordinator = self
+        settingsCoord.start()
     }
     
     func goToRemark() {
-        print("MainCoordinator에서 별 네비게이션 호출")
         navigationController.dismiss(animated: true)
         navigationController.pushViewController(RemarkViewController(), animated: true)
     }
