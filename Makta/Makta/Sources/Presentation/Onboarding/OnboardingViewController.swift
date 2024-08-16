@@ -53,7 +53,7 @@ final class OnboardingViewController: UIViewController {
     }
     
     private func setup() {
-        navigationItem.title = "도착지 설정"
+        navigationItem.title = type == .enterFirst ? "도착지 설정" : "도착지 수정"
     }
     
     private func bind() {
