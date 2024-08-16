@@ -87,7 +87,6 @@ struct UILabelFactory {
 import RxSwift
 import RxCocoa
 
-
 final class CustomUITextField: UITextField {
     var textPadding = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 6)
     // 보더 스타일 구분 임시

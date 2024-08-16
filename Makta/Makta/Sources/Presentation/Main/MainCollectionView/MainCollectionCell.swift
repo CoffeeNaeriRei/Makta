@@ -510,7 +510,7 @@ extension MainCollectionCell {
     }
     
     private func layoutPathInfoBus(_ flex: Flex, params: LayoutPathInfoBusParameter) {
-        let ((_, distance, icon), busType, subPath) = params
+        let ((_, distance, icon), busType, _) = params
         
         let bgColor = busType.busUIColor
         let distanceBgColor = UIColor(busType.busColor.opacity(0.6))
@@ -540,7 +540,7 @@ extension MainCollectionCell {
     }
     
     private func layoutPathInfoSubway(_ flex: Flex, params: LayoutPathInfoSubwayParameter) {
-        let ((_, distance, icon), subwayType, subPath) = params
+        let ((_, distance, icon), subwayType, _) = params
         
         let bgColor = subwayType.subWayUIColor
         let distanceBgColor = UIColor(subwayType.subwayColor.opacity(0.6))

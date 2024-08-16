@@ -117,12 +117,10 @@ extension MainViewModel: MainCollectionViewDelegate {
 // MARK: 델리게이션을 통한 코디네이터 처리
 extension MainViewModel: MainNavigation {
     func goToSettings() {
-        print("뷰모델에서 세팅 버튼 클릭 호출")
         navigation?.goToSettings()
     }
     
     func goToRemark() {
-        print("뷰모델에서 스타 버튼 클릭 호출")
         navigation?.goToRemark()
     }
     

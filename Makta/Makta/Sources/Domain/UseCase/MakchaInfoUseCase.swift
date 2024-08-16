@@ -183,7 +183,6 @@ final class MakchaInfoUseCase {
     func saveDefaultDestinationPoint() {
         if let tempDest = EndPoint.loadFromUserDefaults(key: .tempDestination) {
             tempDest.saveAsUserDefaults(key: .defaultDestination)
-            print("저장 ㅇㅇ")
         }
     }
     

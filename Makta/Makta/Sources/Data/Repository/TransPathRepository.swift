@@ -28,7 +28,6 @@ final class TransPathRepository: TransPathRepositoryProtocol {
             self.apiService.fetchTransPathData(start: start, destination: destination) { result in
                 switch result {
                 case .success(let transPathDTO):
-                    print("[APIService] - ✅ fetchTransPathData() 호출 성공!!")
                     guard let makchaInfo = self.convertTransPathDTOToMakchaInfo(transPathDTO: transPathDTO) else {
                         print("[APIService] - ❌ DTO → Entity 변환 실패")
                         emitter.onError(APIServiceError.entityConvertError)
@@ -61,15 +60,10 @@ final class TransPathRepository: TransPathRepositoryProtocol {
                 emitter.onCompleted()
                 return Disposables.create()
             }
-            print("[TransPathRepository] - getSeoulRealtimeSubwayArrival() 호출")
-            print("지하철역 이름: \(stationName)")
-            print("호선 정보: subwayLineCodeInt(\(subwayLineCodeInt)) 👉 subwayLineCode(\(subwayLineCode))")
-            print("호선 정보:  wayCodeInt(\(wayCodeInt)) 👉 wayCode\(wayCode)")
             // 서울시 실시간 지하철 도착정보 API 호출
             self.apiService.fetchSeoulRealtimeSubwayArrival(stationName: stationName) { result in
                 switch result {
                 case .success(let seoulRealtimeSubwayDTO):
-                    print("[APIService] - ✅ fetchSeoulRealtimeSubwayArrival() 호출 성공!!")
                     // 호선+상하행 정보가 일치하는 데이터만 필터링
                     let arrivals = seoulRealtimeSubwayDTO.realtimeArrivalList
                     let filteredArrivals = self.filteringSeoulArrivalSubway(from: arrivals, subwayLine: subwayLineCode, wayCode: wayCode)
@@ -77,7 +71,6 @@ final class TransPathRepository: TransPathRepositoryProtocol {
                     // 실제 도착까지 남은 시간 구해서 도착정보 데이터 생성
                     // TODO: - 지하철 도착 메세지 등 정보도 확인해서 적절한 ArrivalStatus로 반환할 수 있도록 수정하기
                     let realtimeArrival = self.makeRealtimeArrivalFromSeoulSubway(from: filteredArrivals, currentTime: currentTime)
-                    print("\n\n도착정보 : \(realtimeArrival)\n\n")
                     emitter.onNext(realtimeArrival)
                     emitter.onCompleted()
                 case .failure(let error):
@@ -103,7 +96,6 @@ final class TransPathRepository: TransPathRepositoryProtocol {
             self.apiService.fetchSeoulRealtimeBusStationInfo(arsID: arsID) { result in
                 switch result {
                 case .success(let seoulRealtimeBusStationDTO):
-                    print("[APIService] - ✅ fetchSeoulRealtimeBusStationInfo() 호출 성공!!")
                     // 노선ID+노선명이 매칭되는 도착 정보들만 필터링
                     let filteredArrivals = seoulRealtimeBusStationDTO.arrivals.itemList.filter {
                         (routeIDs.contains($0.busRouteID)) && (routeNames.contains($0.busRouteName))
@@ -337,8 +329,8 @@ extension TransPathRepository {
     func makeRealtimeArrivalInfo(from seoulRealtimeSubwayArrival: SeoulRealtimeSubwayArrival, currentTime: Date) -> RealtimeArrivalInfo {
         let realRemainingTime = getRealRemainingTimeFromSeoulSubway(arrival: seoulRealtimeSubwayArrival, currentTime: currentTime)
         let status: ArrivalStatus = .coming(remainingSecond: realRemainingTime)
-        var way: String? = nil
-        var nextSt: String? = nil
+        var way: String?
+        var nextSt: String?
         let wayAndNextSt = seoulRealtimeSubwayArrival.trainLineNm.components(separatedBy: " - ")
         if wayAndNextSt.count >= 2 {
             way = wayAndNextSt[0]

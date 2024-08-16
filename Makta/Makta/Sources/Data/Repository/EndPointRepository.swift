@@ -34,7 +34,6 @@ final class EndPointRepository: EndPointRepositoryProtocol {
                     emitter.onError(LocationServiceError.noLocationData)
                     return
                 }
-                print("[LocationService] - ✅ 위치 불러오기 성공")
                 
                 let lon = String(location.coordinate.longitude)
                 let lat = String(location.coordinate.latitude)
@@ -42,7 +41,6 @@ final class EndPointRepository: EndPointRepositoryProtocol {
                 self.apiService.fetchKakaoReverseGeocodingResult(lonX: lon, latY: lat) { result in
                     switch result {
                     case .success(let kakaoReverseGeocodingResultDTO):
-                        print("[APIService] - ✅ fetchKakaoReverseGeocodingResult() 호출 성공!!")
                         guard let addressInfo = kakaoReverseGeocodingResultDTO.results.first else {
                             print("리버스 지오코딩 실패")
                             emitter.onError(APIServiceError.noData)
@@ -72,7 +70,6 @@ final class EndPointRepository: EndPointRepositoryProtocol {
             self.apiService.fetchKakaoPlaceSearchResult(placeKeyword: searchKeyword) { result in
                 switch result {
                 case .success(let kakaoPlaceSearchResultDTO):
-                    print("[APIService] - ✅ fetchKakaoPlaceSearchResult() 호출 성공!!")
                     var searchedAddressArr = [EndPoint]()
                     for kakaoPlace in kakaoPlaceSearchResultDTO.places {
                         let searchedAddress = EndPoint(

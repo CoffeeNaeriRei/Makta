@@ -248,7 +248,7 @@ extension DetailView: DetailViewDelegate {
 }
 
 extension DetailView {
-    //TODO: - MainCollectionCell에 있는 layoutCenterContentsTopContainer와 거의 유사하기 때문에 메서드 하나로 정리 필요
+    // TODO: - MainCollectionCell에 있는 layoutCenterContentsTopContainer와 거의 유사하기 때문에 메서드 하나로 정리 필요
     private func layoutTotalDurationTimeLabel(totalTime: Int) {
         // totalTime String 변환 ex) 72 -> 1시간12분
         let totalTimeDescription = totalTime.calcTotalTimeDescription()

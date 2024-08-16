@@ -176,7 +176,7 @@ final class SearchPathView: UIView {
         rootView.pin.all()
         rootView.flex.layout()
         
-        //TODO: - 테이블뷰 높이 고정(다른 방식 생각해보기)
+        // TODO: - 테이블뷰 높이 고정(다른 방식 생각해보기)
         let height = rootView.frame.height - titleContainer.frame.height - textFieldContainer.frame.height - searchButton.frame.height - safeAreaInsets.bottom
         searchResultTableView.flex.height(height)
     }
