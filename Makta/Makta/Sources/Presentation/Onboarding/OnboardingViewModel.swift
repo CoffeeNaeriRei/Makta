@@ -15,9 +15,13 @@ final class OnboardingViewModel: ViewModelType {
     private let makchaInfoUseCase: MakchaInfoUseCase
     private let disposeBag = DisposeBag()
     weak var navigation: OnboardingNavigation?
+    weak var settingsNavigation: SettingsNavigation?
     
-    init(_ makchaInfoUseCase: MakchaInfoUseCase) {
+    private let type: OnboardingType
+    
+    init(_ makchaInfoUseCase: MakchaInfoUseCase, type: OnboardingType = .enterFirst) {
         self.makchaInfoUseCase = makchaInfoUseCase
+        self.type = type
     }
     
     struct Input {
@@ -58,7 +62,11 @@ final class OnboardingViewModel: ViewModelType {
             .subscribe { vm, _ in
                 print("start Button Tap")
                 vm.makchaInfoUseCase.saveDefaultDestinationPoint()
-                vm.goToMain(isSkip: false)
+                if vm.type == .enterFirst {
+                    vm.goToMain(isSkip: false)
+                } else {
+                    vm.settingsNavigation?.showEditCompleteAlert()
+                }
             }
             .disposed(by: disposeBag)
         
