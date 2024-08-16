@@ -64,7 +64,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to undo the changes made on entering the background.
         print("\n⚪️⚪️포어그라운드 진입⚪️⚪️\n")
         if isAppStarted {
-            coordinator?.makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
+            coordinator?.makchaInfoUseCase.loadMakchaPathWithSearchedLocation()
         } else {
             isAppStarted = true
         }

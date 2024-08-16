@@ -37,7 +37,7 @@ final class MainViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         bind()
@@ -48,7 +48,7 @@ final class MainViewController: UIViewController {
         setupSheet()
     }
     
-    public override func loadView() {
+    override func loadView() {
         view = MainView()
     }
     
@@ -69,6 +69,8 @@ final class MainViewController: UIViewController {
         _ = mainVM.transform(input: input)
 
         bindCollectionView()
+        
+        input.viewDidLoadedEvent.accept(())
     }
 }
 
