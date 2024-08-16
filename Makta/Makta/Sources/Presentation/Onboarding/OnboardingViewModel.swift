@@ -62,6 +62,8 @@ final class OnboardingViewModel: ViewModelType {
             .subscribe { vm, _ in
                 print("start Button Tap")
                 vm.makchaInfoUseCase.saveDefaultDestinationPoint()
+                vm.makchaInfoUseCase.searchedStartPoints.onNext([])
+                vm.makchaInfoUseCase.searchedDestinationPoints.onNext([])
                 if vm.type == .enterFirst {
                     vm.goToMain(isSkip: false)
                 } else {
