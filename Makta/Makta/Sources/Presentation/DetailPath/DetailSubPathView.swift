@@ -347,9 +347,8 @@ extension DetailSubPathView {
             textColor: .cf(.grayScale(.gray700))
         )
         
-        // MARK: ~행 과 ~ 방면을 구분해서 알 수 있는지?
         let way = "\(subPath.way?.getNameFromWayAndNextSt() ?? "--")행"
-        let detailWay = "\(subPath.nextSt?.getNameFromWayAndNextSt() ?? "--") 방면"
+        let nextSt = "\(subPath.nextSt?.getNameFromWayAndNextSt() ?? "--") 방면"
         // 도착시간 계산
         // 다음 도착시간?
         let arrivalTime = "NN분 NN초"
@@ -360,8 +359,8 @@ extension DetailSubPathView {
             textScale: .caption2,
             textColor: .cf(.grayScale(.gray600))
         )
-        let detailWayLabel = UILabelFactory.build(
-            text: detailWay,
+        let nextStLabel = UILabelFactory.build(
+            text: nextSt,
             textScale: .caption2,
             textColor: .cf(.grayScale(.gray600))
         )
@@ -372,7 +371,7 @@ extension DetailSubPathView {
             textColor: .cf(.grayScale(.gray700))
         )
         wayLabel.flex.padding(2, 4)
-        detailWayLabel.flex.padding(2, 4)
+        nextStLabel.flex.padding(2, 4)
         
         let arrivalTimeLabel = UILabelFactory.build(
             text: arrivalTime,
@@ -418,8 +417,10 @@ extension DetailSubPathView {
                         $0.addItem(startStationLabel)
                         $0.addItem().direction(.row).gap(2).define {
                             $0.addItem(wayLabel)
-                            $0.addItem(dividerLabel)
-                            $0.addItem(detailWayLabel)
+                            if nextSt != "-- 방면" { // 방면 정보가 있을 때만 화면에 표시
+                                $0.addItem(dividerLabel)
+                                $0.addItem(nextStLabel)
+                            }
                         }
                     }
                     $0.addItem().position(.absolute).define {

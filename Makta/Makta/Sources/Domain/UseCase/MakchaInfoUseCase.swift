@@ -31,7 +31,7 @@ final class MakchaInfoUseCase {
     let searchedStartPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 출발지 주소들
     let searchedDestinationPoints = BehaviorSubject<[EndPoint]>(value: []) // 검색 결과로 불러온 도착지 주소들
     
-    private var makchaPathNumToLoad = 5 // 화면에 보여줄 막차 경로 개수
+    private var makchaPathNumToLoad = 0 // 화면에 보여줄 막차 경로 개수
     private var makchaPathCount = 0 // 불러온 막차 정보 개수
     
     private let disposeBag = DisposeBag()
@@ -164,7 +164,9 @@ final class MakchaInfoUseCase {
                 $0.makeRealtimeArrivalTimes(currentTime: $1.startTime, makchaPaths: $1.makchaPaths)
                 // 새로운 MakchaInfo로 값을 업데이트
                 $0.makchaInfo.onNext($1)
-                $0.makchaPathNumToLoad = 5 // 화면에 보여줄 막차 경로 개수 5개로 리셋
+                // 화면에 보여줄 막차 경로 개수 5개부터 시작 (전체 경로 개수가 5개보다 적을 경우에는 그 개수에 맞춤)
+                $0.makchaPathCount = $1.makchaPaths.count
+                $0.makchaPathNumToLoad = $0.makchaPathCount < 5 ? $0.makchaPathCount : 5
             }
             .disposed(by: disposeBag)
     }
@@ -172,6 +174,16 @@ final class MakchaInfoUseCase {
     /// 검색 시트 열림 여부를 갱신하는 메서드
     func updateIsSheetOpened(_ isOpened: Bool) {
         isSheetOpened = isOpened
+    }
+    
+    /**
+     검색한 주소를 기본 도착지로 저장하는 메서드
+     - 온보딩 & 설정에서 사용
+     */
+    func saveDefaultDestinationPoint() {
+        if let tempDest = EndPoint.loadFromUserDefaults(key: .tempDestination) {
+            tempDest.saveAsUserDefaults(key: .defaultDestination)
+        }
     }
     
     // MARK: - MakchaPath 배열을 받아와서 각 경로별 실시간 도착정보를 만들어주는 메서드
@@ -223,7 +235,6 @@ final class MakchaInfoUseCase {
             .subscribe(onNext: { _, arrivals in
                 self.realtimeArrivals.onNext(arrivals)
                 self.startTimer()
-                self.makchaPathCount = arrivals.count
             })
             .disposed(by: disposeBag)
     }
@@ -284,7 +295,7 @@ extension MakchaInfoUseCase {
                 var updatedMakchaCell = [MakchaCellData]()
                 if makchaInfo.makchaPaths.count == realtimeArrivals.count {
                     // 화면에 보여줄 막차 경로의 개수만큼만 넘겨준다.
-                    for makchaIdx in 0..<(self?.makchaPathNumToLoad ?? 5) {
+                    for makchaIdx in 0..<(self?.makchaPathNumToLoad ?? 0) {
                         let realtimeArrival = realtimeArrivals[makchaIdx]
                         
                         // makchaPath의 첫번째 대중교통 SubPath에 ~행/~방면 정보를 반영

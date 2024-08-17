@@ -16,8 +16,8 @@ final class OnboardingView: UIView {
     var type: OnboardingType = .enterFirst
 
     // HeaderViews
-    private let titleLabel = UILabelFactory.build(
-        text: "기본 도착지 설정",
+    private lazy var titleLabel = UILabelFactory.build(
+        text: type == .enterFirst ? "기본 도착지 설정" : "기본 도착지 수정",
         textScale: .title3
     )
     private let descriptionLabel = UILabelFactory.build(
@@ -48,9 +48,9 @@ final class OnboardingView: UIView {
     // FooterViews
     let footerContainer = UIView()
     
-    let startButton: UIButton = {
+    lazy var startButton: UIButton = {
         let button = UIButton()
-        button.setTitle("시작하기", for: .normal)
+        button.setTitle(type == .enterFirst ? "시작하기" : "수정 완료", for: .normal)
         button.tintColor = .cf(.grayScale(.white))
         
         return button

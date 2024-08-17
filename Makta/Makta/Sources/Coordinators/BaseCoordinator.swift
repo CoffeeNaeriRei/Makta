@@ -22,7 +22,7 @@ protocol Coordinator: AnyObject {
 }
 
 // MARK: - 기본 코디네이터 구현
-class BaseCoordinator: Coordinator {
+class BaseCoordinator: NSObject, Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController
@@ -48,6 +48,23 @@ class BaseCoordinator: Coordinator {
 
 final class AppCoordinator: BaseCoordinator {
     private var isSkippedOnboarding = UserDefaults.standard.bool(forKey: .isSkipOnboarding)
+    
+    let apiService: APIServiceInterface
+    let locationService: LocationService
+    
+    let transPathRepository: TransPathRepositoryProtocol
+    let endPointRepository: EndPointRepositoryProtocol
+    
+    let makchaInfoUseCase: MakchaInfoUseCase
+    
+    override init(_ vc: UINavigationController) {
+        self.apiService = APIService()
+        self.locationService = LocationService()
+        self.transPathRepository = TransPathRepository(apiService)
+        self.endPointRepository = EndPointRepository(locationService, apiService)
+        self.makchaInfoUseCase = MakchaInfoUseCase(transPathRepository, endPointRepository)
+        super.init(vc)
+    }
     
     override func start() {
         super.start()

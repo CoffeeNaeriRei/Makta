@@ -53,7 +53,7 @@ final class OnboardingViewController: UIViewController {
     }
     
     private func setup() {
-        navigationItem.title = "도착지 설정"
+        navigationItem.title = type == .enterFirst ? "도착지 설정" : "도착지 수정"
     }
     
     private func bind() {
@@ -62,14 +62,14 @@ final class OnboardingViewController: UIViewController {
         let startButtonTap = mainView.startButton.rx.tap
         let skipButtonTap = mainView.skipButton.rx.tap
         
-        let output = vm.transform(
-            input: .init(
-                textFieldChange: textFieldChange,
-                searchedPointSelect: selected,
-                startButtonTap: startButtonTap,
-                skipButtonTap: skipButtonTap
-            )
+        let input = OnboardingViewModel.Input(
+            textFieldChange: textFieldChange,
+            searchedPointSelect: selected,
+            startButtonTap: startButtonTap,
+            skipButtonTap: skipButtonTap
         )
+        
+        let output = vm.transform(input: input)
         
         output.textFieldLabel
             .drive(mainView.textField.rx.text)
@@ -84,6 +84,8 @@ final class OnboardingViewController: UIViewController {
                 return cell
             }
             .disposed(by: disposeBag)
+        
+        input.viewDidLoaded.accept(())
     }
 }
 
@@ -99,13 +101,13 @@ struct OnboardingViewController_Previews: PreviewProvider {
         ViewControllerPreview {
             let apiService = APIService()
             let locationService = LocationService()
-            let onbardingUseCase = OnboardingUseCase(
+            let makchaInfoUseCase = MakchaInfoUseCase(
                 TransPathRepository(apiService),
                 EndPointRepository(locationService, apiService)
             )
             return UINavigationController(
                 rootViewController: OnboardingViewController(
-                    OnboardingViewModel(onbardingUseCase)
+                    OnboardingViewModel(makchaInfoUseCase)
                 )
             )
             

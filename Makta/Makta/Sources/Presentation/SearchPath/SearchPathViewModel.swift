@@ -26,6 +26,7 @@ final class SearchPathViewModel: ViewModelType {
         let destinationPointResetButtonTap: ControlEvent<Void> // 도착지 리셋버튼 탭
         let searchButtonTap: ControlEvent<Void> // 검색 버튼 탭
         let isSheetOpened: BehaviorRelay<Bool> // 검색 시트가 열려있는 상태인지
+        let closeButtonTap: ControlEvent<Void> // 닫기 버튼 클릭
     }
     
     struct Output {
@@ -34,6 +35,7 @@ final class SearchPathViewModel: ViewModelType {
         let startPointSearchedResult: Observable<[EndPoint]> // 출발지 검색 결과 리스트
         let destinationPointSearchedResult: Observable<[EndPoint]> // 도착지 검색 결과 리스트
         let searchButtonPressed: Driver<Void> // 막차 경로 검색 버튼이 눌림
+        let closeButtonPressed: Driver<Void> // 닫기 버튼이 눌림
     }
     
     func transform(input: Input) -> Output {
@@ -107,13 +109,15 @@ final class SearchPathViewModel: ViewModelType {
         let startPointSearchedResult = makchaInfoUseCase.searchedStartPoints
         let destinationPointSearchedResult = makchaInfoUseCase.searchedDestinationPoints
         let searchButtonPressed = input.searchButtonTap.asDriver()
+        let closeButtonPressed = input.closeButtonTap.asDriver()
         
         return Output(
             startPointLabel: startPointLabel,
             destinationPointLabel: destinationPointLabel,
             startPointSearchedResult: startPointSearchedResult,
             destinationPointSearchedResult: destinationPointSearchedResult,
-            searchButtonPressed: searchButtonPressed
+            searchButtonPressed: searchButtonPressed,
+            closeButtonPressed: closeButtonPressed
         )
     }
 }

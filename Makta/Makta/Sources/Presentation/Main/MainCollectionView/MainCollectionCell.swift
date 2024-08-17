@@ -199,7 +199,7 @@ extension MainCollectionCell {
     // MARK: 패치 된 데이터를 활용해 뷰 레이아웃을 설정하기 위한 인터페이스 메서드
     func configure(with data: MakchaCellData) {
         let pathType = data.makchaPath.makchaPathType.rawValue
-        pathTypelabel.text = data.makchaPath.fastest ? "\(pathType)(가장 빠른 경로)" : pathType
+        pathTypelabel.text = data.makchaPath.fastest ? "가장 빠른 경로" : pathType
         pathTypelabel.flex.markDirty()
         
         // 경로 별 height 계산
@@ -212,10 +212,8 @@ extension MainCollectionCell {
             firstSubPath: data.makchaPath.subPath.filter { $0.subPathType != .walk }.first
         )
         // 타이머 도착 예정 시간 업데이트
-//        currentArrivalTransportTimeLabel.text = data.arrival.first.status.arrivalMessageFirst
         currentArrivalTransportTimeLabel.attributedText = .repet(data.arrival.first.status.arrivalMessageFirst, size: 36, alt: .bold)
         currentArrivalTransportTimeLabel.flex.markDirty()
-//        nextArrivalTransportTimeLabel.text = data.arrival.second.status.arrivalMessageSecond
         nextArrivalTransportTimeLabel.attributedText = .repet(data.arrival.second.status.arrivalMessageSecond, size: 14)
         nextArrivalTransportTimeLabel.flex.markDirty()
         // 경로 업데이트
@@ -512,7 +510,7 @@ extension MainCollectionCell {
     }
     
     private func layoutPathInfoBus(_ flex: Flex, params: LayoutPathInfoBusParameter) {
-        let ((_, distance, icon), busType, subPath) = params
+        let ((_, distance, icon), busType, _) = params
         
         let bgColor = busType.busUIColor
         let distanceBgColor = UIColor(busType.busColor.opacity(0.6))
@@ -542,7 +540,7 @@ extension MainCollectionCell {
     }
     
     private func layoutPathInfoSubway(_ flex: Flex, params: LayoutPathInfoSubwayParameter) {
-        let ((_, distance, icon), subwayType, subPath) = params
+        let ((_, distance, icon), subwayType, _) = params
         
         let bgColor = subwayType.subWayUIColor
         let distanceBgColor = UIColor(subwayType.subwayColor.opacity(0.6))

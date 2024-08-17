@@ -37,7 +37,7 @@ final class MainViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         bind()
@@ -48,7 +48,7 @@ final class MainViewController: UIViewController {
         setupSheet()
     }
     
-    public override func loadView() {
+    override func loadView() {
         view = MainView()
     }
     
@@ -57,9 +57,10 @@ final class MainViewController: UIViewController {
         setupNavigationItems()
         setupCollectionView()
     }
-        
+    
     private func bind() {
         let input = MainViewModel.Input(
+            viewDidAppearEvent: self.rx.methodInvoked(#selector(self.viewDidAppear)).map({ _ in Void() }),
             settingButtonTap: leftUIBarButtonItem.rx.tap,
 //            starButtonTap: rightUIBarButtonItem.rx.tap,
             loadButtonTap: rightUIBarButtonItem.rx.tap
@@ -68,7 +69,8 @@ final class MainViewController: UIViewController {
         _ = mainVM.transform(input: input)
 
         bindCollectionView()
-        input.viewDidLoadEvent.accept(()) // 바인딩이 끝난 뒤에 viewDldLoad 이벤트 1회 발생
+        
+        input.viewDidLoadedEvent.accept(())
     }
 }
 

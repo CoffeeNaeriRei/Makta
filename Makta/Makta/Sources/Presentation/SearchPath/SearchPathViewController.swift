@@ -60,6 +60,7 @@ final class SearchPathViewController: UIViewController {
         let startPointResetButtonTap = mainView.resetStartPointButton.rx.tap
         let destinationPointResetButtonTap = mainView.resetDestinationPointButton.rx.tap
         let searchButtonTap = mainView.searchButton.rx.tap
+        let closeButtonTap = mainView.closeButton.rx.tap
         
         let output = searchPathVM.transform(
             input: SearchPathViewModel.Input(
@@ -69,7 +70,8 @@ final class SearchPathViewController: UIViewController {
                 startPointResetButtonTap: startPointResetButtonTap,
                 destinationPointResetButtonTap: destinationPointResetButtonTap,
                 searchButtonTap: searchButtonTap,
-                isSheetOpened: isSheetOpened
+                isSheetOpened: isSheetOpened,
+                closeButtonTap: closeButtonTap
             )
         )
         // 출발지 검색 텍스트필드
@@ -94,8 +96,18 @@ final class SearchPathViewController: UIViewController {
             .drive(onNext: { [weak self] in
                 guard let `self` = self else { return }
                 // 시트 내리기
-                navigation?.pullDownSheet()
-                updateToCustomSheet()
+                self.navigation?.pullDownSheet()
+                self.updateToCustomSheet()
+            })
+            .disposed(by: disposeBag)
+        
+        // 시트 닫기 버튼 클릭 시 이벤트
+        output.closeButtonPressed
+            .drive(onNext: { [weak self] in
+                guard let `self` = self else { return }
+                // 시트 내리기
+                self.navigation?.pullDownSheet()
+                self.updateToCustomSheet()
             })
             .disposed(by: disposeBag)
     }
