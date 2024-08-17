@@ -110,12 +110,17 @@ extension MainViewController: MainCollectionViewDelegate, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         let width = collectionView.bounds.width
         let model = mainVM.tempSections.value[indexPath.section].items[indexPath.row]
         let cell = MainCollectionCell(frame: .zero)
         cell.configure(with: model)
 
         return CGSize(width: width, height: cell.cellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        .init(width: collectionView.bounds.width, height: 48)
     }
 }
 
