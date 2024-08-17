@@ -72,8 +72,6 @@ final class DetailSubPathView: UIView {
     }()
     private let toggleButon = {
         let button = UIButton()
-        
-//        button.setImage(UIImage(systemName: "chevron.down")?.withTintColor(.cf(.grayScale(.gray700)), renderingMode: .alwaysOriginal), for: .normal)
         button.flex.minHeight(24).minWidth(40)
         
         return button
@@ -285,8 +283,8 @@ extension DetailSubPathView {
                         $0.addItem(expandableHeaderContainer).direction(.row).justifyContent(.spaceBetween).define {
                             $0.addItem(headerTitleLabel)
                                 .marginLeft(12)
-                            $0.addItem(toggleDecoration)
                             if !stations.isEmpty {
+                                $0.addItem(toggleDecoration)
                                 $0.addItem(toggleButon)
                                     .position(.absolute)
                                     .width(100%).height(24)
@@ -452,8 +450,8 @@ extension DetailSubPathView {
                         $0.addItem(expandableHeaderContainer).direction(.row).justifyContent(.spaceBetween).define {
                             $0.addItem(headerTitleLabel)
                                 .marginLeft(12)
-                            $0.addItem(toggleDecoration)
                             if !stations.isEmpty {
+                                $0.addItem(toggleDecoration)
                                 $0.addItem(toggleButon)
                                     .position(.absolute)
                                     .width(100%).height(24)
