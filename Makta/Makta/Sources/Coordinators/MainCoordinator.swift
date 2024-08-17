@@ -14,6 +14,7 @@ protocol MainNavigation: AnyObject {
     func goToRemark()
     func showSheet(_ height: CGFloat)
     func pullDownSheet()
+    func pullUpSheet()
     func goToDetails(_ makchaIdx: Int, with data: MakchaCellData, path: (String, String))
 }
 
@@ -74,6 +75,13 @@ extension MainCoordinator: MainNavigation {
             sheet.delegate = searchPathSheet
         }
         navigationController.present(searchPathSheet, animated: true)
+    }
+        
+    func pullUpSheet() {
+        guard let sheet = searchPathViewController?.sheetPresentationController else { return }
+        sheet.animateChanges {
+            sheet.selectedDetentIdentifier = .large
+        }
     }
     
     /// SearchPathView 시트를 "initDent" 크기의 Dent로 내려준다.

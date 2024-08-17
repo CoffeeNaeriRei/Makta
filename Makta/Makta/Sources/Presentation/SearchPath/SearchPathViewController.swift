@@ -50,6 +50,8 @@ final class SearchPathViewController: UIViewController {
     }
     
     private func setup() {
+        mainView.startPointTextField.delegate = self
+        mainView.destinationPointTextField.delegate = self
         mainView.searchResultTableView.delegate = self
         mainView.configure(.custom)
     }
@@ -66,6 +68,8 @@ final class SearchPathViewController: UIViewController {
             input: SearchPathViewModel.Input(
                 startPointTextFieldChange: startPointTextFieldChange,
                 destinationPointTextFieldChange: destinationPointTextFieldChange,
+                startPointTextFieldFocus: ( mainView.startPointTextField.rx.controlEvent(.editingDidBegin), mainView.startPointTextField),
+                destinationPointTextFieldFocus: (mainView.destinationPointTextField.rx.controlEvent(.editingDidBegin), mainView.destinationPointTextField),
                 searchedPointSelect: searchedPointSelected,
                 startPointResetButtonTap: startPointResetButtonTap,
                 destinationPointResetButtonTap: destinationPointResetButtonTap,
@@ -105,7 +109,7 @@ final class SearchPathViewController: UIViewController {
         output.closeButtonPressed
             .drive(onNext: { [weak self] in
                 guard let `self` = self else { return }
-                // 시트 내리기
+                view.endEditing(true)
                 self.navigation?.pullDownSheet()
                 self.updateToCustomSheet()
             })
@@ -140,9 +144,16 @@ extension SearchPathViewController: UISheetPresentationControllerDelegate {
     }
 }
 
-extension SearchPathViewController {
+extension SearchPathViewController: UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if !isSheetOpened.value {
+            self.navigation?.pullUpSheet()
+            mainView.configure(.large)
+        }
     }
 }
 

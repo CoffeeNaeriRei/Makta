@@ -141,6 +141,8 @@ extension MainViewModel: MainNavigation {
         navigation?.showSheet(height)
     }
     
+    func pullUpSheet() {}
+    
     func pullDownSheet() {}
     
     func goToDetails(_ makchaIdx: Int, with data: MakchaCellData, path: (String, String)) {

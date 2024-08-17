@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 import RxSwift
 import RxCocoa
@@ -21,6 +22,8 @@ final class SearchPathViewModel: ViewModelType {
     struct Input {
         let startPointTextFieldChange: ControlProperty<String> // 출발지 텍스트필드 입력 변화 감지
         let destinationPointTextFieldChange: ControlProperty<String> // 도착지 텍스트필드 입력 변화
+        let startPointTextFieldFocus: (ControlEvent<()>, UITextField)
+        let destinationPointTextFieldFocus: (ControlEvent<()>, UITextField)
         let searchedPointSelect: ControlEvent<IndexPath> // 출발지/도착지 검색 결과 목록 중 하나를 선택
         let startPointResetButtonTap: ControlEvent<Void> // 출발지 리셋버튼 탭
         let destinationPointResetButtonTap: ControlEvent<Void> // 도착지 리셋버튼 탭
@@ -60,6 +63,24 @@ final class SearchPathViewModel: ViewModelType {
                     self.makchaInfoUseCase.searchWithAddressText(isStartPoint: false, searchKeyword: inputText)
                 }
             })
+            .disposed(by: disposeBag)
+        
+        input.startPointTextFieldFocus
+            .0.withUnretained(self)
+            .subscribe { `self`, _ in
+                if let text = input.startPointTextFieldFocus.1.text, text != "" {
+                    self.makchaInfoUseCase.searchWithAddressText(isStartPoint: true, searchKeyword: text)
+                }
+            }
+            .disposed(by: disposeBag)
+       
+        input.destinationPointTextFieldFocus
+            .0.withUnretained(self)
+            .subscribe { `self`, _ in
+                if let text = input.destinationPointTextFieldFocus.1.text, text != "" {
+                    self.makchaInfoUseCase.searchWithAddressText(isStartPoint: false, searchKeyword: text)
+                }
+            }
             .disposed(by: disposeBag)
         
         input.searchedPointSelect
