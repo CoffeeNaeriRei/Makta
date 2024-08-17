@@ -140,6 +140,7 @@ final class MainCollectionCell: UICollectionViewCell {
                 /// BottomContents
                 $0.addItem().define {
                     $0.addItem(pathsContentView)
+                        .minWidth(100%)
                         .alignSelf(.center)
                         .marginBottom(12)
                 }
@@ -159,7 +160,7 @@ final class MainCollectionCell: UICollectionViewCell {
         .backgroundColor(.background)
         .cornerRadius(12)
         .width(100%)
-        .maxWidth(UIScreen.main.bounds.width - 32)
+        .maxWidth(UIScreen.main.bounds.width - 16)
     }
     
     private func layout() {
@@ -465,9 +466,13 @@ extension MainCollectionCell {
     
     private func layoutPathContentContainer(subPaths: [MakchaSubPath]) {
         pathsContentView.subviews.forEach { $0.removeFromSuperview() }
+        
         pathsContentView.flex.direction(.row).define {
+            $0.addItem().grow(1)
             $0.addItem(layoutPathInfo(with: subPaths))
+            $0.addItem().grow(1)
         }
+        
         pathsContentView.flex.markDirty()
     }
 }

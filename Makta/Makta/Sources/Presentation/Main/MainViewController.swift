@@ -100,6 +100,13 @@ extension MainViewController: MainCollectionViewDelegate, UICollectionViewDelega
             }
             .disposed(by: disposeBag)
 
+        mainView.collectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe { `self`, indexPath in
+                self.goToDetails(indexPath)
+            }
+            .disposed(by: disposeBag)
+        
         mainVM.tempSections
             .bind(to: mainView.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
