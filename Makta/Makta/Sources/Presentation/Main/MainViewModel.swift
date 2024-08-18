@@ -37,6 +37,7 @@ final class MainViewModel: ViewModelType {
         let settingButtonTap: ControlEvent<Void> // [설정] 버튼 탭
 //        let starButtonTap: ControlEvent<Void> // [즐겨찾기] 버튼 탭
         let loadButtonTap: ControlEvent<Void> // 막차 경로 더 불러오기
+        let reloadButtonTap: ControlEvent<Void>
     }
     
     struct Output {
@@ -86,11 +87,23 @@ final class MainViewModel: ViewModelType {
             })
             .disposed(by: disposeBag)
 
+        input.reloadButtonTap
+            .withUnretained(self)
+            .subscribe { `self`, _ in
+                self.makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
+            }
+            .disposed(by: disposeBag)
+        
         // MARK: makchaSectionModel 데이터 처리
         makchaInfoUseCase.makchaSectionOfMainCard
             .withUnretained(self)
             .subscribe(onNext: {
-                $0.tempSections.accept([.init(model: $1.model, items: $1.items)])
+                // 데이터를 받기 전에 한번 확인하자.
+                if self.makchaInfoUseCase.ifNeedLoadMakchaPath() {
+                    $0.tempSections.accept([.init(model: $1.model, items: $1.items), .init(model: "more", items: [])])
+                } else {
+                    $0.tempSections.accept([.init(model: $1.model, items: $1.items)])
+                }
             })
             .disposed(by: disposeBag)
         
@@ -116,6 +129,10 @@ final class MainViewModel: ViewModelType {
         tempSections.accept([])
         makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
     }
+    
+    func loadMorePath() {
+        makchaInfoUseCase.updateMakchaPathNumToLoad()
+    }
 }
 
 extension MainViewModel: MainCollectionViewDelegate {
@@ -140,6 +157,8 @@ extension MainViewModel: MainNavigation {
     func showSheet(_ height: CGFloat) {
         navigation?.showSheet(height)
     }
+    
+    func pullUpSheet() {}
     
     func pullDownSheet() {}
     

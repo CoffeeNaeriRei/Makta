@@ -37,7 +37,7 @@ final class MainCollectionView: UICollectionView {
         
         // 생성 시 `UICollectionViewFlowLayout` 일 경우 기본 레이아웃 설정
         let collectionViewLayout = collectionViewLayout as? UICollectionViewFlowLayout
-        collectionViewLayout?.sectionInset = .init(top: 16, left: 16, bottom: 16, right: 16)
+        collectionViewLayout?.sectionInset = .init(top: 0, left: 8, bottom: 16, right: 8)
         collectionViewLayout?.minimumLineSpacing = 16
         collectionViewLayout?.minimumInteritemSpacing = 0
         collectionViewLayout?.sectionHeadersPinToVisibleBounds = true
@@ -68,6 +68,7 @@ final class MainCollectionView: UICollectionView {
             
             let cell: MainCollectionCell = collectionView.dequeueReusableCell(for: indexPath)
             cell.configure(with: cardInfo)
+            
             cell.navigationToDetailsButton.rx.tap
                 .subscribe { _ in
                         self.mainCollectionViewDelegate?.goToDetails(indexPath)
@@ -79,7 +80,13 @@ final class MainCollectionView: UICollectionView {
         
         rxDataSource.configureSupplementaryView = { dataSource, collectionView, _, indexPath in
             let header: MainCollectionHeaderCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, for: indexPath)
-            header.configure(with: dataSource.sectionModels[indexPath.section].model)
+            
+            if dataSource.sectionModels[indexPath.section].model == "more" {
+                header.configurePlus()
+            } else {
+                header.configure(with: dataSource.sectionModels[indexPath.section].model)
+            }
+            
             return header
         }
     }

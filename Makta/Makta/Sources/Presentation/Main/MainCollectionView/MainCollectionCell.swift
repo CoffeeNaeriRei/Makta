@@ -101,6 +101,11 @@ final class MainCollectionCell: UICollectionViewCell {
     }
     
     private func setup() {
+        contentView.layer.shadowColor = UIColor.black.cgColor
+        contentView.layer.shadowOffset = .init(width: 0, height: 0)
+        contentView.layer.shadowRadius = 4.0
+        contentView.layer.shadowOpacity = 0.05
+        
         contentView.flex.define {
             /// TopContents
             $0.addItem().define {
@@ -130,6 +135,7 @@ final class MainCollectionCell: UICollectionViewCell {
                     }
                     
                     $0.addItem(currentArrivalTransportTimeLabel)
+                        .height(36)
                         .marginTop(12)
                     $0.addItem(nextArrivalTransportTimeContainer).define {
                         $0.addItem(nextArrivalTransportTimeLabel)
@@ -140,6 +146,7 @@ final class MainCollectionCell: UICollectionViewCell {
                 /// BottomContents
                 $0.addItem().define {
                     $0.addItem(pathsContentView)
+                        .minWidth(100%)
                         .alignSelf(.center)
                         .marginBottom(12)
                 }
@@ -159,7 +166,7 @@ final class MainCollectionCell: UICollectionViewCell {
         .backgroundColor(.background)
         .cornerRadius(12)
         .width(100%)
-        .maxWidth(UIScreen.main.bounds.width - 32)
+        .maxWidth(UIScreen.main.bounds.width - 16)
     }
     
     private func layout() {
@@ -293,7 +300,7 @@ extension MainCollectionCell {
                             let label = UILabelFactory.build(text: subPath.startName ?? "", textAlignment: .left)
                             $0.addItem(label)
                             $0.addItem().direction(.row).gap(8).define {
-                                if let lane = subPath.lane {
+                                if let lane = subPath.lane?.prefix(3) {
                                     for lan in lane {
                                         let label = UILabelFactory.build(text: lan.name, textScale: .caption, textColor: busType.busUIColor)
                                         
@@ -439,35 +446,20 @@ extension MainCollectionCell {
         centerContentsTopContainer.subviews.forEach { $0.removeFromSuperview() }
         // 컨테이너 뷰 새로 그리기
         centerContentsTopContainer.flex.direction(.row).define {
-            if firstSubPath?.subPathType == .bus,
-               let busInfo = firstSubPath?.lane?.first,
-               let busColor = busInfo.busRouteType?.busUIColor {
-                
-                let busNoLabel = UILabelFactory.build(
-                    text: busInfo.name,
-                    textScale: .caption2,
-                    textColor: busColor
-                )
-                
-                $0.addItem(centerContentsTopLabel)
-                    .marginLeft(busNoLabel.intrinsicContentSize.width + 12)
-                $0.addItem(busNoLabel)
-                    .marginLeft(4)
-                    .padding(2, 4)
-                    .border(1, busColor)
-                    .cornerRadius(2)
-            } else {
-                $0.addItem(centerContentsTopLabel)
-            }
+            $0.addItem(centerContentsTopLabel)
         }
         centerContentsTopContainer.flex.markDirty()
     }
     
     private func layoutPathContentContainer(subPaths: [MakchaSubPath]) {
         pathsContentView.subviews.forEach { $0.removeFromSuperview() }
+        
         pathsContentView.flex.direction(.row).define {
+            $0.addItem().grow(1)
             $0.addItem(layoutPathInfo(with: subPaths))
+            $0.addItem().grow(1)
         }
+        
         pathsContentView.flex.markDirty()
     }
 }

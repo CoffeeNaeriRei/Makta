@@ -23,7 +23,7 @@ final class OnboardingCoordinator: BaseCoordinator {
         onboardingVM.navigation = self
         
         let onboardingVC = OnboardingViewController(onboardingVM)
-        navigationController.pushViewController(onboardingVC, animated: true)
+        navigationController.pushViewController(onboardingVC, animated: false)
     }
 }
 

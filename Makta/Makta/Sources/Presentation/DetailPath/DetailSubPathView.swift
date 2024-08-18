@@ -72,8 +72,6 @@ final class DetailSubPathView: UIView {
     }()
     private let toggleButon = {
         let button = UIButton()
-        
-//        button.setImage(UIImage(systemName: "chevron.down")?.withTintColor(.cf(.grayScale(.gray700)), renderingMode: .alwaysOriginal), for: .normal)
         button.flex.minHeight(24).minWidth(40)
         
         return button
@@ -197,39 +195,14 @@ extension DetailSubPathView {
             textColor: .cf(.grayScale(.gray700))
         )
         
-        // MARK: ~행 과 ~ 방면을 구분해서 알 수 있는지?
         let way = "\(subPath.startArsID ?? "")"
-        // 도착시간 계산
-        // 다음 도착시간?
-        let arrivalTime = "NN분 NN초"
-        let nextArrivalTime = "NN분"
-        
+    
         let wayLabel = UILabelFactory.build(
             text: way,
             textScale: .caption2,
             textColor: .cf(.grayScale(.gray600))
         )
         wayLabel.flex.padding(2, 4)
-        
-        let arrivalTimeLabel = UILabelFactory.build(
-            text: arrivalTime,
-            textScale: .caption,
-            textColor: .cf(.grayScale(.gray600))
-        )
-        let nextArrivalTimeLabel = UILabelFactory.build(
-            text: nextArrivalTime,
-            textScale: .caption,
-            textColor: .cf(.grayScale(.gray600))
-        )
-        
-        let dividerLabel2 = UILabelFactory.build(
-            text: "|",
-            textScale: .caption,
-            textColor: .cf(.grayScale(.gray700))
-        )
-        
-        arrivalTimeLabel.flex.padding(2, 4)
-        nextArrivalTimeLabel.flex.padding(2, 4)
         
         let startStationLabel = UILabelFactory.build(
             attributedText: .pretendard("\(subPath.startName ?? "시작")", scale: .headline),
@@ -257,14 +230,6 @@ extension DetailSubPathView {
                             $0.addItem(wayLabel)
                         }
                     }
-                    $0.addItem().position(.absolute).define {
-                        $0.addItem().direction(.row).gap(2).define {
-                            $0.addItem(arrivalTimeLabel)
-                            $0.addItem(dividerLabel2)
-                            $0.addItem(nextArrivalTimeLabel)
-                        }
-                    }
-                    .top(startImageView.intrinsicContentSize.height + 6)
                 }
             }
             $0.addItem().define {
@@ -285,8 +250,8 @@ extension DetailSubPathView {
                         $0.addItem(expandableHeaderContainer).direction(.row).justifyContent(.spaceBetween).define {
                             $0.addItem(headerTitleLabel)
                                 .marginLeft(12)
-                            $0.addItem(toggleDecoration)
                             if !stations.isEmpty {
+                                $0.addItem(toggleDecoration)
                                 $0.addItem(toggleButon)
                                     .position(.absolute)
                                     .width(100%).height(24)
@@ -318,8 +283,7 @@ extension DetailSubPathView {
                         }
                     }
                     .width(UIScreen.main.bounds.width - 64).minHeight(24)
-                    .top(arrivalTimeLabel.intrinsicContentSize.height + 6).left(32)
-                
+                    .top(0).left(32)
             }
             .marginLeft(32)
             $0.addItem().direction(.row).gap(8).define {
@@ -349,10 +313,6 @@ extension DetailSubPathView {
         
         let way = "\(subPath.way?.getNameFromWayAndNextSt() ?? "--")행"
         let nextSt = "\(subPath.nextSt?.getNameFromWayAndNextSt() ?? "--") 방면"
-        // 도착시간 계산
-        // 다음 도착시간?
-        let arrivalTime = "NN분 NN초"
-        let nextArrivalTime = "NN분"
         
         let wayLabel = UILabelFactory.build(
             text: way,
@@ -370,28 +330,9 @@ extension DetailSubPathView {
             textScale: .caption,
             textColor: .cf(.grayScale(.gray700))
         )
+        
         wayLabel.flex.padding(2, 4)
         nextStLabel.flex.padding(2, 4)
-        
-        let arrivalTimeLabel = UILabelFactory.build(
-            text: arrivalTime,
-            textScale: .caption,
-            textColor: .cf(.grayScale(.gray600))
-        )
-        let nextArrivalTimeLabel = UILabelFactory.build(
-            text: nextArrivalTime,
-            textScale: .caption,
-            textColor: .cf(.grayScale(.gray600))
-        )
-        
-        let dividerLabel2 = UILabelFactory.build(
-            text: "|",
-            textScale: .caption,
-            textColor: .cf(.grayScale(.gray700))
-        )
-        
-        arrivalTimeLabel.flex.padding(2, 4)
-        nextArrivalTimeLabel.flex.padding(2, 4)
         
         let startStationLabel = UILabelFactory.build(
             attributedText: .pretendard("\(subPath.startName ?? "시작")역", scale: .headline),
@@ -423,16 +364,7 @@ extension DetailSubPathView {
                             }
                         }
                     }
-                    $0.addItem().position(.absolute).define {
-                        $0.addItem().direction(.row).gap(2).define {
-                            $0.addItem(arrivalTimeLabel)
-                            $0.addItem(dividerLabel2)
-                            $0.addItem(nextArrivalTimeLabel)
-                        }
-                    }
-                    .top(startImageView.intrinsicContentSize.height + 6)
                 }
-                
             }
             $0.addItem().define {
                 // Decorations
@@ -452,8 +384,8 @@ extension DetailSubPathView {
                         $0.addItem(expandableHeaderContainer).direction(.row).justifyContent(.spaceBetween).define {
                             $0.addItem(headerTitleLabel)
                                 .marginLeft(12)
-                            $0.addItem(toggleDecoration)
                             if !stations.isEmpty {
+                                $0.addItem(toggleDecoration)
                                 $0.addItem(toggleButon)
                                     .position(.absolute)
                                     .width(100%).height(24)
@@ -485,8 +417,7 @@ extension DetailSubPathView {
                         }
                     }
                     .width(UIScreen.main.bounds.width - 64).minHeight(24)
-                    .top(arrivalTimeLabel.intrinsicContentSize.height + 6).left(32)
-                
+                    .top(0).left(32)
             }
             .marginLeft(32)
             $0.addItem().direction(.row).gap(8).define {
@@ -573,7 +504,7 @@ extension DetailSubPathView {
             
             timeLabel.flex.top(calcedDistance! / 2 - timeLabel.intrinsicContentSize.height / 2)
         } else {
-            let expandableHeight = expandableBodyContainer.bounds.height + 44
+            let expandableHeight = expandableBodyContainer.bounds.height + 27
             expanbaleContainer.flex.height(.infinity)
             expanbaleContainer.lineDashPattern = [4]
             expandableHeaderContainer.lineWidth = 0

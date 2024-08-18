@@ -63,7 +63,8 @@ final class MainViewController: UIViewController {
             viewDidAppearEvent: self.rx.methodInvoked(#selector(self.viewDidAppear)).map({ _ in Void() }),
             settingButtonTap: leftUIBarButtonItem.rx.tap,
 //            starButtonTap: rightUIBarButtonItem.rx.tap,
-            loadButtonTap: rightUIBarButtonItem.rx.tap
+            loadButtonTap: rightUIBarButtonItem.rx.tap,
+            reloadButtonTap: mainView.reloadButton.rx.tap
         )
 
         _ = mainVM.transform(input: input)
@@ -90,6 +91,13 @@ extension MainViewController: MainCollectionViewDelegate, UICollectionViewDelega
             .withUnretained(self)
             .subscribe { _, event in
                 if let header = event.supplementaryView as? MainCollectionHeaderCell {
+                    header.addPathButton.rx.tap
+                        .withUnretained(self)
+                        .subscribe { `self`, _ in
+                            self.mainVM.loadMorePath()
+                        }
+                        .disposed(by: header.disposeBag)
+                    
                     header.resetButton.rx.tap
                         .withUnretained(self)
                         .subscribe { vc, _ in
@@ -100,6 +108,13 @@ extension MainViewController: MainCollectionViewDelegate, UICollectionViewDelega
             }
             .disposed(by: disposeBag)
 
+        mainView.collectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe { `self`, indexPath in
+                self.goToDetails(indexPath)
+            }
+            .disposed(by: disposeBag)
+        
         mainVM.tempSections
             .bind(to: mainView.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -110,12 +125,17 @@ extension MainViewController: MainCollectionViewDelegate, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         let width = collectionView.bounds.width
         let model = mainVM.tempSections.value[indexPath.section].items[indexPath.row]
         let cell = MainCollectionCell(frame: .zero)
         cell.configure(with: model)
 
         return CGSize(width: width, height: cell.cellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        .init(width: collectionView.bounds.width, height: 48)
     }
 }
 
@@ -132,11 +152,11 @@ extension MainViewController {
         leftUIBarButtonItem.image = _leftBarButtonImage
 //        rightUIBarButtonItem.title = "Link to Remark"
 //        rightUIBarButtonItem.image = _rightBarButtonImage
-        rightUIBarButtonItem.title = "경로 더보기"
+//        rightUIBarButtonItem.title = "경로 더보기"
         
         navigationItem.title = _title
         navigationItem.leftBarButtonItem = leftUIBarButtonItem
-        navigationItem.rightBarButtonItem = rightUIBarButtonItem
+//        navigationItem.rightBarButtonItem = rightUIBarButtonItem
     }
     
     private func setupSheet() {
