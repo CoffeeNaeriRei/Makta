@@ -22,6 +22,23 @@ final class MainView: UIView {
     private var collectionViewLayout = UICollectionViewFlowLayout()
     var collectionView: UICollectionView
     
+    private let reloadButtonContainer = UIView()
+    
+    var reloadButton = {
+        let button = UIButton()
+        button.setAttributedTitle(.repet("0", size: 24), for: .normal)
+
+        button.tintColor = .cf(.primaryScale(.primary(.medium)))
+        button.titleLabel?.textColor = .cf(.primaryScale(.primary(.medium)))
+        
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = .init(width: 0.0, height: 3.0)
+        button.layer.shadowOpacity = 0.4
+        button.layer.shadowRadius = 4.0
+        
+        return button
+    }()
+    
     init() {
         collectionView = MainCollectionView(collectionViewLayout)
         super.init(frame: .zero)
@@ -36,10 +53,33 @@ final class MainView: UIView {
         super.layoutSubviews()
         collectionView.pin.top(pin.safeArea)
             .horizontally().bottom(185)
+        reloadButtonContainer.pin.bottom(185 + 8).right(16).width(40).height(40)
+        reloadButtonContainer.flex.layout()
     }
 
     private func setup() {
+        let imageView = UIImageView()
+        let symbolConfig = UIImage.SymbolConfiguration(
+            pointSize: 34,
+            weight: .light,
+            scale: .default
+        )
+        let image = UIImage(systemName: "gobackward", withConfiguration: symbolConfig)?.withTintColor(.cf(.primaryScale(.primary(.medium))), renderingMode: .alwaysOriginal)
+
+        imageView.image = image
+        imageView.contentMode = .scaleToFill
+        
+        reloadButtonContainer.flex.justifyContent(.center).alignItems(.center).define {
+            
+            $0.addItem(reloadButton).position(.absolute)
+                .width(100%).height(100%)
+                .cornerRadius(20)
+                .backgroundColor(.white)
+            $0.addItem(imageView).position(.absolute).left(0).top(-3)
+        }
+        
         addSubview(collectionView)
+        addSubview(reloadButtonContainer)
     }
 }
 
