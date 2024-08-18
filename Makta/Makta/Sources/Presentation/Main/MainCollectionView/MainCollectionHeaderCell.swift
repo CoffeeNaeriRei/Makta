@@ -61,7 +61,12 @@ final class MainCollectionHeaderCell: UICollectionViewCell {
     }
     
     private func setup() {
-        contentView.flex.backgroundColor(.cf(.grayScale(.white)))
+        contentView.layer.shadowColor = UIColor.black.cgColor
+        contentView.layer.shadowOffset = .init(width: 0, height: 4.0)
+        contentView.layer.shadowRadius = 4.0
+        contentView.layer.shadowOpacity = 0.05
+        
+        contentView.flex.backgroundColor(.background)
         contentView.flex.direction(.row).alignItems(.center).define {
             $0.addItem(startTimeLabel)
                 .grow(1)

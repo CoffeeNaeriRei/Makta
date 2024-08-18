@@ -28,14 +28,9 @@ final class MainView: UIView {
         let button = UIButton()
         button.setAttributedTitle(.repet("0", size: 24), for: .normal)
 
-        button.tintColor = .cf(.primaryScale(.primary(.medium)))
-        button.titleLabel?.textColor = .cf(.primaryScale(.primary(.medium)))
-        
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = .init(width: 0.0, height: 3.0)
-        button.layer.shadowOpacity = 0.4
-        button.layer.shadowRadius = 4.0
-        
+        button.tintColor = .cf(.grayScale(.black))
+        button.titleLabel?.textColor = .cf(.grayScale(.black))
+   
         return button
     }()
     
@@ -53,30 +48,34 @@ final class MainView: UIView {
         super.layoutSubviews()
         collectionView.pin.top(pin.safeArea)
             .horizontally().bottom(185)
-        reloadButtonContainer.pin.bottom(185 + 8).right(16).width(40).height(40)
+        reloadButtonContainer.pin.bottom(185 + 8).right(16).width(48).height(48)
         reloadButtonContainer.flex.layout()
     }
 
     private func setup() {
         let imageView = UIImageView()
         let symbolConfig = UIImage.SymbolConfiguration(
-            pointSize: 34,
+            pointSize: 32,
             weight: .light,
             scale: .default
         )
-        let image = UIImage(systemName: "gobackward", withConfiguration: symbolConfig)?.withTintColor(.cf(.primaryScale(.primary(.medium))), renderingMode: .alwaysOriginal)
+        let image = UIImage(systemName: "gobackward", withConfiguration: symbolConfig)?.withTintColor(.cf(.grayScale(.gray700)), renderingMode: .alwaysOriginal)
 
         imageView.image = image
         imageView.contentMode = .scaleToFill
         
+        reloadButtonContainer.layer.shadowColor = UIColor.black.cgColor
+        reloadButtonContainer.layer.shadowOffset = .init(width: 0.0, height: 3.0)
+        reloadButtonContainer.layer.shadowRadius = 3.0
+        reloadButtonContainer.layer.shadowOpacity = 0.2
+        
         reloadButtonContainer.flex.justifyContent(.center).alignItems(.center).define {
-            
-            $0.addItem(reloadButton).position(.absolute)
-                .width(100%).height(100%)
-                .cornerRadius(20)
-                .backgroundColor(.white)
-            $0.addItem(imageView).position(.absolute).left(0).top(-3)
+            $0.addItem(reloadButton).position(.absolute).top(8)
+            $0.addItem(imageView).position(.absolute).left(5.5).top(3.5)
         }
+        .width(100%).height(100%)
+        .cornerRadius(24)
+        .backgroundColor(.cf(.grayScale(.white)))
         
         addSubview(collectionView)
         addSubview(reloadButtonContainer)

@@ -63,7 +63,8 @@ final class MainViewController: UIViewController {
             viewDidAppearEvent: self.rx.methodInvoked(#selector(self.viewDidAppear)).map({ _ in Void() }),
             settingButtonTap: leftUIBarButtonItem.rx.tap,
 //            starButtonTap: rightUIBarButtonItem.rx.tap,
-            loadButtonTap: rightUIBarButtonItem.rx.tap
+            loadButtonTap: rightUIBarButtonItem.rx.tap,
+            reloadButtonTap: mainView.reloadButton.rx.tap
         )
 
         _ = mainVM.transform(input: input)

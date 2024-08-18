@@ -37,6 +37,7 @@ final class MainViewModel: ViewModelType {
         let settingButtonTap: ControlEvent<Void> // [설정] 버튼 탭
 //        let starButtonTap: ControlEvent<Void> // [즐겨찾기] 버튼 탭
         let loadButtonTap: ControlEvent<Void> // 막차 경로 더 불러오기
+        let reloadButtonTap: ControlEvent<Void>
     }
     
     struct Output {
@@ -86,6 +87,13 @@ final class MainViewModel: ViewModelType {
             })
             .disposed(by: disposeBag)
 
+        input.reloadButtonTap
+            .withUnretained(self)
+            .subscribe { `self`, _ in
+                self.makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
+            }
+            .disposed(by: disposeBag)
+        
         // MARK: makchaSectionModel 데이터 처리
         makchaInfoUseCase.makchaSectionOfMainCard
             .withUnretained(self)
