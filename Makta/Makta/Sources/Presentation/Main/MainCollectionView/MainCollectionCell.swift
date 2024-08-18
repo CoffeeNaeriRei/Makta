@@ -300,7 +300,7 @@ extension MainCollectionCell {
                             let label = UILabelFactory.build(text: subPath.startName ?? "", textAlignment: .left)
                             $0.addItem(label)
                             $0.addItem().direction(.row).gap(8).define {
-                                if let lane = subPath.lane {
+                                if let lane = subPath.lane?.prefix(3) {
                                     for lan in lane {
                                         let label = UILabelFactory.build(text: lan.name, textScale: .caption, textColor: busType.busUIColor)
                                         
