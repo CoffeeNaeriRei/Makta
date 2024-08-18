@@ -37,7 +37,7 @@ final class MainCoordinator: BaseCoordinator {
         
         mainVM.navigation = self
         let mainViewController = MainViewController(mainVM)
-        navigationController.pushViewController(mainViewController, animated: true)
+        navigationController.pushViewController(mainViewController, animated: false)
     }
 }
 

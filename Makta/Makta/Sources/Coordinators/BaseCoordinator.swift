@@ -10,6 +10,7 @@ import UIKit
 
 protocol AppNavigation: AnyObject {
     func goToMain()
+    func goToStart()
 }
 
 // MARK: - 코디네이터 구현을 위한 인터페이스
@@ -68,11 +69,7 @@ final class AppCoordinator: BaseCoordinator {
     
     override func start() {
         super.start()
-        if isSkippedOnboarding {
-            goToMain()
-        } else {
-            goToOnboarding()
-        }
+        navigationController.pushViewController(SplashViewController(self), animated: false)
     }
     
     deinit {
@@ -81,6 +78,14 @@ final class AppCoordinator: BaseCoordinator {
 }
 
 extension AppCoordinator: AppNavigation {
+    func goToStart() {
+        if isSkippedOnboarding {
+            goToMain()
+        } else {
+            goToOnboarding()
+        }
+    }
+    
     func goToMain() {
         removeAll()
         let coordinator = MainCoordinator(navigationController)

@@ -31,6 +31,8 @@
 		20C053D32C11F9E700DB78C8 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */; };
 		20C053D52C14A40000DB78C8 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C053D42C14A40000DB78C8 /* DetailView.swift */; };
 		20C053D82C1576CA00DB78C8 /* DottedLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C053D72C1576CA00DB78C8 /* DottedLineView.swift */; };
+		20C7D78E2C71954E00F775D0 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7D78D2C71954E00F775D0 /* SplashViewController.swift */; };
+		20C7D7902C71ACE300F775D0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7D78F2C71ACE300F775D0 /* SplashView.swift */; };
 		20E277222C0198DF0071F6CA /* MainCollectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */; };
 		20E277242C02E4340071F6CA /* Rx+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E277232C02E4340071F6CA /* Rx+Extension.swift */; };
 		20EB5D1C2C17500F0028287C /* DetailSubPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EB5D1B2C17500F0028287C /* DetailSubPathView.swift */; };
@@ -116,6 +118,8 @@
 		20C053D22C11F9E700DB78C8 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		20C053D42C14A40000DB78C8 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		20C053D72C1576CA00DB78C8 /* DottedLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DottedLineView.swift; sourceTree = "<group>"; };
+		20C7D78D2C71954E00F775D0 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		20C7D78F2C71ACE300F775D0 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		20CFB2682C2826AE004CFC04 /* Flex+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flex+Extension.swift"; sourceTree = "<group>"; };
 		20E277212C0198DF0071F6CA /* MainCollectionHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionHeaderCell.swift; sourceTree = "<group>"; };
 		20E277232C02E4340071F6CA /* Rx+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+Extension.swift"; sourceTree = "<group>"; };
@@ -250,6 +254,15 @@
 				20CFB2682C2826AE004CFC04 /* Flex+Extension.swift */,
 			);
 			path = "UIView+Extension";
+			sourceTree = "<group>";
+		};
+		20C7D78C2C71953600F775D0 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				20C7D78D2C71954E00F775D0 /* SplashViewController.swift */,
+				20C7D78F2C71ACE300F775D0 /* SplashView.swift */,
+			);
+			path = Splash;
 			sourceTree = "<group>";
 		};
 		B86232D72BE7A761003959FB /* MaktaTests */ = {
@@ -447,6 +460,7 @@
 		B89E7F992BE7700700A13B58 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				20C7D78C2C71953600F775D0 /* Splash */,
 				206571522C4E84840077FE1B /* Onboarding */,
 				205075D92BF9A40400BAC30E /* Remark */,
 				205075D62BF9A14800BAC30E /* Settings */,
@@ -716,6 +730,7 @@
 				B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */,
 				B89494AF2C218C00003068D5 /* SearchResultCell.swift in Sources */,
 				B890C2D92C6F2F6C00FE0A3F /* SettingsCoordinator.swift in Sources */,
+				20C7D78E2C71954E00F775D0 /* SplashViewController.swift in Sources */,
 				B8D48C112BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift in Sources */,
 				20EB5D1C2C17500F0028287C /* DetailSubPathView.swift in Sources */,
 				B83FBDD12C12D6D7004805ED /* KakaoPlaceSearchResultDTO.swift in Sources */,
@@ -744,6 +759,7 @@
 				B862334B2BEC99AB003959FB /* MakchaInfoUseCase.swift in Sources */,
 				B89E7F792BE7613800A13B58 /* SceneDelegate.swift in Sources */,
 				204A39E02C0C1A4C00C2F403 /* SearchPathView.swift in Sources */,
+				20C7D7902C71ACE300F775D0 /* SplashView.swift in Sources */,
 				20E277242C02E4340071F6CA /* Rx+Extension.swift in Sources */,
 				B86233302BE9FCD5003959FB /* APIServiceError.swift in Sources */,
 			);
