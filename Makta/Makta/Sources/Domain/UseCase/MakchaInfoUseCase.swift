@@ -262,6 +262,10 @@ final class MakchaInfoUseCase {
             makchaPathNumToLoad = makchaPathCount
         }
     }
+    
+    func ifNeedLoadMakchaPath() -> Bool {
+        makchaPathNumToLoad < makchaPathCount ? true : false
+    }
 }
 
 // MARK: - init() 시점에서의 구독

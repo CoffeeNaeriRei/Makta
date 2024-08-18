@@ -78,7 +78,7 @@ final class MainView: UIView {
         .backgroundColor(.cf(.grayScale(.white)))
         
         addSubview(collectionView)
-        addSubview(reloadButtonContainer)
+//        addSubview(reloadButtonContainer)
     }
 }
 

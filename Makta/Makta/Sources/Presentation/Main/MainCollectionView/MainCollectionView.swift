@@ -80,7 +80,13 @@ final class MainCollectionView: UICollectionView {
         
         rxDataSource.configureSupplementaryView = { dataSource, collectionView, _, indexPath in
             let header: MainCollectionHeaderCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, for: indexPath)
-            header.configure(with: dataSource.sectionModels[indexPath.section].model)
+            
+            if dataSource.sectionModels[indexPath.section].model == "more" {
+                header.configurePlus()
+            } else {
+                header.configure(with: dataSource.sectionModels[indexPath.section].model)
+            }
+            
             return header
         }
     }

@@ -98,7 +98,12 @@ final class MainViewModel: ViewModelType {
         makchaInfoUseCase.makchaSectionOfMainCard
             .withUnretained(self)
             .subscribe(onNext: {
-                $0.tempSections.accept([.init(model: $1.model, items: $1.items)])
+                // 데이터를 받기 전에 한번 확인하자.
+                if self.makchaInfoUseCase.ifNeedLoadMakchaPath() {
+                    $0.tempSections.accept([.init(model: $1.model, items: $1.items), .init(model: "more", items: [])])
+                } else {
+                    $0.tempSections.accept([.init(model: $1.model, items: $1.items)])
+                }
             })
             .disposed(by: disposeBag)
         
@@ -123,6 +128,10 @@ final class MainViewModel: ViewModelType {
     func resetToCurrentLocationTap() {
         tempSections.accept([])
         makchaInfoUseCase.loadMakchaPathWithCurrentLocation()
+    }
+    
+    func loadMorePath() {
+        makchaInfoUseCase.updateMakchaPathNumToLoad()
     }
 }
 

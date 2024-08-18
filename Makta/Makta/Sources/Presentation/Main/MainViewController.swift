@@ -91,6 +91,13 @@ extension MainViewController: MainCollectionViewDelegate, UICollectionViewDelega
             .withUnretained(self)
             .subscribe { _, event in
                 if let header = event.supplementaryView as? MainCollectionHeaderCell {
+                    header.addPathButton.rx.tap
+                        .withUnretained(self)
+                        .subscribe { `self`, _ in
+                            self.mainVM.loadMorePath()
+                        }
+                        .disposed(by: header.disposeBag)
+                    
                     header.resetButton.rx.tap
                         .withUnretained(self)
                         .subscribe { vc, _ in
@@ -145,11 +152,11 @@ extension MainViewController {
         leftUIBarButtonItem.image = _leftBarButtonImage
 //        rightUIBarButtonItem.title = "Link to Remark"
 //        rightUIBarButtonItem.image = _rightBarButtonImage
-        rightUIBarButtonItem.title = "경로 더보기"
+//        rightUIBarButtonItem.title = "경로 더보기"
         
         navigationItem.title = _title
         navigationItem.leftBarButtonItem = leftUIBarButtonItem
-        navigationItem.rightBarButtonItem = rightUIBarButtonItem
+//        navigationItem.rightBarButtonItem = rightUIBarButtonItem
     }
     
     private func setupSheet() {
