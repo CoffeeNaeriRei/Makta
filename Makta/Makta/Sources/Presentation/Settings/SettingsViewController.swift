@@ -19,7 +19,7 @@ final class SettingsViewController: UIViewController {
     }
     // swiftlint: enable force_cast
     
-    let menus = Observable.of(["기본 도착지 수정하기", "위치 권한 허용하기", "개발자 문의"])
+    let menus = Observable.of(["기본 도착지 수정하기", "위치 권한 허용하기", "개발자 문의", "앱 버전"])
     private let disposeBag = DisposeBag()
     
     weak var navigation: SettingsNavigation?
@@ -47,7 +47,16 @@ final class SettingsViewController: UIViewController {
         menus.bind(to: mainView.settingsTableView.rx.items) { tableView, row, item in
             let cell = tableView.dequeueReusableCell(for: IndexPath(row: row, section: 0)) as UITableViewCell
             cell.textLabel?.text = item
-            cell.accessoryType = .disclosureIndicator
+            if row == 3 {
+                let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0"
+                let label = UILabelFactory.build(text: "\(appVersion)", textColor: .cf(.grayScale(.gray600)))
+                label.sizeToFit()
+                
+                cell.accessoryView = label
+                
+            } else {
+                cell.accessoryType = .disclosureIndicator
+            }
             
             return cell
         }

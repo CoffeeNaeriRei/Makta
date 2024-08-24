@@ -153,13 +153,11 @@ final class SearchPathView: UIView {
                         .width(100%).height(.cfStroke(.xsmall))
                         .backgroundColor(UIColor.cf(.grayScale(.gray500)))
                     $0.addItem(searchResultTableView)
-                        .grow(1)
                 }
                 .grow(1)
                 
                 $0.addItem(searchButton)
                     .backgroundColor(.test)
-//                    .backgroundColor(.cf(.primaryScale(.primary(.medium))))
                     .minHeight(56)
                     .cornerRadius(28)
                     .marginHorizontal(16)
@@ -175,10 +173,8 @@ final class SearchPathView: UIView {
     private func layout() {
         rootView.pin.all()
         rootView.flex.layout()
-        
-        // TODO: - 테이블뷰 높이 고정(다른 방식 생각해보기)
-        let height = rootView.frame.height - titleContainer.frame.height - textFieldContainer.frame.height - searchButton.frame.height - safeAreaInsets.bottom
-        searchResultTableView.flex.height(height)
+
+        searchResultTableView.frame.size.height = searchResultScrollView.bounds.size.height
     }
     
     override func layoutSubviews() {

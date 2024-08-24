@@ -80,6 +80,12 @@ final class DetailView: UIView {
         textColor: .cf(.grayScale(.gray900))
     )
     
+    private let pathCopyrightLabel = UILabelFactory.build(
+        text: "powered by www.ODsay.com",
+        textScale: .caption2,
+        textColor: .cf(.grayScale(.gray600))
+    )
+    
     init() {
         super.init(frame: .zero)
         setup()
@@ -193,6 +199,8 @@ final class DetailView: UIView {
                 }
                 .marginLeft(32)
                 .marginBottom(32)
+                $0.addItem(pathCopyrightLabel)
+                    .marginBottom(32)
             }
         }
         .backgroundColor(.subpathContainer)

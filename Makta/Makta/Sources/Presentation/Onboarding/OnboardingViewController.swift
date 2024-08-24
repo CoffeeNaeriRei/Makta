@@ -54,6 +54,7 @@ final class OnboardingViewController: UIViewController {
     
     private func setup() {
         navigationItem.title = type == .enterFirst ? "도착지 설정" : "도착지 수정"
+        mainView.searchResultTableView.delegate = self
     }
     
     private func bind() {
@@ -93,6 +94,12 @@ extension OnboardingViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
+}
+
+extension OnboardingViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+          view.endEditing(true)
+      }
 }
 
 #if DEBUG

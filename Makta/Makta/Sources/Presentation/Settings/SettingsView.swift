@@ -23,11 +23,6 @@ final class SettingsView: UIView {
         return tableView
     }()
     
-    private lazy var appVersionLabel = UILabelFactory.build(
-        attributedText: getAppVersionNSAttrString(),
-        textColor: .cf(.grayScale(.gray600))
-    )
-    
     init() {
         super.init(frame: .zero)
         setup()
@@ -43,7 +38,6 @@ final class SettingsView: UIView {
         
         rootView.flex.define {
             $0.addItem(settingsTableView).grow(1)
-            $0.addItem(appVersionLabel)
         }
         
         addSubview(rootView)
@@ -57,15 +51,6 @@ final class SettingsView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         layout()
-    }
-    
-    private func getAppVersionNSAttrString() -> NSAttributedString {
-        if let infoDict = Bundle.main.infoDictionary,
-           let currentVersion = infoDict["CFBundleShortVersionString"] as? String {
-            return NSAttributedString(string: "앱 버전 \(currentVersion)")
-        } else {
-            return NSAttributedString(string: "앱 버전 불러오지 못함")
-        }
     }
 }
 
