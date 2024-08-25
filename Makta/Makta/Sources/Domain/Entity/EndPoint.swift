@@ -58,7 +58,6 @@ struct EndPoint: Codable, Equatable {
     }
 }
 
-#if DEBUG
 extension EndPoint {
     static let mockStartPoint = EndPoint(
         name: nil, // 대조어린이공원
@@ -105,4 +104,3 @@ extension EndPoint {
         )
     ]
 }
-#endif
