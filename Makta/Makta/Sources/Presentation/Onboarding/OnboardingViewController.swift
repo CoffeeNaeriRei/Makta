@@ -53,6 +53,9 @@ final class OnboardingViewController: UIViewController {
     }
     
     private func setup() {
+        if type == .enterFirst {
+            navigationItem.setHidesBackButton(true, animated: true)
+        }
         navigationItem.title = type == .enterFirst ? "도착지 설정" : "도착지 수정"
         mainView.searchResultTableView.delegate = self
     }
