@@ -144,7 +144,7 @@ final class TransPathRepository: TransPathRepositoryProtocol {
 
 // MARK: - 대중교통 환승정보 불러오기 관련 유틸리티 메서드
 
-extension TransPathRepository {
+private extension TransPathRepository {
     // TransPathDTO -> MakchaInfo 변환 메서드
     func convertTransPathDTOToMakchaInfo(transPathDTO: TransPathDTO) -> MakchaInfo? {
         let startTime = Date() // 출발시간(현재시간)
@@ -288,10 +288,8 @@ extension TransPathRepository {
 
 // MARK: - 서울시 실시간 지하철 도착정보 불러오기 관련 유틸리티 메서드
 
-extension TransPathRepository {
-    /**
-     서울시 실시간 지하철 도착정보 배열에서 호선+방면이 일치하는 도착정보를 필터링해서 반환
-     */
+private extension TransPathRepository {
+    /// 서울시 실시간 지하철 도착정보 배열에서 호선+방면이 일치하는 도착정보를 필터링해서 반환
     func filteringSeoulArrivalSubway(
         from arrivals: [SeoulRealtimeSubwayArrival],
         subwayLine: String,
@@ -374,8 +372,8 @@ extension TransPathRepository {
 
 // MARK: - 서울시 실시간 버스 도착정보 불러오기 관련 유틸리티 메서드
 
-extension TransPathRepository {
-    // 버스의 도착 상태를 구해서 BusArrivalStatus 타입 값을 반환하는 메서드
+private extension TransPathRepository {
+    /// 버스의 도착 상태를 구해서 BusArrivalStatus 타입 값을 반환하는 메서드
     func getBusArrivalStatusFromSeoulBusStation(arrivalMessage: String) -> ArrivalStatus {
         if arrivalMessage.contains("출발대기") {
             return .waiting

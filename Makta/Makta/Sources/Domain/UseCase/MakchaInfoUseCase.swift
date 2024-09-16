@@ -96,7 +96,6 @@ final class MakchaInfoUseCase {
     /**
      - Core Location을 통해 불러온 현재 위치로 갱신
      - searchedDestinationPoints 배열 초기화
-     -
      */
     func resetStartPoint() {
         endPointRepository.getCurrentLocation()
@@ -118,7 +117,6 @@ final class MakchaInfoUseCase {
      - 기본 설정된 도착지로 destinationPoint를 갱신
      - UserDefaults의 "tempDestination"도 기본 도착지로 갱신
      - searchedDestinationPoints 배열 초기화
-     -
      */
     func resetDestinationPoint() {
         guard let defaultDestination = EndPoint.loadFromUserDefaults(key: .defaultDestination) else { return }
