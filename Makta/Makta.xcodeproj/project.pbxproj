@@ -58,6 +58,8 @@
 		B862334B2BEC99AB003959FB /* MakchaInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862334A2BEC99AB003959FB /* MakchaInfoUseCase.swift */; };
 		B862334F2BECD93F003959FB /* MakchaInfoUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B862334E2BECD93F003959FB /* MakchaInfoUseCaseTests.swift */; };
 		B8745C5E2C36EBDD00B63EAB /* SearchPathViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8745C5D2C36EBDD00B63EAB /* SearchPathViewModel.swift */; };
+		B88A96242C973B3100D9E831 /* TransPathErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88A96232C973B3100D9E831 /* TransPathErrorDTO.swift */; };
+		B88A96262C98733E00D9E831 /* TransPathDTOResponsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88A96252C98733E00D9E831 /* TransPathDTOResponsable.swift */; };
 		B890C2D92C6F2F6C00FE0A3F /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B890C2D82C6F2F6C00FE0A3F /* SettingsCoordinator.swift */; };
 		B89494AF2C218C00003068D5 /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89494AE2C218C00003068D5 /* SearchResultCell.swift */; };
 		B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89E7F762BE7613800A13B58 /* AppDelegate.swift */; };
@@ -146,6 +148,8 @@
 		B862334A2BEC99AB003959FB /* MakchaInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaInfoUseCase.swift; sourceTree = "<group>"; };
 		B862334E2BECD93F003959FB /* MakchaInfoUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakchaInfoUseCaseTests.swift; sourceTree = "<group>"; };
 		B8745C5D2C36EBDD00B63EAB /* SearchPathViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPathViewModel.swift; sourceTree = "<group>"; };
+		B88A96232C973B3100D9E831 /* TransPathErrorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransPathErrorDTO.swift; sourceTree = "<group>"; };
+		B88A96252C98733E00D9E831 /* TransPathDTOResponsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransPathDTOResponsable.swift; sourceTree = "<group>"; };
 		B890C2D82C6F2F6C00FE0A3F /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		B89494AE2C218C00003068D5 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		B89E7F732BE7613800A13B58 /* Makta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Makta.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -325,6 +329,25 @@
 			path = UseCase;
 			sourceTree = "<group>";
 		};
+		B88A96202C973AD600D9E831 /* ODSayTransPath */ = {
+			isa = PBXGroup;
+			children = (
+				B88A96252C98733E00D9E831 /* TransPathDTOResponsable.swift */,
+				B89E7FAF2BE773D100A13B58 /* TransPathDTO.swift */,
+				B88A96232C973B3100D9E831 /* TransPathErrorDTO.swift */,
+			);
+			path = ODSayTransPath;
+			sourceTree = "<group>";
+		};
+		B88A96212C973AE800D9E831 /* SeoulRealtimeArrival */ = {
+			isa = PBXGroup;
+			children = (
+				B8D48C102BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift */,
+				B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */,
+			);
+			path = SeoulRealtimeArrival;
+			sourceTree = "<group>";
+		};
 		B89E7F6A2BE7613800A13B58 = {
 			isa = PBXGroup;
 			children = (
@@ -409,9 +432,8 @@
 		B89E7F942BE76FD300A13B58 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
-				B89E7FAF2BE773D100A13B58 /* TransPathDTO.swift */,
-				B8D48C102BF1CD5600DA2EB6 /* SeoulRealtimeSubwayDTO.swift */,
-				B81BDE4F2BFC87D700CFDC7A /* SeoulRealtimeBusStationDTO.swift */,
+				B88A96202C973AD600D9E831 /* ODSayTransPath */,
+				B88A96212C973AE800D9E831 /* SeoulRealtimeArrival */,
 				B83FBDD02C12D6D7004805ED /* KakaoPlaceSearchResultDTO.swift */,
 				B83FBDD22C1375A3004805ED /* KakaoReverseGeocodingResultDTO.swift */,
 			);
@@ -725,8 +747,10 @@
 				B83FBDD32C1375A3004805ED /* KakaoReverseGeocodingResultDTO.swift in Sources */,
 				B89E7FAE2BE773B700A13B58 /* APIService.swift in Sources */,
 				206571562C4E85380077FE1B /* OnboardingViewModel.swift in Sources */,
+				B88A96242C973B3100D9E831 /* TransPathErrorDTO.swift in Sources */,
 				204A39DC2C0BF88E00C2F403 /* BaseCoordinator.swift in Sources */,
 				205D20F72BE912B100A7BD98 /* Preview+Extension.swift in Sources */,
+				B88A96262C98733E00D9E831 /* TransPathDTOResponsable.swift in Sources */,
 				B89E7F772BE7613800A13B58 /* AppDelegate.swift in Sources */,
 				B89494AF2C218C00003068D5 /* SearchResultCell.swift in Sources */,
 				B890C2D92C6F2F6C00FE0A3F /* SettingsCoordinator.swift in Sources */,
