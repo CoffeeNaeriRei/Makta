@@ -27,14 +27,30 @@ final class TransPathRepository: TransPathRepositoryProtocol {
         return Observable.create { emitter in
             self.apiService.fetchTransPathData(start: start, destination: destination) { result in
                 switch result {
-                case .success(let transPathDTO):
-                    guard let makchaInfo = self.convertTransPathDTOToMakchaInfo(transPathDTO: transPathDTO) else {
-                        print("[APIService] - ❌ DTO → Entity 변환 실패")
-                        emitter.onError(APIServiceError.entityConvertError)
+                case .success(let transPathDTOResponse):
+                    guard let responseType = transPathDTOResponse.type else {
+                        emitter.onError(APIServiceError.noData)
                         return
                     }
-                    emitter.onNext(makchaInfo)
-                    emitter.onCompleted()
+                    
+                    switch responseType {
+                    case .success: // TransPathDTO
+                        guard let transPathDTO = transPathDTOResponse as? TransPathDTO,
+                              let makchaInfo = self.convertTransPathDTOToMakchaInfo(transPathDTO: transPathDTO) else {
+                            print("[APIService] - ❌ DTO → Entity 변환 실패")
+                            emitter.onError(APIServiceError.entityConvertError)
+                            return
+                        }
+                        emitter.onNext(makchaInfo)
+                        emitter.onCompleted()
+                    case .error: // TransPathErrorDTO
+                        guard let transPathErrorDTO = transPathDTOResponse as? TransPathErrorDTO else {
+                            emitter.onError(APIServiceError.entityConvertError)
+                            return
+                        }
+                        emitter.onError(transPathErrorDTO.error.errorType)
+                    }
+                    
                 case .failure(let error):
                     print("[APIService] - ❌ fetchTransPathData() 호출 실패 \(error.localizedDescription)")
                     emitter.onError(error)

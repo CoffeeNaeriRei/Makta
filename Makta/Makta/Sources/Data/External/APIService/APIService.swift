@@ -14,7 +14,7 @@ protocol APIServiceInterface {
     func fetchTransPathData(
         start: XYCoordinate,
         destination: XYCoordinate,
-        completion: @escaping (Result<TransPathDTO, APIServiceError>) -> Void
+        completion: @escaping (Result<TransPathDTOResponsable, APIServiceError>) -> Void
     )
     func fetchSeoulRealtimeSubwayArrival(
         stationName: String,
@@ -42,7 +42,7 @@ struct APIService: APIServiceInterface {
     func fetchTransPathData(
         start: XYCoordinate,
         destination: XYCoordinate,
-        completion: @escaping (Result<TransPathDTO, APIServiceError>) -> Void
+        completion: @escaping (Result<TransPathDTOResponsable, APIServiceError>) -> Void
     ) {
         guard let transPathURL = makeTransPathURL(start: start, destination: destination),
               let url = URL(string: transPathURL) else {
@@ -57,11 +57,17 @@ struct APIService: APIServiceInterface {
                 completion(.failure(APIServiceError.noData))
                 return
             }
-            guard let transPathDTO = try? JSONDecoder().decode(TransPathDTO.self, from: data) else {
-                completion(.failure(APIServiceError.decodingError))
+            // TransPathDTO / TransPathErrorDTO 중 적절한 응답으로 디코딩
+            if var transPathDTO = try? JSONDecoder().decode(TransPathDTO.self, from: data) {
+                transPathDTO.type = .success
+                completion(.success(transPathDTO))
+                return
+            } else if var transPathErrorDTO = try? JSONDecoder().decode(TransPathErrorDTO.self, from: data) {
+                transPathErrorDTO.type = .error
+                completion(.success(transPathErrorDTO))
                 return
             }
-            completion(.success(transPathDTO))
+            completion(.failure(APIServiceError.decodingError))
         }.resume()
     }
     
