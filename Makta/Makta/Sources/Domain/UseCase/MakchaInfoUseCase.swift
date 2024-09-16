@@ -168,7 +168,6 @@ final class MakchaInfoUseCase {
                 $0.makchaPathNumToLoad = $0.makchaPathCount < 5 ? $0.makchaPathCount : 5
             }, onError: { error in
                 if let error = error as? TransPathError {
-                    print(error)
                     switch error {
                     case .inputError: self.makchaErrorMessage.onNext("입력값이 올바르지 않습니다.")
                     case .noEndPoint: self.makchaErrorMessage.onNext("출발/도착지가 존재하지 않습니다.")
@@ -252,7 +251,6 @@ final class MakchaInfoUseCase {
     
     // MARK: - 타이머 시작
     private func startTimer() {
-        print("타이머 시작")
         timerDisposable?.dispose() // 기존 타이머 종료
         timerDisposable = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
 //            .take(몇초까지할지)

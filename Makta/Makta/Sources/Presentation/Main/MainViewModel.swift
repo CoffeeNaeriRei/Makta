@@ -35,7 +35,6 @@ final class MainViewModel: ViewModelType {
         let viewDidLoadedEvent = PublishRelay<Void>()
         let viewDidAppearEvent: Observable<Void>
         let settingButtonTap: ControlEvent<Void> // [설정] 버튼 탭
-//        let starButtonTap: ControlEvent<Void> // [즐겨찾기] 버튼 탭
         let loadButtonTap: ControlEvent<Void> // 막차 경로 더 불러오기
         let reloadButtonTap: ControlEvent<Void>
     }
@@ -71,14 +70,6 @@ final class MainViewModel: ViewModelType {
                 vm.navigation?.goToSettings()
             }
             .disposed(by: disposeBag)
-        
-//        input.starButtonTap
-//            .withUnretained(self)
-//            .subscribe { vm, _ in
-//                // 프로토콜을 통한 메서드로 호출
-//                vm.goToRemark()
-//            }
-//            .disposed(by: disposeBag)
         
         input.loadButtonTap
             .withUnretained(self)

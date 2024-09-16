@@ -51,10 +51,6 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        #if DEBUG
-        print(data.arrival.first.status.arrivalMessageFirst)
-        print(data.arrival.second.status.arrivalMessageSecond)
-        #endif
         bind()
     }
     

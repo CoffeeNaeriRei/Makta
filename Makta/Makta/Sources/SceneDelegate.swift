@@ -11,7 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var coordinator: AppCoordinator?
-    var isAppStarted: Bool = false // foreground 진입 시 최초 실행 여부를 판단하기 위한 플래그
+    private var isAppStarted: Bool = false // foreground 진입 시 최초 실행 여부를 판단하기 위한 플래그
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -46,7 +46,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         - 앱을 시작하면서 foreground로 진입하는 경우는 제외
      */
     func sceneWillEnterForeground(_ scene: UIScene) {
-        print("\n⚪️⚪️포어그라운드 진입⚪️⚪️\n")
         if isAppStarted {
             coordinator?.makchaInfoUseCase.loadMakchaPathWithSearchedLocation()
         } else {

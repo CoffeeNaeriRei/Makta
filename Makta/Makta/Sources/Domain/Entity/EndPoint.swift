@@ -38,10 +38,7 @@ struct EndPoint: Codable, Equatable {
     /// EndPoint를 UserDefaults로 저장하는 메서드
     func saveAsUserDefaults(key: DestinationKey) {
         let encoder = JSONEncoder()
-        guard let encoded = try? encoder.encode(self) else {
-            print("UserDefaults에 \(key.rawValue) 저장 실패")
-            return
-        }
+        guard let encoded = try? encoder.encode(self) else { return }
         UserDefaults.standard.setValue(encoded, forKey: key.rawValue)
         print("UserDefaults에 \(key.rawValue) 저장 성공!!")
     }
@@ -50,10 +47,7 @@ struct EndPoint: Codable, Equatable {
     static func loadFromUserDefaults(key: DestinationKey) -> EndPoint? {
         let decoder = JSONDecoder()
         guard let data = UserDefaults.standard.object(forKey: key.rawValue) as? Data,
-              let endPoint = try? decoder.decode(EndPoint.self, from: data) else {
-            print("UserDefaults에서 \(key.rawValue) 불러오기 실패")
-            return nil
-        }
+              let endPoint = try? decoder.decode(EndPoint.self, from: data) else { return nil }
         return endPoint
     }
 }
