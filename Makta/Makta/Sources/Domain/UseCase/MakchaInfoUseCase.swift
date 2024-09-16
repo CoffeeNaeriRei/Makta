@@ -23,6 +23,7 @@ final class MakchaInfoUseCase {
     // MakchaInfoUseCase 내부에서만 관찰하는 스트림 (테스트 코드 때문에 private은 적용 x, 나중에 모듈 분리하면 접근제어자 설정)
     let makchaInfo = PublishSubject<MakchaInfo>() // 막차 정보
     let realtimeArrivals = PublishSubject<[RealtimeArrivalTuple]>() // 막차 경로 별 실시간 도착 정보
+    let makchaErrorMessage = PublishSubject<String>()
     private let timerEvent = PublishRelay<Void>() // 실시간 도착 정보 타이머 이벤트
     
     let makchaSectionOfMainCard = PublishSubject<SectionOfMainCard>() // 컬렉션뷰 바인딩을 위한 SectionModel에 전달할 데이터
@@ -159,7 +160,7 @@ final class MakchaInfoUseCase {
     func loadMakchaPath(start: XYCoordinate, destination: XYCoordinate) {
         transPathRepository.getAllMakchaTransPath(start: start, destination: destination)
             .withUnretained(self)
-            .subscribe {
+            .subscribe(onNext: {
                 // 실시간 도착정보 불러오기
                 $0.makeRealtimeArrivalTimes(currentTime: $1.startTime, makchaPaths: $1.makchaPaths)
                 // 새로운 MakchaInfo로 값을 업데이트
@@ -167,7 +168,19 @@ final class MakchaInfoUseCase {
                 // 화면에 보여줄 막차 경로 개수 5개부터 시작 (전체 경로 개수가 5개보다 적을 경우에는 그 개수에 맞춤)
                 $0.makchaPathCount = $1.makchaPaths.count
                 $0.makchaPathNumToLoad = $0.makchaPathCount < 5 ? $0.makchaPathCount : 5
-            }
+            }, onError: { error in
+                if let error = error as? TransPathError {
+                    print(error)
+                    switch error {
+                    case .inputError: self.makchaErrorMessage.onNext("입력값이 올바르지 않습니다.")
+                    case .noEndPoint: self.makchaErrorMessage.onNext("출발/도착지가 존재하지 않습니다.")
+                    case .noServiceArea: self.makchaErrorMessage.onNext("서비스 지역이 아닙니다.")
+                    case .closeEndpoint: self.makchaErrorMessage.onNext("출발지와 도착지가 700m 이내입니다.")
+                    case .noResult: self.makchaErrorMessage.onNext("검색결과가 없습니다.")
+                    default: self.makchaErrorMessage.onNext("알 수 없는 에러")
+                    }
+                }
+            })
             .disposed(by: disposeBag)
     }
     

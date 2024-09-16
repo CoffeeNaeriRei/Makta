@@ -67,7 +67,13 @@ final class MainViewController: UIViewController {
             reloadButtonTap: mainView.reloadButton.rx.tap
         )
 
-        _ = mainVM.transform(input: input)
+        let output = mainVM.transform(input: input)
+        
+        output.makchaErrorMessage
+            .drive(onNext: { errorMsg in
+                self.mainVM.showTransPathErrorAlert(with: errorMsg)
+            })
+            .disposed(by: disposeBag)
 
         bindCollectionView()
         

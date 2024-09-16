@@ -41,7 +41,7 @@ final class MainViewModel: ViewModelType {
     }
     
     struct Output {
-        
+        let makchaErrorMessage: Driver<String>
     }
     
     func transform(input: Input) -> Output {
@@ -121,7 +121,9 @@ final class MainViewModel: ViewModelType {
             })
             .disposed(by: disposeBag)
 
-        return Output()
+        let makchaErrorMessage = makchaInfoUseCase.makchaErrorMessage.asDriver(onErrorJustReturn: "")
+        
+        return Output(makchaErrorMessage: makchaErrorMessage)
     }
     
     // 현재 위치 재설정 버튼 클릭시 이벤트 처리를 위한 메서드
@@ -164,5 +166,9 @@ extension MainViewModel: MainNavigation {
     
     func goToDetails(_ makchaIdx: Int, with data: MakchaCellData, path: (String, String)) {
         navigation?.goToDetails(makchaIdx, with: data, path: path)
+    }
+    
+    func showTransPathErrorAlert(with message: String) {
+        navigation?.showTransPathErrorAlert(with: message)
     }
 }
