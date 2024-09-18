@@ -62,12 +62,17 @@ final class MainViewController: UIViewController {
         let input = MainViewModel.Input(
             viewDidAppearEvent: self.rx.methodInvoked(#selector(self.viewDidAppear)).map({ _ in Void() }),
             settingButtonTap: leftUIBarButtonItem.rx.tap,
-//            starButtonTap: rightUIBarButtonItem.rx.tap,
             loadButtonTap: rightUIBarButtonItem.rx.tap,
             reloadButtonTap: mainView.reloadButton.rx.tap
         )
 
-        _ = mainVM.transform(input: input)
+        let output = mainVM.transform(input: input)
+        
+        output.makchaErrorMessage
+            .drive(onNext: { errorMsg in
+                self.mainVM.showTransPathErrorAlert(with: errorMsg)
+            })
+            .disposed(by: disposeBag)
 
         bindCollectionView()
         
@@ -145,18 +150,12 @@ extension MainViewController {
         let _title = "막차정보"
         let _leftBarButtonImage = UIImage(systemName: "gearshape")?
             .withTintColor(.cf(.grayScale(.gray700)), renderingMode: .alwaysOriginal)
-//        let _rightBarButtonImage = UIImage(systemName: "star")?
-//            .withTintColor(.cf(.grayScale(.gray700)), renderingMode: .alwaysOriginal)
         
         leftUIBarButtonItem.title = "Link to Setting"
         leftUIBarButtonItem.image = _leftBarButtonImage
-//        rightUIBarButtonItem.title = "Link to Remark"
-//        rightUIBarButtonItem.image = _rightBarButtonImage
-//        rightUIBarButtonItem.title = "경로 더보기"
         
         navigationItem.title = _title
         navigationItem.leftBarButtonItem = leftUIBarButtonItem
-//        navigationItem.rightBarButtonItem = rightUIBarButtonItem
     }
     
     private func setupSheet() {

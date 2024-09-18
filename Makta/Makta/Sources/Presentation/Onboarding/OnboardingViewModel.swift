@@ -69,7 +69,6 @@ final class OnboardingViewModel: ViewModelType {
         input.startButtonTap
             .withUnretained(self)
             .subscribe { vm, _ in
-                print("start Button Tap")
                 vm.makchaInfoUseCase.saveDefaultDestinationPoint()
                 vm.makchaInfoUseCase.searchedStartPoints.onNext([])
                 vm.makchaInfoUseCase.searchedDestinationPoints.onNext([])
@@ -84,7 +83,6 @@ final class OnboardingViewModel: ViewModelType {
         input.skipButtonTap
             .withUnretained(self)
             .subscribe { vm, _ in
-                print("Skip Button Tap")
                 vm.goToMain(isSkip: true)
             }
             .disposed(by: disposeBag)

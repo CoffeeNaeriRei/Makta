@@ -35,13 +35,12 @@ final class MainViewModel: ViewModelType {
         let viewDidLoadedEvent = PublishRelay<Void>()
         let viewDidAppearEvent: Observable<Void>
         let settingButtonTap: ControlEvent<Void> // [설정] 버튼 탭
-//        let starButtonTap: ControlEvent<Void> // [즐겨찾기] 버튼 탭
         let loadButtonTap: ControlEvent<Void> // 막차 경로 더 불러오기
         let reloadButtonTap: ControlEvent<Void>
     }
     
     struct Output {
-        
+        let makchaErrorMessage: Driver<String>
     }
     
     func transform(input: Input) -> Output {
@@ -71,14 +70,6 @@ final class MainViewModel: ViewModelType {
                 vm.navigation?.goToSettings()
             }
             .disposed(by: disposeBag)
-        
-//        input.starButtonTap
-//            .withUnretained(self)
-//            .subscribe { vm, _ in
-//                // 프로토콜을 통한 메서드로 호출
-//                vm.goToRemark()
-//            }
-//            .disposed(by: disposeBag)
         
         input.loadButtonTap
             .withUnretained(self)
@@ -121,7 +112,9 @@ final class MainViewModel: ViewModelType {
             })
             .disposed(by: disposeBag)
 
-        return Output()
+        let makchaErrorMessage = makchaInfoUseCase.makchaErrorMessage.asDriver(onErrorJustReturn: "")
+        
+        return Output(makchaErrorMessage: makchaErrorMessage)
     }
     
     // 현재 위치 재설정 버튼 클릭시 이벤트 처리를 위한 메서드
@@ -164,5 +157,9 @@ extension MainViewModel: MainNavigation {
     
     func goToDetails(_ makchaIdx: Int, with data: MakchaCellData, path: (String, String)) {
         navigation?.goToDetails(makchaIdx, with: data, path: path)
+    }
+    
+    func showTransPathErrorAlert(with message: String) {
+        navigation?.showTransPathErrorAlert(with: message)
     }
 }

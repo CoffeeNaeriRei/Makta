@@ -8,7 +8,9 @@
 // MARK: - ODSay 대중교통 환승경로 API의 응답 결과 DTO
 /// https://lab.odsay.com/guide/guide#guideWeb_2
 
-struct TransPathDTO: Codable {
+struct TransPathDTO: TransPathDTOResponsable, Codable {
+    var type: ResponseType? = .success
+    
     let result: TransPathResult
 }
 

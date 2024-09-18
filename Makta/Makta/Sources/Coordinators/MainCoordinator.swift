@@ -16,6 +16,7 @@ protocol MainNavigation: AnyObject {
     func pullDownSheet()
     func pullUpSheet()
     func goToDetails(_ makchaIdx: Int, with data: MakchaCellData, path: (String, String))
+    func showTransPathErrorAlert(with message: String)
 }
 
 final class MainCoordinator: BaseCoordinator {
@@ -99,5 +100,12 @@ extension MainCoordinator: MainNavigation {
         vc.makchaInfoUseCase = appCoordinator.makchaInfoUseCase
         navigationController.dismiss(animated: true)
         navigationController.pushViewController(vc, animated: true)
+    }
+    
+    func showTransPathErrorAlert(with message: String) {
+        let alert = UIAlertController(title: "경로를 불러오지 못했습니다.", message: message, preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "확인", style: .cancel)
+        alert.addAction(confirm)
+        searchPathViewController?.present(alert, animated: true)
     }
 }

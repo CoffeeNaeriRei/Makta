@@ -47,13 +47,11 @@ extension LocationService: LocationManagerDelegate {
     func locationManagerAbstract(_ manager: LocationManagerInterface, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .authorizedWhenInUse:
-            print("위치 서비스 사용 가능")
             locationManager.requestLocation() // 위치 서비스를 허용하고 나면 현재 위치 불러오기
         case .restricted, .denied:
-            print("위치 서비스 사용 불가")
+            break
             // TODO: - "위치 서비스를 사용하려면 승인이 필요합니다. 설정을 변경해주세요." 팝업 띄우기 (이 권한 상태에서는 요청 팝업 불가)
         case .notDetermined:
-            print("권한 설정 필요")
             locationManager.requestWhenInUseAuthorization() // 권한 요청
         default:
             break
